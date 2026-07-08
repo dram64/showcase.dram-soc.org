@@ -222,19 +222,7 @@ body {
 .misc__cart-count { background: transparent; color: var(--misc-accent); padding: 0; min-width: 1em; text-align: center; font-variant-numeric: tabular-nums; }
 @media (max-width: 600px) { .misc__cart-toggle { position: static; margin: 2vh auto; display: flex; justify-content: center; } }
 
-/* Page-load transition for the misc catalog — soft fade + lift. Body
-   starts opacity 0; theme.js adds .is-loaded on DOMContentLoaded. */
-body.page-index,
-body.page-collection {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
-}
-body.page-index.is-loaded,
-body.page-collection.is-loaded {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Page-load transition (removed on Astro port — no theme.js to toggle .is-loaded). */
 
 /* === MISC catalog — nyalra-inspired soft white minimal === */
 /* Apply the misc page chrome to every misc-themed page. PSG/NSO/PSG-product

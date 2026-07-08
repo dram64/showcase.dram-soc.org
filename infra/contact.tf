@@ -22,6 +22,11 @@ resource "aws_iam_role_policy_attachment" "contact_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+resource "aws_iam_role_policy_attachment" "contact_xray" {
+  role       = aws_iam_role.contact_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
+}
+
 resource "aws_iam_role_policy" "contact_ses" {
   name = "ses-send"
   role = aws_iam_role.contact_lambda.id
@@ -69,6 +74,10 @@ resource "aws_lambda_function" "contact" {
   source_code_hash = data.archive_file.contact_zip.output_base64sha256
   timeout          = 8
   memory_size      = 256
+
+  tracing_config {
+    mode = "Active"
+  }
 
   environment {
     variables = {
@@ -121,8 +130,9 @@ resource "aws_apigatewayv2_stage" "contact" {
   auto_deploy = true
 
   default_route_settings {
-    throttling_burst_limit = 20
-    throttling_rate_limit  = 10
+    throttling_burst_limit   = 20
+    throttling_rate_limit    = 10
+    detailed_metrics_enabled = true
   }
 
   access_log_settings {

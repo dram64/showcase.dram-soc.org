@@ -65,12 +65,31 @@ resource "aws_cloudfront_distribution" "site" {
 
   origin {
     domain_name              = aws_s3_bucket.site.bucket_regional_domain_name
-    origin_id                = "s3-${var.domain}"
+    origin_id                = "s3-primary-${var.domain}"
     origin_access_control_id = aws_cloudfront_origin_access_control.site.id
   }
 
+  origin {
+    domain_name              = aws_s3_bucket.site_dr.bucket_regional_domain_name
+    origin_id                = "s3-dr-${var.domain}"
+    origin_access_control_id = aws_cloudfront_origin_access_control.site.id
+  }
+
+  # Origin group flips to the DR bucket on 5xx or timeout without any DNS or
+  # config change on the viewer side. RTO ≈ single failed request (~30s).
+  origin_group {
+    origin_id = "site-origin-group"
+
+    failover_criteria {
+      status_codes = [403, 404, 500, 502, 503, 504]
+    }
+
+    member { origin_id = "s3-primary-${var.domain}" }
+    member { origin_id = "s3-dr-${var.domain}" }
+  }
+
   default_cache_behavior {
-    target_origin_id       = "s3-${var.domain}"
+    target_origin_id       = "site-origin-group"
     viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]

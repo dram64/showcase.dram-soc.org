@@ -1,0 +1,131 @@
+---
+export const prerender = true;
+import "../../../styles/shopify/nso.css";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NSO — Tokyo Zero</title>
+    <meta name="description" content="Needy Streamer Overload homage — CRT / chrome / RGB glitch showcase from Tokyo Zero." />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class="page-nso">
+    <nav class="theme-nav theme-nav--nso" aria-label="Theme navigation">
+      <button type="button" class="theme-nav__btn theme-nav__btn--back" aria-label="Go back" onclick="if(history.length>1){history.back()}else{location.href='/'}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <a class="theme-nav__btn theme-nav__btn--home" href="/" aria-label="Home">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </nav>
+
+    <div class="nso-stage">
+      <div class="nso-herobg-flank nso-herobg-flank--l" aria-hidden="true"></div>
+      <img class="nso-herobg" src="/assets/nso-bg.webp" alt="" aria-hidden="true" />
+      <div class="nso-herobg-flank nso-herobg-flank--r" aria-hidden="true"></div>
+
+      <img class="nso-ribbon"     src="/assets/nso-ribbon.webp" alt="" aria-hidden="true" />
+      <img class="nso-ribbon-new" src="/assets/nso-new.webp"    alt="NEW" aria-hidden="true" />
+
+      <img class="nso-white-gradient" src="/assets/nso-white-gradient.webp" alt="" aria-hidden="true" />
+      <img class="nso-sparkle"        src="/assets/nso-product-bg.webp"     alt="" aria-hidden="true" />
+
+      <img class="nso-ngo-title"      src="/assets/nso-ngo-title.webp"     alt="Needy Girl Overdose" />
+      <img class="nso-ngo-overdose"   src="/assets/nso-ngo-overdose.webp"  alt="Needy Girl Overdose" />
+      <img class="nso-products-banner" src="/assets/nso-products-banner.webp" alt="Products" />
+
+      <p class="nso-coming-soon" aria-hidden="true">
+        <span class="nso-coming-soon__line">COMING</span>
+        <span class="nso-coming-soon__line">SOON</span>
+      </p>
+
+      <img class="nso-y2k-heart"       src="/assets/nso-y2k-heart.webp"       alt="" aria-hidden="true" />
+      <img class="nso-y2k-doubleheart" src="/assets/nso-y2k-doubleheart.webp" alt="" aria-hidden="true" />
+      <img class="nso-heart-grid"      src="/assets/nso-heart-grid.webp"      alt="" aria-hidden="true" />
+
+      <div class="nso-chars">
+        <img class="nso-char nso-char--ame"    src="/assets/nso-ame-sticker.webp"    alt="Ame" />
+        <img class="nso-char nso-char--kangel" src="/assets/nso-kangel-sticker.webp" alt="KAngel" />
+      </div>
+
+      <a class="nso-popup-link nso-popup-link--1" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--1" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--2" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--2" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--3" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--3" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--4" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--4" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--5" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--5" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--6" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--6" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+
+      <div class="nso-pink-grid-bg" aria-hidden="true"></div>
+
+      <div class="nso-card3d-wrap nso-card3d-wrap--1" aria-label="Print preview">
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-print.webp')"></div><div class="nso-card3d__face nso-card3d__face--back"></div></div>
+      </div>
+      <div class="nso-card3d-shadow nso-card3d-shadow--1" aria-hidden="true"></div>
+      <div class="nso-product-copy nso-product-copy--1">
+        <p class="nso-product-copy__title">PRINT.jpg</p>
+        <p class="nso-product-copy__price">$ 5.00</p>
+        <p class="nso-product-copy__desc">12×18 in print on extra-heavy card stock.</p>
+      </div>
+
+      <div class="nso-card3d-wrap nso-card3d-wrap--2" aria-label="Deskmat preview">
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-deskmat.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-deskmat.webp')"></div></div>
+      </div>
+      <div class="nso-card3d-shadow nso-card3d-shadow--2" aria-hidden="true"></div>
+      <div class="nso-product-copy nso-product-copy--2">
+        <p class="nso-product-copy__title">DESKMAT.gif</p>
+        <p class="nso-product-copy__price">$ 35.00</p>
+        <p class="nso-product-copy__desc">900 × 400 mm stitched-edge pad.</p>
+      </div>
+
+      <div class="nso-card3d-wrap nso-card3d-wrap--3" aria-label="Tapestry preview — Ame">
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-ame-tapestry.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-ame-tapestry.webp')"></div></div>
+      </div>
+      <div class="nso-card3d-shadow nso-card3d-shadow--3" aria-hidden="true"></div>
+      <div class="nso-card3d-wrap nso-card3d-wrap--3b" aria-label="Tapestry preview — KAngel">
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-kangel-tapestry.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-kangel-tapestry.webp')"></div></div>
+      </div>
+      <div class="nso-card3d-shadow nso-card3d-shadow--3b" aria-hidden="true"></div>
+      <div class="nso-product-copy nso-product-copy--3">
+        <p class="nso-product-copy__title">TAPESTRY.bmp</p>
+        <p class="nso-product-copy__price">$ 35.00</p>
+        <p class="nso-product-copy__desc">60 × 90 cm wall scroll.<br>Ame or KAngel — sold separately.</p>
+      </div>
+
+      <div class="nso-card3d-wrap nso-card3d-wrap--4" aria-label="Sticker preview — Ame">
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-ame-sticker.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-ame-sticker.webp')"></div></div>
+      </div>
+      <div class="nso-card3d-shadow nso-card3d-shadow--4" aria-hidden="true"></div>
+      <div class="nso-card3d-wrap nso-card3d-wrap--4b" aria-label="Sticker preview — KAngel">
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-kangel-sticker.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-kangel-sticker.webp')"></div></div>
+      </div>
+      <div class="nso-card3d-shadow nso-card3d-shadow--4b" aria-hidden="true"></div>
+      <div class="nso-product-copy nso-product-copy--4">
+        <p class="nso-product-copy__title">STICKERS.webp</p>
+        <p class="nso-product-copy__price">$ 10.00</p>
+        <p class="nso-product-copy__desc">Satin kiss-cut pair. Ame or KAngel.</p>
+      </div>
+    </div>
+
+    <style is:global>
+      .theme-nav {
+        position: fixed; top: 22px; left: 22px; z-index: 250;
+        display: flex; gap: 10px;
+      }
+      .theme-nav__btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 44px; height: 44px; padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 50%;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(16px) saturate(160%);
+        -webkit-backdrop-filter: blur(16px) saturate(160%);
+        color: #1a1a1a; cursor: pointer; text-decoration: none;
+        box-shadow: 0 4px 14px rgba(20,18,38,0.10), 0 1px 3px rgba(20,18,38,0.06), inset 0 1px 0 rgba(255,255,255,0.55);
+        transition: transform .2s ease, background .2s ease;
+      }
+      .theme-nav__btn svg { width: 18px; height: 18px; }
+      .theme-nav__btn:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
+    </style>
+  </body>
+</html>

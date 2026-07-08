@@ -1,0 +1,6 @@
+domain              = "dram-soc.org"
+region              = "us-west-2"
+owner_email         = "you@example.com"
+ses_verified_sender = "no-reply@dram-soc.org"
+log_retention_days  = 30
+price_class         = "PriceClass_100"

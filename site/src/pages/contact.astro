@@ -1,0 +1,175 @@
+---
+export const prerender = true;
+import Base from "../layouts/Base.astro";
+
+const contactApi = import.meta.env.PUBLIC_CONTACT_API || "";
+---
+
+<Base title="contact">
+  <section class="ct">
+    <p class="ct__kicker">get in touch</p>
+    <h1 class="ct__title">say hi.</h1>
+    <p class="ct__lede">
+      Portfolio inquiries, collab pitches, "how did you do X" — send a note. This form
+      submits to a Lambda that stores your message in DynamoDB and emails me via SES.
+    </p>
+
+    <form class="ct__form" id="contact-form">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true" />
+      <label class="fld">
+        <span>name</span>
+        <input type="text" name="name" required maxlength="120" autocomplete="name" />
+      </label>
+      <label class="fld">
+        <span>email</span>
+        <input type="email" name="email" required maxlength="200" autocomplete="email" />
+      </label>
+      <label class="fld">
+        <span>subject</span>
+        <input type="text" name="subject" maxlength="200" placeholder="collab, question, hire me…" />
+      </label>
+      <label class="fld">
+        <span>message</span>
+        <textarea name="body" required rows="6" maxlength="4000"></textarea>
+      </label>
+      <button class="ct__cta" type="submit">
+        <span>send</span> <span class="ct__arrow">→</span>
+      </button>
+      <p class="ct__status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <script is:inline define:vars={{ contactApi }}>
+    (function () {
+      const form = document.getElementById("contact-form");
+      const status = form.querySelector(".ct__status");
+      const cta = form.querySelector(".ct__cta");
+      if (!contactApi) {
+        status.textContent = "contact endpoint not configured — set PUBLIC_CONTACT_API in the build env.";
+        status.classList.add("is-error");
+        cta.disabled = true;
+        return;
+      }
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        status.textContent = "";
+        status.className = "ct__status";
+        cta.disabled = true;
+        cta.querySelector("span:first-child").textContent = "sending";
+        const data = Object.fromEntries(new FormData(form).entries());
+        try {
+          const res = await fetch(contactApi, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          const payload = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(payload.error || "send failed");
+          status.textContent = "sent. i'll reply within a few days.";
+          status.classList.add("is-ok");
+          form.reset();
+        } catch (err) {
+          status.textContent = err.message || "something broke. try again in a minute.";
+          status.classList.add("is-error");
+        } finally {
+          cta.disabled = false;
+          cta.querySelector("span:first-child").textContent = "send";
+        }
+      });
+    })();
+  </script>
+
+  <style>
+    .ct {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px);
+    }
+    .ct__kicker {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 16px;
+    }
+    .ct__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3rem, 8vw, 5rem);
+      line-height: 1;
+      margin: 0 0 20px;
+    }
+    .ct__lede {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0 0 40px;
+    }
+    .ct__form {
+      display: grid;
+      gap: 22px;
+    }
+    .fld {
+      display: grid;
+      gap: 6px;
+    }
+    .fld span {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .fld input, .fld textarea {
+      font-family: var(--sans);
+      font-size: 1rem;
+      color: var(--ink);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      padding: 8px 0;
+      transition: border-color 140ms ease;
+    }
+    .fld textarea {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 12px;
+      background: #fff;
+      resize: vertical;
+      min-height: 140px;
+    }
+    .fld input:focus, .fld textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .ct__cta {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 140ms ease, padding 140ms ease;
+    }
+    .ct__cta:hover { background: var(--accent); padding-right: 34px; }
+    .ct__cta:disabled { opacity: 0.6; cursor: wait; }
+    .ct__arrow { font-family: var(--mono); }
+    .ct__status {
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+    .ct__status.is-ok    { color: var(--accent); }
+    .ct__status.is-error { color: #b53030; }
+  </style>
+</Base>

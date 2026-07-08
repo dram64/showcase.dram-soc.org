@@ -1,0 +1,12 @@
+{
+  "name": "contact-lambda",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Contact form handler for dram-soc.org — validates, stores in DynamoDB, sends via SES.",
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.658.0",
+    "@aws-sdk/client-dynamodb": "^3.658.0",
+    "@aws-sdk/lib-dynamodb": "^3.658.0"
+  }
+}

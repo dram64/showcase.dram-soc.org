@@ -1,0 +1,314 @@
+---
+export const prerender = true;
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="architecture — aws serverless stack">
+  <article class="doc">
+    <header class="doc__head">
+      <p class="doc__kicker">case study · cloud engineering</p>
+      <h1 class="doc__title">how this site ships — a serverless AWS stack, defined in Terraform.</h1>
+      <p class="doc__lede">
+        Every piece of dram-soc.org lives in one Terraform state — the static site, the CDN,
+        the DNS, the certificate, the contact form endpoint, and the log retention policies.
+        `git push` triggers plan + apply. Total spend: roughly $0.80/month.
+      </p>
+    </header>
+
+    <section class="sec">
+      <h2 class="sec__h">the diagram</h2>
+      <div class="diagram" role="img" aria-label="AWS architecture diagram for dram-soc.org">
+        <pre>
+                    ┌─────────────┐
+       user ───────▶│  Route 53   │  dram-soc.org  A → CloudFront
+                    └──────┬──────┘
+                           │
+                           ▼
+                  ┌─────────────────┐        ┌────────────────┐
+                  │   CloudFront    │◀───────│  ACM (us-east-1)│
+                  │  + rewrite fn   │        │  wildcard cert  │
+                  └────┬────────┬───┘        └────────────────┘
+                       │        │
+              GET *    │        │  POST /contact
+                       ▼        ▼
+                ┌───────────┐   ┌──────────────────┐
+                │ S3 origin │   │  HTTP API v2     │
+                │ (private) │   │  (API Gateway)   │
+                └───────────┘   └────────┬─────────┘
+                                         │
+                                         ▼
+                                 ┌────────────────┐
+                                 │  Lambda        │
+                                 │  (Node 20)     │
+                                 └───┬────────┬───┘
+                                     │        │
+                                     ▼        ▼
+                                ┌────────┐ ┌────────────┐
+                                │  SES   │ │ DynamoDB   │
+                                │  send  │ │  audit     │
+                                └────────┘ └────────────┘
+        </pre>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec__h">services + purpose</h2>
+      <table class="tbl">
+        <thead>
+          <tr><th>Service</th><th>Purpose</th><th>Why this one</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>S3</code></td>
+            <td>Origin for the static Astro build.</td>
+            <td>Private bucket. Only CloudFront reads it via OAC; direct S3 URLs return 403.</td>
+          </tr>
+          <tr>
+            <td><code>CloudFront</code></td>
+            <td>HTTPS-terminating CDN + edge cache.</td>
+            <td><code>PriceClass_100</code> (US/EU only) is the cheapest tier that still gives full edge coverage for the target audience.</td>
+          </tr>
+          <tr>
+            <td><code>CloudFront Function</code></td>
+            <td>URL rewrite: <code>/process → /process/index.html</code>.</td>
+            <td>Cheaper than Lambda@Edge (~$0/mo at this traffic), sub-millisecond.</td>
+          </tr>
+          <tr>
+            <td><code>Response Headers Policy</code></td>
+            <td>HSTS, X-Frame-Options DENY, Referrer-Policy, XSS-Protection, Content-Type-Options.</td>
+            <td>Managed at the edge instead of in HTML — one place to update, no static-file churn.</td>
+          </tr>
+          <tr>
+            <td><code>Route 53</code></td>
+            <td>DNS zone for <code>dram-soc.org</code> — apex + <code>www</code> A-record aliases.</td>
+            <td>Same account as the rest of the stack, aliases are free (unlike CNAME targeting CloudFront).</td>
+          </tr>
+          <tr>
+            <td><code>ACM</code> (us-east-1)</td>
+            <td>TLS certificate for <code>dram-soc.org</code> + <code>www.dram-soc.org</code>.</td>
+            <td>Free. Must live in us-east-1 to attach to CloudFront (single non-negotiable rule).</td>
+          </tr>
+          <tr>
+            <td><code>API Gateway HTTP v2</code></td>
+            <td>Public POST /contact endpoint. CORS enforced at gateway.</td>
+            <td>~70% cheaper than REST API, faster, native OIDC. CORS at gateway saves a Lambda invoke per preflight.</td>
+          </tr>
+          <tr>
+            <td><code>Lambda</code> (Node 20)</td>
+            <td>Validates contact form, writes to DynamoDB, sends via SES.</td>
+            <td>Cold-start &lt; 200ms for a tiny handler. Free tier covers &gt;10× expected traffic.</td>
+          </tr>
+          <tr>
+            <td><code>SES</code></td>
+            <td>Sends the contact email to my inbox.</td>
+            <td>IAM policy scopes <code>ses:SendEmail</code> to a single verified sender — no impersonation.</td>
+          </tr>
+          <tr>
+            <td><code>DynamoDB</code></td>
+            <td>Audit log of every contact submission (PITR + encryption at rest).</td>
+            <td>Pay-per-request billing = $0 idle. Cheaper than an RDS instance for &lt;1000 rows.</td>
+          </tr>
+          <tr>
+            <td><code>CloudWatch Logs</code></td>
+            <td>Lambda logs + HTTP API access logs, 30-day retention.</td>
+            <td>Retention cap avoids infinite log growth cost. Never let default settings ship to prod.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec__h">the cost breakdown</h2>
+      <table class="tbl">
+        <thead><tr><th>Item</th><th>$/mo</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Route 53 hosted zone</td><td>$0.50</td><td>Fixed regardless of usage</td></tr>
+          <tr><td>CloudFront egress</td><td>~$0.20</td><td>&lt; 10 GB egress at portfolio scale</td></tr>
+          <tr><td>S3 storage + requests</td><td>~$0.05</td><td>Site + logs, ~1 GB total</td></tr>
+          <tr><td>CloudWatch logs</td><td>~$0.05</td><td>30-day retention keeps this bounded</td></tr>
+          <tr><td>Lambda / API GW / DynamoDB / SES</td><td>$0.00</td><td>All inside free tier at this volume</td></tr>
+          <tr><td>ACM certificate</td><td>$0.00</td><td>Free forever</td></tr>
+          <tr class="tbl__total"><td>Total</td><td>≈ $0.80</td><td>Domain registration ($12/yr) not included</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec__h">CI/CD flow</h2>
+      <ol class="steps">
+        <li><strong>Push to <code>main</code></strong> in <a href="https://github.com/dram64" target="_blank" rel="noopener">the repo</a>.</li>
+        <li>GitHub Actions assumes an AWS IAM role via <strong>OIDC</strong> — zero long-lived credentials in the repo.</li>
+        <li>Site change → <code>npm ci → astro build → aws s3 sync → cloudfront invalidate /*</code>.</li>
+        <li>Infra change → <code>terraform fmt → init → validate → plan</code> on PR; <code>apply</code> on merge.</li>
+        <li>Both workflows use path filters so a doc-only change doesn't trigger a full redeploy.</li>
+      </ol>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec__h">deliberate choices worth calling out</h2>
+      <ul class="bul">
+        <li>
+          <strong>Terraform over CloudFormation.</strong> Same expressive power, better job market
+          coverage, plan output is human-readable.
+        </li>
+        <li>
+          <strong>HTTP API v2 over REST API.</strong> Contact form doesn't need request validation
+          plugins, API keys, or usage plans — the fancy stuff REST API gives you. HTTP v2 is the
+          right default for a serverless contact endpoint.
+        </li>
+        <li>
+          <strong>Static Astro, not Next.js SSR.</strong> The site is 100% content. Every dynamic
+          affordance (contact form) is a separate serverless endpoint. No point paying for warm
+          Node servers on every request.
+        </li>
+        <li>
+          <strong>OAC, not signed URLs / OAI.</strong> Origin Access Control is the current
+          AWS-recommended path — supports SigV4 and all S3 features, unlike legacy OAI.
+        </li>
+        <li>
+          <strong>Free-tier native, but not free-tier locked.</strong> Nothing here breaks if
+          traffic 100×'s — CloudFront + S3 + Lambda all scale down to $0 idle and up to
+          production-scale linearly. This exact template is what I'd use for a real product's MVP.
+        </li>
+      </ul>
+    </section>
+
+    <section class="sec sec--cta">
+      <p class="sec__cta-kicker">code</p>
+      <h2 class="sec__cta-h">read the terraform →</h2>
+      <p>
+        The full IaC lives at
+        <a href="https://github.com/dram64/dram-soc.org" target="_blank" rel="noopener">
+          github.com/dram64/dram-soc.org
+        </a> — <code>infra/</code> for Terraform, <code>site/</code> for the Astro source,
+        <code>.github/workflows/</code> for the deploy pipeline.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .doc {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px) clamp(48px, 8vw, 96px);
+    }
+    .doc__head { margin-bottom: 8vh; }
+    .doc__kicker {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 20px;
+    }
+    .doc__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 24px;
+    }
+    .doc__lede {
+      font-size: 1.1rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 720px;
+    }
+    .sec { margin-bottom: 8vh; }
+    .sec__h {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .diagram {
+      background: #14131a;
+      color: #f5f4f0;
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+    }
+    .diagram pre {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 1.35;
+      margin: 0;
+    }
+    .tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    .tbl th, .tbl td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .tbl th {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+    .tbl code {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .tbl__total td {
+      font-weight: 600;
+      border-top: 2px solid var(--ink);
+      border-bottom: none;
+    }
+    .steps, .bul {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .steps li, .bul li {
+      font-size: 1rem;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .sec__cta-kicker {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 8px;
+    }
+    .sec__cta-h {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      margin: 0 0 12px;
+    }
+    .sec--cta {
+      padding: 32px;
+      background: var(--accent-soft);
+      border-radius: 12px;
+    }
+    .sec--cta p { margin: 0; }
+    .sec--cta a, .sec p a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    @media (max-width: 700px) {
+      .diagram pre { font-size: 0.6rem; }
+      .tbl { font-size: 0.82rem; }
+    }
+  </style>
+</Base>

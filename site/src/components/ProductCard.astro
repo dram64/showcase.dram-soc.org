@@ -1,0 +1,36 @@
+---
+import type { Product } from "../data/products.ts";
+interface Props {
+  product: Product;
+  index: string;
+  category: string;
+}
+const { product, index, category } = Astro.props;
+---
+<article
+  class:list={[
+    "misc__card",
+    product.soldOut && "misc__card--sold-out",
+  ]}
+  data-slug={product.slug}
+  data-category={category}
+>
+  <span class="misc__card-num" aria-hidden="true">{index}</span>
+  <div class="misc__link" style="cursor: default;">
+    <div class="misc__media">
+      {product.soldOut && (
+        <span class="misc__sold-out" aria-label="Sold out">sold out</span>
+      )}
+      {!product.soldOut && product.lowStock && (
+        <span class="misc__low-stock" aria-label={`Only ${product.lowStock} left`}>{product.lowStock} left</span>
+      )}
+      <div class="misc__float">
+        <img class="misc__img" src={product.image} alt={product.title} loading="lazy" />
+      </div>
+    </div>
+    <div class="misc__meta">
+      <span class="misc__name">{product.title}</span>
+      <span class="misc__price">${product.price.toFixed(2)}</span>
+    </div>
+  </div>
+</article>

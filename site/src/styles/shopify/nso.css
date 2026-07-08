@@ -1,0 +1,2373 @@
+/* === NSO theme — self-hosted fonts (Shopify /assets/) === */
+@font-face {
+  font-family: "NSO Display";
+  src: url("/fonts/nso-display.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NSO CRT";
+  src: url("/fonts/nso-crt.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NSO Pixel";
+  src: url("/fonts/nso-pixel.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "NSO Banner";
+  src: url("/fonts/nso-banner.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* === NSO body overrides — hide misc theme chrome on the NSO page === */
+body.page-nso {
+  background: #1A1626;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  margin: 0; padding: 0;
+  overflow-x: hidden;
+}
+body.page-nso .misc__header-wrap,
+body.page-nso .misc__footer,
+body.page-nso .cart-drawer,
+body.page-nso .misc__cart-toggle {
+  display: none !important;
+}
+body.page-nso main,
+body.page-nso .content-for-layout,
+body.page-nso .shopify-section {
+  margin: 0; padding: 0; width: 100%; max-width: 100%;
+}
+
+.nso-staticload {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  overflow: hidden;
+  background: #0a020e;
+  animation: nso-staticload-out 1.7s cubic-bezier(.72, 0, .28, 1) forwards;
+}
+@keyframes nso-staticload-out {
+  0%   { opacity: 1; clip-path: inset(0 0 0 0); }
+  60%  { opacity: 1; clip-path: inset(0 0 0 0); }
+  78%  { opacity: 1; clip-path: inset(0 0 30% 0); }      /* first slice peels off the bottom */
+  88%  { opacity: 1; clip-path: inset(20% 0 30% 0); }    /* middle band collapses */
+  100% { opacity: 0; clip-path: inset(50% 0 50% 0); visibility: hidden; }
+}
+.nso-staticload__noise {
+  position: absolute;
+  inset: -2%;
+  mix-blend-mode: screen;
+}
+/* Scanlines — repeating dark stripes for the CRT look */
+.nso-staticload__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.32) 0,
+    rgba(0, 0, 0, 0.32) 0.18vw,
+    transparent 0.18vw,
+    transparent 0.45vw
+  );
+  mix-blend-mode: multiply;
+  animation: nso-staticload-scan 4s linear infinite;
+}
+@keyframes nso-staticload-scan {
+  to { background-position: 0 4vw; }
+}
+/* Chromatic aberration bars — narrow red + cyan stripes that flicker
+   horizontally, evoking VHS color bleed. */
+.nso-staticload__rgb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.4vw;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+.nso-staticload__rgb--r {
+  background: linear-gradient(90deg, transparent, #ff2d6a 30%, #ff2d6a 70%, transparent);
+  animation: nso-staticload-rgb-r 1.6s steps(8, end) infinite;
+}
+.nso-staticload__rgb--b {
+  background: linear-gradient(90deg, transparent, #2dd4ff 25%, #2dd4ff 75%, transparent);
+  animation: nso-staticload-rgb-b 1.6s steps(7, end) infinite;
+}
+@keyframes nso-staticload-rgb-r {
+  0%   { top: 18%; transform: translateX(0); }
+  25%  { top: 52%; transform: translateX(-2vw); }
+  50%  { top: 31%; transform: translateX(3vw); }
+  75%  { top: 74%; transform: translateX(-1vw); }
+  100% { top: 18%; transform: translateX(0); }
+}
+@keyframes nso-staticload-rgb-b {
+  0%   { top: 42%; transform: translateX(0); }
+  30%  { top: 12%; transform: translateX(2vw); }
+  60%  { top: 67%; transform: translateX(-3vw); }
+  90%  { top: 29%; transform: translateX(1vw); }
+  100% { top: 42%; transform: translateX(0); }
+}
+/* Glitch interference bands — fat horizontal stripes that jitter
+   vertically + horizontally, mimicking VHS head-switching artifacts. */
+.nso-staticload__glitch {
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.18) 0 0.3vw,
+      transparent 0.3vw 1.2vw),
+    rgba(255, 255, 255, 0.05);
+  mix-blend-mode: screen;
+}
+.nso-staticload__glitch--1 { height: 1.8vw; animation: nso-staticload-glitch-1 0.95s steps(6, end) infinite; }
+.nso-staticload__glitch--2 { height: 0.9vw; animation: nso-staticload-glitch-2 1.25s steps(9, end) infinite; }
+.nso-staticload__glitch--3 { height: 2.6vw; opacity: 0.45; animation: nso-staticload-glitch-3 0.7s steps(5, end) infinite; }
+@keyframes nso-staticload-glitch-1 {
+  0%, 12%, 38%, 64%, 89% { top: 22%; transform: translateX(-1.8vw); }
+  15%, 36%               { top: 58%; transform: translateX(2.4vw);  }
+  41%, 62%               { top: 11%; transform: translateX(-3vw);   }
+  66%, 87%               { top: 79%; transform: translateX(1.6vw);  }
+}
+@keyframes nso-staticload-glitch-2 {
+  0%, 100% { top: 8%;  transform: translateX(0); }
+  18%      { top: 33%; transform: translateX(3vw);    }
+  42%      { top: 71%; transform: translateX(-2vw);   }
+  68%      { top: 47%; transform: translateX(1.2vw);  }
+  86%      { top: 19%; transform: translateX(-3.6vw); }
+}
+@keyframes nso-staticload-glitch-3 {
+  0%, 100% { top: 92%; transform: translateX(0); }
+  20%      { top: 60%; transform: translateX(2vw); }
+  40%      { top: 5%;  transform: translateX(-2vw); }
+  60%      { top: 81%; transform: translateX(3vw); }
+  80%      { top: 36%; transform: translateX(-1.5vw); }
+}
+/* Edge vignette so the screen feels rounded (CRT bezel feel) */
+.nso-staticload__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.65) 90%, rgba(0, 0, 0, 0.95) 100%);
+  pointer-events: none;
+}
+/* "SIGNAL ▸ NO SYNC" badge — top-right, with a pulsing red dot. */
+.nso-staticload__signal {
+  position: absolute;
+  top: 2.5vw;
+  right: 2.5vw;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  padding: 0.5vw 0.9vw;
+  background: rgba(0, 0, 0, 0.55);
+  border: 0.12vw solid rgba(255, 255, 255, 0.45);
+  /* tiny REC/SIGNAL chip — NSO Pixel reads sharper at small sizes */
+  font-family: "NSO Pixel", "NSO Display", monospace;
+  font-size: 1vw;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 0 0.4vw rgba(255, 60, 120, 0.8);
+}
+.nso-staticload__rec {
+  width: 0.6vw;
+  height: 0.6vw;
+  border-radius: 50%;
+  background: #ff2d6a;
+  box-shadow: 0 0 0.5vw #ff2d6a;
+  animation: nso-staticload-rec 0.7s steps(2, end) infinite;
+}
+@keyframes nso-staticload-rec {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.25; }
+}
+/* Chyron — bottom strip running the loading text */
+.nso-staticload__chyron {
+  position: absolute;
+  bottom: 3vw;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  padding: 0.8vw 1.4vw;
+  background: rgba(255, 0, 110, 0.18);
+  border-top: 0.18vw solid #ff2d6a;
+  border-bottom: 0.18vw solid #ff2d6a;
+  font-family: "NSO Display", "NSO CRT", ui-monospace, monospace;
+  font-size: 1.1vw;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow:
+    0.12vw 0 #2dd4ff,
+    -0.12vw 0 #ff2d6a;
+  animation: nso-staticload-chyron 0.15s steps(2, end) infinite;
+}
+@keyframes nso-staticload-chyron {
+  0%   { transform: translate(-50%, 0); }
+  50%  { transform: translate(calc(-50% + 0.1vw), 0.04vw); }
+  100% { transform: translate(-50%, 0); }
+}
+.nso-staticload__chyron em {
+  display: inline-flex;
+  gap: 0.15vw;
+  margin-left: 0.4vw;
+  font-style: normal;
+}
+.nso-staticload__chyron em span {
+  animation: nso-staticload-dot 0.9s steps(2, end) infinite;
+}
+.nso-staticload__chyron em span:nth-child(2) { animation-delay: 0.15s; }
+.nso-staticload__chyron em span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes nso-staticload-dot {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (max-width: 600px) {
+  .nso-staticload__signal { font-size: 2.6vw; padding: 1.4vw 2.2vw; gap: 1.4vw; top: 4vw; right: 4vw; }
+  .nso-staticload__rec    { width: 1.6vw; height: 1.6vw; }
+  .nso-staticload__chyron { font-size: 3vw; padding: 2vw 3vw; bottom: 8vw; }
+  .nso-staticload__rgb    { height: 0.9vw; }
+  .nso-staticload__scanlines { background: repeating-linear-gradient(180deg, rgba(0,0,0,0.32) 0, rgba(0,0,0,0.32) 0.4vw, transparent 0.4vw, transparent 1vw); }
+}
+
+
+/* === Shared theme-selector + theme-tile base rules === */
+.theme-selector {
+  position: absolute;
+  top: 244vw;             /* sits right under the green EXPLORE bar */
+  left: 12vw;             /* narrower side margins → wider tiles */
+  right: 12vw;
+  z-index: 22;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2vw;
+}
+.theme-tile {
+  position: relative;     /* anchors the colored backing square */
+  aspect-ratio: 16 / 9;
+  background: #FFF4FA;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Allotrope Wide", "Allotrope", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 3.5vw;
+  letter-spacing: -0.01em;
+  color: rgba(29, 10, 29, 0.5);
+  cursor: pointer;
+}
+
+/* PSG theme tile — composite thumbnail layered exactly like the source
+   reference (5 PNGs in z-order from back to front). The layer PNGs are
+   each 3960×2160 (16:9, matching the tile aspect) so they fit edge-to-edge
+   with `inset: 0; width/height: 100%`. The title PNG is also stretched
+   into the same 16:9 box — its transparent margins preserve its own
+   placement inside the frame. */
+.theme-tile--psg {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  /* Chars layer used as a single background image, scaled 108% to crop
+     out the stripe pattern baked into the PNG's outer margins. Cream
+     pink underneath in case the image fails to load. */
+  background:
+    url("/assets/psg-tile-web-theme-square-0001-characters.webp")
+      center / 108% 108% no-repeat,
+    #ffd1e5;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.theme-tile--psg:hover { transform: translateY(-0.4vw); box-shadow: 0 0.6vw 1.2vw rgba(40, 0, 30, 0.25); }
+/* Layered <img> children are kept in the markup for backwards-compat /
+   accessibility but no longer rendered — the background-image approach
+   above replaces the desktop composite stack. */
+.theme-tile__psg-layer { display: none; }
+/* Title as a pseudo-element pinned to the bottom-center edge. Using the
+   PNG's own aspect ratio (3021×814 ≈ 3.71:1) keeps it crisp. */
+.theme-tile--psg::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  width: 60%;
+  aspect-ratio: 3021 / 814;
+  background: url("/assets/psg-tile-web-theme-square-0000-psgtitle.webp")
+    center / contain no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* NSO theme tile — composite thumbnail with characters + title */
+.theme-tile--nso {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #ffffff;                  /* white tile base */
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.theme-tile--nso:hover { transform: translateY(-0.4vw); box-shadow: 0 0.6vw 1.2vw rgba(40, 0, 30, 0.25); }
+.theme-tile--nso::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  width: 55%;
+  aspect-ratio: 1910 / 712;
+  background: url("/assets/nso-ngo-title.webp") center / contain no-repeat;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Hide the standalone NSO title <img> — replaced by ::after background. */
+.theme-tile__title { display: none; }
+
+/* Position the Ame + KAngel <img> elements explicitly. height 100 % +
+   width auto preserves the PNG's aspect ratio; the IMG fits the tile
+   height edge-to-edge, then we let it overflow horizontally if needed. */
+.theme-tile--nso .theme-tile__char {
+  position: absolute;
+  top: 0;                   /* anchor TOP of image flush with tile's top edge */
+  bottom: auto;
+  height: 260%;             /* big; extends well past the bottom and clips via overflow:hidden */
+  width: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+.theme-tile--nso .theme-tile__char--ame    { left:  -10%; }
+/* KAngel.webp has 2.44% transparent top padding while Ame has none — pull
+   KAngel up so its first opaque pixel aligns with the tile top edge.
+   2.44% × 260% (image height) ≈ 6.4% of tile height. */
+.theme-tile--nso .theme-tile__char--kangel { right: -16%; top: -6.4%; }
+/* White wash along the BOTTOM edge of the tile, using the SAME asset
+   the NSO hero uses (nso-white-gradient.webp). z-index 2 sits
+   between the characters (1) and the NGOTitle ::after (3).
+   Selector specificity (.theme-selector .theme-tile.theme-tile--nso = 0,3,1)
+   beats the generic ".theme-tile:nth-child(1)::before" rule (0,2,1) that
+   would otherwise paint a blue tilted backing here. */
+.theme-selector .theme-tile.theme-tile--nso::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  inset: auto 0 0 0;
+  /* tile is 16:9, asset is 1920:329 (5.84:1) — at full tile width the
+     asset's natural height is (1 / 5.84) of tile width = (16/9) / 5.84
+     ≈ 30.5% of tile HEIGHT. */
+  height: 30.5%;
+  background: url("/assets/nso-white-gradient.webp") center / 100% 100% no-repeat;
+  transform: none;          /* kill the rotate(-3.5deg) from nth-child(1) rule */
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* "Enter Theme →" overlay labels are hidden ONLY on tiles that already
+   show character artwork (NSO + PSG). MISC tile has no art so its
+   label stays visible. */
+.theme-tile--nso .theme-tile__label,
+.theme-tile--psg .theme-tile__label { display: none; }
+
+
+.nso-stage {
+  position: relative;
+  width: 100vw;
+  /* popup-6 sits at top:160vw and the popup PNG renders ~38vw tall
+     (62vw width × 1080/1819 aspect). Bottom edge lands near 198vw —
+     stage needs at least that much, plus a couple vw of buffer. */
+  height: 202vw;
+  background: #FFF4FA;
+  overflow: hidden;
+}
+
+
+/* Layer stack (back → front):
+     z:0  title (NEEDY OVERLOAD) + streamer text — behind everything
+     z:1  characters
+     z:2  white-bg (covers character bottoms)
+     z:3  sparkle (over white-bg)
+     z:4  white-gradient (smooth fade at top of the white region) */
+/* HeroBG — backdrop sitting BEHIND the top characters. Asset is 3837×2559
+   (~1.5:1). Centered at 77vw width (10% bigger than the previous 70vw)
+   so the BG keeps its native aspect ratio. Computed height:
+     77vw × 2559/3837 ≈ 51.33vw
+   The flanks below match that exact height so the hero band reads as
+   a single rectangle (white rails + HeroBG center, all ending at the
+   same Y). ChromeBG (.nso-sparkle) picks up from that same Y. */
+.nso-herobg {
+  position: absolute;
+  top: 0;
+  left: 11.5vw;
+  width: 77vw;
+  height: auto;
+  aspect-ratio: 3837 / 2559;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+/* Equal-width white side rails matching HeroBG's HEIGHT, not aspect. */
+.nso-herobg-flank {
+  position: absolute;
+  top: 0;
+  width: 11.5vw;
+  height: 51.33vw;              /* matches HeroBG natural height at 77vw width */
+  background: #FFF4FA;
+  z-index: 0;
+  pointer-events: none;
+}
+.nso-herobg-flank--l { left: 0; }
+.nso-herobg-flank--r { right: 0; }
+
+/* Decorative blue ribbon — bigger, and bled past the top + left edges so
+   the edges visibly clip off the page. PNG already carries the diagonal tilt. */
+.nso-ribbon {
+  position: absolute;
+  top: -5vw;
+  left: -5vw;
+  width: 22vw;
+  height: auto;
+  aspect-ratio: 1108 / 956;
+  z-index: 11;            /* above HeroBG (1-3) but below char glow (15+) */
+  pointer-events: none;
+  user-select: none;
+  filter:
+    drop-shadow(0.25vw 0.25vw 0.5vw rgba(20, 10, 40, 0.4));
+}
+
+/* "NEW" wordmark stamped on top of the ribbon, centered on its visible band.
+   Ribbon spans (-7 → 21vw) × (-7 → 17vw), centre at (7vw, 5vw). */
+.nso-ribbon-new {
+  position: absolute;
+  top: 4.2vw;
+  left: 5.9vw;
+  transform: translate(-50%, -50%);
+  width: 10vw;
+  height: auto;
+  aspect-ratio: 526 / 506;
+  z-index: 12;            /* sits ABOVE the ribbon (z 11) */
+  pointer-events: none;
+  user-select: none;
+}
+/* Group wrapper — the white glow is applied to the UNION of both
+   characters' alpha shapes, so KAngel's halo no longer washes Ame
+   (and vice versa). The wrapper is positioned the same as the chars
+   used to be (full-width, anchored to the top). */
+.nso-chars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 115vw;            /* 10% smaller than before (was 128vw) */
+  z-index: 1;
+  pointer-events: none;
+  filter:
+    drop-shadow(0 0 0.4vw  rgba(255, 255, 255, 1))
+    drop-shadow(0 0 1.2vw  rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 3vw    rgba(255, 255, 255, 0.75))
+    drop-shadow(0 0 6vw    rgba(255, 255, 255, 0.45))
+    drop-shadow(0 0 12vw   rgba(255, 255, 255, 0.25));
+}
+.nso-char {
+  position: absolute;
+  /* Top of the asset hits the top of the screen, bottom lands just
+     above where the ChromeBG starts (top: 45vw). Full vertical span
+     across the hero band. */
+  top: 0;
+  height: 44vw;             /* 0 → 44vw bottom, chrome starts at 45vw */
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+}
+.nso-char--ame    { left: 7vw; }
+.nso-char--kangel { right: 1vw; top: 0; }
+
+.nso-bg-white {
+  position: absolute;
+  top: 48vw;
+  left: 0;
+  width: 100vw;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+}
+.nso-sparkle {
+  position: absolute;
+  top: 45vw;                /* moved up so ChromeBG starts a bit sooner */
+  left: 0;
+  width: 100vw;
+  height: auto;
+  aspect-ratio: 3840 / 6145;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* NGO Title plate — straddles the seam between HeroBG and ChromeBG.
+   Source asset is 1910×712 (~2.68:1). Centered, sized to 48vw wide so
+   the height comes to ~17.9vw; sat a bit higher than dead-center on the
+   seam so more of it floats over the hero. */
+/* NGOTitle: back to its previous spot — sits centered above the popups
+   at the HeroBG/ChromeBG seam. */
+.nso-ngo-title {
+  position: absolute;
+  top: 32vw;
+  /* Static centering (no transform) so the load-in popin animation,
+     which animates `transform`, doesn't fight the translateX centering. */
+  left: 28.4vw;                   /* (100 − 43.2) / 2 */
+  width: 43.2vw;
+  height: auto;
+  aspect-ratio: 1910 / 712;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center center;
+}
+
+/* NEEDY GIRL OVERDOSE title plate — sits OVER the first popup, aligned
+   to the LEFT EDGE OF POPUP #1 (which is at left: 3vw). */
+.nso-ngo-overdose {
+  position: absolute;
+  top: 56vw;                /* lower than before (was 47vw) */
+  left: 3vw;
+  width: 38vw;
+  height: auto;
+  aspect-ratio: 1584 / 919;
+  z-index: 7;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* PRODUCTS banner — sat lower, ending just a hair above popup #3 (at
+   top: 94vw). At 35vw width × 1578/215 aspect, the strip is ~4.77vw
+   tall, so top: 89vw lands its bottom at ~93.77vw → just a touch of
+   breathing room above popup #3's top edge. */
+.nso-products-banner {
+  position: absolute;
+  top: 89vw;
+  left: 3vw;
+  width: 35vw;
+  height: auto;
+  aspect-ratio: 1578 / 215;
+  z-index: 7;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* COMING SOON — centered horizontally AND vertically inside popup #6.
+   Popup #6 spans:
+     top: 160vw → bottom: ~196.84vw  (height = 62vw / (1819/1081))
+     left: ~35vw → right: 97vw         (62vw wide, anchored right: 3vw)
+   Center: (66vw horizontal, 178.42vw vertical).
+   transform: translate(-50%, -50%) puts the text block's middle on the
+   center point regardless of its own size. */
+.nso-coming-soon {
+  position: absolute;
+  top: 178.42vw;
+  left: 66vw;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vw;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  font-family: "NSO Display", "NSO CRT", monospace;
+  font-size: 3vw;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: #ff5fa8;
+  text-shadow:
+    0.22vw 0.22vw 0 #5a1e8a,
+    -0.06vw -0.06vw 0 #ffffff;
+}
+.nso-coming-soon__line { display: block; }
+
+/* ===========================================================================
+   Decorative y2k heart glyphs scattered around the popup column.
+   y2kheart and y2kdoubleheart sit ON TOP of everything (z 9) so they
+   read above popups, text, and other layers. HeartGrid sits BELOW the
+   theme tiles (z 7, tiles at z 8) but above PinkGridBG (z 5), centered
+   vertically on PinkGridBG.
+   ============================================================================ */
+.nso-y2k-heart {
+  position: absolute;
+  top: 100vw;                     /* vertically between popups #2 and #4, right side */
+  right: 0;
+  width: 24vw;                    /* a lot bigger than before */
+  height: auto;
+  aspect-ratio: 1207 / 885;
+  z-index: 9;                     /* above popups + text */
+  pointer-events: none;
+  user-select: none;
+}
+.nso-y2k-doubleheart {
+  position: absolute;
+  top: 172vw;                     /* moved lower */
+  left: 0;                        /* swapped to LEFT side */
+  right: auto;
+  width: 26vw;
+  height: auto;
+  aspect-ratio: 1350 / 1420;
+  z-index: 9;                     /* above popups + text */
+  pointer-events: none;
+  user-select: none;
+}
+.nso-heart-grid {
+  position: absolute;
+  /* Sits over the ChromeBG (.nso-sparkle starts at 45vw, ends ~205vw).
+     Centered across the page as a watermark, BELOW the popups + product
+     cards (z 30+) so it reads as background decoration. */
+  top: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95vw;
+  height: auto;
+  aspect-ratio: 919 / 827;
+  z-index: 4;
+  opacity: 0.9;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Glitch-noise looping video — sits at the seam between the white
+   gradient (top hero) and the sparkle BG below. z-index 50 lifts it
+   ABOVE every other NSO-* layer (highest other is 18) so it overlays
+   characters, popups, theme tiles — everything on the page.
+   Edge fades via mask-image so the strip dissolves into the surrounding
+   art instead of cutting hard. */
+.nso-glitch-video {
+  position: absolute;
+  top: 56vw;                /* sits a hair above where .nso-sparkle starts */
+  left: 0;
+  width: 100vw;
+  height: 8vw;              /* rectangle crop */
+  z-index: 50;              /* on top of every existing nso layer */
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 600px) {
+  .nso-glitch-video {
+    top: 130vw;             /* mobile NSO hero ends much lower */
+    height: 16vw;
+  }
+}
+
+
+.nso-white-gradient {
+  position: absolute;
+  /* Sits in the seam between the hero band and the ProductBG, below
+     the NGOTitle (z 4) and above the character stack (z 1). */
+  top: 30vw;
+  left: 0;
+  width: 100vw;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Static-overlay clipping masks — each <div>.*-static is positioned
+   identically to its sibling element, painted with the static texture,
+   and clipped to the element's alpha shape via mask-image. Result: the
+   static-noise PNG appears ONLY where the underlying element has pixels,
+   like a Photoshop clipping mask over each layer. Characters are
+   intentionally excluded. All overlays flicker like a CRT monitor. */
+.nso-title-static,
+.nso-streamer-static,
+.nso-bg-white-static,
+.nso-sparkle-static,
+.nso-white-gradient-static,
+.nso-base-static {
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  opacity: 0;            /* hidden until the CRT-on animation fires */
+  animation: nso-tv-on 0.9s steps(1, end) 0.45s forwards;
+}
+
+/* TV-turn-on: hidden → flash → off → flash → off → settled overlay.
+   All overlays share the same keyframe %, same duration, same delay, so
+   they snap on/off in perfect lockstep — no choppy stagger. Each layer
+   peaks at its OWN base --st-op (no multiplier spikes that would clip
+   to opacity 1 differently per layer). */
+@keyframes nso-tv-on {
+  0%   { opacity: 0; }
+  12%  { opacity: var(--st-op, 0.7); }   /* flash 1 on */
+  22%  { opacity: 0; }                    /* off */
+  38%  { opacity: var(--st-op, 0.7); }   /* flash 2 on */
+  48%  { opacity: 0; }                    /* off */
+  60%, 100% { opacity: var(--st-op, 0.7); } /* settle */
+}
+
+.nso-title-static {
+  top: 8vw;
+  left: 38%;
+  transform: translateX(-50%);
+  width: 70vw;
+  aspect-ratio: 3792 / 1854;
+  background-image: url('/nso/layers/static-overlay.png');
+  -webkit-mask-image: url('/nso/layers/title.png');
+  mask-image: url('/nso/layers/title.png');
+  mix-blend-mode: overlay;
+  z-index: 0;
+  --st-op: 0.75;
+}
+.nso-streamer-static {
+  top: 22vw;
+  left: 38%;
+  transform: translateX(-50%);
+  width: 70vw;
+  aspect-ratio: 3697 / 347;
+  background-image: url('/nso/layers/static-overlay.png');
+  -webkit-mask-image: url('/nso/layers/streamer.png');
+  mask-image: url('/nso/layers/streamer.png');
+  mix-blend-mode: overlay;
+  z-index: 0;
+  --st-op: 0.75;
+}
+/* bg / gradient / sparkle layers are mostly white, so `overlay` blend
+   gives nothing. Multiply lets the noise's darker pixels show through. */
+.nso-bg-white-static {
+  top: 48vw;
+  left: 0;
+  width: 100vw;
+  aspect-ratio: 3839 / 7668;
+  background-image: url('/nso/layers/static-overlay-2.png');
+  -webkit-mask-image: url('/nso/layers/bg-white.png');
+  mask-image: url('/nso/layers/bg-white.png');
+  mix-blend-mode: multiply;
+  z-index: 2;
+  --st-op: 0.85;
+}
+.nso-sparkle-static {
+  top: 60vw;
+  left: 0;
+  width: 100vw;
+  aspect-ratio: 3840 / 7292;
+  background-image: url('/nso/layers/static-overlay.png');
+  -webkit-mask-image: url('/nso/layers/sparkle.png');
+  mask-image: url('/nso/layers/sparkle.png');
+  mix-blend-mode: multiply;
+  z-index: 3;
+  --st-op: 0.9;
+}
+.nso-white-gradient-static {
+  top: 35vw;
+  left: 0;
+  width: 100vw;
+  aspect-ratio: 3840 / 658;
+  background-image: url('/nso/layers/static-overlay-2.png');
+  -webkit-mask-image: url('/nso/layers/white-gradient.png');
+  mask-image: url('/nso/layers/white-gradient.png');
+  mix-blend-mode: multiply;
+  z-index: 4;
+  --st-op: 0.8;
+}
+/* Base white-canvas static — sits BEHIND chars (z:0 < chars z:1), so the
+   character silhouettes still cover it and stay static-free, but the
+   empty white canvas around them gets the same TV noise. No mask. */
+.nso-base-static {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-image: url('/nso/layers/static-overlay-2.png');
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  mix-blend-mode: multiply;
+  z-index: 0;
+  --st-op: 0.55;
+}
+/* Pop-up product boxes — alternate left/right down the white area
+   between the gradient strip and the 3D print card. Each is wrapped in
+   an .nso-popup-link <a> so the popup frame area navigates to the
+   product page on click. The link holds positioning; the img fills it. */
+.nso-popup-link {
+  position: absolute;
+  display: block;
+  width: 62vw;
+  z-index: 6;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.nso-popup {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;   /* clicks pass to the parent <a> for navigation */
+}
+/* Six popups stacked alternating left/right inside ChromeBG (45vw → 205vw).
+   22vw spacing between each top → tight overlap for the scattered
+   "open windows" feel, last popup bottoms out at ~197vw (still inside
+   ChromeBG). */
+.nso-popup-link--1 { top: 50vw;  left: 3vw;  }
+.nso-popup-link--2 { top: 72vw;  right: 3vw; }
+.nso-popup-link--3 { top: 94vw;  left: 3vw;  }
+.nso-popup-link--4 { top: 116vw; right: 3vw; }
+.nso-popup-link--5 { top: 138vw; left: 3vw;  }
+.nso-popup-link--6 { top: 160vw; right: 3vw; }
+
+/* NSO-page-specific positioning + PSG tile styling for the bottom
+   theme selector. Sized so all 4 tiles fit inside PinkGridBG
+   (PinkGridBG: 205vw → 254.4vw). Each tile is 37vw × 20.81vw (16:9 in
+   a 2-col grid spanning 76vw wide); 2 rows + 2vw gap = 43.62vw total
+   tile-area height. top: 210vw → ends at 253.62vw, inside PinkGridBG. */
+.nso-theme-selector {
+  top: 208vw;          /* sits inside PinkGridBG (205 → 254.4vw) */
+  left: 12vw;
+  right: 12vw;
+  z-index: 8;
+}
+
+/* ===========================================================================
+   NSO PinkGridBG wallpaper — pixel-art pink grid asset sitting BEHIND
+   the theme tiles, picking up where ChromeBG ends. Uses an explicit
+   height + object-fit: cover so the pattern fills the full theme tile
+   area regardless of the source asset's native aspect (the source is
+   a uniform pixel grid, so cropping it doesn't break the look).
+   ============================================================================ */
+.nso-pink-grid-bg { display: none; }
+/* ===== NSO theme-selector tiles — Y2K aesthetic window pop-up boxes
+   inspired by the Needy Streamer Overload desktop UI. Each tile is
+   styled as a pixel-art window with a pink title bar, _□✕ controls,
+   and a pink+cyan double border with a hard ink drop shadow. */
+.nso-theme-selector .theme-tile {
+  position: relative;
+  background: #FFF4FA;
+  border: 0.18vw solid #5a1e8a;            /* ink pixel outline */
+  outline: 0.18vw solid #2dd4ff;            /* cyan halo OUTSIDE the ink */
+  outline-offset: 0;
+  box-shadow:
+    0 0 0 0.34vw #ffffff,                   /* inner white between cyan + pink chrome */
+    0 0 0 0.52vw #ff66c4,                   /* outer pink frame */
+    0.6vw 0.6vw 0 #5a1e8a;                  /* hard ink drop shadow */
+  color: transparent;
+  font-size: 0;
+  overflow: hidden;
+  padding-top: 1.8vw;                        /* room for the title bar */
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.nso-theme-selector .theme-tile:hover {
+  transform: translate(-0.2vw, -0.2vw);
+  box-shadow:
+    0 0 0 0.34vw #ffffff,
+    0 0 0 0.52vw #ff66c4,
+    0.85vw 0.85vw 0 #5a1e8a;
+}
+.nso-theme-selector .theme-tile:active {
+  transform: translate(0.1vw, 0.1vw);
+  box-shadow:
+    0 0 0 0.34vw #ffffff,
+    0 0 0 0.52vw #ff66c4,
+    0.25vw 0.25vw 0 #5a1e8a;
+}
+
+/* Pink title bar across the top of every tile */
+.nso-win-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.6vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.6vw;
+  background:
+    repeating-linear-gradient(180deg, #ff8fcb 0 0.18vw, #ffb7dc 0.18vw 0.36vw);  /* pixel scan stripes */
+  border-bottom: 0.14vw solid #5a1e8a;
+  font-family: "NSO Display", "NSO CRT", monospace;
+  font-size: 0.86vw;
+  letter-spacing: 0.04em;
+  color: #5a1e8a;
+  text-shadow: 0.06vw 0.06vw 0 rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+.nso-win-bar__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vw;
+}
+.nso-win-bar__title i {
+  display: inline-block;
+  width: 0.7vw;
+  height: 0.7vw;
+  background: #5a1e8a;
+  border: 0.12vw solid #ffffff;             /* the small chip-icon to the left of the label */
+}
+.nso-win-bar__ctrls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2vw;
+}
+.nso-win-bar__ctrls b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2vw;
+  height: 1.1vw;
+  border: 0.1vw solid #5a1e8a;
+  background: #ffd6ec;
+  font: 700 0.7vw/1 "NSO CRT", ui-monospace, monospace;
+  color: #5a1e8a;
+}
+
+/* PSG tile INSIDE the NSO theme selector keeps its 5 layered PNGs as
+   the window body — title bar floats above them at z 10. Scoped to the
+   NSO selector ONLY so the homepage PSG tile stays clean. */
+.nso-theme-selector .theme-tile--psg {
+  border: 0.18vw solid #5a1e8a;             /* same window chrome as siblings */
+  padding-top: 1.8vw;
+  /* The base .theme-tile--psg sets the Panty + Stocking chars as a
+     background-image, but the NSO selector's `background: #ffffff` (line
+     2856) covers it up. Put the chars BACK as a background-image, and
+     anchor them BELOW the 1.8vw window title bar so the bg starts in the
+     body area, not under the pink title strip. */
+  background:
+    url("/assets/psg-tile-web-theme-square-0001-characters.webp")
+      center 1.8vw / 108% calc(108% - 1.8vw) no-repeat,
+    #ffd1e5;
+}
+.nso-theme-selector .theme-tile--psg::after {
+  /* Title pseudo-element lives on the base .theme-tile--psg rule; the
+     `top` positioning sat above the window title bar inside the NSO
+     selector. Pull it down by the title-bar height so the PANTY & STOCKING
+     wordmark sits in the lower-centre of the body. */
+  bottom: 4%;
+}
+.nso-theme-selector .theme-tile--psg .theme-tile__psg-layer { display: none; }
+
+/* Placeholder tiles (3, 4) — "coming-soon" content area with a
+   dashed inner rect echoing the OS look. */
+.nso-theme-selector .theme-tile:nth-child(n+3) {
+  background:
+    repeating-linear-gradient(135deg,
+      #ffe8f4 0 0.5vw,
+      #ffffff 0.5vw 1.2vw);
+}
+.nso-theme-selector .theme-tile:nth-child(n+3)::before {
+  content: '⛔ coming soon';
+  position: absolute;
+  top: 1.8vw;
+  left: 0.6vw;
+  right: 0.6vw;
+  bottom: 0.6vw;
+  border: 0.12vw dashed #ff66c4;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "NSO Display", "NSO CRT", monospace;
+  font-size: 1.2vw;
+  letter-spacing: 0.06em;
+  color: #ff5fa8;
+  text-shadow: 0.1vw 0.1vw 0 #5a1e8a;
+  transform: none;
+}
+
+/* Override the homepage's bright nth-child colored tilted backings */
+.nso-theme-selector .theme-tile:nth-child(1)::before,
+.nso-theme-selector .theme-tile:nth-child(2)::before {
+  background: transparent;
+  inset: auto;
+  content: none;
+}
+
+/* ===== NSO load-in animations =====
+   Two reusable keyframes that fit the streamer/CRT theme:
+     - nso-window-popin: a Windows-98-style snap-in (scale + slight
+       overshoot + a tiny CRT flicker at the seam)
+     - nso-glitch-in: pure opacity flashes for text/copy that should
+       "tune in" like a CRT channel rather than scale */
+@keyframes nso-window-popin {
+  0%   { opacity: 0; transform: scale(0.4)  rotate(-2deg); }
+  18%  { opacity: 1; transform: scale(1.18) rotate(1.4deg); }   /* slam in big + tilted */
+  30%  { opacity: 0; transform: scale(1.18) rotate(1.4deg); }   /* CRT blink off */
+  40%  { opacity: 1; transform: scale(0.94) rotate(-0.8deg); }  /* bounce */
+  55%  { opacity: 0; transform: scale(0.94); }                  /* CRT blink off */
+  70%  { opacity: 1; transform: scale(1.03) rotate(0.4deg); }
+  85%  { opacity: 0.5; transform: scale(1.01); }                /* final tiny flicker */
+  100% { opacity: 1; transform: scale(1)    rotate(0); }
+}
+@keyframes nso-glitch-in {
+  0%   { opacity: 0;   transform: translateX(-1.2vw); }
+  12%  { opacity: 1;   transform: translateX( 0.6vw); }   /* glitch slide */
+  22%  { opacity: 0;   transform: translateX(-0.4vw); }
+  34%  { opacity: 1;   transform: translateX( 0.3vw); }
+  44%  { opacity: 0;   transform: translateX(-0.2vw); }
+  56%  { opacity: 1;   transform: translateX( 0); }
+  68%  { opacity: 0.3; transform: translateX( 0); }       /* final tune-in flicker */
+  78%, 100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Apply: popups + theme tiles snap in with the windows-popin; product
+   copy + heart tunes in with glitch flashes. All staggered after the
+   TV-on static boot (~1.35s) so they don't fight for attention. */
+.nso-popup-link {
+  animation: nso-window-popin 0.9s steps(20, end) 0.7s backwards;
+}
+.nso-popup-link--1 { animation-delay: 0.70s; }
+.nso-popup-link--2 { animation-delay: 0.95s; }
+.nso-popup-link--3 { animation-delay: 1.20s; }
+.nso-popup-link--4 { animation-delay: 1.45s; }
+.nso-popup-link--5 { animation-delay: 1.70s; }
+.nso-popup-link--6 { animation-delay: 1.95s; }
+
+/* Product copy no longer uses nso-glitch-in — the typing engine in JS
+   reveals each line character-by-character instead, controlled via the
+   per-element `data-typing-delay` / `data-typing-speed` attributes. */
+.nso-typing { visibility: hidden; }
+.nso-typing.is-typing,
+.nso-typing.is-typed { visibility: visible; }
+.nso-typing__caret {
+  display: inline-block;
+  color: #ff5fa8;
+  animation: nso-caret-blink 0.6s steps(1, end) infinite;
+  font-weight: bold;
+  margin-left: 0.1em;
+}
+@keyframes nso-caret-blink {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* The 3D cards + their shadows ride in with the popups so the model
+   appears in-place rather than slotting in afterward. */
+.nso-card3d-wrap {
+  animation: nso-window-popin 0.9s steps(20, end) backwards,
+             nso-card-float 3.6s ease-in-out infinite;
+}
+.nso-card3d-wrap--1 { animation-delay: 0.95s, 1.90s; }
+.nso-card3d-wrap--2 { animation-delay: 1.20s, 2.15s; }
+.nso-card3d-wrap--3,
+.nso-card3d-wrap--3b { animation-delay: 1.45s, 2.40s; }
+.nso-card3d-wrap--3b { animation-delay: 1.55s, 2.50s; }
+.nso-card3d-wrap--4  { animation-delay: 1.70s, 2.65s; }
+.nso-card3d-wrap--4b { animation-delay: 1.80s, 2.75s; }
+.nso-card3d-shadow {
+  animation: nso-window-popin 0.9s steps(20, end) backwards,
+             nso-shadow-bob 3.6s ease-in-out infinite;
+}
+.nso-card3d-shadow--1 { animation-delay: 0.95s, 1.90s; }
+.nso-card3d-shadow--2 { animation-delay: 1.20s, 2.15s; }
+.nso-card3d-shadow--3  { animation-delay: 1.45s, 2.40s; }
+.nso-card3d-shadow--3b { animation-delay: 1.55s, 2.50s; }
+.nso-card3d-shadow--4  { animation-delay: 1.70s, 2.65s; }
+.nso-card3d-shadow--4b { animation-delay: 1.80s, 2.75s; }
+
+.nso-theme-selector .theme-tile {
+  animation: nso-window-popin 0.9s steps(20, end) backwards;
+}
+.nso-theme-selector .theme-tile:nth-child(1) { animation-delay: 1.85s; }
+.nso-theme-selector .theme-tile:nth-child(2) { animation-delay: 1.98s; }
+.nso-theme-selector .theme-tile:nth-child(3) { animation-delay: 2.11s; }
+.nso-theme-selector .theme-tile:nth-child(4) { animation-delay: 2.24s; }
+
+/* Header banners (NGOTitle stamp, the duplicate NEEDY GIRL OVERDOSE text
+   plate on desktop, and the PRODUCTS banner) snap in BEFORE the popups
+   so the hero reads as a complete frame by the time the products start. */
+.nso-ngo-title,
+.nso-ngo-overdose,
+.nso-products-banner {
+  animation: nso-window-popin 0.9s steps(20, end) backwards;
+}
+.nso-ngo-title       { animation-delay: 0.35s; }
+.nso-ngo-overdose    { animation-delay: 0.50s; }
+.nso-products-banner { animation-delay: 0.65s; }
+
+.nso-heart {
+  animation: nso-glitch-in 0.9s steps(1, end) 2.35s backwards;
+}
+
+/* Winged heart anchored at the very bottom of the stage, sits behind
+   the 3D print card (natural source order — card is rendered after). */
+.nso-heart {
+  position: absolute;
+  bottom: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22vw;
+  height: auto;
+  z-index: 5;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 3D print preview lives INSIDE popup--1 (the first product slot).
+   Positioned over popup--1's content area (popup--1 sits at top:185vw
+   left:3vw width:62vw, title bar ~5vw tall). The card sits on the left
+   side of the popup so there's room beside it for product copy later. */
+/* Product copy block — title / price / description on the right side
+   of popup--1, next to the 3D card preview. Filler text for now. */
+.nso-product-copy {
+  position: absolute;
+  z-index: 7;
+  color: #2b0f4a;
+  pointer-events: none;
+  /* image-rendering: pixelated keeps the pixel-font crisp on scaled
+     viewports — no anti-aliasing softening. */
+  image-rendering: pixelated;
+}
+/* PRINT (popup--2 right-side): copy on the LEFT interior. */
+.nso-product-copy--1 {
+  top: 80vw;
+  left: 39vw;
+  width: 32vw;
+}
+/* DESKMAT (popup--3): card + shadow now fill the popup's TOP half, so the
+   copy block drops to the bottom-LEFT interior. */
+.nso-product-copy--2 {
+  top: 117vw;
+  left: 8vw;
+  width: 35vw;
+  text-align: left;
+}
+/* TAPESTRY (popup--4 right-side): copy on the LEFT interior. */
+.nso-product-copy--3 {
+  top: 124vw;
+  left: 39vw;
+  width: 32vw;
+}
+/* STICKERS (popup--5 left-side): copy on the RIGHT interior. */
+.nso-product-copy--4 {
+  top: 146vw;
+  left: 32vw;
+  width: 35vw;
+}
+.nso-product-copy__title {
+  margin: 0;
+  font-family: "NSO Display", "NSO CRT", monospace;
+  font-size: 2vw;
+  line-height: 1;
+  color: #ff5fa8;
+  text-shadow:
+    0.18vw 0.18vw 0 #5a1e8a,
+    -0.06vw -0.06vw 0 #ffffff;
+}
+.nso-product-copy__price {
+  margin: 1.4vw 0 1.0vw;
+  font-family: "NSO CRT", "NSO Display", monospace;
+  font-size: 2.4vw;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #5a1e8a;
+}
+.nso-product-copy__desc {
+  margin: 0;
+  font-family: "NSO CRT", "NSO Display", monospace;
+  font-size: 1.7vw;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: #2b0f4a;
+  max-width: 32vw;
+}
+
+/* 3D model card — shared behavior. Each .nso-card3d-wrap--N modifier
+   adds its own top/left/width/aspect-ratio so every popup hosts a
+   different-shaped rotating product preview. */
+.nso-card3d-wrap {
+  position: absolute;
+  perspective: 60vw;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  z-index: 7;                /* above popups (z:6) */
+  /* animation is set by the load-in chain rule above so popin + float
+     stack correctly with per-card delays */
+}
+/* Print — left side of popup--1 */
+/* PRINT — popup--2 (right-side). Card on the right interior, copy on left. */
+.nso-card3d-wrap--1 { top: 79vw;  left: 73vw; width: 16vw; aspect-ratio: 11 / 17;     }
+/* Deskmat — right side of popup--2 (mirrored layout); trimmed asset removes
+   the dark padding bar that was on the original PNG. */
+/* DESKMAT — popup--3 (left-side). Card on the left interior. */
+.nso-card3d-wrap--2 { top: 100vw; left: 20vw; width: 28vw; aspect-ratio: 1678 / 754;  }
+/* Tapestry — left side of popup--3 */
+/* TAPESTRY — popup--4 (right-side). */
+.nso-card3d-wrap--3  { top: 124vw; left: 66vw; width: 14vw; aspect-ratio: 1800 / 2985; }
+.nso-card3d-wrap--3b { top: 124vw; left: 81vw; width: 14vw; aspect-ratio: 1800 / 2985; }
+/* Stickers — right side of popup--4 (mirrored layout) */
+/* STICKERS — popup--5 (left-side). */
+/* STICKERS — popup #5 spans left 3vw → 65vw, top 138 → 174.84vw.
+   Two cards inside the LEFT HALF of the popup:
+   · Ame: small, top-LEFT (lowered slightly so it sits inside the body, not on the title bar)
+   · KAngel: bottom-RIGHT of the left half (raised so it doesn't clip past the popup's bottom frame) */
+.nso-card3d-wrap--4  { top: 146vw; left:  5vw; width: 12vw; aspect-ratio: 1863 / 1920; }
+.nso-card3d-wrap--4b { top: 152vw; left: 19vw; width: 12vw; aspect-ratio: 1863 / 1920; }
+
+/* PS2/PSP-style hover bob — sells the floating-model feel; pairs with
+   the shadow's bob (synced 3.6s) so the shadow shrinks as the card lifts. */
+@keyframes nso-card-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -0.9vw; }
+}
+
+/* Floating contact shadow shared rule + per-model placement.
+   Animation (popin + bob) is set by the load-in chain rule earlier. */
+.nso-card3d-shadow {
+  position: absolute;
+  height: 1.0vw;
+  background: radial-gradient(ellipse at center,
+    rgba(20, 0, 20, 0.4) 0%,
+    rgba(20, 0, 20, 0.22) 35%,
+    rgba(20, 0, 20, 0) 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 7;
+}
+.nso-card3d-shadow--1 { top: 106vw;  left: 74vw; width: 14vw; }
+.nso-card3d-shadow--2 { top: 114vw;  left: 23vw; width: 22vw; }
+.nso-card3d-shadow--3  { top: 149vw; left: 67vw; width: 12vw; }
+.nso-card3d-shadow--3b { top: 149vw; left: 82vw; width: 12vw; }
+.nso-card3d-shadow--4  { top: 160vw; left:  6vw; width: 10vw; }
+.nso-card3d-shadow--4b { top: 166vw; left: 20vw; width: 10vw; }
+@keyframes nso-shadow-bob {
+  0%, 100% { transform: scale(1, 1); opacity: 1; }
+  50%      { transform: scale(0.86, 0.9); opacity: 0.78; }
+}
+.nso-card3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(.22, 1, .36, 1);
+}
+.nso-card3d-wrap.is-flipped .nso-card3d { transform: rotateY(180deg) !important; }
+.nso-card3d__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border: 1px solid #5a1e8a;      /* thin PS2/PSP-style edge outline */
+  box-sizing: border-box;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+/* Tapestry + stickers have decorative borders or pair variants with
+   different aspect ratios on each face — `contain` guarantees the full
+   asset shows on both front and back faces without cropping. */
+.nso-card3d-wrap--3 .nso-card3d__face,
+.nso-card3d-wrap--3b .nso-card3d__face,
+.nso-card3d-wrap--4 .nso-card3d__face,
+.nso-card3d-wrap--4b .nso-card3d__face {
+  background-size: contain;
+  background-color: #ffffff;
+}
+.nso-card3d__face--back {
+  background-color: #ffffff;  /* color only — keeps inline background-image intact */
+  transform: rotateY(180deg);
+}
+
+/* ===========================================================
+   MOBILE — viewports ≤ 600px (most phones, portrait)
+   Homepage switches to single-column products + 7Items banner
+   below the heading. Product pages use a fully portrait-friendly
+   layout (the desktop 16:9 stage gets hidden and a flow-layout
+   mobile section takes over).
+   =========================================================== */
+@media (max-width: 600px) {
+  /* ── HOMEPAGE ──────────────────────────────────────────── */
+  /* layout flow on mobile (in vw, vertical down from top):
+       0-90   characters + frill + PSG logo
+      95-103  FW '26 kicker
+     103-118  PRODUCTS heading
+     118-128  "Limited Time Only" sub
+     130-160  7Items banner (clips off right side, decorative)
+     112-635  white card (products) — 8 single-column items
+     650-664  green EXPLORE bar
+     680-878  4 stacked theme tiles
+     900-955  footer
+     total canvas: ~970vw */
+  .canvas { height: 830vw; }
+
+  .items-kicker { top: 73vw; left: 8vw; font-size: 2.9vw; letter-spacing: 0.35em; }
+  .items-title  { top: 80vw; left: 8vw; font-size: 12.6vw; }
+  .items-sub    { top: 90vw; left: 8vw; font-size: 3.05vw; line-height: 1.25; }
+  .items-asset  { display: none; }   /* decorative banner — hidden on phones to keep the layout clean */
+
+  .products-bg { top: 96vw; height: 400vw; left: 2vw; right: 2vw; }
+
+  .products-showcase {
+    top: 100vw;
+    left: 5vw;
+    right: 5vw;
+    grid-template-columns: 1fr;
+    row-gap: 6vw;
+  }
+  .psg-item { gap: 1.5vw; }
+  .psg-item__name  { font-size: 5.4vw; }
+  .psg-item__desc  { font-size: 3.4vw; line-height: 1.4; max-width: 80vw; }
+  .psg-item__price { font-size: 6.2vw; }
+  .psg-item__no    { font-size: 4.5vw; }
+  .psg-item__rule  { width: 12vw; }
+
+  .product-item               { --product-scale: 1.6vw; }
+  .psg-pair                   { gap: 6vw; }
+  .product-item--print        { max-height: 32vw; }
+  .product-item--tote         { max-height: 30vw; }
+  .product-item--deskmat      { max-height: 18vw; }
+  .product-item--lanyard      { max-height: 28vw; }
+  .product-item--acrylic      { max-height: 26vw; }
+  .product-item--tapestry     { max-height: 36vw; }
+  .product-item--pin          { max-height: 16vw; }
+  .product-item--sticker      { max-height: 22vw; }
+
+  .tz-mark     { display: none; }
+  .explore-bar { top: 520vw; height: 14vw; }
+  .explore-bar__title { font-size: 8vw; }
+  /* Re-position the EXPLORE backing for the mobile bar */
+  .explore-bg-tilt {
+    top: 520vw;
+    height: 14vw;
+    left: -3vw;
+    right: -3vw;
+    transform: rotate(-1.8deg);
+  }
+  /* Re-anchor the products gradient slab to the mobile white card
+     (top 138vw, h 555vw, edges at 4vw). The slab needs to overshoot
+     past the white card by a similar margin to peek out. */
+  .products-bg-tilt {
+    top: 92vw;
+    left: -1vw;
+    right: -1vw;
+    height: 408vw;
+    transform: rotate(1.2deg);
+  }
+  /* Mobile inherits the desktop calc(... + 10px) offset — the px-based
+     nudge stays the same physical 10px on every viewport. */
+
+  /* ───────────────────────────────────────────────────────────
+     MOBILE THEME SELECTOR — ground-up rebuild
+     ──────────────────────────────────────────────────────────
+     Each tile is a clean 16:9 card with a background image, a
+     centered title pseudo-element, and a tilted colored backing
+     that peeks out at the corners (::before at z-index: -1,
+     overflow visible). The fragile desktop composite (5 layered
+     PNGs for PSG) is hidden — too many edge cases on a 320px
+     wide tile. We replace it with a single background-image so
+     scaling/cropping is one declaration.
+     =========================================================== */
+  .theme-selector {
+    top: 550vw;
+    left: 8vw;
+    right: 8vw;
+    grid-template-columns: 1fr;
+    gap: 7vw;
+  }
+
+  .theme-tile {
+    aspect-ratio: 16 / 9;
+    overflow: visible;
+    border: 0;
+    background: #FFF4FA;
+    font-family: "Allotrope Wide", "Allotrope", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 9vw;
+    letter-spacing: -0.01em;
+    color: rgba(29, 10, 29, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+  }
+  .theme-tile::before {
+    content: "";
+    position: absolute;
+    inset: -2.5vw;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* ── PSG tile — chars as cover background + title pseudo at bottom ── */
+  .theme-tile--psg {
+    background:
+      url("/assets/psg-tile-web-theme-square-0001-characters.webp")
+        center / 108% 108% no-repeat,
+      #ffd1e5;
+  }
+  .theme-tile--psg .theme-tile__psg-layer { display: none; }
+  .theme-tile--psg::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+    width: 70%;
+    aspect-ratio: 750 / 195;
+    background: url("/assets/psg-tile-web-theme-square-0000-psgtitle.webp")
+      center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  /* ── NSO tile — IMG-based chars (3× bigger, clipped) + ::after title ── */
+  .theme-tile--nso {
+    background: #ffffff;    /* white tile base */
+    overflow: hidden;       /* override base overflow:visible so chars clip cleanly */
+  }
+  .theme-tile--nso .theme-tile__char {
+    display: block;
+    top: 0;                 /* anchor TOP of image flush with tile's top edge */
+    bottom: auto;
+    height: 270%;           /* big and bold; clipped by overflow:hidden above */
+  }
+  .theme-tile--nso .theme-tile__char--ame    { left:  -10%; }
+  /* compensate for KAngel.webp's 2.44% transparent top padding (image
+     height here = 270% of tile, so offset ≈ 6.6%) */
+  .theme-tile--nso .theme-tile__char--kangel { right: -16%; top: -6.6%; }
+
+  /* Mobile NSO tile white-gradient overlay — re-declared inside @media so
+     it explicitly overrides the local .theme-tile::before { inset: -2.5vw }
+     rule above. Anchored flush with the tile's bottom edge, full width,
+     stretched to the asset's natural 1920:329 aspect at 100% tile width. */
+  .theme-selector .theme-tile.theme-tile--nso::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;          /* override the local inset: -2.5vw */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    height: 30.5%;
+    background: url("/assets/nso-white-gradient.webp") center / 100% 100% no-repeat;
+    transform: none;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+
+  .site-footer {
+    top: 765vw;
+    left: 6vw;
+    right: 6vw;
+    height: 40vw;
+  }
+  .footer-ig { width: 12vw; height: 12vw; }
+  .footer-nav a:nth-of-type(1) { top: 0vw;    left: 16vw; font-size: 5vw; }
+  .footer-nav a:nth-of-type(2) { top: 8vw;    left: 28vw; font-size: 8.5vw; }
+  .footer-nav a:nth-of-type(3) { top: 18vw;   left: 0;    font-size: 16vw; letter-spacing: -0.06em; }
+
+  .psg-logo { width: 70vw; }
+
+  /* Lift the pink scalloped frill higher on mobile so the scallop tips
+     sit closer to the top of the canvas and don't crowd the characters. */
+  .frill-top { top: -230px; }
+
+  /* ── PRODUCT PAGES — portrait layout ─────────────────────
+     The 16:9 desktop stage doesn't translate to portrait phones,
+     so hide the layered .pp-wrap entirely and reveal .pp-mobile
+     (a flow-layout block with brand mark / 3D card / details). */
+  .pp-wrap { display: none; }
+  .pp-rotate-hint { display: none; }
+
+  .pp-mobile {
+    display: block;
+    min-height: 100vh;
+    padding: 5vw 5vw 22vw;             /* extra bottom padding so the floating nav doesn't sit over content */
+    /* candy-PSG palette: cream → blue-cream → soft electric cyan. Pulls
+       from the site's main glow palette (cyan/pink) instead of the warmer
+       peach + saturated pink of the old gradient. */
+    background: linear-gradient(180deg,
+      #FFF4FA 0%,
+      #F2FBFF 50%,
+      #7AD7F0 100%
+    );
+    color: #1A1626;
+    box-sizing: border-box;
+  }
+  .pp-mobile__brand {
+    display: inline-block;
+    margin: 0 0 3vw;
+    font-family: "Allotrope Wide", "Allotrope", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 6vw;
+    color: #FD7AC0;                   /* pink wordmark on the cool BG reads instantly */
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    text-shadow: 0 0.3vw 0 rgba(255, 255, 255, 0.7);
+  }
+  .pp-mobile__card {
+    /* size by BOTH width and height caps so tall products (lanyard 0.25)
+       don't blow past the viewport and wide ones (deskmat 2.19) stay
+       readable. width = min(80vw, 45vh × aspect); height follows aspect. */
+    --_aspect: var(--pp-aspect, 11 / 17);
+    margin: 0 auto 5vw;
+    width: min(78vw, calc(45vh * (var(--_aspect))));
+    aspect-ratio: var(--_aspect);
+    perspective: 200vw;
+    transform-style: preserve-3d;
+    position: relative;
+    cursor: grab;
+    touch-action: pan-y;          /* allow vertical scroll, intercept horizontal for spin */
+    /* gentle up-and-down bob — uses the `translate` property (not
+       `transform`) so it stacks cleanly without disturbing the inner
+       card's JS-driven rotateY transform. */
+    animation: pp-mobile-bob 3.4s ease-in-out infinite;
+  }
+  @keyframes pp-mobile-bob {
+    0%, 100% { translate: 0 -1.2vw; }
+    50%      { translate: 0  1.2vw; }
+  }
+  .pp-mobile__card:active { cursor: grabbing; }
+  .pp-mobile__card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    /* rotation driven by JS rAF loop (auto-spin + pointer drag) — no CSS
+       animation/transition so the per-frame transform updates aren't smeared. */
+  }
+  .pp-mobile__card.is-flipped .pp-mobile__card-inner {
+    animation: none;
+    transform: rotateY(180deg);
+  }
+  @keyframes pp-mobile-spin { to { transform: rotateY(360deg); } }
+  .pp-mobile__face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 2vw;
+    overflow: hidden;
+    background-color: #ffffff;     /* white backing behind the product art */
+  }
+  .pp-mobile__face--front {
+    background: var(--img) center/contain no-repeat #ffffff;
+    /* Trim the white backing to the product silhouette so transparent
+       areas around the PNG don't read as a white halo. For products that
+       already fill the card aspect (print, deskmat) this is a no-op. */
+    -webkit-mask: var(--img) center/contain no-repeat;
+            mask: var(--img) center/contain no-repeat;
+  }
+  .pp-mobile__card[data-pair] .pp-mobile__face--front {
+    background:
+      var(--img) left top / 48% 48% no-repeat,
+      var(--pair-img) right bottom / 48% 48% no-repeat,
+      #ffffff;
+    -webkit-mask:
+      var(--img) left top / 48% 48% no-repeat,
+      var(--pair-img) right bottom / 48% 48% no-repeat;
+            mask:
+      var(--img) left top / 48% 48% no-repeat,
+      var(--pair-img) right bottom / 48% 48% no-repeat;
+  }
+  .pp-mobile__card[data-pair] .pp-mobile__face--back {
+    /* back is now ALSO just the product silhouette in solid white —
+       no copy, no panel — so the flip reads as a clean mirror of the
+       front. */
+    -webkit-mask:
+      var(--img) left top / 48% 48% no-repeat,
+      var(--pair-img) right bottom / 48% 48% no-repeat;
+            mask:
+      var(--img) left top / 48% 48% no-repeat,
+      var(--pair-img) right bottom / 48% 48% no-repeat;
+  }
+  .pp-mobile__face--back {
+    /* Back face REFLECTS the front — same product art, mirrored. The
+       inherited rotateY(180deg) faces the back away; we layer scaleX(-1)
+       so that when the card flips and the combined transforms unwind
+       upright, the image reads as a left-right mirror of the front.
+       Text content is hidden (the Details section below covers info). */
+    background: var(--img) center/contain no-repeat #ffffff;
+    -webkit-mask: none;
+            mask: none;
+    padding: 0;
+    transform: rotateY(180deg) scaleX(-1);
+  }
+  .pp-mobile__card[data-pair] .pp-mobile__face--back {
+    /* paired version of the same reflection — both stickers mirrored */
+    background:
+      var(--img) left top / 48% 48% no-repeat,
+      var(--pair-img) right bottom / 48% 48% no-repeat,
+      #ffffff;
+    -webkit-mask: none;
+            mask: none;
+  }
+  .pp-mobile__face--back > * { display: none; }
+
+  /* === Mobile variant selector — cyan pill row, same palette family as
+     the desktop .pp-variant but laid out horizontally below the card. */
+  .pp-mobile__variant {
+    display: flex;
+    justify-content: center;
+    gap: 3vw;
+    margin: 0 0 6vw;
+  }
+  .pp-mobile__variant-btn {
+    flex: 1 1 0;
+    max-width: 38vw;
+    padding: 2.6vw 4vw;
+    background: #7AD7F0;
+    color: #ffffff;
+    border: 0.4vw solid #ffffff;
+    outline: 0.45vw solid #3DEAFF;
+    outline-offset: 0;
+    font-family: "Allotrope Wide", "Allotrope", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 4.4vw;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+  }
+  .pp-mobile__variant-btn--panty    { transform: rotate(-1.5deg); }
+  .pp-mobile__variant-btn--stocking { transform: rotate( 2deg); }
+  .pp-mobile__variant-btn:hover     { background: #3DEAFF; }
+  .pp-mobile__variant-btn.is-selected {
+    background: #FFF4FA;
+    color: #163A6B;
+    border-color: #3DEAFF;
+    outline-color: #ffffff;
+  }
+  .pp-mobile__hint {
+    margin: 0 0 6vw;
+    text-align: center;
+    font-family: "Allotrope Wide", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 2.6vw;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(40, 0, 30, 0.55);
+  }
+  .pp-mobile__name {
+    margin: 0;
+    font-family: "Resotyc", "Allotrope", serif;
+    font-weight: 400;
+    font-size: 14vw;
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+    color: #fd7ac0;
+    text-shadow:
+      0 0.4vw 0 #ffffff,
+      0 0.9vw 0 rgba(40, 0, 30, 0.18);
+  }
+  .pp-mobile__meta {
+    display: flex;
+    /* center the price (single line, 9vw) against the size block (two
+       stacked lines totalling ~9vw) so they sit at the same vertical center
+       instead of baseline-mismatching. */
+    align-items: center;
+    justify-content: space-between;
+    gap: 4vw;
+    margin: 4vw 0 6vw;
+    font-family: "Resotyc", "Allotrope", serif;
+  }
+  .pp-mobile__price {
+    margin: 0;
+    font-size: 9vw;
+    color: #1A1626;
+  }
+  .pp-mobile__size {
+    margin: 0;
+    text-align: right;
+    font-size: 4vw;
+    letter-spacing: 0.04em;
+    color: #1A1626;
+  }
+  .pp-mobile__size > span { display: block; }
+  .pp-mobile__size > span:first-child { font-weight: 700; font-size: 5vw; }
+  .pp-mobile__cta {
+    display: block;
+    width: 100%;
+    margin: 0 0 6vw;
+    padding: 4.5vw 5vw;
+    background: #FFF4FA;
+    color: #fd7ac0;
+    border: 0.6vw solid #fd7ac0;
+    border-radius: 1.2vw;
+    font-family: "Allotrope Wide", "Allotrope", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 5.5vw;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 1vw 0 0 rgba(40, 0, 30, 0.18);
+  }
+  .pp-mobile__cta:active { transform: translateY(0.5vw); box-shadow: 0 0.5vw 0 0 rgba(40, 0, 30, 0.18); }
+  .pp-mobile__details {
+    border-top: 0.3vw solid rgba(40, 0, 30, 0.18);
+    padding-top: 5vw;
+    /* Axique Light body copy — mirrors the desktop back-face pairing. */
+    font-family: "Branding Pro", system-ui, sans-serif;
+  }
+  .pp-mobile__details-eyebrow {
+    margin: 0 0 1.6vw;
+    /* System monospace eyebrow — matches the desktop back-face .pp-print3d__eyebrow */
+    font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
+    font-weight: 700;
+    font-size: 3vw;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fd7ac0;
+  }
+  .pp-mobile__details-title {
+    margin: 0 0 3vw;
+    font-family: "Resotyc", "Allotrope Wide", serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 8vw;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #1A1626;
+  }
+  .pp-mobile__details-desc {
+    margin: 0 0 5vw;
+    font-size: 3.6vw;
+    line-height: 1.5;
+    color: #1A1626;
+  }
+  .pp-mobile__specs {
+    margin: 0;
+    display: grid;
+    gap: 2vw;
+    font-size: 3.2vw;
+  }
+  .pp-mobile__specs > div {
+    display: grid;
+    grid-template-columns: 22vw 1fr;
+    align-items: baseline;
+    border-top: 1px solid rgba(40, 0, 30, 0.18);
+    padding-top: 2vw;
+  }
+  .pp-mobile__specs dt {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fd7ac0;
+    font-size: 2.8vw;
+  }
+  .pp-mobile__specs dd { margin: 0; color: #1A1626; }
+}
+/* hide the mobile-only product layout on desktop / landscape */
+@media (min-width: 601px) {
+  .pp-mobile { display: none; }
+}
+
+/* ============================================================
+   NSO Product Page — /nso/products/[slug]
+   Windows-98-style product dialog with a big rotating model on the
+   left and pixel-themed copy on the right, over a CRT static base.
+   Mobile (<=600px) gets the .np-mobile flow layout instead.
+   ============================================================ */
+.np-stage {
+  position: relative;
+  width: 100vw;
+  /* Tall enough to fully contain the absolutely-positioned popup
+     (top 6vw + ~31vw aspect height) PLUS the info column to its right,
+     even on long product copy. */
+  min-height: max(100vh, 44vw);
+  background: #FFF4FA;
+  overflow: hidden;
+  font-family: "NSO CRT", "NSO Display", monospace;
+}
+.np-bg-static {
+  position: absolute;
+  inset: 0;
+  background-image: url('/nso/layers/static-overlay-2.png');
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+.np-back {
+  position: absolute;
+  top: 2vw;
+  left: 3vw;
+  z-index: 10;
+  font-family: "NSO Display", monospace;
+  font-size: 1vw;
+  color: #5a1e8a;
+  text-decoration: none;
+  padding: 0.6vw 1.2vw;
+  border: 1px solid #5a1e8a;
+  background: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.06em;
+}
+.np-back:hover { background: #ffd6ec; }
+
+/* Popup-product-box frame holding JUST the rotating 3D model. Pinned to
+   the LEFT edge of the viewport (overshooting by a few vw) as a
+   poster-style asymmetric anchor; the product info copy floats in the
+   space to the right. */
+.np-window {
+  position: absolute;
+  z-index: 2;
+  top: 6vw;
+  left: -3vw;                   /* overshoots the canvas edge — adds a "torn poster" feel */
+  width: 52vw;
+  max-width: 920px;
+  aspect-ratio: 1819 / 1081;
+}
+.np-window__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+.np-window__titlebar-text {
+  position: absolute;
+  top: 1.4%;
+  left: 2.5%;
+  margin: 0;
+  z-index: 2;
+  font-family: "NSO Display", monospace;
+  font-size: 1.4vw;
+  color: #5a1e8a;
+  letter-spacing: 0.04em;
+}
+
+.np-card3d-wrap {
+  position: absolute;
+  /* Centered horizontally, sat a bit up from the popup's top edge.
+     Height-bounded (instead of width-bounded like before) so wide
+     products (deskmat, tapestry) stay readable next to tall ones. */
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 74%;
+  width: auto;
+  aspect-ratio: var(--np-aspect, 11 / 17);
+  perspective: 60vw;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  z-index: 3;
+  animation: nso-card-float 3.6s ease-in-out infinite;
+}
+.np-card3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(.22, 1, .36, 1);
+}
+.np-card3d-wrap.is-flipped .np-card3d { transform: rotateY(180deg) !important; }
+.np-card3d__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border: 1px solid #5a1e8a;
+  box-sizing: border-box;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ffffff;
+}
+.np-card3d__face--back {
+  transform: rotateY(180deg);
+  /* clean white plate — no duplicate art, no pair image — so the back
+     of the rotating model reads as a blank card stock. */
+  background-image: none;
+  background-color: #ffffff;
+}
+.np-card3d-shadow {
+  /* sibling of .np-card3d INSIDE the wrap → always tracks the card's
+     position and width; sat noticeably lower than the card edge. */
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: -9%;
+  height: 1.4vw;
+  background: radial-gradient(ellipse at center,
+    rgba(20, 0, 20, 0.42) 0%,
+    rgba(20, 0, 20, 0.22) 38%,
+    rgba(20, 0, 20, 0) 78%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  animation: nso-shadow-bob 3.6s ease-in-out infinite;
+}
+
+.np-info {
+  /* Floats to the right of the left-anchored popup, in the empty space
+     past the popup's right edge. Left-aligned column of copy, sits a
+     touch lower than the popup top so the product label/title aligns
+     visually with the top of the model. */
+  position: absolute;
+  top: 9vw;
+  left: 56vw;                   /* clears the popup's right edge */
+  right: 4vw;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 0.6vw;
+}
+.np-info__specs {
+  width: 100%;
+}
+.np-info__eyebrow {
+  margin: 0;
+  /* eyebrow accent — NSO Banner gives a distinct broadcast-chyron voice
+     so the eyebrow doesn't read the same as the body NSO CRT below it */
+  font-family: "NSO Banner", "NSO CRT", monospace;
+  font-size: 1.2vw;
+  letter-spacing: 0.08em;
+  color: #ff5fa8;
+  text-transform: uppercase;
+}
+.np-info__title {
+  margin: 0;
+  font-family: "NSO Display", monospace;
+  font-size: 2vw;
+  line-height: 1.1;
+  color: #ff5fa8;
+  text-shadow:
+    0.18vw 0.18vw 0 #5a1e8a,
+    -0.05vw -0.05vw 0 #ffffff;
+}
+.np-info__price {
+  margin: 0.4vw 0 0.8vw;
+  font-family: "NSO CRT", monospace;
+  font-size: 2.4vw;
+  color: #5a1e8a;
+  letter-spacing: 0.04em;
+}
+.np-info__desc {
+  margin: 0;
+  font-family: "NSO CRT", monospace;
+  font-size: 1.3vw;
+  line-height: 1.25;
+  color: #2b0f4a;
+}
+.np-info__specs {
+  margin: 0.8vw 0 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.4vw 1.2vw;
+  font-family: "NSO CRT", monospace;
+  font-size: 1.2vw;
+  color: #2b0f4a;
+}
+.np-info__specs > div { display: contents; }
+.np-info__specs dt { color: #ff5fa8; letter-spacing: 0.06em; }
+.np-info__specs dd { margin: 0; }
+.np-info__rarity {
+  margin: 0.6vw 0 0;
+  font-family: "NSO CRT", monospace;
+  font-size: 1.3vw;
+  color: #2b0f4a;
+}
+.np-info__rarity span { color: #ff5fa8; }
+.np-cta {
+  margin-top: 1.2vw;
+  align-self: flex-start;       /* left-aligned in the right-side info column */
+  font-family: "NSO Display", monospace;
+  font-size: 1.1vw;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  background: #ff5fa8;
+  border: 1px solid #5a1e8a;
+  padding: 0.9vw 1.6vw;
+  cursor: pointer;
+  box-shadow: 0.25vw 0.25vw 0 #5a1e8a;
+}
+.np-cta:hover { transform: translate(-0.1vw, -0.1vw); box-shadow: 0.35vw 0.35vw 0 #5a1e8a; }
+.np-cta:active { transform: translate(0.1vw, 0.1vw); box-shadow: 0.1vw 0.1vw 0 #5a1e8a; }
+
+/* === MOBILE portrait flow layout (<= 600px) === */
+.np-mobile { display: none; }
+@media (max-width: 600px) {
+  .np-stage { display: none; }
+  .np-mobile {
+    display: block;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 5vw 5vw 22vw;             /* extra bottom padding for floating nav clearance */
+    box-sizing: border-box;
+    /* Match the NSO catalog: pink-cream → blue-cream → cyan-cream wash with
+       the same PinkGridBG vibe. */
+    background:
+      url("/assets/nso-pink-grid-bg.webp") center top / cover no-repeat,
+      linear-gradient(180deg, #ffe9f5 0%, #f2e8ff 50%, #e9f6ff 100%);
+    position: relative;
+    font-family: "NSO CRT", "NSO Display", monospace;
+  }
+  .np-mobile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* film-grain noise overlay matching the catalog */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.3 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+    background-size: 240px 240px;
+    background-repeat: repeat;
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .np-mobile > * { position: relative; }
+  .np-mobile__back {
+    display: inline-block;
+    font-family: "NSO Display", monospace;
+    font-size: 3vw;
+    color: #5a1e8a;
+    text-decoration: none;
+    padding: 1.6vw 3vw;
+    border: 1px solid #5a1e8a;
+    background: #FFF4FA;
+    margin-bottom: 4vw;
+  }
+  .np-mobile__brand {
+    margin: 0 0 4vw;
+    font-family: "NSO CRT", monospace;
+    font-size: 3.4vw;
+    letter-spacing: 0.08em;
+    color: #ff5fa8;
+    text-transform: uppercase;
+  }
+  .np-mobile__card {
+    width: 80%;
+    margin: 4vw auto 4vw;
+    aspect-ratio: var(--np-aspect, 11 / 17);
+    perspective: 60vw;
+    cursor: pointer;
+    /* Pop-up window framing matching the catalog popups */
+    border: 0.5vw solid #5a1e8a;
+    background: #FFF4FA;
+    box-shadow:
+      0 0 0 0.7vw #ffd6ec,
+      0 1.6vw 0 #5a1e8a;
+  }
+  .np-mobile__card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(.22, 1, .36, 1);
+    animation: pp-mobile-spin 14s linear infinite;
+  }
+  .np-mobile__card.is-flipped .np-mobile__card-inner {
+    animation: none;
+    transform: rotateY(180deg);
+  }
+  .np-mobile__face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border: 1px solid #5a1e8a;
+    box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff;
+  }
+  .np-mobile__face--back { transform: rotateY(180deg); }
+  .np-mobile__hint {
+    margin: 0 0 5vw;
+    text-align: center;
+    font-family: "NSO CRT", monospace;
+    font-size: 3.2vw;
+    color: #5a1e8a;
+    opacity: 0.7;
+  }
+  .np-mobile__title {
+    margin: 0 0 2vw;
+    font-family: "NSO Display", monospace;
+    font-size: 5.6vw;
+    color: #ff5fa8;
+    text-shadow:
+      0.6vw 0.6vw 0 #5a1e8a,
+      -0.1vw -0.1vw 0 #ffffff;
+  }
+  .np-mobile__price {
+    margin: 0 0 1vw;
+    font-family: "NSO CRT", monospace;
+    font-size: 6vw;
+    color: #5a1e8a;
+    letter-spacing: 0.04em;
+  }
+  .np-mobile__rarity {
+    margin: 0 0 4vw;
+    font-family: "NSO CRT", monospace;
+    font-size: 4vw;
+    color: #2b0f4a;
+  }
+  .np-mobile__rarity span { color: #ff5fa8; }
+  .np-mobile__cta {
+    display: block;
+    width: 100%;
+    margin: 0 0 6vw;
+    font-family: "NSO Display", monospace;
+    font-size: 4vw;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    background: #ff5fa8;
+    border: 1px solid #5a1e8a;
+    padding: 4vw 5vw;
+    cursor: pointer;
+    box-shadow: 1vw 1vw 0 #5a1e8a;
+  }
+  .np-mobile__details {
+    border: 1px dashed #ff5fa8;
+    padding: 4vw;
+    background: rgba(255, 255, 255, 0.6);
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .np-mobile__details-title {
+    margin: 0 0 2vw;
+    font-family: "NSO Display", monospace;
+    font-size: 4vw;
+    color: #ff5fa8;
+    letter-spacing: 0.06em;
+  }
+  .np-mobile__details-desc {
+    margin: 0 0 3vw;
+    font-family: "NSO CRT", monospace;
+    font-size: 4vw;
+    line-height: 1.25;
+    color: #2b0f4a;
+  }
+  .np-mobile__specs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 1.4vw 3vw;
+    font-family: "NSO CRT", monospace;
+    font-size: 3.6vw;
+    color: #2b0f4a;
+    margin: 0;
+    width: 100%;
+  }
+  .np-mobile__specs > div { display: contents; }
+  .np-mobile__specs dt { color: #ff5fa8; letter-spacing: 0.06em; min-width: 0; }
+  .np-mobile__specs dd { margin: 0; min-width: 0; }
+}
+@media (min-width: 601px) {
+  .np-mobile { display: none; }
+}
+
+/* ===========================================================================
+   NSO CATALOG — mobile (≤600px) flow layout
+   --------------------------------------------------------------------------
+   Lives at end-of-file so source-order overrides every desktop .nso-* rule.
+   Stage spans 0 → 900vw. Layout bands (in mobile vw, 1vw = 4px @ 400-wide):
+       0   – 90    Hero (HeroBG + characters bounded inside it)
+      90   – 122   NGOTitle stamp (only "NEEDY GIRL OVERDOSE" title kept on mobile)
+     122   – 158   PRODUCTS banner
+     158   – 600   Six popups (74vw tall, 4vw gap → 78vw stride)
+     600   – 670   PinkGridBG fade-in seam
+     670   – 900   PinkGridBG + theme tiles (one column)
+   The duplicate NeedyGirlOverdose.png is HIDDEN on mobile — it duplicates
+   the NGOTitle stamp and only fits desktop's wide chrome panel.
+   ============================================================================ */
+@media (max-width: 600px) {
+  .nso-stage { height: 782vw; }      /* trimmed to end where the theme tiles end, since PinkGridBG is hidden */
+
+  /* === HERO BAND ===
+     HeroBG at 78vw width × 3837/2559 aspect = 52vw tall. White flanks
+     fill the 11vw rails on each side so the hero reads as a framed art
+     rather than full-bleed. */
+  .nso-herobg {
+    top: 0;
+    left: 11vw;
+    width: 78vw;
+    aspect-ratio: 3837 / 2559;
+  }
+  .nso-herobg-flank {
+    display: block;
+    top: 0;
+    width: 11vw;
+    height: 52vw;
+    background: #FFF4FA;
+  }
+  .nso-herobg-flank--l { left: 0; right: auto; }
+  .nso-herobg-flank--r { right: 0; left: auto; }
+
+  /* Ribbon scaled larger on mobile and bled past both top + left edges. */
+  .nso-ribbon { width: 38vw; top: -9vw; left: -9vw; }
+  /* Ribbon spans (-9 → 29vw) × (-9 → 23.8vw), centre at (10vw, 7.4vw). */
+  .nso-ribbon-new { top: 7.0vw; left: 9.6vw; width: 16vw; }   /* nudged up + left a couple px for mobile */
+  .nso-chars        { height: 130vw; }
+  /* Mobile ChromeBG starts at 52vw; full hero-height chars top to seam. */
+  .nso-char         { top: 0; height: 50vw; }
+  .nso-char--ame    { left: 6vw; }
+  .nso-char--kangel { right: 0; top: 0; }
+  .nso-chars {
+    filter:
+      drop-shadow(0 0 0.6vw rgba(255, 255, 255, 1))
+      drop-shadow(0 0 2vw   rgba(255, 255, 255, 0.95))
+      drop-shadow(0 0 5vw   rgba(255, 255, 255, 0.75))
+      drop-shadow(0 0 10vw  rgba(255, 255, 255, 0.5))
+      drop-shadow(0 0 18vw  rgba(255, 255, 255, 0.3));
+  }
+
+  /* White-gradient seam — sits between the HeroBG (ends 52vw) and the
+     ProductBG on mobile, under NGOTitle (48vw → ~70vw), over the chars. */
+  .nso-white-gradient {
+    top: 36vw;
+    width: 100vw;
+  }
+
+  /* === Sparkle / ChromeBG behind everything below the hero === */
+  .nso-sparkle {
+    top: 52vw;                /* picks up right where HeroBG ends — no white gap */
+    left: 0;
+    width: 100vw;
+    /* Now also covers the theme-tile band so there's no white area below
+       the popups. Pink grid sits at the very bottom of the page below it. */
+    height: 729vw;
+    object-fit: cover;
+  }
+
+  /* === TITLES — only the gradient NGOTitle stamp; hide duplicate PNG === */
+  .nso-ngo-title {
+    /* Split equally across the HeroBG (ends 52vw) / ProductBG (starts 52vw) seam.
+       NGOTitle at 60vw wide × aspect 1910/712 → height ~22.4vw.
+       top = 52 − 11.2 = 40.8vw centres it on the seam. */
+    top: 40.8vw;
+    width: 60vw;
+    left: 20vw;
+    transform: none;
+  }
+  .nso-ngo-overdose { display: none; }      /* duplicate of NGOTitle — desktop-only */
+
+  /* PRODUCTS banner sits right under NGOTitle.
+     NGOTitle at 60vw width × aspect 1910/712 → height ~22.4vw → bottom at 70.4vw.
+     PRODUCTS banner at 65vw width × aspect 1578/215 → height ~8.85vw. */
+  .nso-products-banner {
+    top: 74vw;
+    left: 17.5vw;
+    width: 65vw;
+  }
+
+  /* === POPUPS — single column. Each product popup contains ONLY the
+     model + shadow; the product text drops into the gap BELOW it in its
+     own dedicated space. Stride: 75vw popup + 20vw text-gap = 95vw. */
+  .nso-popup-link    { width: 92vw; }
+  .nso-popup-link--1 { top:  88vw; left: 4vw; right: auto; }
+  .nso-popup-link--2 { top: 187vw; left: 4vw; right: auto; }
+  .nso-popup-link--3 { top: 286vw; left: 4vw; right: auto; }
+  .nso-popup-link--4 { top: 385vw; left: 4vw; right: auto; }
+  .nso-popup-link--5 { top: 484vw; left: 4vw; right: auto; }   /* COMING SOON */
+  .nso-popup-link--6 { display: none; }
+
+  /* === Products inside their popups (1=#1, 2=#2, 3=#3, 4=#4) ===
+     Products start in the FIRST popup. Each popup is ~75vw tall, card
+     on the left, copy on the right. The card3d-wrap top = popup top + 8vw,
+     shadow at popup top + 60vw. */
+
+  /* === Products inside popups ===
+     Popups are ~75vw tall (stride 79vw, 4vw gap).
+     Layout per popup: title bar at top (~7vw), then content area.
+     Cards sit at popup_top + 12vw (clears title bar), shadow at
+     popup_top + 58vw, both confined within the popup's content area.
+     Text sits at popup_top + 22vw — raised above vertical center. */
+
+  /* PRINT — model centered in popup #1 (88 → 163vw), text BELOW popup. */
+  .nso-card3d-wrap--1   { top: 100vw; left: 40.5vw; width: 19vw; }
+  .nso-card3d-shadow--1 { top: 134vw; left: 42vw;   width: 16vw; }
+  .nso-product-copy--1  { top: 152vw; left: 8vw;    width: 84vw; font-size: 3.4vw; text-align: center; }
+
+  /* DESKMAT in popup #2 (top 167vw, ~75vw tall → top half = 167 → 204.5vw).
+     Card + shadow scaled up so they fill the top half of the popup; text
+     drops below into the bottom half. */
+  /* DESKMAT — model centered in popup #2 (187 → 262vw), text BELOW popup. */
+  .nso-card3d-wrap--2   { top: 207vw; left: 25vw; width: 50vw; }
+  .nso-card3d-shadow--2 { top: 235vw; left: 30vw; width: 40vw; }
+  .nso-product-copy--2  { top: 251vw; left: 8vw; width: 84vw; font-size: 3.4vw; text-align: center; }
+
+  /* TAPESTRY — model centered in popup #3 (286 → 361vw), text BELOW. */
+  .nso-card3d-wrap--3   { top: 296vw; left: 30vw; width: 18vw; }
+  .nso-card3d-shadow--3 { top: 330vw; left: 32vw; width: 14vw; }
+  .nso-card3d-wrap--3b  { top: 296vw; left: 52vw; width: 18vw; }
+  .nso-card3d-shadow--3b{ top: 330vw; left: 54vw; width: 14vw; }
+  .nso-product-copy--3  { top: 350vw; left: 8vw; width: 84vw; font-size: 3.4vw; text-align: center; }
+
+  /* STICKERS — popup #4 (385 → 460vw). Ame top-left (lowered), KAngel
+     bottom-right (raised so it stays inside the popup body). */
+  /* sticker pair centered on the viewport — pair spans 30vw + 24vw stagger
+     + 30vw = 54vw wide; centered means left edge at (100 - 54) / 2 = 23vw.
+     Bumped from 22vw → 30vw per sticker (≈36% larger) while staying on
+     screen — right edge of KAngel sits at 77vw, well within 100vw. */
+  .nso-card3d-wrap--4    { top: 399vw; left: 23vw; width: 30vw; }
+  .nso-card3d-shadow--4  { top: 430vw; left: 27vw; width: 19vw; }
+  .nso-card3d-wrap--4b   { top: 410vw; left: 47vw; width: 30vw; }
+  .nso-card3d-shadow--4b { top: 441vw; left: 51vw; width: 19vw; }
+  .nso-product-copy--4  { top: 449vw; left: 8vw;  width: 84vw; font-size: 3.4vw; text-align: center; }
+
+  .nso-product-copy__title { font-size: 4.4vw; line-height: 1.05; margin: 0 0 1.2vw; }
+  .nso-product-copy__price { font-size: 4vw;   margin: 0 0 1.5vw; }
+  .nso-product-copy__desc  { font-size: 2.8vw; line-height: 1.35; max-width: 100%; margin: 0 auto; }
+
+  /* COMING SOON — H + V centered inside popup #5.
+     Popup spans 484vw → 538.75vw (height 54.75vw at aspect 1819/1081 × 92vw width)
+     → vertical centre 511.4vw. */
+  .nso-coming-soon {
+    top: 511.4vw;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    font-size: 7vw;
+    text-align: center;
+  }
+
+  /* === Hearts (positioned in popup gaps) === */
+  .nso-y2k-heart       { top: 260vw; right: -4vw; width: 32vw; z-index: 9; }
+  .nso-y2k-doubleheart { top: 540vw; left: -4vw; right: auto; width: 38vw; z-index: 9; }
+  /* HeartGrid sits below the theme tiles on mobile — see the bottom block. */
+
+  /* === BOTTOM SECTION — PinkGridBG hidden on mobile per request ===
+     ChromeBG carries the bottom of the page; no PinkGridBG band underneath. */
+  .nso-pink-grid-bg { display: none; }
+  .nso-theme-selector {
+    top: 565vw;             /* sits right under the popup stack, on ChromeBG */
+    left: 14vw;             /* narrowed so HeartGrid peeks past the column */
+    right: 14vw;
+    grid-template-columns: 1fr;
+    gap: 5vw;
+  }
+  /* HeartGrid is a watermark over the ChromeBG area on mobile. */
+  .nso-heart-grid {
+    display: block;
+    position: absolute;
+    top: 240vw;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110vw;
+    height: auto;
+    aspect-ratio: 919 / 827;
+    opacity: 0.85;
+    z-index: 6;
+    pointer-events: none;
+  }
+}
+

@@ -1,169 +1,29 @@
 ---
 export const prerender = true;
 import Base from "../layouts/Base.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { products, categories } from "../data/products.ts";
+
+function pad(n: number): string {
+  return String(n + 1).padStart(2, "0");
+}
 ---
-
-<Base title="dram — design + cloud portfolio">
-  <section class="hero">
-    <p class="hero__kicker">portfolio · design + cloud engineering</p>
-    <h1 class="hero__title">
-      character-first merch,<br />
-      shipped on aws.
-    </h1>
-    <p class="hero__lede">
-      This site is a paired case study. On the design side, <a href="/work/">Tokyo Zero</a> —
-      a 47-product anime merch line with three themed storefronts (misc / PSG / NSO), custom
-      typography, and character illustration work. On the cloud side, the whole thing runs on
-      <a href="/architecture/">a serverless AWS stack</a> provisioned entirely with Terraform.
-    </p>
-    <div class="hero__cta">
-      <a class="btn btn--primary" href="/work/">see the work</a>
-      <a class="btn" href="/architecture/">see the stack</a>
-    </div>
-  </section>
-
-  <section class="split">
-    <article class="card">
-      <p class="card__tag">design</p>
-      <h2 class="card__title">tokyo zero — full brand system</h2>
-      <ul class="card__list">
-        <li>3 storefronts, distinct aesthetics, one brand voice</li>
-        <li>47 products across 6 categories, all illustrated by hand</li>
-        <li>Self-hosted typography — Apex Mk3, Beam Visionary, Branding Pro, NSO CRT</li>
-        <li>Custom loaders, CRT boot animations, magazine-style catalog</li>
-      </ul>
-      <a class="card__cta" href="/process/">read the process →</a>
-    </article>
-
-    <article class="card">
-      <p class="card__tag">cloud</p>
-      <h2 class="card__title">aws serverless, deployed via IaC</h2>
-      <ul class="card__list">
-        <li>S3 + CloudFront + Route 53 + ACM for the static frontend</li>
-        <li>Lambda + API Gateway + SES + DynamoDB for the contact form</li>
-        <li>Terraform-managed, GitHub Actions OIDC-deployed</li>
-        <li>~$0.80/mo total cost, 30-day CloudWatch log retention</li>
-      </ul>
-      <a class="card__cta" href="/architecture/">see the architecture →</a>
-    </article>
-  </section>
-
-  <style>
-    .hero {
-      padding: clamp(56px, 10vw, 128px) clamp(24px, 6vw, 72px) clamp(48px, 8vw, 96px);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .hero__kicker {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 24px;
-    }
-    .hero__title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(2.6rem, 8vw, 6rem);
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      margin: 0 0 28px;
-    }
-    .hero__lede {
-      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-      line-height: 1.55;
-      max-width: 640px;
-      color: var(--ink-soft);
-      margin: 0 0 40px;
-    }
-    .hero__lede a {
-      color: var(--ink);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--accent);
-      text-decoration-thickness: 1.5px;
-    }
-    .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn {
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: lowercase;
-      padding: 14px 26px;
-      border-radius: 999px;
-      text-decoration: none;
-      border: 1px solid var(--ink);
-      color: var(--ink);
-      transition: background 140ms ease, color 140ms ease, transform 140ms ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn--primary { background: var(--ink); color: var(--bg); }
-    .btn--primary:hover { background: var(--accent); border-color: var(--accent); }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(20px, 3vw, 32px);
-      padding: 0 clamp(24px, 6vw, 72px) 6vh;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .card {
-      padding: clamp(28px, 3.5vw, 40px);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-    }
-    .card__tag {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 12px;
-    }
-    .card__title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-      line-height: 1.05;
-      margin: 0 0 20px;
-    }
-    .card__list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 24px;
-      display: grid;
-      gap: 8px;
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-    }
-    .card__list li {
-      position: relative;
-      padding-left: 18px;
-    }
-    .card__list li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-family: var(--mono);
-    }
-    .card__cta {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      text-decoration: none;
-      color: var(--accent);
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-      transition: border-color 140ms ease;
-    }
-    .card__cta:hover { border-bottom-color: var(--accent); }
-
-    @media (max-width: 700px) {
-      .split { grid-template-columns: 1fr; }
-    }
-  </style>
+<Base title="misc" pageClass="page-index">
+  {categories.map(cat => {
+    const items = products.filter(p => p.category === cat.key);
+    if (!items.length) return null;
+    return (
+      <section class="misc__section" data-section={cat.key}>
+        <div class="misc__section-head">
+          <h2 class="misc__section-title">{cat.title}</h2>
+          <p class="misc__section-tagline">{cat.tagline}</p>
+        </div>
+        <div class="misc__grid">
+          {items.map((p, i) => (
+            <ProductCard product={p} index={pad(i)} category={cat.key} />
+          ))}
+        </div>
+      </section>
+    );
+  })}
 </Base>

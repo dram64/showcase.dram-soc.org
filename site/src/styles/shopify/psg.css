@@ -1,0 +1,1565 @@
+/* === PSG body overrides — hide misc theme chrome on the PSG page === */
+body.page-psg {
+  background: #FFF4FA;
+  color: #1A1626;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+body.page-psg .misc__header-wrap,
+body.page-psg .misc__footer,
+body.page-psg .cart-drawer,
+body.page-psg .misc__cart-toggle {
+  display: none !important;
+}
+/* Let the canvas fill the viewport — Shopify's default <main> wrappers
+   often add padding/margin that would constrain the PSG layout. */
+body.page-psg main,
+body.page-psg .content-for-layout,
+body.page-psg .shopify-section {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* === PSG theme — self-hosted fonts (Shopify /assets/) === */
+@font-face {
+  font-family: "Resotyc";
+  src: url("/fonts/resotyc-regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TZ Mark";
+  src: url("/fonts/tz-mark.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Allotrope";
+  src: url("/fonts/allotrope-black.otf") format("opentype");
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Allotrope Wide";
+  src: url("/fonts/allotrope-wide-heavy-italic.otf") format("opentype");
+  font-weight: 800; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Allotrope Wide";
+  src: url("/fonts/allotrope-wide-black-italic.otf") format("opentype");
+  font-weight: 900; font-style: italic; font-display: swap;
+}
+
+.canvas {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  /* Products-bg ends at ~219vw. Footer is now positioned right after.
+     Canvas = footer top + footer height = 225 + 22 = 247vw. */
+  height: 247vw;
+  overflow-x: hidden;
+  overflow-y: visible;
+  background: #FFF4FA;
+}
+html.page-psg, html { overflow-x: hidden; }
+
+/* ===========================================================================
+   UNIVERSAL FLOATING NAV — Home + Cart pill, fixed to the top-right corner
+   of every page via ArchiveBase. Two icon-only buttons by default; the label
+   slides in on hover/focus so the bar stays small "on demand" but can be
+   reached at any time.
+
+   Theme-aware via body[data-theme="…"]; each theme overrides the four CSS
+   custom properties below to fit its palette without touching the markup.
+   ============================================================================ */
+.tz-nav {
+  position: fixed;
+  bottom: 1.6vw;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;                /* above intro loader (1000) and theme-enter (9999) */
+  display: flex;
+  gap: 1.4vw;
+  pointer-events: none;          /* let children opt in */
+  opacity: 1;
+  transition: opacity 0.4s ease 0.3s;
+}
+/* Hide during the intro loader sequence so the slam doesn't get cluttered;
+   ArchiveBase flips body to .intro-done once the loader finishes. */
+body:not(.intro-done) .tz-nav { opacity: 0; pointer-events: none; }
+body:not(.intro-done) .tz-nav__btn { pointer-events: none; }
+.tz-nav__btn {
+  --tz-nav-fg:       #1A1626;
+  --tz-nav-accent:   #FD7AC0;
+
+  pointer-events: auto;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--tz-nav-fg);
+  width: 2.2vw;
+  height: 2.2vw;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+.tz-nav__btn:hover,
+.tz-nav__btn:focus-visible {
+  opacity: 1;
+  color: var(--tz-nav-accent);
+  outline: none;
+}
+.tz-nav__btn:active { transform: translateY(0.1vw); }
+.tz-nav__ico {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* Halo + soft shadow so the icon stays legible on every theme/colour
+     — product pages letterbox the cream stage on tall viewports and the
+     dark .pp-wrap shows through behind the nav, where bare ink icons
+     used to disappear. The halo is a near-white outline glow; the
+     shadow grounds the icon on bright pink backgrounds. */
+  filter:
+    drop-shadow(0  0    0.2vw rgba(255, 255, 255, 0.85))
+    drop-shadow(0  0.15vw 0.35vw rgba(0, 0, 0, 0.28));
+}
+/* labels are kept in the markup for screen readers but visually hidden;
+   minimalist nav relies on icons alone. */
+.tz-nav__label {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* tiny count dot sitting on the cart icon — only shows when there are items.
+   When the count text reads "0", we suppress it via :has() so the cart icon
+   is uncluttered until something is added. */
+.tz-nav__count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 0.85vw;
+  height: 0.85vw;
+  padding: 0 0.2vw;
+  border-radius: 999px;
+  background: var(--tz-nav-accent);
+  color: #ffffff;
+  font: 700 0.55vw/0.85vw "Apex Mk3", ui-monospace, monospace;
+  text-align: center;
+}
+.tz-nav__btn:has(.tz-nav__count:not([data-active])) .tz-nav__count { display: none; }
+
+/* === Cart-bump animation — fired when the count increments. === */
+@keyframes tz-cart-bump {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.35) rotate(-8deg); }
+  60%  { transform: scale(0.92) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.tz-nav__btn--cart.is-bumped .tz-nav__ico {
+  animation: tz-cart-bump 0.55s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes tz-count-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+.tz-nav__btn--cart.is-bumped .tz-nav__count[data-active] {
+  animation: tz-count-pop 0.5s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* === "Added to cart" toast — slides up from above the nav. === */
+.tz-toast {
+  position: fixed;
+  bottom: 5.2vw;             /* sits just above the nav row (1.6vw + button ~2.2vw + margin) */
+  left: 50%;
+  transform: translate(-50%, 0.8vw);
+  z-index: 10001;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55vw;
+  padding: 0.7vw 1.2vw;
+  border-radius: 999px;
+  background: rgba(26, 22, 38, 0.92);
+  color: #ffffff;
+  font: 700 0.9vw/1 ui-monospace, "Resotyc", ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+.tz-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.tz-toast__ico {
+  width: 1.1vw;
+  height: 1.1vw;
+  flex: 0 0 auto;
+  color: var(--tz-toast-tick, #6FE3A8);
+}
+body[data-theme="nso"]   .tz-toast { background: rgba(90, 30, 138, 0.95); }
+body[data-theme="nso"]   .tz-toast__ico { color: #FFD23F; }
+@media (max-width: 600px) {
+  .tz-toast {
+    bottom: 14vw;
+    padding: 2.4vw 4.2vw;
+    font-size: 2.8vw;
+    gap: 2vw;
+    border-radius: 999px;
+  }
+  .tz-toast__ico { width: 3.6vw; height: 3.6vw; }
+}
+
+/* === CTA pulse on the source element — short flash so the user sees
+   their click registered even when the hit-target is invisible (e.g.
+   the transparent .pp-cta-hit overlay). === */
+@keyframes tz-cta-pulse {
+  0%   { transform: scale(1); filter: brightness(1); }
+  40%  { transform: scale(0.96); filter: brightness(1.15); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+.is-cta-pulse { animation: tz-cta-pulse 0.45s cubic-bezier(.22, 1, .36, 1); }
+
+/* === Theme overrides — minimalist, only foreground + accent change. */
+body[data-theme="psg"] .tz-nav__btn {
+  --tz-nav-fg:     #1A1626;
+  --tz-nav-accent: #FD7AC0;
+}
+body[data-theme="nso"] .tz-nav__btn {
+  --tz-nav-fg:     #5a1e8a;
+  --tz-nav-accent: #FF4DA6;
+}
+/* Mobile: drop the labels-on-hover affordance (no hover on touch); shrink
+   the buttons and use viewport-units instead of vw so they don't bloat
+   on narrow phones. */
+@media (max-width: 600px) {
+  .tz-nav {
+    bottom: 4vw;
+    gap: 6vw;
+    /* Soft frosted-glass pill behind the icons — so they're never
+       fighting the page content underneath as the user scrolls. */
+    padding: 2vw 6vw;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    box-shadow: 0 0.6vw 1.4vw rgba(40, 0, 30, 0.18);
+  }
+  .tz-nav__btn { width: 9vw; height: 9vw; }
+  .tz-nav__ico {
+    /* halo is now lighter — the pill provides most of the separation */
+    filter: drop-shadow(0 0.3vw 0.6vw rgba(0, 0, 0, 0.18));
+  }
+  .tz-nav__count {
+    min-width: 3.6vw;
+    height: 3.6vw;
+    padding: 0 0.9vw;
+    font: 700 2.2vw/3.6vw "Apex Mk3", ui-monospace, monospace;
+  }
+}
+
+   NSO page load, then peels away in horizontal slice glitches to reveal
+   the page. Layers:
+     1. SVG <feTurbulence> animated noise (the actual "snow")
+     2. Repeating-gradient scanlines
+     3. Two color-split bars (red + cyan) drifting horizontally
+     4. Three random "interference" glitch bands ticking up/down
+     5. A vignette darkening the edges
+     6. A "SIGNAL ▸ NO SYNC" badge in the top-right
+     7. A chyron strip at the bottom "LOADING ASSET STREAM ..."
+   Pointer-events off — the page below stays interactive even while
+   the overlay is fading.
+   ============================================================================ */
+.nso-staticload {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  overflow: hidden;
+  background: #0a020e;
+  animation: nso-staticload-out 1.7s cubic-bezier(.72, 0, .28, 1) forwards;
+}
+@keyframes nso-staticload-out {
+  0%   { opacity: 1; clip-path: inset(0 0 0 0); }
+  60%  { opacity: 1; clip-path: inset(0 0 0 0); }
+  78%  { opacity: 1; clip-path: inset(0 0 30% 0); }      /* first slice peels off the bottom */
+  88%  { opacity: 1; clip-path: inset(20% 0 30% 0); }    /* middle band collapses */
+  100% { opacity: 0; clip-path: inset(50% 0 50% 0); visibility: hidden; }
+}
+.nso-staticload__noise {
+  position: absolute;
+  inset: -2%;
+  mix-blend-mode: screen;
+}
+/* Scanlines — repeating dark stripes for the CRT look */
+.nso-staticload__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.32) 0,
+    rgba(0, 0, 0, 0.32) 0.18vw,
+    transparent 0.18vw,
+    transparent 0.45vw
+  );
+  mix-blend-mode: multiply;
+  animation: nso-staticload-scan 4s linear infinite;
+}
+@keyframes nso-staticload-scan {
+  to { background-position: 0 4vw; }
+}
+/* Chromatic aberration bars — narrow red + cyan stripes that flicker
+   horizontally, evoking VHS color bleed. */
+.nso-staticload__rgb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0.4vw;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+.nso-staticload__rgb--r {
+  background: linear-gradient(90deg, transparent, #ff2d6a 30%, #ff2d6a 70%, transparent);
+  animation: nso-staticload-rgb-r 1.6s steps(8, end) infinite;
+}
+.nso-staticload__rgb--b {
+  background: linear-gradient(90deg, transparent, #2dd4ff 25%, #2dd4ff 75%, transparent);
+  animation: nso-staticload-rgb-b 1.6s steps(7, end) infinite;
+}
+@keyframes nso-staticload-rgb-r {
+  0%   { top: 18%; transform: translateX(0); }
+  25%  { top: 52%; transform: translateX(-2vw); }
+  50%  { top: 31%; transform: translateX(3vw); }
+  75%  { top: 74%; transform: translateX(-1vw); }
+  100% { top: 18%; transform: translateX(0); }
+}
+@keyframes nso-staticload-rgb-b {
+  0%   { top: 42%; transform: translateX(0); }
+  30%  { top: 12%; transform: translateX(2vw); }
+  60%  { top: 67%; transform: translateX(-3vw); }
+  90%  { top: 29%; transform: translateX(1vw); }
+  100% { top: 42%; transform: translateX(0); }
+}
+/* Glitch interference bands — fat horizontal stripes that jitter
+   vertically + horizontally, mimicking VHS head-switching artifacts. */
+.nso-staticload__glitch {
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.18) 0 0.3vw,
+      transparent 0.3vw 1.2vw),
+    rgba(255, 255, 255, 0.05);
+  mix-blend-mode: screen;
+}
+.nso-staticload__glitch--1 { height: 1.8vw; animation: nso-staticload-glitch-1 0.95s steps(6, end) infinite; }
+.nso-staticload__glitch--2 { height: 0.9vw; animation: nso-staticload-glitch-2 1.25s steps(9, end) infinite; }
+.nso-staticload__glitch--3 { height: 2.6vw; opacity: 0.45; animation: nso-staticload-glitch-3 0.7s steps(5, end) infinite; }
+@keyframes nso-staticload-glitch-1 {
+  0%, 12%, 38%, 64%, 89% { top: 22%; transform: translateX(-1.8vw); }
+  15%, 36%               { top: 58%; transform: translateX(2.4vw);  }
+  41%, 62%               { top: 11%; transform: translateX(-3vw);   }
+  66%, 87%               { top: 79%; transform: translateX(1.6vw);  }
+}
+@keyframes nso-staticload-glitch-2 {
+  0%, 100% { top: 8%;  transform: translateX(0); }
+  18%      { top: 33%; transform: translateX(3vw);    }
+  42%      { top: 71%; transform: translateX(-2vw);   }
+  68%      { top: 47%; transform: translateX(1.2vw);  }
+  86%      { top: 19%; transform: translateX(-3.6vw); }
+}
+@keyframes nso-staticload-glitch-3 {
+  0%, 100% { top: 92%; transform: translateX(0); }
+  20%      { top: 60%; transform: translateX(2vw); }
+  40%      { top: 5%;  transform: translateX(-2vw); }
+  60%      { top: 81%; transform: translateX(3vw); }
+  80%      { top: 36%; transform: translateX(-1.5vw); }
+}
+/* Edge vignette so the screen feels rounded (CRT bezel feel) */
+.nso-staticload__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.65) 90%, rgba(0, 0, 0, 0.95) 100%);
+  pointer-events: none;
+}
+/* "SIGNAL ▸ NO SYNC" badge — top-right, with a pulsing red dot. */
+.nso-staticload__signal {
+  position: absolute;
+  top: 2.5vw;
+  right: 2.5vw;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  padding: 0.5vw 0.9vw;
+  background: rgba(0, 0, 0, 0.55);
+  border: 0.12vw solid rgba(255, 255, 255, 0.45);
+  /* tiny REC/SIGNAL chip — NSO Pixel reads sharper at small sizes */
+  font-family: "NSO Pixel", "NSO Display", monospace;
+  font-size: 1vw;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 0 0.4vw rgba(255, 60, 120, 0.8);
+}
+.nso-staticload__rec {
+  width: 0.6vw;
+  height: 0.6vw;
+  border-radius: 50%;
+  background: #ff2d6a;
+  box-shadow: 0 0 0.5vw #ff2d6a;
+  animation: nso-staticload-rec 0.7s steps(2, end) infinite;
+}
+@keyframes nso-staticload-rec {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.25; }
+}
+/* Chyron — bottom strip running the loading text */
+.nso-staticload__chyron {
+  position: absolute;
+  bottom: 3vw;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  padding: 0.8vw 1.4vw;
+  background: rgba(255, 0, 110, 0.18);
+  border-top: 0.18vw solid #ff2d6a;
+  border-bottom: 0.18vw solid #ff2d6a;
+  font-family: "NSO Display", "NSO CRT", ui-monospace, monospace;
+  font-size: 1.1vw;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow:
+    0.12vw 0 #2dd4ff,
+    -0.12vw 0 #ff2d6a;
+  animation: nso-staticload-chyron 0.15s steps(2, end) infinite;
+}
+@keyframes nso-staticload-chyron {
+  0%   { transform: translate(-50%, 0); }
+  50%  { transform: translate(calc(-50% + 0.1vw), 0.04vw); }
+  100% { transform: translate(-50%, 0); }
+}
+.nso-staticload__chyron em {
+  display: inline-flex;
+  gap: 0.15vw;
+  margin-left: 0.4vw;
+  font-style: normal;
+}
+.nso-staticload__chyron em span {
+  animation: nso-staticload-dot 0.9s steps(2, end) infinite;
+}
+.nso-staticload__chyron em span:nth-child(2) { animation-delay: 0.15s; }
+.nso-staticload__chyron em span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes nso-staticload-dot {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (max-width: 600px) {
+  .nso-staticload__signal { font-size: 2.6vw; padding: 1.4vw 2.2vw; gap: 1.4vw; top: 4vw; right: 4vw; }
+  .nso-staticload__rec    { width: 1.6vw; height: 1.6vw; }
+  .nso-staticload__chyron { font-size: 3vw; padding: 2vw 3vw; bottom: 8vw; }
+  .nso-staticload__rgb    { height: 0.9vw; }
+  .nso-staticload__scanlines { background: repeating-linear-gradient(180deg, rgba(0,0,0,0.32) 0, rgba(0,0,0,0.32) 0.4vw, transparent 0.4vw, transparent 1vw); }
+}
+
+/* ===========================================================================
+   PSG PAGE-LOAD TRANSITION — every PSG page (home + product pages) gets
+   washed in hot pink with a "NOW LOADING ..." badge in the bottom-right
+   for ~1.2s. PSG fashion: Resotyc italic display type, hot-pink fill,
+   white text-shadow stamp, sparkle stars + heart confetti drifting,
+   blinking dots after the word.
+
+   Pure CSS, runs once on page load, no JS. Uses pointer-events: none on
+   the entire layer so the page underneath stays interactive even while
+   the wash fades.
+   ============================================================================ */
+.psg-pageload {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;                 /* sits under the typing-enter overlay (9999) and theme-enter overlays */
+  background: #FF8FB8;           /* flat bubblegum pink */
+  pointer-events: none;
+  animation: psg-pageload-out 1.4s cubic-bezier(.22, 1, .36, 1) forwards;
+  overflow: hidden;
+}
+@keyframes psg-pageload-out {
+  0%   { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+/* Confetti hearts + stars: removed. Only the pink wash and the loading
+   text remain. The .psg-pageload__heart elements stay in the markup but
+   are hidden so we don't have to touch the layout file. */
+.psg-pageload__heart { display: none; }
+
+/* The bottom-right "now loading ..." mark — plain flat white, no stamp. */
+.psg-pageload__text {
+  position: absolute;
+  bottom: 3vw;
+  right: 3vw;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6vw;
+  font-family: "Resotyc", "Allotrope Wide", "Allotrope", serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 3.8vw;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+/* Drop the gold star prefix — kept in markup, hidden via CSS. */
+.psg-pageload__text i { display: none; }
+
+/* Blinking dot trio after "LOADING" — same flat white as the text. */
+.psg-pageload__dots {
+  display: inline-flex;
+  gap: 0.15vw;
+  margin-left: 0.4vw;
+  font-style: normal;
+  font-family: "Resotyc", monospace;
+  color: #ffffff;
+}
+.psg-pageload__dots span {
+  animation: psg-pageload-dot 0.9s steps(2, end) infinite;
+}
+.psg-pageload__dots span:nth-child(1) { animation-delay: 0s; }
+.psg-pageload__dots span:nth-child(2) { animation-delay: 0.15s; }
+.psg-pageload__dots span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes psg-pageload-dot {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (max-width: 600px) {
+  .psg-pageload__text { font-size: 9vw; bottom: 6vw; right: 6vw; gap: 1.6vw; }
+}
+
+/* === LOADER ===
+   PSG-style intro: TOKYO ZERO letters slam down one by one onto a hot-pink
+   field, hold for a beat, then the panel wipes out. Pure CSS — runs once on
+   page load, no JS. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fd7ac0;
+  overflow: hidden;
+  /* hold full → fade out → take it out of the layer tree */
+  animation: loader-out 0.55s cubic-bezier(.7,0,.3,1) 2.4s forwards;
+}
+/* subtle scanline-ish grain on the loader too, so it matches the page */
+.loader::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+.loader__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5vw;
+  font-family: "TZ Mark", "Allotrope Wide", sans-serif;
+  font-weight: 400;
+  font-size: 18vw;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-shadow: 0.4vw 0.7vw 0 rgba(80, 0, 50, 0.35);
+}
+.loader__word {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.4vw;
+}
+.loader__ltr {
+  display: inline-block;
+  transform: translateY(-130vh) rotate(-12deg);
+  /* choppy 5-step drop = PSG snap, then a tiny jitter settle */
+  animation:
+    loader-drop 0.45s steps(5, end) forwards,
+    loader-jitter 0.18s steps(2, end) 0.45s 2;
+  /* per-letter cascade via --i (set inline on the element) */
+  animation-delay: calc(var(--i, 0) * 0.10s), calc(var(--i, 0) * 0.10s + 0.45s);
+  transform-origin: center bottom;
+  opacity: 0;
+}
+/* unique end rotation per letter so the word looks hand-thrown, not aligned */
+.loader__ltr:nth-child(odd) { --rot: 3deg; }
+.loader__ltr:nth-child(even) { --rot: -4deg; }
+.loader__ltr:nth-child(3n)  { --rot: 5deg; }
+
+@keyframes loader-drop {
+  0%   { transform: translateY(-130vh) rotate(-12deg); opacity: 0; }
+  1%   { opacity: 1; }
+  60%  { transform: translateY(2vh)    rotate(2deg);   opacity: 1; }
+  80%  { transform: translateY(-1.2vh) rotate(-1deg);  opacity: 1; }
+  100% { transform: translateY(0)      rotate(var(--rot, 0deg)); opacity: 1; }
+}
+@keyframes loader-jitter {
+  0%   { transform: translate(-0.25vw, 0)  rotate(calc(var(--rot, 0deg) - 1deg)); }
+  100% { transform: translate( 0.25vw, 0.15vh) rotate(calc(var(--rot, 0deg) + 1deg)); }
+}
+@keyframes loader-out {
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-6vh); visibility: hidden; pointer-events: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader { animation: loader-out 0.3s ease 0.4s forwards; }
+  .loader__ltr { transform: none; opacity: 1; animation: none; }
+}
+
+/* === INTRO GATE ===
+   Hold every entrance / loop animation inside .canvas at its frame-0 state
+   until the loader has finished its fade-out. body.intro-done (set in
+   ArchiveBase JS once `loader-out` animationend fires) flips them on.
+
+   !important is required because every per-element `animation: ...` shorthand
+   later in this file resets animation-play-state to its initial value
+   (running), which would otherwise override our pause via cascade order. */
+.canvas *, .canvas *::before, .canvas *::after {
+  animation-play-state: paused !important;
+}
+body.intro-done .canvas *,
+body.intro-done .canvas *::before,
+body.intro-done .canvas *::after {
+  animation-play-state: running !important;
+}
+
+/* slight film-grain over the whole canvas. SVG turbulence data-URI →
+   opaque grayscale noise, soft-light blend so it sits on white AND pink alike. */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.45;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  background-repeat: repeat;
+}
+
+/* z-stack inside the canvas:
+     .heart-bg    z  5  — big PinkHeart behind EVERYTHING (decorative)
+     .frill-top   z 10  — pink scalloped top border
+     .char        z 15  — Panty + Stocking, ON TOP of the frill
+     .bg-pink     z 20  — pink wash at the bottom, RISES OVER the characters
+     .products-bg z 22  — white rectangle, products/items live ON TOP of it
+     .psg-logo    z 25  — wordmark, SITS ON TOP of the pink near its top edge
+*/
+
+/* white rectangle that starts where the pink gradient finishes (.bg-pink
+   top 42.4vw + 21vw fade region = ~63vw) and runs to the bottom of the
+   canvas, with 10vw left/right margin so ~20% of the pink shows on the
+   sides. This is the surface that product/item showcase tiles will sit on. */
+/* halftone-dot circles peeking out from BEHIND the white products card.
+   z-index sits above the pink wave (z 20) but below the white card (z 22),
+   so only the part of each circle that hangs off the side of the rectangle
+   is visible — the rest is hidden under the card. */
+.halftone-circle {
+  position: absolute;
+  width: 22vw;
+  height: auto;
+  z-index: 21;
+  pointer-events: none;
+  user-select: none;
+}
+/* positions are 30% / 67% (2/3) DOWN THE WHITE RECTANGLE itself, not the
+   canvas. Rectangle spans 63vw → 219vw, height 156vw.
+   left  = 63 + 0.30 * 156 ≈ 110vw
+   right = 63 + 0.67 * 156 ≈ 167vw */
+.halftone-circle--left  { top: 110vw; left:  -3vw; }
+.halftone-circle--right { top: 167vw; right: -3vw; }
+
+/* full-width thick green bar sitting BELOW the white rectangle.
+   Rectangle ends at 219vw; bar sits a bit below at 231vw with empty
+   pink room below it before the canvas ends. */
+.explore-bar {
+  position: absolute;
+  top: 231vw;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 7vw;            /* thinner bar */
+  background: #6FE3A8;
+  z-index: 22;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Sunset-gradient backing for the EXPLORE bar — same width + height as
+   .explore-bar, sat at the same Y. Tilted a hair like the theme-tile
+   backings, but extended past the canvas edges so the rotation can't
+   pull either side inward — the bar always reaches the full width. */
+.explore-bg-tilt {
+  position: absolute;
+  top: 231vw;
+  left: -2vw;            /* extend past canvas edge so the rotated slab still touches the screen sides */
+  right: -2vw;
+  height: 7vw;
+  background: linear-gradient(
+    90deg,
+    #FF4DA6 0%,
+    #FF6B6B 18%,
+    #FFD23F 38%,
+    #FFC9A8 60%,
+    #B07EE8 80%,
+    #3DEAFF 100%
+  );
+  transform: rotate(-1.8deg);   /* slightly less tilt than the theme-tile family */
+  transform-origin: center center;
+  z-index: 21;
+  pointer-events: none;
+}
+/* theme selector — 4 placeholder tiles in a row below the EXPLORE bar.
+   16:9 aspect, equal widths, gap matching the page rhythm. */
+.theme-selector {
+  position: absolute;
+  top: 244vw;             /* sits right under the green EXPLORE bar */
+  left: 12vw;             /* narrower side margins → wider tiles */
+  right: 12vw;
+  z-index: 22;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2vw;
+}
+.theme-tile {
+  position: relative;     /* anchors the colored backing square */
+  aspect-ratio: 16 / 9;
+  background: #FFF4FA;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Allotrope Wide", "Allotrope", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 3.5vw;
+  letter-spacing: -0.01em;
+  color: rgba(29, 10, 29, 0.5);
+  cursor: pointer;
+}
+
+/* PSG theme tile — composite thumbnail layered exactly like the source
+   reference (5 PNGs in z-order from back to front). The layer PNGs are
+   each 3960×2160 (16:9, matching the tile aspect) so they fit edge-to-edge
+   with `inset: 0; width/height: 100%`. The title PNG is also stretched
+   into the same 16:9 box — its transparent margins preserve its own
+   placement inside the frame. */
+.theme-tile--psg {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  /* Chars layer used as a single background image, scaled 108% to crop
+     out the stripe pattern baked into the PNG's outer margins. Cream
+     pink underneath in case the image fails to load. */
+  background:
+    url('/new-assets/psg/WebThemeSquare_0001_Characters.webp')
+      center / 108% 108% no-repeat,
+    #ffd1e5;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.theme-tile--psg:hover { transform: translateY(-0.4vw); box-shadow: 0 0.6vw 1.2vw rgba(40, 0, 30, 0.25); }
+/* Layered <img> children are kept in the markup for backwards-compat /
+   accessibility but no longer rendered — the background-image approach
+   above replaces the desktop composite stack. */
+.theme-tile__psg-layer { display: none; }
+/* Title as a pseudo-element pinned to the bottom-center edge. Using the
+   PNG's own aspect ratio (3021×814 ≈ 3.71:1) keeps it crisp. */
+.theme-tile--psg::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  width: 60%;
+  aspect-ratio: 3021 / 814;
+  background: url('/new-assets/psg/WebThemeSquare_0000_PSGTitle.webp')
+    center / contain no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* NSO theme tile — composite thumbnail with characters + title */
+.theme-tile--nso {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #ffffff;                  /* white tile base */
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.theme-tile--nso:hover { transform: translateY(-0.4vw); box-shadow: 0 0.6vw 1.2vw rgba(40, 0, 30, 0.25); }
+.theme-tile--nso::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  width: 55%;
+  aspect-ratio: 1910 / 712;
+  background: url('/new-assets/nso/NGOTitle.webp') center / contain no-repeat;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Hide the standalone NSO title <img> — replaced by ::after background. */
+.theme-tile__title { display: none; }
+
+/* Position the Ame + KAngel <img> elements explicitly. height 100 % +
+   width auto preserves the PNG's aspect ratio; the IMG fits the tile
+   height edge-to-edge, then we let it overflow horizontally if needed. */
+.theme-tile--nso .theme-tile__char {
+  position: absolute;
+  top: 0;                   /* anchor TOP of image flush with tile's top edge */
+  bottom: auto;
+  height: 260%;             /* big; extends well past the bottom and clips via overflow:hidden */
+  width: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+.theme-tile--nso .theme-tile__char--ame    { left:  -10%; }
+/* KAngel.webp has 2.44% transparent top padding while Ame has none — pull
+   KAngel up so its first opaque pixel aligns with the tile top edge.
+   2.44% × 260% (image height) ≈ 6.4% of tile height. */
+.theme-tile--nso .theme-tile__char--kangel { right: -16%; top: -6.4%; }
+/* White wash along the BOTTOM edge of the tile, using the SAME asset
+   the NSO hero uses (/new-assets/nso/WhiteGradient.webp). z-index 2 sits
+   between the characters (1) and the NGOTitle ::after (3).
+   Selector specificity (.theme-selector .theme-tile.theme-tile--nso = 0,3,1)
+   beats the generic ".theme-tile:nth-child(1)::before" rule (0,2,1) that
+   would otherwise paint a blue tilted backing here. */
+.theme-selector .theme-tile.theme-tile--nso::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  inset: auto 0 0 0;
+  /* tile is 16:9, asset is 1920:329 (5.84:1) — at full tile width the
+     asset's natural height is (1 / 5.84) of tile width = (16/9) / 5.84
+     ≈ 30.5% of tile HEIGHT. */
+  height: 30.5%;
+  background: url('/new-assets/nso/WhiteGradient.webp') center / 100% 100% no-repeat;
+  transform: none;          /* kill the rotate(-3.5deg) from nth-child(1) rule */
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* "Enter Theme →" overlay labels are hidden ONLY on tiles that already
+   show character artwork (NSO + PSG). MISC tile has no art so its
+   label stays visible. */
+.theme-tile--nso .theme-tile__label,
+.theme-tile--psg .theme-tile__label { display: none; }
+
+/* === Typing-Enter transition overlay ===
+   Fullscreen scanline/CRT panel that types "ENTER" then navigates. */
+.theme-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #1A1626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, visibility 0s linear 0.18s;
+}
+.theme-enter.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.18s ease;
+}
+.theme-enter__crt {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.04) 0 2px, transparent 2px 4px),
+    radial-gradient(circle at 50% 50%, rgba(255, 130, 200, 0.25) 0%, transparent 60%);
+  mix-blend-mode: screen;
+}
+.theme-enter__caret {
+  position: relative;
+  margin: 0;
+  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
+  font-weight: 700;
+  font-size: 8vw;
+  letter-spacing: 0.18em;
+  color: #FD7AC0;
+  text-shadow:
+    0 0 1vw rgba(255, 175, 217, 0.7),
+    0 0 2vw rgba(160, 100, 255, 0.45);
+  z-index: 2;
+}
+.theme-enter__cursor {
+  display: inline-block;
+  animation: theme-enter-blink 0.4s step-end infinite;
+}
+@keyframes theme-enter-blink {
+  0%, 50%  { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+/* tilted colored square sitting behind each tile — peeks out at the
+   corners because it's slightly larger and rotated under the white card */
+.theme-tile::before {
+  content: "";
+  position: absolute;
+  inset: -1.2vw;
+  z-index: -1;
+  pointer-events: none;
+}
+.theme-tile:nth-child(1)::before { background: #7AD7F0; transform: rotate(-3.5deg); }
+.theme-tile:nth-child(2)::before { background: #6FE3A8; transform: rotate( 2.8deg); }
+.theme-tile:nth-child(3)::before { background: #FFD23F; transform: rotate(-2.2deg); }
+.theme-tile:nth-child(4)::before { background: #B07EE8; transform: rotate( 3.6deg); }
+
+.site-footer {
+  position: absolute;
+  top: 225vw;             /* right below products-bg which ends at ~219vw */
+  left: 15vw;             /* shifted toward center; children keep their relative slots */
+  right: 4vw;
+  height: 22vw;           /* tall block to allow stacked / rotated wackiness */
+  z-index: 22;
+  color: #ffffff;
+}
+.footer-ig {
+  position: absolute;
+  left: 0;
+  top: 0.5vw;
+  width: 7.5vw;
+  height: 7.5vw;
+  color: #ffffff;
+  text-decoration: none;
+  transform: rotate(-6deg);
+  transform-origin: left top;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.footer-ig svg { width: 100%; height: 100%; display: block; }
+.footer-ig:hover { transform: rotate(-6deg) scale(1.1); color: #FFF4FA; }
+.footer-nav { display: contents; }     /* children are absolute on .site-footer */
+.footer-nav a {
+  position: absolute;
+  margin: 0;
+  font-family: "Allotrope Wide", "Allotrope", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.footer-nav a:nth-of-type(1) {          /* CONTACT US — small, kinked up by the IG */
+  top: 0vw;
+  left: 9vw;
+  font-size: 2.4vw;
+  transform: rotate(-3deg);
+  transform-origin: left top;
+}
+.footer-nav a:nth-of-type(2) {          /* ABOUT US — medium, offset right and down */
+  top: 4.4vw;
+  left: 16vw;
+  font-size: 4.6vw;
+  transform: rotate(4deg);
+  transform-origin: left top;
+}
+.footer-nav a:nth-of-type(3) {          /* TOKYO ZERO — oversized, anchored to baseline */
+  top: 10vw;
+  left: 0;
+  font-size: 11vw;
+  letter-spacing: -0.04em;
+  transform: rotate(-2deg);
+  transform-origin: left top;
+}
+.footer-nav a:hover { color: #FFF4FA; }
+
+.explore-bar__title {
+  margin: 0;
+  font-family: "Allotrope Wide", "Allotrope", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 5vw;          /* scaled to the thinner bar */
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: #ffffff;          /* white text */
+  text-transform: uppercase;
+}
+
+.products-bg {
+  position: absolute;
+  top: 63vw;
+  left: 4vw;
+  right: 4vw;
+  /* fixed height — rectangle ends right below the last product row, no
+     empty space at the bottom. */
+  height: 156vw;
+  background: #ffffff;
+  z-index: 22;
+}
+/* Tilted cyan backing peeking out behind the white card — same treatment
+   as the theme tiles. Drawn as a sibling at z 21 (above halftones at 21,
+   below the white card at 22) so a thin cyan halo bleeds out past the
+   rectangle's edges. */
+.products-bg-tilt {
+  position: absolute;
+  top: 59vw;         /* bigger: pushed further past the white card on every side */
+  left: 0.6vw;
+  right: 0.6vw;
+  height: 164vw;
+  /* sunset-acrylic gradient — hot pink → coral → gold across the top
+     band, then peach mid-tone, into lavender + electric cyan along the
+     bottom. Picks up every PSG candy accent so the slivers peeking out
+     past the white card read like the printed acrylic backing. */
+  background: linear-gradient(
+    180deg,
+    #FF4DA6 0%,
+    #FF6B6B 14%,
+    #FFD23F 28%,
+    #FFC9A8 50%,
+    #B07EE8 78%,
+    #3DEAFF 100%
+  );
+  transform: rotate(1.2deg);
+  z-index: 21;       /* same as halftones — DOM order puts this on top of them */
+  pointer-events: none;
+}
+
+/* "ITEMS" heading — straddles the top edge of the white rectangle so
+   half sits over the pink, half over the white. Resotyc display font,
+   #3DEAFF electric-cyan outer glow built from layered text-shadow blurs. */
+.items-title {
+  position: absolute;
+  top: 63vw;                                      /* same y as the white rectangle's top edge */
+  left: 12vw;                                     /* anchored toward the left of the white card */
+  transform: translateY(-50%);                    /* vertical-center on the boundary line only */
+  margin: 0;
+  z-index: 24;
+  font-family: "Resotyc", "Allotrope", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 6.3vw;                     /* 30% smaller (was 9vw) */
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-shadow:
+    0 0 0.42vw rgba(61, 234, 255, 0.55),
+    0 0 0.84vw rgba(61, 234, 255, 0.50),
+    0 0 1.4vw  rgba(61, 234, 255, 0.45),
+    0 0 2.1vw  rgba(61, 234, 255, 0.40);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 7Items asset — layered rainbow "ITEMS" graphic, oversized so the right
+   portion clips past the viewport edge (canvas `overflow: hidden` masks it). */
+.items-asset {
+  position: absolute;
+  top: 54vw;                /* nudged up */
+  right: -8vw;              /* less clip → shifts the asset to the left */
+  width: 61vw;              /* ~20% smaller (was 76vw) */
+  height: auto;
+  z-index: 24;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* small mono kicker ABOVE the ITEMS heading */
+.items-kicker {
+  position: absolute;
+  top: 58vw;
+  left: 12vw;                                /* aligned with PRODUCTS title */
+  margin: 0;
+  z-index: 24;
+  font: 700 0.95vw/1 ui-monospace, "Resotyc", ui-monospace, monospace;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0.12vw 0 rgba(40,0,30,0.35);
+  pointer-events: none;
+}
+
+/* italic sub line BELOW the PRODUCTS heading (sits over the white card) */
+.items-sub {
+  position: absolute;
+  top: 67vw;
+  left: 12vw;                                /* aligned left with the title */
+  margin: 0;
+  z-index: 24;
+  font: italic 400 1.35vw/1.3 "Resotyc", "Allotrope", serif;
+  color: #1A1626;
+  letter-spacing: 0.02em;
+  text-align: left;
+  pointer-events: none;
+}
+
+/* product showcase grid — flat, no backgrounds, no badges. Just the
+   image, name, short description, price. Two columns, multiple rows. */
+.products-showcase {
+  position: absolute;
+  top: 75vw;
+  left: 8vw;
+  right: 8vw;
+  z-index: 23;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4vw;
+  row-gap: 6vw;
+  align-items: end;
+  justify-items: center;
+  pointer-events: none;
+  --product-scale: 1.2vw;
+}
+
+/* per-product real-world heights (inches). These are SOMEWHAT relative —
+   true ratios (tapestry 60 / pin 1.5 = 40×) would make pins invisible,
+   so the extremes are compressed but the visual hierarchy holds:
+     tapestry > print > tote > lanyard > acrylic > deskmat > pin */
+.product-item--tote     { --real-h: 16; }   /* real 16-in body                */
+.product-item--lanyard  { --real-h: 18; }   /* bumped — was reading too small  */
+.product-item--print    { --real-h: 17; }   /* real 11×17-in art print        */
+.product-item--deskmat  { --real-h: 12; }   /* bumped to read against the grid */
+.product-item--acrylic  { --real-h: 14; }   /* bumped — standee now reads big  */
+.product-item--tapestry { --real-h: 22; }   /* compressed from real 60-in     */
+.product-item--pin      { --real-h: 4;  }   /* real 1.5-in pin, gently boosted */
+.product-item--sticker  { --real-h: 11; }   /* bumped — pair now reads big     */
+
+/* pair slot — two items side-by-side, sharing a baseline.
+   Larger gap so the shake rotations don't crash into each other. */
+.psg-pair {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4vw;
+}
+.psg-pair .product-item { margin: 0; }
+
+/* paired items share the same milder shake — the keyframes above are
+   already gentle enough that pair-mates no longer crash into each other */
+
+/* solo final-row item — span both columns and center */
+.psg-item--solo { grid-column: 1 / -1; }
+
+/* clickable variant — the entire product card becomes a link target
+   via the transparent <a class="psg-item__link"> overlay */
+.psg-item--clickable { cursor: pointer; transition: transform 0.2s ease; }
+.psg-item--clickable:hover { transform: translateY(-0.4vw); }
+.psg-item--clickable:hover .psg-item__name { text-decoration: underline; text-underline-offset: 0.3vw; }
+.psg-item__link {
+  position: absolute;
+  inset: -0.5vw;          /* slight bleed beyond card so corners are also clickable */
+  z-index: 30;
+  border-radius: 0.4vw;
+  outline: none;
+  /* parent .products-showcase has pointer-events:none for the shaky decorative
+     product imagery — re-enable hit-testing on this link explicitly */
+  pointer-events: auto;
+}
+.psg-item__link:focus-visible { outline: 0.25vw solid #fd7ac0; outline-offset: 0.2vw; }
+
+.psg-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5vw;
+  text-align: center;
+}
+
+/* mono catalog number floating to the SIDE of the product image — left
+   for item 01, right for item 02, so the page reads asymmetric */
+/* Big sequence number (01/02/...) hidden — it floated BEHIND the
+   product model. Name / rule / desc / price stay visible in front. */
+.psg-item__no { display: none !important; }
+.psg-item__no {
+  position: absolute;
+  top: 1.5vw;
+  font-family: "Apex Mk3", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 1.1vw;
+  letter-spacing: 0.2em;
+  color: #1A1626;
+  opacity: 0.55;
+}
+.psg-item--a .psg-item__no { left: 1vw; }
+.psg-item--b .psg-item__no { right: 1vw; }
+
+.psg-item__name {
+  margin: 0.8vw 0 0;
+  font-family: "Allotrope Wide", "Allotrope", sans-serif;
+  font-weight: 900; font-style: italic;
+  font-size: 2vw;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #1A1626;
+}
+/* small colored heart / star next to the name */
+.psg-item__name i {
+  display: inline-block;
+  font-style: normal;
+  font-size: 0.72em;
+  vertical-align: 0.05em;
+  margin-left: 0.2vw;
+}
+.psg-item--a .psg-item__name i { color: #FF4DA6; }
+.psg-item--b .psg-item__name i { color: #ffd23f; }
+
+/* short colored underline rule below the name */
+.psg-item__rule {
+  display: block;
+  width: 3vw;
+  height: 0.22vw;
+  border-radius: 999px;
+  margin: 0.1vw 0 0.3vw;
+}
+.psg-item--a .psg-item__rule { background: #FF4DA6; }
+.psg-item--b .psg-item__rule { background: #3DEAFF; }
+
+.psg-item__desc {
+  margin: 0;
+  font-family: "Branding Pro", "Branding Pro", system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 0.85vw;
+  line-height: 1.4;
+  color: #1A1626;
+  max-width: 22vw;
+}
+.psg-item__price {
+  margin: 0.1vw 0 0;
+  font-family: "TZ Mark", "Branding Pro", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 2.6vw;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #1A1626;
+}
+/* a colored dot prefix on the price line */
+.psg-item__price em {
+  font-style: normal;
+  margin-right: 0.3vw;
+  font-size: 1.3em;
+  vertical-align: 0.05em;
+}
+.psg-item--a .psg-item__price em { color: #3DEAFF; }   /* cyan dot for the pink item */
+.psg-item--b .psg-item__price em { color: #FF4DA6; }   /* pink dot for the cyan item */
+
+/* slight asymmetric vertical offset on right-column items */
+.psg-item--b { transform: translateY(-1vw); }
+/* size each item from its REAL-WORLD HEIGHT in inches, so any new
+   product just declares its --real-h and falls into proportion. */
+.product-item {
+  height: calc(var(--real-h, 10) * var(--product-scale));
+  width: auto;
+  object-fit: contain;
+  transform-origin: center center;
+}
+.product-item--tote    { --real-h: 20; }      /* ~16" body + 4" handles */
+.product-item--lanyard { --real-h: 18; }      /* bumped to match grid scale */
+
+/* every product gets a drop-shadow + the quirky step-end PSG shake.
+   IDENTICAL duration on every item + zero delay so all the snaps fire
+   on the same frame — the whole grid choreographs together. */
+.product-item {
+  filter: drop-shadow(0.35vw 0.55vw 0.45vw rgba(20, 0, 20, 0.30));
+  animation: psg-shake-a 1.2s step-end infinite;
+}
+.product-item--shake-b { animation: psg-shake-b 1.2s step-end infinite; }
+/* `step-end` = no tween, instant snaps. MILDER now — small swings so
+   items teeter gently in place instead of swinging side to side. */
+@keyframes psg-shake-a {
+  0%   { transform: rotate(-7deg) translate(-0.3vw, -0.2vw); }
+  50%  { transform: rotate( 7deg) translate( 0.3vw,  0.1vw); }
+}
+@keyframes psg-shake-b {
+  0%   { transform: rotate( 6deg) translate( 0.3vw, -0.2vw); }
+  50%  { transform: rotate(-8deg) translate(-0.3vw,  0.1vw); }
+}
+
+/* PSG wordmark — centered between the characters, sitting up over the
+   pink wave. Hard offset cartoon shadow (deep pink hard stamp + soft
+   dark depth under) for that PSG title-card pop. */
+.psg-logo {
+  position: absolute;
+  top: 35vw;            /* moved up — comfortably above the fold on a 16:9 viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50vw;          /* larger */
+  height: auto;
+  z-index: 25;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 1.2vw 1.6vw rgba(40, 5, 40, 0.45));  /* soft depth shadow only */
+  animation: psg-logo-anvil 1.55s linear 0.85s both;  /* per-keyframe timing-fns drive gravity → impact → bounce → jitter */
+}
+
+/* ============================================================================
+   PSG-FASHION LOAD-IN — every visible asset snaps onto the page with a
+   dramatic step-end entrance, staggered. Frill drops, heart pops in
+   behind, characters slide in from off-screen, logo stamps, products
+   pop up. All step-end so the motion is choppy/snappy, not smooth — the
+   limited-frame anime entrance vibe. Final keyframe = the resting style
+   for every element, so nothing jumps after the animation finishes.
+   ========================================================================== */
+@keyframes psg-frill-drop {
+  0%   { transform: translateY(-280px); }
+  40%  { transform: translateY(  30px); }
+  70%  { transform: translateY(  -8px); }
+  100% { transform: translateY(   0); }
+}
+@keyframes psg-heart-pop {
+  0%   { opacity: 0;    transform: translateX(calc(-50% - 15vw)) scale(0.55); }
+  60%  { opacity: 0.20; transform: translateX(calc(-50% - 15vw)) scale(1.15); }
+  100% { opacity: 0.20; transform: translateX(calc(-50% - 15vw)) scale(1); }
+}
+@keyframes psg-panty-slide {
+  0%   { transform: translateX(-32vw); opacity: 0; }
+  60%  { transform: translateX(  3vw); opacity: 1; }
+  100% { transform: translateX(  0);   opacity: 1; }
+}
+@keyframes psg-stocking-slide {
+  0%   { transform: translateX( 32vw); opacity: 0; }
+  60%  { transform: translateX( -3vw); opacity: 1; }
+  100% { transform: translateX(   0);  opacity: 1; }
+}
+/* heavy anvil drop: gravity-accelerated fall → SLAM (squash) → bounce →
+   second impact → tiny bounce → settle, then jitter shake from the
+   shockwave. Per-keyframe timing-function alternates ease-in (gravity)
+   with ease-out (bounce). */
+@keyframes psg-logo-anvil {
+  0%   { transform: translateX(-50%) translateY(-120vh) rotate(-4deg); opacity: 0;
+         animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0); }
+  10%  { opacity: 1;
+         animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0); }
+  44%  { transform: translateX(-50%) translateY(0) rotate(0);
+         animation-timing-function: cubic-bezier(0.18, 0.9, 0.5, 1); }
+  48%  { transform: translateX(-50%) translateY(0) scale(1.18, 0.78);  /* SLAM squash */
+         animation-timing-function: cubic-bezier(0.2, 1.2, 0.4, 1); }
+  56%  { transform: translateX(-50%) translateY(-4vw) scale(0.94, 1.08);  /* bounce up */
+         animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0); }
+  64%  { transform: translateX(-50%) translateY(0) scale(1.07, 0.94);   /* second impact */
+         animation-timing-function: cubic-bezier(0.2, 1.2, 0.4, 1); }
+  70%  { transform: translateX(-50%) translateY(-1.3vw) scale(0.99, 1.02);
+         animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0); }
+  76%  { transform: translateX(-50%) translateY(0); }
+  /* shockwave jitter — quick step snaps left/right */
+  79%  { transform: translateX(calc(-50% + 0.45vw)) translateY(0); }
+  82%  { transform: translateX(calc(-50% - 0.45vw)) translateY(0); }
+  85%  { transform: translateX(calc(-50% + 0.3vw))  translateY(0); }
+  88%  { transform: translateX(calc(-50% - 0.2vw))  translateY(0); }
+  91%  { transform: translateX(calc(-50% + 0.12vw)) translateY(0); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+/* smoke cloud at the impact point — each puff is a soft radial gradient
+   that expands + drifts outward + fades as it goes. */
+.psg-impact {
+  position: absolute;
+  top: 51vw;                   /* near logo bottom edge (logo top 35vw + ~16vw height) */
+  left: 50%;
+  width: 56vw;                 /* a touch wider than the logo so puffs reach the sides */
+  height: 0;
+  transform: translateX(-50%);
+  z-index: 24;                 /* below the logo (z 25) */
+  pointer-events: none;
+}
+.smoke {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%,
+    rgba(255,255,255,0.95) 0%,
+    rgba(255,255,255,0.65) 25%,
+    rgba(255,250,245,0.25) 55%,
+    transparent 80%);
+  opacity: 0;
+  filter: blur(0.3vw);
+  will-change: transform, opacity;
+}
+/* one puff per .smoke--N — different sizes / spread directions / timings
+   to feel like a real impact cloud, not a clean burst. */
+.smoke--1 { left:  4%; width:  9vw; height:  9vw; --dx: -16vw; --dy: -5vw; animation: smoke-puff 1.25s ease-out 1.60s both; }
+.smoke--2 { left: 18%; width:  7vw; height:  7vw; --dx:  -9vw; --dy: -7vw; animation: smoke-puff 1.10s ease-out 1.55s both; }
+.smoke--3 { left: 32%; width: 11vw; height: 11vw; --dx:  -3vw; --dy: -9vw; animation: smoke-puff 1.30s ease-out 1.58s both; }
+.smoke--4 { left: 46%; width:  8vw; height:  8vw; --dx:   1vw; --dy:-10vw; animation: smoke-puff 1.20s ease-out 1.62s both; }
+.smoke--5 { left: 56%; width: 10vw; height: 10vw; --dx:   4vw; --dy: -9vw; animation: smoke-puff 1.30s ease-out 1.57s both; }
+.smoke--6 { left: 70%; width:  7vw; height:  7vw; --dx:   9vw; --dy: -7vw; animation: smoke-puff 1.10s ease-out 1.65s both; }
+.smoke--7 { left: 84%; width:  9vw; height:  9vw; --dx:  15vw; --dy: -5vw; animation: smoke-puff 1.25s ease-out 1.63s both; }
+.smoke--8 { left: 38%; width:  6vw; height:  6vw; --dx:  -2vw; --dy: -4vw; animation: smoke-puff 0.95s ease-out 1.66s both; }
+
+@keyframes smoke-puff {
+  0%   { opacity: 0;    transform: translate(0, 0) scale(0.15); }
+  12%  { opacity: 0.92; transform: translate(calc(var(--dx) * 0.18), calc(var(--dy) * 0.12)) scale(0.55); }
+  55%  { opacity: 0.55; transform: translate(calc(var(--dx) * 0.65), calc(var(--dy) * 0.60)) scale(1.15); }
+  100% { opacity: 0;    transform: translate(var(--dx), var(--dy)) scale(1.7); }
+}
+@keyframes psg-product-pop {
+  0%   { transform: scale(0)   translateY( 80px); opacity: 0; }
+  55%  { transform: scale(1.3) translateY(-18px); opacity: 1; }
+  100% { transform: scale(1)   translateY(  0);   opacity: 1; }
+}
+
+/* large decorative heart sitting BEHIND the frill and the characters.
+   centered on the characters' vertical midpoint, 20% opacity. */
+.heart-bg {
+  position: absolute;
+  top: -10vw;                                         /* shifted up */
+  left: 50%;
+  transform: translateX(calc(-50% - 15vw));           /* shifted more to the left */
+  width: 80vw;
+  height: auto;
+  z-index: 5;
+  opacity: 0.20;
+  pointer-events: none;
+  user-select: none;
+  animation: psg-heart-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both;
+}
+
+/* scalloped frill border at the very top — bottom edge of PinkFrills.png
+   hangs down, scallops run off both screen edges */
+.frill-top {
+  position: absolute;
+  top: -80px;                  /* nudged UP — scallop tips closer to the top edge */
+  left: 0; right: 0;
+  height: 260px;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+  background-image: url("/assets/psg-pink-frills.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 108% auto;
+  animation: psg-frill-drop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s both;
+}
+
+/* Panty & Stocking — large, side by side, sitting on top of the frill
+   and getting their lower halves covered by the rising pink bg below */
+.char {
+  position: absolute;
+  /* viewport-relative scale; same height = same scale */
+  height: 90vw;
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+  z-index: 15;
+}
+/* Positioning is built from the OPAQUE bounding box inside each PNG
+   (Panty body L=352,R=2543,T=111 / Stocking body L=390,R=2776,T=130).
+   `top`  pulls the figure up by its transparent top margin so the
+          character's actual TOP sits at y=0 (viewport top).
+   `left` places the figure so the body's inner edge (Panty's right /
+          Stocking's left) meets at viewport CENTER (50vw). The pair is
+          therefore centered around viewport center; the outer edges
+          fall where the art puts them. */
+.char--panty {
+  top:  -2.40vw;     /*  111/4154 × 90vw  */
+  left: -5.12vw;     /* PNG_w × R/PNG_w → body's right edge lands at 50vw */
+  animation: psg-panty-slide 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+.char--stocking {
+  top:  -2.85vw;     /*  130/4099 × 90vw  */
+  left: 41.44vw;     /* body's left edge lands at 50vw */
+  animation: psg-stocking-slide 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
+/* Blue silhouette overlay of each character — same alpha shape, same
+   dimensions, same coordinates as the real .char--panty / .char--stocking
+   <img>. Width is derived from each PNG's native aspect ratio so the
+   silhouette is a 1:1 pixel match of the original art (Panty PNG is
+   1309×1920, Stocking PNG is 1559×1920). No offset; from here a single
+   transform: translate(...) moves them anywhere. */
+.char-silh {
+  position: absolute;
+  height: 90vw;
+  z-index: 14;                  /* UNDER .char (z 15) — character art reads on top */
+  pointer-events: none;
+  user-select: none;
+  background: #3DEAFF;
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0;
+          mask-position: 0 0;
+}
+.char-silh--panty {
+  /* matches .char--panty position, nudged 10px down + 10px right */
+  top:  calc(-2.40vw + 10px);
+  left: calc(-5.12vw + 10px);
+  aspect-ratio: 1309 / 1920;
+  -webkit-mask-image: url("/assets/psg-panty.webp");
+          mask-image: url("/assets/psg-panty.webp");
+  animation: psg-panty-slide 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+.char-silh--stocking {
+  top:  calc(-2.85vw + 10px);
+  left: calc(41.44vw + 10px);
+  aspect-ratio: 1559 / 1920;
+  -webkit-mask-image: url("/assets/psg-stocking.webp");
+          mask-image: url("/assets/psg-stocking.webp");
+  animation: psg-stocking-slide 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
+/* pink background wave — its own layer, anchored to canvas bottom,
+   pushed DOWN so the white area in the middle is larger and the
+   characters get progressively swallowed by the pink as it rises. */
+.bg-pink {
+  position: absolute;
+  left: 0; right: 0;
+  /* pink top tracks the characters' midline: top (~-2.6vw avg) + 45vw */
+  top: 42.4vw;
+  bottom: 0;
+  z-index: 20;
+  pointer-events: none;
+  /* CSS gradient replacing the PNG (PS premultiplies white into the
+     alpha channel — composites as a hazy white veil). Straight alpha
+     by construction. New asset is two-tone: fades transparent → light
+     pink (#ffb0d9) → deep pink (#fd7ac0). Distances picked to match
+     the PNG's natural transitions when scaled to 100vw width. */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 176, 217, 0) 0,    /* fully transparent (light-pink hue) */
+    #ffb0d9 11vw,                /* light pink, opaque                  */
+    #fd7ac0 21vw,                /* transitions into deep pink          */
+    #fd7ac0 100%
+  );
+}
+
+/* ============================================================

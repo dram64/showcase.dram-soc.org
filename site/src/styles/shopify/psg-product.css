@@ -1,0 +1,870 @@
+/* === PSG product page — body overrides === */
+body.page-psg-product {
+  margin: 0;
+  padding: 0;
+  /* match the .pp-wrap letterbox gradient so any uncovered edge blends
+     into the soft pink, not the dark misc purple. */
+  background: #FFD1E5;
+  overflow-x: hidden;
+}
+body.page-psg-product .misc__header-wrap,
+body.page-psg-product .misc__footer {
+  display: none !important;
+}
+/* Keep cart toggle + drawer alive so add-to-cart opens the drawer (and
+   the user has a way to view their cart). Float the toggle above the
+   16:9 stage in a frosted pill. */
+body.page-psg-product .misc__cart-toggle {
+  position: fixed !important;
+  top: 3vh !important;
+  right: 3vw !important;
+  margin: 0 !important;
+  z-index: 200;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+body.page-psg-product main,
+body.page-psg-product .content-for-layout,
+body.page-psg-product .shopify-section {
+  margin: 0; padding: 0; width: 100%; max-width: 100%;
+}
+
+/* ============================================================
+   PRODUCT PAGE — /print
+   16:9 stage that scales to fit any viewport while preserving
+   aspect. Every layer is a 3840×2160 PNG with its content placed
+   correctly and the rest transparent; we just stack them and
+   reverse-map the source filename order to z-index.
+   ============================================================ */
+.pp-wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFD1E5 0%, #C9F0F7 100%);   /* soft pink → cyan PSG wash */
+  overflow: hidden;
+}
+.pp-stage {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #FFF4FA;
+}
+.pp-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+/* layer order — lower number in the source filename = closer to camera */
+.pp-layer--bg        { z-index:  1; }
+.pp-layer--silh      { z-index:  2; }
+.pp-layer--pink-rect { z-index:  3; }
+.pp-layer--backing   { z-index:  4; }
+.pp-layer--gradient  { z-index:  5; }
+.pp-layer--halftone  { z-index:  6; }
+.pp-layer--brand     { z-index:  7; }
+.pp-layer--rainbow   { z-index:  8; }
+.pp-layer--cta-rect  { z-index:  9; }
+.pp-layer--product   { z-index: 10; }
+.pp-layer--name      { z-index: 11; }
+.pp-layer--size      { z-index: 12; }
+.pp-layer--irl       { z-index: 13; display: none; }
+.pp-layer--cta-text  { z-index: 14; }
+.pp-layer--price     { z-index: 15; }
+
+/* === Product-page HTML overlays ===
+   Per-product label/price/size text. The original `/print` page used baked
+   PNG layers for these; the generic /products/[slug] template renders them
+   as HTML so each product can supply its own copy. Positions match where
+   the equivalent PNG layers used to render in the 16:9 stage. */
+.pp-stage { container-type: inline-size; }     /* enables cqi sizing inside */
+
+/* Product NAME — centered horizontally AND vertically on the BOTTOM
+   white rectangle (the IRL square at x:~2-43%, y:~69-88% of stage).
+   Center of that rect ≈ (22.5%, 78.5%). */
+.pp-name {
+  position: absolute;
+  left: 22.5%;
+  top: 63.5%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  z-index: 16;
+  font-family: "Resotyc", "Allotrope", serif;
+  font-weight: 400;
+  font-size: 8cqi;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  color: #fd7ac0;
+  text-shadow:
+    0 0.2cqi 0 #ffffff,
+    0 0.45cqi 0 rgba(40, 0, 30, 0.18);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+}
+.pp-name--img {
+  height: 7cqi;
+  width: auto;
+  max-width: 38%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.2cqi 0.4cqi rgba(40, 0, 30, 0.12));
+}
+
+/* Product PRICE — sits in the pink gap just above the bottom white
+   rect, smaller and lower so it tucks closer to the name. */
+.pp-price {
+  position: absolute;
+  left: 22.5%;
+  top: 55.2%;
+  transform: translate(-50%, -100%);
+  margin: 0;
+  z-index: 16;
+  font-family: "Resotyc", "Allotrope", serif;
+  font-weight: 400;
+  font-size: 4cqi;
+  letter-spacing: -0.01em;
+  color: #1A1626;
+  pointer-events: none;
+  user-select: none;
+  text-align: center;
+}
+.pp-price--img {
+  height: 4.5cqi;
+  width: auto;
+}
+/* Wrapper used when the price is rendered as a PNG and we need to slot
+   an "each" suffix next to it (pair products). The .pp-price absolute
+   positioning is on the wrapper; we flex the img + suffix inside. */
+.pp-price--imgwrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6cqi;
+}
+.pp-price__each {
+  font: italic 700 2.4cqi/1 "Resotyc", "Allotrope", serif;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-transform: lowercase;
+}
+
+/* Dimensions — Allotrope Wide heavy italic, white text, vertical along
+   the right edge fitted INSIDE the pink-rect area. Uses writing-mode for
+   reliable vertical layout (no rotate transform needed). Sized small so
+   even the longest dimension (e.g. tapestry "23.62 × 35.43 INCHES")
+   stays bounded between the pink rect's top edge and the bottom. */
+.pp-size {
+  display: none;             /* vertical right-side dimension hidden site-wide */
+}
+.pp-size span:first-child { font-weight: 900; }
+
+/* transparent hit-target sitting EXACTLY over the visible "Add to Cart"
+   text inside cta.png. Coordinates derived by scanning the PNG's alpha
+   channel: opaque bbox is (615,668)→(694,747) in 1920×1080 source =
+   left 32.03%, top 61.85%, 4.11% wide, 7.31% tall. A small padding is
+   added so the hit zone is slightly larger than the bare text. */
+.pp-cta-hit {
+  position: absolute;
+  left:  31%;
+  top:   46.5%;
+  width: 6.5%;
+  height: 9%;
+  z-index: 20;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.pp-cta-hit:hover {
+  transform: translateY(-0.2vw) scale(1.01);
+  /* subtle white wash over the underlying CTA art so the hover area is
+     visible — the button itself is transparent but this tint reads as
+     a "lift" on the hit zone. */
+  background: rgba(255, 255, 255, 0.14);
+  outline: 0.18vw solid rgba(255, 255, 255, 0.55);
+  outline-offset: -0.3vw;
+  border-radius: 0.6vw;
+}
+.pp-cta-hit:active {
+  transform: translateY(0.1vw) scale(0.995);
+  background: rgba(255, 255, 255, 0.22);
+}
+.pp-cta-hit:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  outline: 0.22vw solid #FF4DA6;
+  outline-offset: 0;
+  border-radius: 0.6vw;
+}
+/* Propagate hover to the visible CTA art via :has() — both the white
+   CTA rectangle and the "Add to Cart" text glow + lift slightly so the
+   user can tell the button is alive. */
+.pp-stage:has(.pp-cta-hit:hover) .pp-layer--cta-text {
+  filter: drop-shadow(0 0.4vw 0.7vw rgba(40, 0, 30, 0.28)) brightness(1.06);
+  transition: filter 0.18s ease;
+}
+.pp-stage:has(.pp-cta-hit:hover) .pp-layer--cta-rect {
+  filter: brightness(1.06) drop-shadow(0 0.3vw 0.6vw rgba(40, 0, 30, 0.16));
+  transition: filter 0.18s ease;
+}
+
+/* grain inside the stage instead of the body (re-uses .grain styles) */
+.pp-stage .grain { z-index: 30; }
+
+/* === PRODUCT PAGE entrance animations ===
+   PSG-style cascade — background settles first, then silhouettes glide in,
+   pink slabs rise, brand/rainbow slide, the product print SLAMS down with
+   a tiny jitter, then name/size/IRL/CTA/price pop in. Total ~2.2s. */
+@keyframes pp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pp-rise {
+  from { opacity: 0; transform: translateY(6vw); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pp-from-left {
+  from { opacity: 0; transform: translateX(-8vw); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pp-from-right {
+  from { opacity: 0; transform: translateX(8vw); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pp-pop {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes pp-pop-rot {
+  0%   { opacity: 0; transform: scale(0) rotate(-15deg); }
+  60%  { opacity: 1; transform: scale(1.18) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes pp-product-slam {
+  /* heavy drop from above with rotation jitter on impact */
+  0%   { opacity: 0; transform: translateY(-65vh) rotate(-22deg) scale(1.08); }
+  55%  { opacity: 1; transform: translateY(3vh)   rotate(3deg)   scale(1.04); }
+  72%  {              transform: translateY(-1.4vh) rotate(-2deg) scale(1.01); }
+  85%  {              transform: translateY(0.7vh) rotate(1deg)  scale(1); }
+  100% { opacity: 1; transform: translateY(0)    rotate(0)      scale(1); }
+}
+@keyframes pp-drop-step {
+  /* choppy step-end drop for the PRINT title */
+  0%   { opacity: 0; transform: translateY(-26vw); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.pp-layer--bg        { animation: pp-fade        0.55s ease-out  0.00s both; }
+.pp-layer--silh      { animation: pp-from-left   0.60s cubic-bezier(.22,1,.36,1) 0.05s both; }
+.pp-layer--pink-rect { animation: pp-rise        0.60s cubic-bezier(.22,1,.36,1) 0.12s both; }
+.pp-layer--backing   { animation: pp-pop         0.55s cubic-bezier(.34,1.56,.64,1) 0.28s both; transform-origin: 78% 50%; }
+.pp-layer--gradient  { animation: pp-fade        0.45s ease-out  0.32s both; }
+.pp-layer--halftone  { animation: pp-fade        0.45s ease-out  0.38s both; }
+.pp-layer--brand     { animation: pp-from-left   0.50s cubic-bezier(.22,1,.36,1) 0.42s both; }
+.pp-layer--rainbow   { animation: pp-from-left   0.55s cubic-bezier(.22,1,.36,1) 0.48s both; }
+.pp-layer--cta-rect  { animation: pp-rise        0.55s cubic-bezier(.34,1.56,.64,1) 0.55s both; }
+/* ─── 3D rotating print showcase ───
+   Outer wrapper handles the one-shot slam entrance + bob loop; inner
+   .pp-print3d carries the perpetual Y-axis spin. Split into two boxes so
+   the slam's `forwards` fill on transform doesn't conflict with the spin's
+   transform on the same property. */
+.pp-print3d-wrap {
+  position: absolute;
+  /* Per-product shape — `--pp-aspect` is set inline on each product page.
+     Width is clamped via cqw so wide products (deskmat) don't blow past
+     the stage; height follows from aspect-ratio. The wrap is anchored at
+     top-right; for short landscape products it sits as a smaller card up
+     top, for portrait it fills almost the full right side. */
+  --_aspect: var(--pp-aspect, 11 / 17);
+  top: 8%;
+  right: 10%;                                  /* shifted further left */
+  width: min(50cqw, calc(45cqw * var(--_aspect)));
+  aspect-ratio: var(--_aspect);
+  container-type: inline-size;                 /* so cqi inside resolves against the CARD width */
+  z-index: 10;
+  perspective: 1600px;
+  /* CRITICAL: keep the 3D context alive through the wrap, otherwise the
+     wrap's own transforms (slam / bob) flatten descendants into 2D and
+     the inner card's rotateY reads as an X-mirror instead of a true flip */
+  transform-style: preserve-3d;
+  pointer-events: auto;            /* clickable */
+  cursor: pointer;
+  outline: none;
+  filter: drop-shadow(0.6vw 1.2vw 1vw rgba(20, 0, 20, 0.45));
+  animation:
+    pp-product-slam 0.85s steps(8, end) 0.65s both,
+    pp-print3d-bob  3.4s  ease-in-out   1.55s infinite;
+  transform-origin: center center;
+  transition:
+    top   0.85s cubic-bezier(.22, 1, .36, 1),
+    right 0.85s cubic-bezier(.22, 1, .36, 1),
+    height 0.85s cubic-bezier(.22, 1, .36, 1);
+}
+.pp-print3d-wrap:focus-visible { filter: drop-shadow(0 0 0.6vw #fd7ac0) drop-shadow(0.6vw 1.2vw 1vw rgba(20,0,20,0.45)); }
+.pp-print3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* drag-to-spin disabled — card sits at rotateY(0) and only flips on click. */
+  cursor: pointer;
+}
+
+/* === FLIPPED STATE ===
+   On click, the wrapper glides to the center of the stage, the spin
+   stops, and the inner card locks to rotateY(180deg) so the back face
+   (with the description) is presented to the viewer. */
+.pp-print3d-wrap.is-flipped {
+  /* On flip, scale up and center horizontally within the stage. Width is
+     clamped to a wider cap so landscape products read large at flipped time;
+     `right: calc(50% - width/2)` would be cleaner but with the same min()
+     formula, we override and center via `left` + `right` auto with margin. */
+  top: 4%;
+  left: 50%;
+  right: auto;
+  width: min(70cqw, calc(60cqw * var(--_aspect, 11/17)));
+  aspect-ratio: var(--_aspect, 11/17);
+  transform: translateX(-50%);
+  z-index: 25;                                      /* float above CTA rect / IRL / name etc */
+  animation:
+    pp-print3d-bob 3.4s ease-in-out 0s infinite;   /* keep the bob, kill the slam (it already finished) */
+}
+.pp-print3d-wrap.is-flipped .pp-print3d {
+  animation: none !important;
+  /* !important needed to override the inline transform JS sets on the
+     normal (unflipped) state — without it the inline style would win */
+  transform: rotateY(180deg) !important;
+  cursor: default;
+}
+
+/* === BACK-FACE CONTENT ===
+   The back face holds the product details. Children inherit the back's
+   rotateY(180deg), so when the card flips to show the back, the combined
+   transform unwinds and text reads upright. */
+.pp-print3d__face--back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6% 8%;
+  /* override the diagonal stripe back from earlier — clean for reading */
+  background: #FFF4FA;
+  box-shadow:
+    inset 0 0 0 0.6vw #fd7ac0,
+    inset 0 0 0 1.0vw #ffffff;
+  overflow: hidden;
+}
+/* All back-face copy sizes in cqi (1cqi = 1% of the card width). This
+   makes the text shrink with smaller / narrower cards (e.g. pins) so it
+   stops clipping out of the masked silhouette. */
+.pp-print3d__details {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;     /* bottom-align inside the silhouette body */
+  padding-bottom: 6%;
+  gap: 2cqi;
+  color: #1A1626;
+  /* Axique Light (self-hosted, /fonts/psg/) carries the body copy on the
+     back face — a real light-weight body font instead of fake-weight
+     Allotrope which would synthesize the regular weight badly. */
+  font-family: "Branding Pro", system-ui, sans-serif;
+}
+
+/* Tote-specific back: flip the bag silhouette mask horizontally so the
+   back face mirrors the bag (handle on the opposite side from the front).
+   The face is already rotateY(180deg) to face the viewer when flipped;
+   compounding scaleX(-1) mirrors the alpha mask. The details container
+   re-applies scaleX(-1) so the text reads upright instead of mirrored. */
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__face--back {
+  background: transparent;
+  box-shadow: none;
+  transform: rotateY(180deg) scaleX(-1);
+}
+/* Tote-specific back: tilt text 25° clockwise to follow the bag's natural
+   angle, shrink it, and shift it lower into the bag body. The leading
+   scaleX(-1) cancels the parent face's mirror so the text isn't backwards. */
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__details {
+  justify-content: flex-end;
+  padding-bottom: 12%;           /* push group lower into the bag body */
+  gap: 1.4cqi;
+  transform: scaleX(-1) rotate(25deg);
+  transform-origin: center center;
+  font-size: 70%;
+  text-align: center;
+}
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__name { font-size: 4.5cqi; }
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__desc { font-size: 2cqi; }
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__specs { font-size: 1.7cqi; }
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__specs dt { font-size: 1.5cqi; }
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__specs > div { grid-template-columns: 10cqi 1fr; padding-top: 0.6cqi; }
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__eyebrow { font-size: 1.8cqi; }
+.pp-print3d-wrap[data-slug="tote"] .pp-print3d__hint { font-size: 1.4cqi; }
+
+/* Deskmat-specific: wide-and-short card (35:16). Pushed lower-right so
+   it sits centered vertically; both faces get a large border-radius and
+   overflow:hidden to imitate the rounded fabric corners of a real desk
+   mat. The back face drops the image alpha mask in favor of the rounded
+   rectangle so the back reads as a clean rounded surface, mirroring the
+   print product's back-face treatment. */
+.pp-print3d-wrap[data-slug="deskmat"] {
+  top: 25%;
+  right: 3%;
+}
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__face {
+  border-radius: 4cqi;            /* rounded corners — reads like a real deskmat */
+  overflow: hidden;
+}
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__face--front {
+  /* fill the face so the printed art reaches the rounded edges; faint
+     rubber-base inset shadow + a thin stitched-edge ring for realism */
+  background-size: cover;
+  box-shadow:
+    inset 0 0 0 0.25cqi rgba(40, 0, 30, 0.55),     /* stitched fabric edge */
+    inset 0 -0.6cqi 1.2cqi rgba(0, 0, 0, 0.18);    /* thickness shadow */
+}
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__face--back {
+  /* drop the silhouette mask — it's a rounded rectangle, not an organic
+     shape — and lean on the face's border-radius instead. */
+  -webkit-mask: none;
+          mask: none;
+  padding: 5% 6%;
+  background: #FFF4FA;
+  box-shadow:
+    inset 0 0 0 0.25cqi rgba(40, 0, 30, 0.55),
+    inset 0 0 0 0.7cqi #ffffff,
+    inset 0 0 0 0.95cqi #fd7ac0;
+}
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__details {
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  gap: 1.4cqi;
+}
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__eyebrow { font-size: 1.8cqi; letter-spacing: 0.28em; }
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__name    { font-size: 5.5cqi; line-height: 0.95; letter-spacing: -0.01em; }
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__specs   { font-size: 1.7cqi; row-gap: 0.8cqi; margin-top: 0.6cqi; }
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__specs dt { font-size: 1.5cqi; }
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__specs > div { grid-template-columns: 9cqi 1fr; padding-top: 0.6cqi; }
+.pp-print3d-wrap[data-slug="deskmat"] .pp-print3d__hint    { display: none; }
+
+/* Print-specific back: Tokyo Zero eyebrow + "Panty and Stocking Print"
+   title + two spec rows (Trim + Material), centered as a compact group
+   in the middle of the silhouette. No description, no hint, no credits. */
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__face--back {
+  padding: 4% 6%;
+}
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__details {
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  gap: 2.2cqi;
+}
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__eyebrow { font-size: 2.4cqi; letter-spacing: 0.26em; }
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__name    { font-size: 7.5cqi; line-height: 0.95; letter-spacing: -0.01em; }
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__specs   { font-size: 2.6cqi; row-gap: 1.4cqi; margin-top: 1cqi; }
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__specs dt { font-size: 2.2cqi; }
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__specs > div { grid-template-columns: 14cqi 1fr; padding-top: 1cqi; }
+.pp-print3d-wrap[data-slug="print"] .pp-print3d__hint    { display: none; }
+
+/* Lanyard-specific: scaled down from the default 50cqw cap, sat lower,
+   nudged right. Back face is a clean white panel — no description copy,
+   no silhouette mask. */
+.pp-print3d-wrap[data-slug="lanyard"] {
+  top: 16%;
+  right: 8%;
+  width: min(36cqw, calc(36cqw * var(--_aspect)));
+}
+.pp-print3d-wrap[data-slug="lanyard"] .pp-print3d__face--back {
+  /* Render the back as the SAME image as the front, then flatten its
+     colours to pure white via filter, and horizontally mirror it via
+     scaleX(-1) on top of the existing rotateY(180deg) — so the white
+     silhouette on the back reads as the lanyard flipped left-to-right
+     relative to the front. */
+  background: var(--img) center/contain no-repeat;
+  filter: brightness(0) invert(1);
+  transform: rotateY(180deg) scaleX(-1);
+  -webkit-mask: none;
+          mask: none;
+  padding: 0;
+  box-shadow: none;
+}
+.pp-print3d-wrap[data-slug="lanyard"] .pp-print3d__details { display: none; }
+
+/* Only the Art Print and Deskmat pages keep a full back-face description.
+   For every other product, the back face is just the silhouette / shape —
+   no eyebrow, title, description, specs or hint text. */
+.pp-print3d-wrap:not([data-slug="print"]):not([data-slug="deskmat"]) .pp-print3d__details {
+  display: none;
+}
+
+/* Acrylic-specific: bumped slightly bigger, sit lower, pushed further
+   right, and the back is a clean white panel (no description). */
+.pp-print3d-wrap[data-slug="acrylic"] {
+  top: 18%;
+  right: 3%;
+  width: min(40cqw, calc(40cqw * var(--_aspect)));
+}
+.pp-print3d-wrap[data-slug="acrylic"] .pp-print3d__face--back {
+  background: #ffffff;
+  padding: 0;
+  /* Mirror the silhouette horizontally so the white backing flips relative
+     to the front. No text on the back to compensate for. */
+  transform: rotateY(180deg) scaleX(-1);
+}
+.pp-print3d-wrap[data-slug="acrylic"] .pp-print3d__details { display: none; }
+/* Acrylic pair: tightened diagonal — pulled in a smidge from the global
+   corner-to-corner layout so the two stands sit closer together. The
+   back-face mask MUST mirror these exact positions so the white backing
+   lines up with the showcase front silhouettes. */
+.pp-print3d-wrap[data-slug="acrylic"][data-pair] .pp-print3d__face--front {
+  background:
+    var(--img)      12% 12% / 48% 48% no-repeat,
+    var(--pair-img) 88% 88% / 48% 48% no-repeat;
+}
+.pp-print3d-wrap[data-slug="acrylic"][data-pair] .pp-print3d__face--back {
+  -webkit-mask:
+    var(--img)      12% 12% / 48% 48% no-repeat,
+    var(--pair-img) 88% 88% / 48% 48% no-repeat;
+          mask:
+    var(--img)      12% 12% / 48% 48% no-repeat,
+    var(--pair-img) 88% 88% / 48% 48% no-repeat;
+}
+
+/* Tapestry-specific: bigger pair card, shifted further right. The pair
+   inside is also nudged closer height-wise — vertical stagger pulled in
+   from the global 0%/100% to 20%/80% so the two tapestries overlap more
+   along the Y axis. */
+.pp-print3d-wrap[data-slug="tapestry"] {
+  top: 5%;                                    /* raised from the default 8% */
+  right: 6%;
+  width: min(52cqw, calc(52cqw * var(--_aspect)));
+}
+.pp-print3d-wrap[data-slug="tapestry"][data-pair] .pp-print3d__face--front {
+  background:
+    var(--img)      left  20% / 54% 54% no-repeat,
+    var(--pair-img) right 80% / 54% 54% no-repeat;
+}
+.pp-print3d-wrap[data-slug="tapestry"][data-pair] .pp-print3d__face--back {
+  -webkit-mask:
+    var(--img)      left  20% / 54% 54% no-repeat,
+    var(--pair-img) right 80% / 54% 54% no-repeat;
+          mask:
+    var(--img)      left  20% / 54% 54% no-repeat,
+    var(--pair-img) right 80% / 54% 54% no-repeat;
+}
+/* Tapestry single-variant view — 10% smaller than the default `contain`
+   fill and nudged up so the tapestry sits higher in the card. */
+.pp-print3d-wrap[data-slug="tapestry"]:not([data-pair]) .pp-print3d__face--front {
+  background: var(--img) center 22% / 90% no-repeat;
+}
+.pp-print3d-wrap[data-slug="tapestry"]:not([data-pair]) .pp-print3d__face--back {
+  -webkit-mask: var(--img) center 22% / 90% no-repeat;
+          mask: var(--img) center 22% / 90% no-repeat;
+}
+/* Tapestry back: pure white backing, mirror the silhouette horizontally
+   (both pair + single views). Counter-flip the details so the description
+   + specs read upright. */
+.pp-print3d-wrap[data-slug="tapestry"] .pp-print3d__face--back {
+  background: #ffffff;
+  box-shadow: none;            /* drop the default pink/white inset ring */
+  transform: rotateY(180deg) scaleX(-1);
+}
+.pp-print3d-wrap[data-slug="tapestry"] .pp-print3d__details {
+  transform: scaleX(-1);
+}
+
+/* Sticker pair — pulled in close to the card centre so the two
+   stickers nearly touch along the diagonal. Back is mirrored relative
+   to the front (scaleX on top of the inherited rotateY). When a
+   variant is selected (the JS strips [data-pair]), only one sticker
+   stays — centred on the card instead of in the pair offset. */
+.pp-print3d-wrap[data-slug="stickers"][data-pair] .pp-print3d__face--front {
+  background:
+    var(--img)      20% 20% / 50% 50% no-repeat,
+    var(--pair-img) 80% 80% / 50% 50% no-repeat;
+}
+.pp-print3d-wrap[data-slug="stickers"][data-pair] .pp-print3d__face--back {
+  -webkit-mask:
+    var(--img)      20% 20% / 50% 50% no-repeat,
+    var(--pair-img) 80% 80% / 50% 50% no-repeat;
+          mask:
+    var(--img)      20% 20% / 50% 50% no-repeat,
+    var(--pair-img) 80% 80% / 50% 50% no-repeat;
+  transform: rotateY(180deg) scaleX(-1);
+}
+/* Single-variant view — show just the chosen sticker, centered larger. */
+.pp-print3d-wrap[data-slug="stickers"]:not([data-pair]) .pp-print3d__face--front {
+  background: var(--img) center / 70% 70% no-repeat;
+}
+.pp-print3d-wrap[data-slug="stickers"]:not([data-pair]) .pp-print3d__face--back {
+  -webkit-mask: var(--img) center / 70% 70% no-repeat;
+          mask: var(--img) center / 70% 70% no-repeat;
+  transform: rotateY(180deg) scaleX(-1);
+}
+
+/* Pin-specific: smaller pair card, lower on the stage and pulled left. */
+.pp-print3d-wrap[data-slug="pins"] {
+  top: 25%;
+  right: 15%;
+  width: min(34cqw, calc(34cqw * var(--_aspect)));
+}
+
+/* Sticker-specific: nudged up and pushed further right so the single
+   sticker (default Panty view) sits higher and tighter against the
+   right edge of the stage. */
+.pp-print3d-wrap[data-slug="stickers"] {
+  top: 12%;
+  right: -3%;
+}
+.pp-print3d__eyebrow {
+  margin: 0;
+  font: 700 2.5cqi/1 ui-monospace, "Resotyc", ui-monospace, monospace;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fd7ac0;
+}
+.pp-print3d__name {
+  margin: 0;
+  font-family: "Resotyc", "Allotrope", serif;
+  font-weight: 400;
+  font-size: 7cqi;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+.pp-print3d__desc {
+  margin: 0;
+  font-size: 2.8cqi;
+  line-height: 1.4;
+  color: #1A1626;
+}
+.pp-print3d__specs {
+  margin: 1cqi 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1.5cqi;
+  font-size: 2.4cqi;
+}
+.pp-print3d__specs > div {
+  display: grid;
+  grid-template-columns: 15cqi 1fr;
+  align-items: baseline;
+  border-top: 1px solid rgba(40, 0, 30, 0.18);
+  padding-top: 1cqi;
+}
+/* Credits variant — sits above the print specs on the print product back.
+   Lore-style: dotted rules + slightly smaller, italic dd so it reads as
+   franchise credits rather than line-item specs. */
+.pp-print3d__specs--credits {
+  margin: 0.4cqi 0 0;
+  row-gap: 1cqi;
+  font-size: 2.1cqi;
+}
+.pp-print3d__specs--credits > div {
+  border-top: 1px dashed rgba(40, 0, 30, 0.22);
+  padding-top: 0.7cqi;
+}
+.pp-print3d__specs--credits dt { color: #FF4DA6; font-size: 1.8cqi; }
+.pp-print3d__specs--credits dd { font-style: italic; opacity: 0.9; }
+.pp-print3d__specs dt {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fd7ac0;
+  font-size: 2.1cqi;
+}
+.pp-print3d__specs dd {
+  margin: 0;
+  color: #1A1626;
+}
+.pp-print3d__hint {
+  margin: 1.5cqi 0 0;
+  font-size: 2cqi;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(40, 0, 30, 0.45);
+  text-align: right;
+}
+.pp-print3d__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 0.3vw;
+}
+.pp-print3d__face--front {
+  /* per-product image — each [slug].astro sets `--img: url('...')` inline */
+  background: var(--img, url("/assets/psg-print.webp")) center/contain no-repeat;
+}
+/* Back face mirrors the product silhouette via the image alpha mask so
+   it doesn't look like a rectangle hanging behind a non-rectangular
+   product. Generous inner padding keeps the description text inside the
+   visible body of the silhouette so it doesn't clip at the edges. */
+.pp-print3d__face--back {
+  -webkit-mask: var(--img) center/contain no-repeat;
+          mask: var(--img) center/contain no-repeat;
+  /* Heavy horizontal padding so the description body stays inside the
+     silhouette's main "body" area (e.g. tote bag body, lanyard strap)
+     and doesn't get clipped by the mask at the sides. */
+  padding: 22% 27%;
+}
+
+/* PAIR products — show BOTH variants on the front, STAGGERED diagonally
+   with a small gap between them so they don't overlap. */
+.pp-print3d-wrap[data-pair] .pp-print3d__face--front {
+  background:
+    var(--img) left top / 48% 48% no-repeat,
+    var(--pair-img) right bottom / 48% 48% no-repeat;
+}
+.pp-print3d-wrap[data-pair] .pp-print3d__face--back {
+  -webkit-mask:
+    var(--img) left top / 48% 48% no-repeat,
+    var(--pair-img) right bottom / 48% 48% no-repeat;
+          mask:
+    var(--img) left top / 48% 48% no-repeat,
+    var(--pair-img) right bottom / 48% 48% no-repeat;
+  padding: 10% 12%;
+}
+/* back face pre-rotated 180° so it faces away from viewer initially —
+   when .pp-print3d gets rotateY(180), this face's combined transform
+   unwinds to identity and its content reads upright. */
+.pp-print3d__face--back {
+  transform: rotateY(180deg);
+}
+@keyframes pp-print3d-spin {
+  to { transform: rotateY(360deg); }
+}
+@keyframes pp-print3d-bob {
+  0%, 100% { translate: 0 -0.4vh; }
+  50%      { translate: 0  0.4vh; }
+}
+.pp-layer--name      { animation: pp-drop-step   0.45s steps(5, end) 1.20s both; }
+.pp-layer--size      { animation: pp-from-right  0.45s cubic-bezier(.22,1,.36,1) 1.30s both; }
+.pp-layer--irl       { animation: pp-pop         0.45s cubic-bezier(.34,1.56,.64,1) 1.42s both; transform-origin: 20% 35%; }
+.pp-layer--cta-text  { animation: pp-fade        0.35s ease-out  1.58s both; }
+.pp-layer--price     { animation: pp-pop-rot     0.55s cubic-bezier(.34,1.56,.64,1) 1.68s both; transform-origin: 18% 78%; }
+
+/* fade-only entrance for the HTML overlays — keyframes that animate
+   `transform` would clobber pp-size's rotate(90deg) and pp-price/name's
+   centering, so use the opacity-only pp-fade and stagger via delays. */
+.pp-name  { animation: pp-fade 0.5s ease-out 1.20s both; }
+.pp-size  { animation: pp-fade 0.4s ease-out 1.30s both; }
+.pp-price { animation: pp-fade 0.4s ease-out 1.68s both; }
+
+/* CTA hit-target only becomes interactive once the rectangle has landed */
+.pp-cta-hit {
+  animation: pp-fade 0.3s ease-out 0.95s both;
+}
+
+/* Variant selector — tucked at the outer right corner of the bottom
+   white rectangle (the IRL square sits roughly y:69-87%, x:2-43% of the
+   stage). Smaller, stacked banded buttons. */
+.pp-variant {
+  position: absolute;
+  left: 44%;                  /* just past the right edge of the lower white rect */
+  top: 53%;                   /* shifted up 15% to match the cluster */
+  z-index: 18;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4cqi;
+  pointer-events: auto;
+}
+.pp-variant__btn {
+  display: block;
+  padding: 0.6cqi 1.8cqi;
+  background: #7AD7F0;                   /* core cyan */
+  color: #ffffff;
+  border: 0.2cqi solid #ffffff;
+  outline: 0.22cqi solid #3DEAFF;        /* electric cyan halo */
+  outline-offset: 0;
+  font-family: "Allotrope Wide", "Allotrope", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.6cqi;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.pp-variant__btn--panty    { transform: rotate(-1.5deg); }
+.pp-variant__btn--stocking { transform: rotate(4.5deg); }
+.pp-variant__btn:hover     { transform: rotate(0) scale(1.04); background: #3DEAFF; }
+.pp-variant__btn.is-selected {
+  background: #FFF4FA;
+  color: #163A6B;                        /* deep navy on white when active */
+  border-color: #3DEAFF;
+  outline-color: #ffffff;
+}
+.pp-variant__btn:focus-visible {
+  outline: 0.4cqi solid #1A1626;
+}
+.pp-variant__btn.is-sold-out {
+  opacity: 0.55;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  text-decoration-thickness: 0.18cqi;
+}
+.pp-variant__btn.is-sold-out:hover {
+  transform: none;
+  background: #7AD7F0;
+  color: #ffffff;
+}
+.pp-variant__btn em {
+  display: block;
+  font-style: normal;
+  font-size: 0.7em;
+  letter-spacing: 0.1em;
+  margin-top: 0.2cqi;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-layer, .pp-name, .pp-price, .pp-cta-hit, .pp-print3d-wrap, .pp-print3d {
+    animation: none !important;
+  }
+}
+
+/* === Bottom-cluster shift-up ===
+   The bottom IRL rect is hidden; shift the remaining visible bottom
+   cluster (CTA rect + CTA text PNG) up by the same 15% used for the
+   HTML overlays (name/price/cta-hit/variant). Custom keyframes
+   preserve the entrance animation while ending at the shifted resting
+   position — a static transform alone would be clobbered by the
+   original `forwards` fill on the animation. */
+@keyframes pp-rise-shifted {
+  from { opacity: 0; transform: translateY(calc(6vw - 15%)); }
+  to   { opacity: 1; transform: translateY(-15%); }
+}
+.pp-layer--cta-rect { animation: pp-rise-shifted 0.55s cubic-bezier(.34,1.56,.64,1) 0.55s both; }
+.pp-layer--cta-text { animation: pp-fade         0.35s ease-out                    1.58s both; transform: translateY(-15%); }
+
+/* Product description — sits ABOVE the bottom cluster (cta-rect, name,
+   price, cta, variant). Constrained to the left half of the stage so
+   it doesn't bleed into the 3D card on the right. */
+.pp-desc {
+  position: absolute;
+  left: 5%;
+  top:  35%;
+  width: 36%;
+  max-height: 16%;
+  z-index: 17;
+  font-family: "Branding Pro", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.4cqi;
+  line-height: 1.45;
+  color: #ffffff;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pp-desc :first-child { margin-top: 0; }
+.pp-desc :last-child  { margin-bottom: 0; }
+.pp-desc p { margin: 0 0 0.6cqi; }

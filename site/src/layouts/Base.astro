@@ -1,122 +1,46 @@
 ---
+import MiscHeader from "../components/MiscHeader.astro";
+import MiscFooter from "../components/MiscFooter.astro";
+import "../styles/shopify/theme.css";
+
 interface Props {
   title: string;
   description?: string;
+  pageClass?: string;
+  miscTitle?: string;
+  showHeader?: boolean;
+  showFooter?: boolean;
+  showAnnouncement?: boolean;
 }
 const {
   title,
-  description = "Design + cloud portfolio by dram — Tokyo Zero merch line and the AWS architecture that ships it.",
+  description = "Tokyo Zero — anime merch. Character-first design, printed heavy, shipped worldwide.",
+  pageClass = "page-index",
+  miscTitle = "misc",
+  showHeader = true,
+  showFooter = true,
+  showAnnouncement = true,
 } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} — dram-soc.org</title>
+    <title>{title} — Tokyo Zero</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta property="og:title" content={`${title} — dram-soc.org`} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content="/og-image.png" />
-    <meta property="og:type" content="website" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).toString()} />
+    <meta property="og:title" content={`${title} — Tokyo Zero`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
   </head>
-  <body>
-    <a class="skip" href="#main">Skip to content</a>
-    <header class="nav">
-      <a class="nav__brand" href="/">dram-soc.<span>org</span></a>
-      <nav class="nav__links" aria-label="Main">
-        <a href="/work/">work</a>
-        <a href="/process/">process</a>
-        <a href="/architecture/">architecture</a>
-        <a href="/contact/">contact</a>
-      </nav>
-    </header>
-    <main id="main"><slot /></main>
-    <footer class="foot">
-      <div class="foot__row">
-        <span>© {new Date().getFullYear()} dram — designed &amp; deployed by hand.</span>
-        <div class="foot__links">
-          <a href="https://github.com/dram64" target="_blank" rel="noopener">github</a>
-          <a href="https://www.instagram.com/tokyozeroofficial/" target="_blank" rel="noopener">tokyo zero</a>
-          <a href="/contact/">contact</a>
-        </div>
-      </div>
-    </footer>
-    <style is:global>
-      :root {
-        --bg: #f5f4f0;
-        --ink: #14131a;
-        --ink-soft: rgba(20, 19, 26, 0.62);
-        --accent: #5061b9;
-        --accent-soft: rgba(80, 97, 185, 0.14);
-        --line: rgba(20, 19, 26, 0.14);
-        --mono: ui-monospace, "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
-        --sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-        --serif: "Instrument Serif", Georgia, serif;
-      }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
-      body {
-        background: var(--bg);
-        color: var(--ink);
-        font-family: var(--sans);
-        -webkit-font-smoothing: antialiased;
-      }
-      a { color: inherit; }
-      .skip { position: absolute; left: -9999px; }
-      .skip:focus { left: 1vw; top: 1vh; background: #fff; padding: 0.5em 1em; }
-
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        padding: clamp(20px, 3vw, 32px) clamp(24px, 6vw, 72px);
-        border-bottom: 1px solid var(--line);
-      }
-      .nav__brand {
-        font-family: var(--mono);
-        font-weight: 600;
-        text-decoration: none;
-        font-size: 0.95rem;
-        letter-spacing: -0.01em;
-      }
-      .nav__brand span { color: var(--accent); }
-      .nav__links {
-        display: flex;
-        gap: clamp(14px, 2.5vw, 32px);
-        font-family: var(--mono);
-        font-size: 0.85rem;
-      }
-      .nav__links a {
-        text-decoration: none;
-        color: var(--ink-soft);
-        transition: color 140ms ease;
-      }
-      .nav__links a:hover { color: var(--accent); }
-
-      .foot {
-        margin-top: 8vh;
-        padding: clamp(28px, 4vw, 48px) clamp(24px, 6vw, 72px);
-        border-top: 1px solid var(--line);
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        color: var(--ink-soft);
-      }
-      .foot__row {
-        display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-      .foot__links { display: flex; gap: 20px; }
-      .foot__links a {
-        text-decoration: none;
-        transition: color 140ms ease;
-      }
-      .foot__links a:hover { color: var(--accent); }
-    </style>
+  <body class={pageClass}>
+    <a class="skip-to-content" href="#MainContent">Skip to content</a>
+    {showHeader && <MiscHeader title={miscTitle} showAnnouncement={showAnnouncement} />}
+    <main id="MainContent" class="content-for-layout" role="main">
+      <slot />
+    </main>
+    {showFooter && <MiscFooter />}
   </body>
 </html>

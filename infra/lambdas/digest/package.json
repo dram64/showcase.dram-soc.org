@@ -1,0 +1,13 @@
+{
+  "name": "cost-digest-lambda",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Nightly digest — Cost Explorer + Synthetics + Athena → JSON on S3.",
+  "dependencies": {
+    "@aws-sdk/client-cost-explorer": "^3.658.0",
+    "@aws-sdk/client-s3":            "^3.658.0",
+    "@aws-sdk/client-synthetics":    "^3.658.0",
+    "@aws-sdk/client-athena":        "^3.658.0"
+  }
+}

@@ -1,0 +1,69 @@
+---
+export const prerender = true;
+import Base from "../../layouts/Base.astro";
+---
+<Base title="cost" miscTitle="cost" showAnnouncement={false}>
+  <section class="ops">
+    <p class="ops__kicker">actual spend · last 30 days · unblended</p>
+    <h1 class="ops__title">cost.</h1>
+    <p class="ops__lede">
+      Live from <strong>AWS Cost Explorer</strong>, published nightly by a scheduled Lambda.
+      Radical transparency: the <em>actual</em> spend running this whole stack, grouped by service.
+      An AWS Budget hard-caps the account at <strong>$25/mo</strong> with SNS alerts at 20% and 40%,
+      plus Cost Anomaly Detection scoped to <code>&gt;= $1</code> daily drift.
+    </p>
+
+    <div class="ops__grid" id="cost-total-wrap">
+      <div class="ops__stat"><span class="ops__stat-label">30-day total</span><span class="ops__stat-value" id="c-total">…</span></div>
+      <div class="ops__stat"><span class="ops__stat-label">period start</span><span class="ops__stat-value" id="c-start">…</span></div>
+      <div class="ops__stat"><span class="ops__stat-label">period end</span><span class="ops__stat-value" id="c-end">…</span></div>
+      <div class="ops__stat"><span class="ops__stat-label">budget ceiling</span><span class="ops__stat-value">$25.00</span></div>
+    </div>
+
+    <h2 class="ops__h2">by service</h2>
+    <table class="ops__tbl">
+      <thead><tr><th>Service</th><th>$ / 30d</th><th>% total</th></tr></thead>
+      <tbody id="c-body"><tr><td colspan="3">loading…</td></tr></tbody>
+    </table>
+
+    <p class="ops__note" id="c-generated">loading…</p>
+  </section>
+
+  <script is:inline>
+    fetch("/cost.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
+      const set = (id, v) => document.getElementById(id).textContent = v;
+      set("c-total", "$" + (d.total ?? 0).toFixed(2));
+      set("c-start", d.periodStart || "—");
+      set("c-end",   d.periodEnd   || "—");
+      set("c-generated", "digest generated " + new Date(d.generatedAt).toLocaleString());
+      const body = document.getElementById("c-body");
+      body.innerHTML = "";
+      (d.services || []).forEach(s => {
+        const tr = document.createElement("tr");
+        const pct = d.total ? ((s.cost / d.total) * 100).toFixed(1) + "%" : "";
+        tr.innerHTML = `<td>${s.service}</td><td>$${s.cost.toFixed(2)}</td><td>${pct}</td>`;
+        body.appendChild(tr);
+      });
+      if (!(d.services || []).length) body.innerHTML = "<tr><td colspan='3'>no charges yet</td></tr>";
+    }).catch(() => {
+      document.getElementById("c-generated").textContent = "digest not available yet.";
+    });
+  </script>
+
+  <style>
+    .ops { max-width: 900px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px); }
+    .ops__kicker { font-family: 'Apex Mk3', monospace; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--misc-accent); margin: 0 0 16px; }
+    .ops__title { font-family: 'Apex Mk3', monospace; font-weight: 300; font-size: clamp(3rem, 8vw, 5rem); line-height: 1; margin: 0 0 20px; text-transform: lowercase; letter-spacing: -0.02em; }
+    .ops__lede { font-family: 'Branding Pro', sans-serif; font-size: 1.05rem; line-height: 1.55; color: var(--misc-ink-soft); margin: 0 0 5vh; max-width: 660px; }
+    .ops__lede code, .ops__lede em { color: var(--misc-accent); font-family: 'Apex Mk3', monospace; font-style: normal; font-size: 0.9rem; }
+    .ops__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+    .ops__stat { padding: 20px; border: 1px solid var(--misc-line); border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 8px; }
+    .ops__stat-label { font-family: 'Apex Mk3', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--misc-ink-soft); }
+    .ops__stat-value { font-family: 'Branding Pro', sans-serif; font-size: 1.15rem; color: var(--misc-ink); }
+    .ops__h2 { font-family: 'Apex Mk3', monospace; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--misc-ink-soft); margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--misc-line); }
+    .ops__tbl { width: 100%; border-collapse: collapse; font-family: 'Branding Pro', sans-serif; font-size: 0.95rem; }
+    .ops__tbl th, .ops__tbl td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--misc-line); }
+    .ops__tbl th { font-family: 'Apex Mk3', monospace; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--misc-ink-soft); font-weight: 500; }
+    .ops__note { font-family: 'Apex Mk3', monospace; font-size: 0.82rem; color: var(--misc-ink-soft); margin-top: 32px; }
+  </style>
+</Base>

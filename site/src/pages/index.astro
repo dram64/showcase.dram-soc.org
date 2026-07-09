@@ -836,7 +836,12 @@ const roster = [
        ============================================================ */
     .hero {
       position: relative;
-      width: 100%;
+      /* Full-bleed — force 100vw regardless of any parent constraints */
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
       min-height: 100vh;
       min-height: 100svh;
       height: 100vh;

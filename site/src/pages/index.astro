@@ -694,6 +694,24 @@ const roster = [
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
+
+    // Hide fixed rails once user scrolls past the hero; slide tracker back to
+    // the edge when the rails go away.
+    const heroEl = document.getElementById("hero");
+    const railL = document.querySelector(".hero__rail--l");
+    const railR = document.querySelector(".hero__rail--r");
+    const tracker = document.querySelector(".tracker");
+    if (heroEl && railL && railR) {
+      const heroObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const inHero = entry.isIntersecting && entry.intersectionRatio > 0.15;
+          railL.classList.toggle("is-hidden", !inHero);
+          railR.classList.toggle("is-hidden", !inHero);
+          if (tracker) tracker.style.right = inHero ? "76px" : "24px";
+        });
+      }, { threshold: [0, 0.15, 0.3, 0.6, 1] });
+      heroObs.observe(heroEl);
+    }
   </script>
 
   <style>
@@ -702,10 +720,10 @@ const roster = [
        ============================================================ */
     .tracker {
       position: fixed;
-      right: clamp(12px, 1.6vw, 24px);
+      right: 76px; /* clear the 60px right rail + 16px gap */
       top: 50%;
       transform: translateY(-50%);
-      z-index: 90;
+      z-index: 91;
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -846,12 +864,14 @@ const roster = [
       100% { transform: scale(1.06) translate(-1.2%, -0.8%); }
     }
 
-    /* Left/Right rails — dark backdrop, blur, flush to the edge */
+    /* Left/Right rails — FIXED to viewport, guaranteed flush to screen edges.
+       Only visible while the hero is in view (JS toggles .is-hidden below). */
     .hero__rail {
-      position: absolute;
-      top: 0; bottom: 0;
+      position: fixed;
+      top: 0;
+      bottom: 0;
       width: 60px;
-      z-index: 10;
+      z-index: 90;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -859,9 +879,25 @@ const roster = [
       background: rgba(20, 19, 26, 0.55);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      transition: opacity 260ms ease, transform 260ms ease;
     }
-    .hero__rail--l { left: 0; border-right: 1px solid rgba(255, 255, 255, 0.08); gap: 32px; }
-    .hero__rail--r { right: 0; border-left:  1px solid rgba(255, 255, 255, 0.08); gap: 20px; justify-content: center; }
+    .hero__rail.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .hero__rail--l {
+      left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 32px;
+    }
+    .hero__rail--l.is-hidden { transform: translateX(-100%); }
+    .hero__rail--r {
+      right: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 20px;
+      justify-content: center;
+    }
+    .hero__rail--r.is-hidden { transform: translateX(100%); }
     .hero__mark {
       display: block;
       width: 22px; height: 22px;

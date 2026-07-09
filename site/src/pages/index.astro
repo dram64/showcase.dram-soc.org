@@ -16,943 +16,1047 @@ const featured = [
 ].map(slug => products.find(p => p.slug === slug)).filter(Boolean);
 
 const roster = [
-  { key: "kafka",     img: "/portfolio/kafka.webp",     name: "Kafka",             faction: "Stellaron Hunters", universe: "Honkai: Star Rail", tag: "HSR" },
+  { key: "kafka",     img: "/portfolio/kafka.webp",     name: "Kafka",             faction: "Stellaron Hunters",         universe: "Honkai: Star Rail", tag: "HSR" },
   { key: "topaz",     img: "/portfolio/topaz.webp",     name: "Topaz",             faction: "IPC · Strategic Investment", universe: "Honkai: Star Rail", tag: "HSR" },
-  { key: "psg",       img: "/portfolio/psg.webp",       name: "Panty & Stocking",  faction: "Daten City Church",  universe: "Panty & Stocking",  tag: "PSG" },
-  { key: "ayaka",     img: "/portfolio/ayaka.webp",     name: "Kamisato Ayaka",    faction: "Kamisato Clan",       universe: "Genshin Impact",     tag: "GI" },
-  { key: "jane",      img: "/portfolio/jane.webp",      name: "Jane Doe",          faction: "Tokyo Zero Original", universe: "Chromadipity Core",  tag: "OC" },
-  { key: "ironmouse", img: "/portfolio/ironmouse.webp", name: "Ironmouse",         faction: "VShojo",              universe: "Vtuber",             tag: "VT" },
+  { key: "psg",       img: "/portfolio/psg.webp",       name: "Panty & Stocking",  faction: "Daten City Church",         universe: "Panty & Stocking",  tag: "PSG" },
+  { key: "ayaka",     img: "/portfolio/ayaka.webp",     name: "Kamisato Ayaka",    faction: "Kamisato Clan",             universe: "Genshin Impact",    tag: "GI" },
+  { key: "jane",      img: "/portfolio/jane.webp",      name: "Jane Doe",          faction: "Tokyo Zero Original",       universe: "Chromadipity Core", tag: "OC" },
+  { key: "ironmouse", img: "/portfolio/ironmouse.webp", name: "Ironmouse",         faction: "VShojo",                    universe: "Vtuber",            tag: "VT" },
 ];
 ---
 <Base title="portfolio" pageClass="page-index" showHeader={false} showFooter={true}>
 
-  <!-- ============================================================
-       SECTION 01 · HERO — dark cinematic banner
-       ============================================================ -->
-  <section class="hero" aria-label="hero">
-    <!-- Left rail — vertical brand + section indicator -->
-    <div class="hero__rail hero__rail--l" aria-hidden="true">
-      <span class="hero__mark"></span>
-      <span class="ef-vrail">// TOKYO ZERO · CHROMADIPITY CORE</span>
-    </div>
-
-    <!-- Right rail — social icons -->
-    <div class="hero__rail hero__rail--r">
-      <a href="https://www.instagram.com/tokyozeroofficial/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg>
-      </a>
-      <a href="https://github.com/dram64" target="_blank" rel="noopener" aria-label="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.9.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0012 2z" fill="currentColor"/></svg>
-      </a>
-      <a href="mailto:dez6220@gmail.com" aria-label="Email">
-        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 6l8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      </a>
-    </div>
-
-    <!-- Painterly atmosphere -->
-    <div class="hero__glow hero__glow--l" aria-hidden="true"></div>
-    <div class="hero__glow hero__glow--r" aria-hidden="true"></div>
-    <div class="hero__grain" aria-hidden="true"></div>
-
-    <!-- Sprites -->
-    <img class="hero__char hero__char--l" src="/assets/psg-panty.webp"    alt="Panty" />
-    <img class="hero__char hero__char--r" src="/assets/psg-stocking.webp" alt="Stocking" />
-    <div class="hero__floor" aria-hidden="true"></div>
-
-    <!-- Center frame -->
-    <div class="hero__frame">
-      <p class="hero__meta">
-        <span class="ef-brk"><span class="rec-dot" style="width:8px;height:8px;border-radius:50%;background:#ff5566;box-shadow:0 0 8px #ff5566;display:inline-block;"></span> REC</span>
-        <span class="hero__meta-sep">/</span>
-        <span>01/04 · portfolio</span>
-      </p>
-      <div class="hero__title-wrap">
-        <h1 class="hero__title">TOKYO<br/>ZERO</h1>
-        <p class="hero__title-sub">chromadipity core</p>
+  <!-- ==================================================================
+       01 · HERO — magazine cover, Tokyo Zero misc palette
+       ================================================================== -->
+  <section class="tz-hero">
+    <div class="tz-hero__inner">
+      <!-- LEFT — editorial column -->
+      <div class="tz-hero__copy">
+        <p class="tz-hero__eyebrow-line">
+          <span class="tz-hero__eyebrow-script">chromadipity core</span>
+          <span class="tz-hero__eyebrow-mono">// portfolio · 01 / 04</span>
+        </p>
+        <h1 class="tz-hero__title">tokyo<br/>zero<span class="tz-hero__title-dot">.</span></h1>
+        <p class="tz-hero__lede">
+          A small set of pieces that don&rsquo;t fit any one drop &mdash; three themed
+          storefronts, hand-illustrated character work, shipped on a serverless
+          AWS stack.
+        </p>
+        <div class="tz-hero__cta">
+          <a class="tz-hero__btn tz-hero__btn--primary" href="/catalog/">enter catalog &rarr;</a>
+          <a class="tz-hero__btn" href="/architecture/">the aws stack</a>
+        </div>
+        <div class="tz-hero__meta-strip">
+          <span><em>design</em> Apex Mk3 · Beam Visionary · Branding Pro</span>
+          <span><em>cloud</em> S3 · CloudFront · Lambda · Athena · Terraform</span>
+          <span><em>spend</em> ~$2/mo &mdash; <a href="/status/">/status</a></span>
+        </div>
       </div>
-      <p class="hero__lede">
-        Three themed anime merch storefronts &mdash; hand-illustrated character work,
-        magazine-style catalog, shipped on a serverless AWS stack provisioned via Terraform.
+
+      <!-- RIGHT — character composition -->
+      <div class="tz-hero__stage" aria-hidden="true">
+        <div class="tz-hero__halftone tz-hero__halftone--l"></div>
+        <div class="tz-hero__halftone tz-hero__halftone--r"></div>
+        <img class="tz-hero__char tz-hero__char--l" src="/assets/psg-panty.webp"    alt="" />
+        <img class="tz-hero__char tz-hero__char--r" src="/assets/psg-stocking.webp" alt="" />
+      </div>
+    </div>
+
+    <!-- theme selector — same tiles as the misc header -->
+    <div class="tz-hero__themes">
+      <p class="tz-hero__themes-h">
+        <span class="tz-hero__themes-eyebrow">experimental</span>
+        <span class="tz-hero__themes-title">theme selector</span>
       </p>
-      <div class="hero__cta">
-        <a class="ef-btn" href="/catalog/">
-          <span class="ef-btn__bar"></span>
-          <span class="ef-btn__body">▶ Enter Catalog</span>
+      <nav class="tz-hero__theme-switch" aria-label="Theme">
+        <a class="tz-hero__sq tz-hero__sq--psg" href="/work/psg/" aria-label="PSG theme">
+          <img src="/assets/psg-panty-sticker.webp" alt="" aria-hidden="true" />
+          <img src="/assets/psg-stocking-sticker.webp" alt="" aria-hidden="true" />
+          <span>psg</span>
         </a>
-        <a class="hero__cta-alt" href="/architecture/">// the aws stack &rarr;</a>
-      </div>
-    </div>
-
-    <!-- Bottom ticker -->
-    <div class="hero__ticker" aria-hidden="true">
-      <div class="hero__ticker-inner">
-        <span><em>// DESIGN</em> Astro · Space Grotesk · Chakra Petch · Beam Visionary</span>
-        <span><em>// CLOUD</em> S3 · CloudFront · Lambda · Athena · Terraform</span>
-        <span><em>// SPEND</em> ~$2/mo · <a href="/status/">/status</a> · <a href="/cost/">/cost</a> · <a href="/insights/">/insights</a></span>
-      </div>
+        <a class="tz-hero__sq tz-hero__sq--nso" href="/work/nso/" aria-label="NSO theme">
+          <img src="/assets/nso-ame-sticker.webp" alt="" aria-hidden="true" />
+          <img src="/assets/nso-kangel-sticker.webp" alt="" aria-hidden="true" />
+          <span>nso</span>
+        </a>
+      </nav>
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 02 · GRAPHIC DESIGN WORK — Themed-Gallery layout
-       ============================================================ -->
-  <section class="sec02" aria-label="graphic design work">
-    <!-- Tab bar -->
-    <div class="sec02__tabs-wrap">
-      <div class="sec02__brand">
-        <span class="sec02__brand-mark"></span>
-        <span class="sec02__brand-txt">TOKYO ZERO</span>
-      </div>
-      <div class="ef-tabs" role="tablist">
-        <a class="is-active">Chromadipity</a>
-        <a>PSG</a>
-        <a>NSO</a>
-        <a>Genshin · HSR</a>
-        <a>Vtuber</a>
-      </div>
+  <!-- ==================================================================
+       02 · GRAPHIC DESIGN — soft magazine layout, filler slot
+       ================================================================== -->
+  <section class="tz-sec02">
+    <div class="tz-sec02__head">
+      <p class="tz-sec02__num">02 / 04</p>
+      <p class="tz-sec02__eyebrow">// graphic design</p>
+      <h2 class="tz-sec02__title">the illustration.</h2>
+      <p class="tz-sec02__lede">
+        Character studies, key art, print-ready compositions. A featured piece
+        rotates in this frame &mdash; each one is the source for something in the
+        catalog.
+      </p>
     </div>
 
-    <div class="sec02__body">
-      <!-- Left rail — theme info -->
-      <aside class="sec02__rail">
-        <span class="sec02__chip"></span>
-        <p class="ef-counter"><strong>02</strong><span class="sep">/</span>04</p>
-        <p class="ef-meta">// THEME <em>&mdash; the roster</em></p>
-        <p class="ef-meta">// CREATOR <em>&mdash; dram</em></p>
-        <div class="sec02__rail-num" aria-hidden="true">
-          <span class="sec02__rail-num-lg">02</span>
-          <span class="sec02__rail-num-sub">CHROMADIPITY</span>
+    <div class="tz-sec02__nav">
+      <a class="tz-sec02__tab is-active">chromadipity</a>
+      <span aria-hidden="true">·</span>
+      <a class="tz-sec02__tab">psg</a>
+      <span aria-hidden="true">·</span>
+      <a class="tz-sec02__tab">nso</a>
+      <span aria-hidden="true">·</span>
+      <a class="tz-sec02__tab">genshin · hsr</a>
+      <span aria-hidden="true">·</span>
+      <a class="tz-sec02__tab">vtuber</a>
+    </div>
+
+    <div class="tz-sec02__grid">
+      <!-- Left rail — theme info block -->
+      <aside class="tz-sec02__rail">
+        <span class="tz-sec02__chip"></span>
+        <div class="tz-sec02__meta">
+          <p><em>theme</em>&mdash; chromadipity core</p>
+          <p><em>creator</em>&mdash; dram</p>
+          <p><em>index</em>&mdash; 01 of 12</p>
         </div>
+        <p class="tz-sec02__signature">from the desk.</p>
       </aside>
 
-      <!-- Center — filler slot with big graphic to drop in -->
-      <div class="sec02__stage ef-corners">
-        <span class="ef-corner--tr"></span>
-        <span class="ef-corner--bl"></span>
-        <div class="ef-slot">
-          <span class="ef-slot__label">// slot 01 · illustration</span>
-          <span class="ef-slot__icon">◇</span>
-          <span class="ef-slot__dim">2400 &times; 1600 · webp · portrait or landscape both fit</span>
-          <span class="ef-slot__dim">DROP HERO GRAPHIC HERE</span>
+      <!-- Center — filler slot -->
+      <div class="tz-sec02__stage">
+        <div class="tz-slot">
+          <span class="tz-slot__label">// slot 01 · featured illustration</span>
+          <span class="tz-slot__icon">◇</span>
+          <span class="tz-slot__dim">2400 &times; 1600 · webp · drop the graphic here</span>
         </div>
-        <p class="sec02__stage-caption">// FEATURED PIECE &mdash; SWAP FREELY</p>
+        <p class="tz-sec02__caption">&mdash; swap freely; portrait &amp; landscape both fit.</p>
       </div>
 
-      <!-- Right rail — rotated section text -->
-      <aside class="sec02__rail sec02__rail--r">
-        <span class="ef-vrail">OVER THE FRONTIER · CHROMADIPITY CORE</span>
+      <!-- Right rail — vertical text -->
+      <aside class="tz-sec02__rail-r">
+        <span class="tz-sec02__vrail">chromadipity core &middot; drop 01</span>
       </aside>
     </div>
 
-    <div class="sec02__foot">
-      <div class="sec02__nav" aria-hidden="true">
-        <button class="sec02__arrow">&larr;</button>
-        <div class="sec02__progress">
-          <span class="sec02__progress-bar">01 / 12</span>
-        </div>
-        <button class="sec02__arrow">&rarr;</button>
+    <div class="tz-sec02__foot">
+      <div class="tz-sec02__pager">
+        <button aria-label="previous">&larr;</button>
+        <span class="tz-sec02__pager-nums">01 / 12</span>
+        <button aria-label="next">&rarr;</button>
       </div>
-      <p class="ef-meta">** MISSION-DEPENDENT PAYLOAD &mdash; INTERFACE / 002</p>
+      <p class="tz-sec02__foot-meta">// interface &mdash; graphic 02</p>
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 03 · CHARACTER SHOWCASE — Operators layout
-       ============================================================ -->
-  <section class="sec03" aria-label="character roster">
-    <!-- Left rail — portrait carousel -->
-    <aside class="sec03__rail">
-      <button class="sec03__scroll" aria-label="scroll up">&uarr;</button>
-      {roster.map((r, i) => (
-        <button class:list={["ef-portrait", i === 0 && "is-active"]} data-key={r.key} aria-label={r.name}>
-          <img src={r.img} alt={r.name} />
-        </button>
-      ))}
-      <button class="sec03__scroll" aria-label="scroll down">&darr;</button>
-      <button class="sec03__all">
-        <span class="ef-mono">All Characters</span>
-      </button>
-    </aside>
-
-    <!-- Center — big character illustration + big bleed letters + yellow block -->
-    <div class="sec03__stage">
-      <div class="ef-yellow-block sec03__yellow"></div>
-      <div class="ef-bleed-letters" data-target="letters">KAFKA</div>
-
-      <div class="sec03__hero">
-        <p class="ef-brk ef-brk--rec">
-          <span class="rec-dot"></span> REC
-        </p>
-        <p class="sec03__index">
-          <span class="sec03__name" data-target="name">Kafka</span>
-          <span class="sec03__count"><em id="c-num">01</em> / 06</span>
-        </p>
-
-        <div class="sec03__ranking">
-          <span class="sec03__diamond"></span>
-          <span class="sec03__diamond"></span>
-          <span class="sec03__diamond"></span>
-          <span class="sec03__diamond"></span>
-          <span class="sec03__diamond"></span>
-        </div>
-
-        <div class="sec03__img-wrap ef-corners">
-          <span class="ef-corner--tr"></span>
-          <span class="ef-corner--bl"></span>
-          <img class="sec03__img" src="/portfolio/kafka.webp" alt="Kafka" data-target="img" />
-        </div>
-      </div>
-
-      <!-- Info card -->
-      <div class="sec03__info">
-        <div class="sec03__info-icons">
-          <span aria-hidden="true">◤◢</span>
-        </div>
-        <p class="ef-brk" style="font-size: 1.1rem; letter-spacing: 0.06em;">
-          <span data-target="brk-name">Kafka</span>
-        </p>
-        <div class="sec03__accent-bar"></div>
-        <div class="sec03__tags">
-          <span class="sec03__tag sec03__tag--k">Faction</span>
-          <span class="sec03__tag-val" data-target="faction">Stellaron Hunters</span>
-          <span class="sec03__tag sec03__tag--k">Universe</span>
-          <span class="sec03__tag-val" data-target="universe">Honkai: Star Rail</span>
-        </div>
-        <div class="sec03__voice">
-          <span class="sec03__voice-tag">✽</span>
-          <span data-target="tag">HSR</span>
-        </div>
-        <p class="sec03__desc">
-          Hand-illustrated character work &mdash; portraits, key art, chibi variants,
-          and full-body poses. Each character in the roster serves a specific product
-          category: deskmats, tapestries, prints, or acrylic stands.
-        </p>
-      </div>
+  <!-- ==================================================================
+       03 · CHARACTER SHOWCASE — interactive roster with soft palette
+       ================================================================== -->
+  <section class="tz-sec03">
+    <div class="tz-sec03__head">
+      <p class="tz-sec03__num">03 / 04</p>
+      <p class="tz-sec03__eyebrow">// the roster</p>
+      <h2 class="tz-sec03__title">character work.</h2>
     </div>
 
-    <!-- Right rail — vertical text + "Go to Catalog" -->
-    <aside class="sec03__rail sec03__rail--r">
-      <span class="ef-vrail">// FULL ROSTER &mdash; 40+ PIECES</span>
-      <a class="sec03__cta" href="/catalog/">
-        <span class="sec03__cta-mark">▲</span>
-        <span class="sec03__cta-txt">Go to<br/>Catalog</span>
-      </a>
-    </aside>
+    <div class="tz-sec03__body">
+      <!-- Left rail — portrait carousel -->
+      <aside class="tz-sec03__rail">
+        {roster.map((r, i) => (
+          <button class:list={["tz-portrait", i === 0 && "is-active"]} data-key={r.key} aria-label={r.name}>
+            <img src={r.img} alt={r.name} />
+          </button>
+        ))}
+        <a class="tz-sec03__all" href="/catalog/">all &rarr;</a>
+      </aside>
+
+      <!-- Center — big stage -->
+      <div class="tz-sec03__stage">
+        <div class="tz-sec03__soft-block" aria-hidden="true"></div>
+        <div class="tz-sec03__bleed-letters" data-target="letters" aria-hidden="true">KAFKA</div>
+
+        <div class="tz-sec03__hero">
+          <div class="tz-sec03__hero-frame">
+            <img class="tz-sec03__img" src="/portfolio/kafka.webp" alt="Kafka" data-target="img" />
+          </div>
+        </div>
+
+        <!-- Nyalra-style info card -->
+        <div class="tz-sec03__card">
+          <p class="tz-sec03__card-num">01 / 06</p>
+          <h3 class="tz-sec03__card-name" data-target="name">Kafka</h3>
+          <div class="tz-sec03__card-rule"></div>
+          <dl class="tz-sec03__card-dl">
+            <dt>faction</dt><dd data-target="faction">Stellaron Hunters</dd>
+            <dt>universe</dt><dd data-target="universe">Honkai: Star Rail</dd>
+            <dt>tag</dt><dd data-target="tag">HSR</dd>
+          </dl>
+          <p class="tz-sec03__card-desc">
+            Portrait, key art, chibi variant, full-body pose &mdash; each character
+            in the roster serves at least one product category. Deskmats,
+            tapestries, prints, or acrylic stands.
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 04 · PRODUCT TILES — Tokyo Zero misc__card grid
-       ============================================================ -->
-  <section class="sec04" aria-label="from the catalog">
-    <div class="sec04__head">
-      <p class="ef-meta">// ARKNIGHTS:ENDFIELD ↘</p>
-      <h2 class="ef-h ef-h--xl ef-h--block" style="text-transform: uppercase;">CATALOG</h2>
+  <!-- ==================================================================
+       04 · CATALOG — misc__card product tiles (shopify-native)
+       ================================================================== -->
+  <section class="tz-sec04">
+    <div class="tz-sec04__head">
+      <p class="tz-sec04__num">04 / 04</p>
+      <p class="tz-sec04__eyebrow">// from the catalog</p>
+      <h2 class="tz-sec04__title">the drops.</h2>
+      <p class="tz-sec04__lede">
+        A curated eight from the 30-piece drop &mdash; deskmats, tapestries, prints,
+        stickers. Each carries a character. Full catalog below.
+      </p>
     </div>
 
-    <div class="sec04__meta-row">
-      <p class="ef-meta">// Notices &nbsp; 2026-06-24 &nbsp; [ Tokyo Zero ] Featured Drops</p>
-    </div>
-
-    <div class="misc__grid">
+    <div class="misc__grid tz-sec04__grid">
       {featured.map((p, i) => (
         <ProductCard product={p} index={String(i + 1).padStart(2, "0")} category={p.category} />
       ))}
     </div>
 
-    <div class="sec04__foot">
-      <div class="sec02__nav">
-        <button class="sec02__arrow" aria-label="prev">&larr;</button>
-        <button class="sec02__arrow" aria-label="next">&rarr;</button>
-      </div>
-      <a class="ef-btn" href="/catalog/">
-        <span class="ef-btn__bar"></span>
-        <span class="ef-btn__body">More Intel &rarr;</span>
-      </a>
+    <div class="tz-sec04__foot">
+      <a class="tz-hero__btn tz-hero__btn--primary" href="/catalog/">see the full catalog &rarr;</a>
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 05 · WHAT WE HAD BEFORE — kept for continuity
-       (Product photography + paths)
-       ============================================================ -->
-  <section class="sec05" aria-label="product photography">
-    <div class="sec05__head">
-      <p class="ef-meta">// PRODUCT PHOTOGRAPHY</p>
-      <h2 class="ef-h ef-h--lg">finished pieces.</h2>
-      <p class="sec05__lede">
-        Illustration &rarr; production &rarr; photography. Four physical drops from the roster.
-      </p>
+  <!-- ==================================================================
+       05 · PRODUCT PHOTOGRAPHY + PATHS (retained from earlier build)
+       ================================================================== -->
+  <section class="tz-sec05">
+    <div class="tz-sec05__head">
+      <p class="tz-sec05__eyebrow">// finished pieces</p>
+      <h2 class="tz-sec05__title">product photography.</h2>
+      <p class="tz-sec05__lede">Illustration &rarr; production &rarr; photography. Four physical drops from the roster.</p>
     </div>
-
-    <div class="prod-grid">
-      <figure class="prod ef-corners">
-        <span class="ef-corner--tr"></span>
-        <span class="ef-corner--bl"></span>
-        <div class="prod__img"><img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" /></div>
+    <div class="tz-sec05__grid">
+      <figure class="tz-prod">
+        <div class="tz-prod__img"><img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" /></div>
         <figcaption>
-          <span class="prod__label">// acrylic stand</span>
-          <span class="prod__name">Kafka</span>
-          <span class="prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
+          <span class="tz-prod__label">acrylic stand</span>
+          <span class="tz-prod__name">Kafka</span>
+          <span class="tz-prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
         </figcaption>
       </figure>
-      <figure class="prod ef-corners">
-        <span class="ef-corner--tr"></span>
-        <span class="ef-corner--bl"></span>
-        <div class="prod__img"><img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" /></div>
+      <figure class="tz-prod">
+        <div class="tz-prod__img"><img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" /></div>
         <figcaption>
-          <span class="prod__label">// acrylic stand</span>
-          <span class="prod__name">Topaz</span>
-          <span class="prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
+          <span class="tz-prod__label">acrylic stand</span>
+          <span class="tz-prod__name">Topaz</span>
+          <span class="tz-prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
         </figcaption>
       </figure>
-      <figure class="prod ef-corners">
-        <span class="ef-corner--tr"></span>
-        <span class="ef-corner--bl"></span>
-        <div class="prod__img"><img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" /></div>
+      <figure class="tz-prod">
+        <div class="tz-prod__img"><img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" /></div>
         <figcaption>
-          <span class="prod__label">// deskmat</span>
-          <span class="prod__name">Faruzan</span>
-          <span class="prod__spec">900 &times; 400 mm &middot; sublimated</span>
+          <span class="tz-prod__label">deskmat</span>
+          <span class="tz-prod__name">Faruzan</span>
+          <span class="tz-prod__spec">900 &times; 400 mm &middot; sublimated</span>
         </figcaption>
       </figure>
-      <figure class="prod ef-corners">
-        <span class="ef-corner--tr"></span>
-        <span class="ef-corner--bl"></span>
-        <div class="prod__img"><img src="/portfolio/prod-miku.webp" alt="Cinna Miku" loading="lazy" /></div>
+      <figure class="tz-prod">
+        <div class="tz-prod__img"><img src="/portfolio/prod-miku.webp" alt="Cinna Miku" loading="lazy" /></div>
         <figcaption>
-          <span class="prod__label">// print</span>
-          <span class="prod__name">Cinna Miku</span>
-          <span class="prod__spec">12 &times; 18 in &middot; satin card stock</span>
+          <span class="tz-prod__label">print</span>
+          <span class="tz-prod__name">Cinna Miku</span>
+          <span class="tz-prod__spec">12 &times; 18 in &middot; satin card stock</span>
         </figcaption>
       </figure>
     </div>
 
-    <div class="sec05__paths">
-      <a class="path" href="/work/">
-        <p class="ef-meta">// 01</p>
-        <h3 class="path__title">the three themes</h3>
-        <p class="path__desc">PSG · NSO · MISC &mdash; each with a distinct visual system.</p>
+    <div class="tz-sec05__paths">
+      <a class="tz-path" href="/work/">
+        <p class="tz-path__num">&mdash; 01</p>
+        <h3 class="tz-path__title">the three themes</h3>
+        <p class="tz-path__desc">psg &middot; nso &middot; misc &mdash; each with a distinct visual system.</p>
       </a>
-      <a class="path" href="/process/">
-        <p class="ef-meta">// 02</p>
-        <h3 class="path__title">design case study</h3>
-        <p class="path__desc">Voice, typography, color, three-theme system.</p>
+      <a class="tz-path" href="/process/">
+        <p class="tz-path__num">&mdash; 02</p>
+        <h3 class="tz-path__title">design case study</h3>
+        <p class="tz-path__desc">voice, typography, color, three-theme system.</p>
       </a>
-      <a class="path" href="/architecture/">
-        <p class="ef-meta">// 03</p>
-        <h3 class="path__title">the aws stack</h3>
-        <p class="path__desc">Serverless breakdown &mdash; 12 services, ~$2/mo.</p>
+      <a class="tz-path" href="/architecture/">
+        <p class="tz-path__num">&mdash; 03</p>
+        <h3 class="tz-path__title">the aws stack</h3>
+        <p class="tz-path__desc">serverless breakdown &mdash; 12 services, ~$2/mo.</p>
       </a>
     </div>
   </section>
 
   <script is:inline>
-    // Portrait carousel — swap the character showcase on click.
     const roster = {
-      kafka:     { name: "Kafka",             letters: "KAFKA",      faction: "Stellaron Hunters",       universe: "Honkai: Star Rail", tag: "HSR",  img: "/portfolio/kafka.webp",     num: "01" },
-      topaz:     { name: "Topaz",             letters: "TOPAZ",      faction: "IPC · Strategic Investment", universe: "Honkai: Star Rail", tag: "HSR", img: "/portfolio/topaz.webp",     num: "02" },
-      psg:       { name: "Panty & Stocking",  letters: "PSG",        faction: "Daten City Church",       universe: "Panty & Stocking",  tag: "PSG",  img: "/portfolio/psg.webp",       num: "03" },
-      ayaka:     { name: "Kamisato Ayaka",    letters: "AYAKA",      faction: "Kamisato Clan",           universe: "Genshin Impact",     tag: "GI",   img: "/portfolio/ayaka.webp",     num: "04" },
-      jane:      { name: "Jane Doe",          letters: "JANE",       faction: "Tokyo Zero Original",     universe: "Chromadipity Core",  tag: "OC",   img: "/portfolio/jane.webp",      num: "05" },
-      ironmouse: { name: "Ironmouse",         letters: "MOUSE",      faction: "VShojo",                  universe: "Vtuber",             tag: "VT",   img: "/portfolio/ironmouse.webp", num: "06" },
+      kafka:     { name: "Kafka",             letters: "KAFKA", faction: "Stellaron Hunters",           universe: "Honkai: Star Rail", tag: "HSR", img: "/portfolio/kafka.webp",     num: "01" },
+      topaz:     { name: "Topaz",             letters: "TOPAZ", faction: "IPC · Strategic Investment", universe: "Honkai: Star Rail", tag: "HSR", img: "/portfolio/topaz.webp",     num: "02" },
+      psg:       { name: "Panty & Stocking",  letters: "PSG",   faction: "Daten City Church",           universe: "Panty & Stocking",  tag: "PSG", img: "/portfolio/psg.webp",       num: "03" },
+      ayaka:     { name: "Kamisato Ayaka",    letters: "AYAKA", faction: "Kamisato Clan",               universe: "Genshin Impact",     tag: "GI",  img: "/portfolio/ayaka.webp",     num: "04" },
+      jane:      { name: "Jane Doe",          letters: "JANE",  faction: "Tokyo Zero Original",         universe: "Chromadipity Core",  tag: "OC",  img: "/portfolio/jane.webp",      num: "05" },
+      ironmouse: { name: "Ironmouse",         letters: "MOUSE", faction: "VShojo",                      universe: "Vtuber",             tag: "VT",  img: "/portfolio/ironmouse.webp", num: "06" },
     };
-    document.querySelectorAll(".ef-portrait[data-key]").forEach(btn => {
+    document.querySelectorAll(".tz-portrait[data-key]").forEach(btn => {
       btn.addEventListener("click", () => {
-        const k = btn.dataset.key;
-        const r = roster[k];
+        const r = roster[btn.dataset.key];
         if (!r) return;
-        document.querySelectorAll(".ef-portrait").forEach(b => b.classList.remove("is-active"));
+        document.querySelectorAll(".tz-portrait").forEach(b => b.classList.remove("is-active"));
         btn.classList.add("is-active");
-        const map = { name: r.name, letters: r.letters, "brk-name": r.name, faction: r.faction, universe: r.universe, tag: r.tag };
-        Object.keys(map).forEach(target => {
-          const el = document.querySelector(`[data-target="${target}"]`);
-          if (el) el.textContent = map[target];
-        });
-        const img = document.querySelector('[data-target="img"]');
-        if (img) img.src = r.img;
-        const num = document.getElementById("c-num");
-        if (num) num.textContent = r.num;
+        const set = (t, v) => { const el = document.querySelector(`[data-target="${t}"]`); if (el) el.textContent = v; };
+        set("name", r.name); set("letters", r.letters); set("faction", r.faction); set("universe", r.universe); set("tag", r.tag);
+        const img = document.querySelector('[data-target="img"]'); if (img) img.src = r.img;
+        const num = document.querySelector(".tz-sec03__card-num"); if (num) num.textContent = r.num + " / 06";
       });
     });
   </script>
 
   <style>
     /* ============================================================
-       SECTION 01 · HERO — dark cinematic
+       01 · HERO — soft magazine cover, misc palette
        ============================================================ */
-    .hero {
-      position: relative;
-      min-height: min(92vh, 900px);
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 25% 30%, rgba(80, 97, 185, 0.22) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 70%, rgba(255, 129, 176, 0.14) 0%, transparent 60%),
-        linear-gradient(180deg, #14131a 0%, #1c1a26 45%, #1a1622 100%);
-      color: #f5f4f0;
-      display: grid;
-      grid-template-rows: 1fr auto;
-      isolation: isolate;
-    }
-    .hero__glow {
-      position: absolute;
-      width: 60vw; height: 60vw;
-      max-width: 900px; max-height: 900px;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.55;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .hero__glow--l { background: rgba(80, 97, 185, 0.35); top: -22%; left: -25%; }
-    .hero__glow--r { background: rgba(255, 129, 176, 0.35); bottom: -30%; right: -25%; }
-    .hero__grain {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 30%, transparent 2px, rgba(255,255,255,0.02) 3px),
-        radial-gradient(circle at 80% 70%, transparent 2px, rgba(255,255,255,0.02) 3px);
-      background-size: 4px 4px, 6px 6px;
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .hero__char {
-      position: absolute;
-      bottom: 0;
-      height: 92%;
-      width: auto;
-      max-width: 42%;
-      object-fit: contain;
-      object-position: bottom center;
-      z-index: 3;
-      filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.5));
-      pointer-events: none;
-    }
-    .hero__char--l { left: -3%; }
-    .hero__char--r { right: -3%; }
-    .hero__floor {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 30%;
-      background: linear-gradient(180deg, transparent 0%, rgba(20, 19, 26, 0.5) 60%, rgba(20, 19, 26, 0.9) 100%);
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    /* Left/Right rails */
-    .hero__rail {
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 60px;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      background: rgba(20, 19, 26, 0.55);
-      backdrop-filter: blur(8px);
-    }
-    .hero__rail--l { left: 0; border-right: 1px solid rgba(255,255,255,0.08); gap: 32px; }
-    .hero__rail--r { right: 0; border-left:  1px solid rgba(255,255,255,0.08); gap: 20px; justify-content: center; }
-    .hero__mark {
-      display: block;
-      width: 22px; height: 22px;
-      background: #fff;
-      clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%);
-    }
-    .hero__rail--r a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.65);
-      transition: color 140ms ease;
-    }
-    .hero__rail--r a:hover { color: #ffee00; }
-    .hero__rail--r svg { width: 20px; height: 20px; }
-    .hero__rail .ef-vrail { color: rgba(245, 244, 240, 0.55); }
-
-    .hero__frame {
-      position: relative;
-      z-index: 5;
-      align-self: center;
-      justify-self: center;
-      text-align: center;
-      max-width: 720px;
-      padding: 8vh clamp(80px, 8vw, 120px) 4vh;
-    }
-    .hero__meta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(245, 244, 240, 0.75);
-      margin: 0 0 32px;
-    }
-    .hero__meta-sep { opacity: 0.35; }
-    .hero__meta .ef-brk { color: #ff8898; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; }
-    .hero__meta .ef-brk::before, .hero__meta .ef-brk::after { color: #ff5566; }
-
-    .hero__title-wrap { margin-bottom: 20px; }
-    .hero__title {
-      font-family: 'Apex Mk3', 'Chakra Petch', sans-serif;
-      font-weight: 300;
-      font-size: clamp(4rem, 12vw, 8rem);
-      line-height: 0.85;
-      letter-spacing: 0.04em;
-      color: #ffffff;
-      text-shadow: 0 4px 30px rgba(80, 97, 185, 0.5);
-      margin: 0 0 4px;
-    }
-    .hero__title-sub {
-      font-family: 'Beam Visionary', cursive;
-      font-size: clamp(1.2rem, 2vw, 1.8rem);
-      color: #ffd6ea;
-      letter-spacing: 0.08em;
-      margin: 0;
-    }
-    .hero__lede {
-      font-family: 'Branding Pro', sans-serif;
-      font-size: clamp(0.9rem, 1.1vw, 1rem);
-      line-height: 1.6;
-      color: rgba(245, 244, 240, 0.7);
-      margin: 24px auto 32px;
-      max-width: 520px;
-    }
-    .hero__cta { display: inline-flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
-    .hero__cta-alt {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      letter-spacing: 0.14em;
-      color: rgba(245, 244, 240, 0.85);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-      padding-bottom: 2px;
-      transition: color 140ms ease, border-color 140ms ease;
-    }
-    .hero__cta-alt:hover { color: #ffee00; border-color: #ffee00; }
-
-    .hero__ticker {
-      position: relative;
-      z-index: 6;
-      padding: 14px 80px;
-      background: rgba(20, 19, 26, 0.75);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-    }
-    .hero__ticker-inner {
-      display: flex;
-      gap: 40px;
-      justify-content: center;
-      flex-wrap: wrap;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      color: rgba(245, 244, 240, 0.65);
-    }
-    .hero__ticker-inner em {
-      font-style: normal;
-      color: #ffee00;
-      font-weight: 500;
-      margin-right: 8px;
-      letter-spacing: 0.2em;
-    }
-    .hero__ticker-inner a {
-      color: #ffd6ea; text-decoration: none;
-      border-bottom: 1px solid rgba(255,214,234,0.4);
-    }
-
-    @media (max-width: 800px) {
-      .hero__rail { width: 40px; }
-      .hero__char { max-width: 55%; opacity: 0.55; }
-      .hero__frame { padding: 8vh 60px 4vh; }
-      .hero__ticker { padding: 12px 60px; }
-    }
-
-    /* ============================================================
-       SECTION 02 · GRAPHIC DESIGN — Themed Gallery layout
-       ============================================================ */
-    .sec02 {
+    .tz-hero {
       background: var(--misc-bg, #fdfcf9);
-      color: var(--misc-ink, #1a1a1a);
-      padding: 0 0 60px;
-    }
-    .sec02__tabs-wrap {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 40px;
-      padding: 24px 40px 0;
-      border-bottom: 1px solid var(--misc-line, rgba(0,0,0,0.12));
-    }
-    .sec02__brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Apex Mk3', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--misc-ink);
-    }
-    .sec02__brand-mark {
-      display: inline-block;
-      width: 18px; height: 18px;
-      background: var(--misc-ink);
-      clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%);
-    }
-    .sec02__body {
-      display: grid;
-      grid-template-columns: 220px 1fr 60px;
-      gap: 32px;
-      padding: 32px 40px 0;
-      position: relative;
-    }
-    .sec02__rail {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding-top: 20px;
-    }
-    .sec02__chip {
-      display: inline-block;
-      width: 32px; height: 32px;
-      background: var(--misc-accent, #5061b9);
-      opacity: 0.15;
-      border: 2px solid var(--misc-accent, #5061b9);
-    }
-    .sec02__rail-num {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      opacity: 0.3;
-    }
-    .sec02__rail-num-lg {
-      font-family: 'Apex Mk3', sans-serif;
-      font-size: 6rem;
-      font-weight: 300;
-      line-height: 0.9;
-      color: var(--misc-ink);
-    }
-    .sec02__rail-num-sub {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      color: var(--misc-accent);
-    }
-    .sec02__rail--r {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-top: 40px;
-    }
-    .sec02__stage {
-      position: relative;
-      padding: 0;
-    }
-    .sec02__stage .ef-slot { min-height: 480px; }
-    .sec02__stage-caption {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      color: var(--misc-ink-soft);
-      margin: 16px 0 0;
-    }
-    .sec02__foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 32px 40px 0;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .sec02__nav {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .sec02__arrow {
-      width: 44px; height: 44px;
-      border: 1px solid var(--misc-line);
-      background: #fff;
-      color: var(--misc-ink);
-      cursor: pointer;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem;
-      transition: background 140ms ease, border-color 140ms ease;
-    }
-    .sec02__arrow:hover { background: var(--misc-accent); color: #fff; border-color: var(--misc-accent); }
-    .sec02__progress-bar {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      color: var(--misc-ink);
-      padding: 12px 20px;
-      border: 1px solid var(--misc-line);
-      background: #fff;
-    }
-    @media (max-width: 900px) {
-      .sec02__body { grid-template-columns: 1fr; }
-      .sec02__rail--r { display: none; }
-    }
-
-    /* ============================================================
-       SECTION 03 · CHARACTER SHOWCASE — Operators layout
-       ============================================================ */
-    .sec03 {
-      background: #fafaf7;
-      padding: 60px 40px;
-      display: grid;
-      grid-template-columns: 120px 1fr 100px;
-      gap: 40px;
-      position: relative;
+      padding: clamp(60px, 8vw, 120px) clamp(24px, 6vw, 80px) 0;
       overflow: hidden;
-      min-height: 780px;
     }
-    .sec03__rail {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      padding-top: 20px;
-    }
-    .sec03__scroll {
-      width: 40px; height: 40px;
-      border: 1px solid var(--misc-line);
-      background: #fff;
-      color: var(--misc-ink);
-      cursor: pointer;
-      border-radius: 50%;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .sec03__all {
-      margin-top: 24px;
-      padding: 10px 16px;
-      background: var(--misc-ink);
-      color: #fff;
-      border: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
-    }
-    .sec03__all:hover { background: var(--misc-accent); }
-    .sec03__rail--r {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .sec03__cta {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      padding: 16px 12px;
-      background: var(--ef-black);
-      color: #fff;
-      text-decoration: none;
-      font-family: 'Apex Mk3', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      writing-mode: horizontal-tb;
-    }
-    .sec03__cta:hover { background: var(--misc-accent); }
-    .sec03__cta-mark { color: var(--ef-yellow); }
-    .sec03__cta-txt { text-align: center; line-height: 1.2; }
-
-    .sec03__yellow {
-      top: 20%;
-      right: 5%;
-      width: 45%;
-      height: 60%;
-      max-width: 500px;
-      z-index: 0;
-    }
-
-    .sec03__stage {
-      position: relative;
+    .tz-hero__inner {
+      max-width: 1440px;
+      margin: 0 auto;
       display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 24px;
-      padding: 0 20px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 72px);
+      align-items: center;
+      min-height: min(72vh, 720px);
     }
-    .sec03__hero {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      gap: 12px;
-    }
-    .sec03__hero .ef-brk { align-self: start; }
-    .sec03__index {
-      font-family: 'Apex Mk3', sans-serif;
-      font-size: 1.2rem;
-      color: var(--misc-ink);
+    .tz-hero__copy { position: relative; z-index: 2; }
+    .tz-hero__eyebrow-line {
       display: flex;
       align-items: baseline;
       gap: 16px;
-      margin: 0;
+      flex-wrap: wrap;
+      margin: 0 0 20px;
     }
-    .sec03__name { font-weight: 400; }
-    .sec03__count { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--misc-ink-soft); }
-    .sec03__count em { font-style: normal; color: var(--misc-ink); font-weight: 500; }
-    .sec03__ranking { display: inline-flex; gap: 4px; }
-    .sec03__diamond {
-      display: inline-block;
-      width: 14px; height: 14px;
-      background: var(--misc-ink);
-      clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    .tz-hero__eyebrow-script {
+      font-family: 'Beam Visionary', cursive;
+      font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+      color: var(--misc-accent, #5061b9);
+      line-height: 1;
     }
-    .sec03__img-wrap {
-      position: relative;
-      max-width: 480px;
-      max-height: 600px;
-      margin-top: 12px;
-      background: #fff;
-      border: 1px solid var(--misc-line);
-    }
-    .sec03__img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .sec03__info {
-      position: relative;
-      z-index: 2;
-      padding: 24px 28px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--misc-line);
-      backdrop-filter: blur(4px);
-      max-width: 520px;
-    }
-    .sec03__info-icons {
-      display: inline-block;
-      width: 42px; height: 32px;
-      background: var(--misc-ink);
-      color: #fff;
-      text-align: center;
-      line-height: 32px;
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-    }
-    .sec03__accent-bar {
-      height: 4px;
-      background: linear-gradient(to right, #ff5566, var(--ef-yellow) 40%, #6de38e 70%, var(--misc-accent));
-      margin: 12px 0;
-    }
-    .sec03__tags {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 8px 16px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .sec03__tag {
-      background: var(--misc-ink);
-      color: #fff;
-      padding: 4px 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
+    .tz-hero__eyebrow-mono {
+      font-family: 'JetBrains Mono', 'Apex Mk3', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
+      color: var(--misc-ink-soft, #6b6b6b);
+      padding-left: 16px;
+      border-left: 1px solid var(--misc-line, rgba(0,0,0,0.14));
     }
-    .sec03__tag-val {
+    .tz-hero__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(3.6rem, 10vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--misc-ink, #1a1a1a);
+      margin: 0 0 24px;
+      text-transform: lowercase;
+    }
+    .tz-hero__title-dot { color: var(--misc-accent, #5061b9); }
+    .tz-hero__lede {
       font-family: 'Branding Pro', sans-serif;
-      font-size: 0.9rem;
-      color: var(--misc-ink);
-    }
-    .sec03__voice {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--ef-yellow);
-      padding: 4px 14px 4px 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--misc-ink);
-      letter-spacing: 0.06em;
-      margin-bottom: 12px;
-    }
-    .sec03__voice-tag { color: var(--misc-ink); }
-    .sec03__desc {
-      font-family: 'Branding Pro', sans-serif;
-      font-size: 0.9rem;
+      font-weight: 300;
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
       line-height: 1.55;
-      color: var(--misc-ink);
-      margin: 0;
+      color: var(--misc-ink, #1a1a1a);
+      max-width: 520px;
+      margin: 0 0 32px;
     }
-
-    @media (max-width: 900px) {
-      .sec03 { grid-template-columns: 1fr; padding: 40px 24px; }
-      .sec03__rail--r { flex-direction: row; }
-      .sec03__yellow { display: none; }
-      .ef-bleed-letters { font-size: 12rem; }
-    }
-
-    /* ============================================================
-       SECTION 04 · PRODUCT TILES
-       ============================================================ */
-    .sec04 {
-      background: var(--misc-bg, #fdfcf9);
-      padding: 80px 40px;
-    }
-    .sec04__head { margin-bottom: 12px; }
-    .sec04__meta-row {
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--misc-line);
+    .tz-hero__cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
       margin-bottom: 40px;
     }
-    .sec04 .misc__grid {
-      grid-template-columns: repeat(4, 1fr) !important;
-      max-width: 100% !important;
-      gap: 5vh 3vw !important;
+    .tz-hero__btn {
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      padding: 14px 26px;
+      border: 1px solid var(--misc-ink, #1a1a1a);
+      color: var(--misc-ink, #1a1a1a);
+      background: transparent;
+      text-decoration: none;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
     }
-    .sec04__foot {
+    .tz-hero__btn:hover {
+      background: var(--misc-ink, #1a1a1a);
+      color: #fff;
+    }
+    .tz-hero__btn--primary {
+      background: var(--misc-accent, #5061b9);
+      color: #fff;
+      border-color: var(--misc-accent, #5061b9);
+    }
+    .tz-hero__btn--primary:hover { background: var(--misc-ink); border-color: var(--misc-ink); }
+
+    .tz-hero__meta-strip {
+      display: grid;
+      gap: 4px;
+      padding-top: 20px;
+      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.12));
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.82rem;
+      color: var(--misc-ink-soft, #6b6b6b);
+    }
+    .tz-hero__meta-strip em {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: normal;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+      margin-right: 10px;
+    }
+    .tz-hero__meta-strip a { color: var(--misc-accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+    /* Right stage — character composition */
+    .tz-hero__stage {
+      position: relative;
+      align-self: stretch;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 60px;
-      gap: 20px;
-      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: center;
+      min-height: 480px;
     }
+    .tz-hero__halftone {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .tz-hero__halftone--l {
+      width: 55%; height: 55%;
+      top: 10%; left: 5%;
+      background: radial-gradient(circle, rgba(80, 97, 185, 0.10) 0%, transparent 70%);
+    }
+    .tz-hero__halftone--r {
+      width: 60%; height: 60%;
+      bottom: 5%; right: 0%;
+      background: radial-gradient(circle, rgba(255, 129, 176, 0.14) 0%, transparent 70%);
+    }
+    .tz-hero__char {
+      position: absolute;
+      bottom: -6%;
+      height: 105%;
+      width: auto;
+      max-width: 60%;
+      object-fit: contain;
+      object-position: bottom center;
+      filter: drop-shadow(0 20px 30px rgba(20, 19, 26, 0.15));
+      pointer-events: none;
+    }
+    .tz-hero__char--l { left: 0; }
+    .tz-hero__char--r { right: 0; }
+
+    /* Theme selector — same as misc header, integrated into hero base */
+    .tz-hero__themes {
+      max-width: 1440px;
+      margin: clamp(32px, 5vw, 60px) auto 0;
+      padding: 24px 0;
+      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 20px;
+    }
+    .tz-hero__themes-h { display: flex; flex-direction: column; margin: 0; gap: 4px; line-height: 1; }
+    .tz-hero__themes-eyebrow {
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+    }
+    .tz-hero__themes-title {
+      font-family: 'Coves', 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 2vw, 1.6rem);
+      color: var(--misc-ink);
+      text-transform: lowercase;
+    }
+    .tz-hero__theme-switch {
+      display: flex;
+      gap: 16px;
+    }
+    .tz-hero__sq {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      width: 210px;
+      aspect-ratio: 1.8 / 1;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%), #fff;
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--misc-ink);
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .tz-hero__sq:hover { transform: translateY(-3px); border-color: var(--misc-accent); }
+    .tz-hero__sq--psg { background: linear-gradient(180deg, rgba(255,224,235,0.6) 0%, rgba(255,244,250,0.9) 100%); }
+    .tz-hero__sq--nso { background: linear-gradient(180deg, rgba(224,230,255,0.6) 0%, rgba(246,242,255,0.9) 100%); }
+    .tz-hero__sq img {
+      position: absolute;
+      bottom: 0;
+      height: 88%;
+      width: auto;
+      max-width: 48%;
+    }
+    .tz-hero__sq img:first-of-type { left: 3%; }
+    .tz-hero__sq img:last-of-type  { right: 3%; }
+    .tz-hero__sq span {
+      position: relative;
+      z-index: 2;
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--misc-ink);
+      background: rgba(255,255,255,0.85);
+      padding: 4px 12px;
+      margin-bottom: 8px;
+    }
+
     @media (max-width: 900px) {
-      .sec04 .misc__grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .tz-hero__inner { grid-template-columns: 1fr; }
+      .tz-hero__stage { min-height: 320px; }
+      .tz-hero__char { opacity: 0.6; }
+      .tz-hero__themes { grid-template-columns: 1fr; }
     }
 
     /* ============================================================
-       SECTION 05 · PRODUCT PHOTOGRAPHY + PATHS
+       02 · GRAPHIC DESIGN — soft magazine layout
        ============================================================ */
-    .sec05 { background: #fafaf7; padding: 80px 40px; }
-    .sec05__head { max-width: 640px; margin-bottom: 40px; }
-    .sec05__lede {
+    .tz-sec02 {
+      background: var(--misc-bg, #fdfcf9);
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px);
+    }
+    .tz-sec02__head { max-width: 720px; margin-bottom: 6vh; }
+    .tz-sec02__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--misc-ink-soft);
+      margin: 0 0 12px;
+    }
+    .tz-sec02__eyebrow,
+    .tz-sec03__eyebrow,
+    .tz-sec04__eyebrow,
+    .tz-sec05__eyebrow {
+      font-family: 'Beam Visionary', cursive;
+      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+      color: var(--misc-accent);
+      margin: 0 0 8px;
+      line-height: 1;
+    }
+    .tz-sec02__title,
+    .tz-sec03__title,
+    .tz-sec04__title,
+    .tz-sec05__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1;
+      color: var(--misc-ink);
+      text-transform: lowercase;
+      margin: 0 0 20px;
+      letter-spacing: -0.01em;
+    }
+    .tz-sec02__lede,
+    .tz-sec04__lede,
+    .tz-sec05__lede {
       font-family: 'Branding Pro', sans-serif;
       font-size: 0.98rem;
       line-height: 1.55;
       color: var(--misc-ink-soft);
+      margin: 0;
+      max-width: 560px;
+    }
+
+    .tz-sec02__nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--misc-line);
+      margin-bottom: 40px;
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+    }
+    .tz-sec02__tab {
+      color: var(--misc-ink-soft);
+      text-decoration: none;
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+      transition: color 140ms ease, border-color 140ms ease;
+    }
+    .tz-sec02__tab:hover { color: var(--misc-ink); }
+    .tz-sec02__tab.is-active {
+      color: var(--misc-ink);
+      border-bottom-color: var(--misc-accent);
+    }
+
+    .tz-sec02__grid {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr) 60px;
+      gap: 40px;
+      align-items: start;
+    }
+    .tz-sec02__rail {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .tz-sec02__chip {
+      width: 32px; height: 32px;
+      background: rgba(80, 97, 185, 0.15);
+      border: 2px solid var(--misc-accent);
+    }
+    .tz-sec02__meta {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.9rem;
+      color: var(--misc-ink);
+    }
+    .tz-sec02__meta p { margin: 0 0 6px; }
+    .tz-sec02__meta em {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: normal;
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+      margin-right: 8px;
+    }
+    .tz-sec02__signature {
+      font-family: 'Beam Visionary', cursive;
+      font-size: 1.4rem;
+      color: var(--misc-accent);
       margin: 12px 0 0;
     }
-    .prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 60px; }
-    .prod { position: relative; margin: 0; background: #fff; border: 1px solid var(--misc-line); overflow: hidden; transition: transform 200ms ease, border-color 200ms ease; display: flex; flex-direction: column; }
-    .prod:hover { transform: translateY(-3px); border-color: var(--misc-accent); }
-    .prod__img { background: #f7f6f2; aspect-ratio: 4/5; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .prod__img img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
-    .prod figcaption { padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--misc-line); }
-    .prod__label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--misc-accent); }
-    .prod__name { font-family: 'Apex Mk3', sans-serif; font-size: 1.05rem; color: var(--misc-ink); }
-    .prod__spec { font-family: 'Branding Pro', sans-serif; font-size: 0.78rem; color: var(--misc-ink-soft); line-height: 1.4; }
+    .tz-sec02__rail-r {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 60px;
+    }
+    .tz-sec02__vrail {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--misc-ink-soft);
+    }
+    .tz-sec02__stage { position: relative; }
+    .tz-sec02__caption {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.88rem;
+      color: var(--misc-ink-soft);
+      margin: 16px 0 0;
+      font-style: italic;
+    }
+    .tz-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 60px;
+      min-height: 520px;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          rgba(80, 97, 185, 0.03) 0px,
+          rgba(80, 97, 185, 0.03) 8px,
+          transparent 8px,
+          transparent 20px
+        ),
+        #fff;
+      border: 1px dashed rgba(80, 97, 185, 0.4);
+    }
+    .tz-slot__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+    }
+    .tz-slot__icon {
+      font-size: 2.2rem;
+      color: var(--misc-accent);
+      opacity: 0.45;
+    }
+    .tz-slot__dim {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--misc-ink-soft);
+      letter-spacing: 0.08em;
+    }
 
-    .sec05__paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .path { display: block; padding: 24px; background: #fff; border: 1px solid var(--misc-line); text-decoration: none; color: inherit; transition: border-color 180ms ease, transform 180ms ease; }
-    .path:hover { border-color: var(--misc-accent); transform: translateY(-2px); }
-    .path__title { font-family: 'Apex Mk3', sans-serif; font-size: 1.2rem; color: var(--misc-ink); margin: 8px 0; font-weight: 400; }
-    .path__desc { font-family: 'Branding Pro', sans-serif; font-size: 0.9rem; color: var(--misc-ink-soft); margin: 0; line-height: 1.5; }
-    @media (max-width: 900px) { .prod-grid { grid-template-columns: repeat(2, 1fr); } .sec05__paths { grid-template-columns: 1fr; } }
+    .tz-sec02__foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--misc-line);
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .tz-sec02__pager {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .tz-sec02__pager button {
+      width: 40px; height: 40px;
+      border: 1px solid var(--misc-line);
+      background: transparent;
+      color: var(--misc-ink);
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+    }
+    .tz-sec02__pager button:hover { background: var(--misc-accent); color: #fff; border-color: var(--misc-accent); }
+    .tz-sec02__pager-nums {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      color: var(--misc-ink);
+    }
+    .tz-sec02__foot-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      color: var(--misc-ink-soft);
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .tz-sec02__grid { grid-template-columns: 1fr; }
+      .tz-sec02__rail-r { display: none; }
+    }
+
+    /* ============================================================
+       03 · CHARACTER SHOWCASE — soft palette, misc info card
+       ============================================================ */
+    .tz-sec03 {
+      background: #faf9f5;
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px);
+      position: relative;
+      overflow: hidden;
+    }
+    .tz-sec03__head { max-width: 720px; margin-bottom: 6vh; position: relative; z-index: 2; }
+    .tz-sec03__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--misc-ink-soft);
+      margin: 0 0 12px;
+    }
+    .tz-sec03__body {
+      display: grid;
+      grid-template-columns: 100px minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 56px);
+      position: relative;
+      z-index: 2;
+    }
+    .tz-sec03__rail {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .tz-portrait {
+      display: block;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--misc-line);
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 180ms ease, transform 180ms ease;
+      padding: 0;
+    }
+    .tz-portrait img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .tz-portrait:hover { transform: scale(1.05); }
+    .tz-portrait.is-active {
+      border-color: var(--misc-accent);
+      box-shadow: 0 0 0 4px rgba(80, 97, 185, 0.15);
+    }
+    .tz-sec03__all {
+      margin-top: 16px;
+      padding: 8px 12px;
+      background: transparent;
+      color: var(--misc-ink);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: 1px solid var(--misc-ink);
+      transition: background 140ms ease, color 140ms ease;
+    }
+    .tz-sec03__all:hover { background: var(--misc-ink); color: #fff; }
+
+    .tz-sec03__stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: clamp(24px, 4vw, 56px);
+      align-items: start;
+    }
+    .tz-sec03__soft-block {
+      position: absolute;
+      top: 4%;
+      right: 30%;
+      width: 55%;
+      height: 92%;
+      max-width: 620px;
+      background: rgba(80, 97, 185, 0.06);
+      z-index: 0;
+    }
+    .tz-sec03__bleed-letters {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(6rem, 18vw, 16rem);
+      letter-spacing: -0.03em;
+      color: rgba(80, 97, 185, 0.06);
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .tz-sec03__hero {
+      position: relative;
+      z-index: 2;
+    }
+    .tz-sec03__hero-frame {
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      overflow: hidden;
+      max-width: 520px;
+    }
+    .tz-sec03__img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .tz-sec03__card {
+      position: relative;
+      z-index: 2;
+      padding: 28px 24px;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+    }
+    .tz-sec03__card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--misc-accent);
+      margin: 0 0 8px;
+    }
+    .tz-sec03__card-name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 2.5vw, 2rem);
+      line-height: 1;
+      color: var(--misc-ink);
+      margin: 0 0 16px;
+      text-transform: lowercase;
+    }
+    .tz-sec03__card-rule {
+      height: 1px;
+      background: var(--misc-line);
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .tz-sec03__card-rule::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 0;
+      width: 48px;
+      height: 2px;
+      background: var(--misc-accent);
+    }
+    .tz-sec03__card-dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px 20px;
+      margin: 0 0 16px;
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.9rem;
+    }
+    .tz-sec03__card-dl dt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--misc-ink-soft);
+      align-self: center;
+    }
+    .tz-sec03__card-dl dd { margin: 0; color: var(--misc-ink); }
+    .tz-sec03__card-desc {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--misc-ink-soft);
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .tz-sec03__body { grid-template-columns: 1fr; }
+      .tz-sec03__rail { flex-direction: row; flex-wrap: wrap; }
+      .tz-sec03__stage { grid-template-columns: 1fr; }
+      .tz-sec03__bleed-letters { font-size: 10rem; }
+      .tz-sec03__soft-block { display: none; }
+    }
+
+    /* ============================================================
+       04 · CATALOG — misc product tiles
+       ============================================================ */
+    .tz-sec04 {
+      background: var(--misc-bg, #fdfcf9);
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px);
+    }
+    .tz-sec04__head { max-width: 720px; margin-bottom: 5vh; }
+    .tz-sec04__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--misc-ink-soft);
+      margin: 0 0 12px;
+    }
+    .tz-sec04__grid { grid-template-columns: repeat(4, 1fr) !important; max-width: 100% !important; gap: 5vh 3vw !important; }
+    .tz-sec04__foot { margin-top: 60px; display: flex; justify-content: center; }
+    @media (max-width: 900px) { .tz-sec04__grid { grid-template-columns: repeat(2, 1fr) !important; } }
+
+    /* ============================================================
+       05 · PRODUCT PHOTOGRAPHY + PATHS
+       ============================================================ */
+    .tz-sec05 {
+      background: #faf9f5;
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px);
+    }
+    .tz-sec05__head { max-width: 720px; margin-bottom: 5vh; }
+    .tz-sec05__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    .tz-prod {
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      overflow: hidden;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .tz-prod:hover { transform: translateY(-3px); border-color: var(--misc-accent); }
+    .tz-prod__img {
+      background: #faf9f5;
+      aspect-ratio: 4/5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tz-prod__img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .tz-prod figcaption {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--misc-line);
+    }
+    .tz-prod__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+    }
+    .tz-prod__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-size: 1.05rem;
+      color: var(--misc-ink);
+    }
+    .tz-prod__spec {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.78rem;
+      color: var(--misc-ink-soft);
+      line-height: 1.4;
+    }
+    .tz-sec05__paths {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .tz-path {
+      display: block;
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 180ms ease, transform 180ms ease;
+    }
+    .tz-path:hover { border-color: var(--misc-accent); transform: translateY(-2px); }
+    .tz-path__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--misc-accent);
+      margin: 0 0 12px;
+    }
+    .tz-path__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-size: 1.2rem;
+      color: var(--misc-ink);
+      margin: 0 0 8px;
+      font-weight: 400;
+      text-transform: lowercase;
+    }
+    .tz-path__desc {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.9rem;
+      color: var(--misc-ink-soft);
+      margin: 0;
+      line-height: 1.5;
+    }
+    @media (max-width: 900px) {
+      .tz-sec05__grid { grid-template-columns: repeat(2, 1fr); }
+      .tz-sec05__paths { grid-template-columns: 1fr; }
+    }
   </style>
 </Base>

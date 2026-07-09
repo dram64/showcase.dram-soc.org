@@ -1,0 +1,29 @@
+---
+export const prerender = true;
+import Base from "../../layouts/Base.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import { products, categories } from "../../data/products.ts";
+
+function pad(n: number): string {
+  return String(n + 1).padStart(2, "0");
+}
+---
+<Base title="misc" pageClass="page-index">
+  {categories.map(cat => {
+    const items = products.filter(p => p.category === cat.key);
+    if (!items.length) return null;
+    return (
+      <section class="misc__section" data-section={cat.key}>
+        <div class="misc__section-head">
+          <h2 class="misc__section-title">{cat.title}</h2>
+          <p class="misc__section-tagline">{cat.tagline}</p>
+        </div>
+        <div class="misc__grid">
+          {items.map((p, i) => (
+            <ProductCard product={p} index={pad(i)} category={cat.key} />
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</Base>

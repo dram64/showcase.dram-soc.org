@@ -1,29 +1,198 @@
 ---
 export const prerender = true;
-import Base from "../layouts/Base.astro";
-import ProductCard from "../components/ProductCard.astro";
-import { products, categories } from "../data/products.ts";
-
-function pad(n: number): string {
-  return String(n + 1).padStart(2, "0");
-}
+import Gryphline from "../layouts/Gryphline.astro";
 ---
-<Base title="misc" pageClass="page-index">
-  {categories.map(cat => {
-    const items = products.filter(p => p.category === cat.key);
-    if (!items.length) return null;
-    return (
-      <section class="misc__section" data-section={cat.key}>
-        <div class="misc__section-head">
-          <h2 class="misc__section-title">{cat.title}</h2>
-          <p class="misc__section-tagline">{cat.tagline}</p>
-        </div>
-        <div class="misc__grid">
-          {items.map((p, i) => (
-            <ProductCard product={p} index={pad(i)} category={cat.key} />
-          ))}
-        </div>
-      </section>
-    );
-  })}
-</Base>
+<Gryphline title="ops">
+  <section class="hero">
+    <div class="hero__meta">
+      <p class="hero__eyebrow">
+        <span class="gl-dot gl-dot--ok"></span>SYSTEM ONLINE
+        · region: <em>us-west-2</em>
+        · failover: <em>us-east-1</em>
+      </p>
+      <h1 class="gl-h1">design <em>&</em> cloud<br/>portfolio.</h1>
+      <p class="gl-lede">
+        Paired case study — <strong>Tokyo Zero</strong>, a 3-theme anime merch brand
+        (design + character work), shipped on a <strong>serverless AWS stack</strong>
+        provisioned entirely via Terraform. Every ops page below reads live data from
+        Cost Explorer, Synthetics, and Athena.
+      </p>
+      <div class="hero__actions">
+        <a class="gl-btn gl-btn--primary" href="/architecture/">
+          view the stack <span class="gl-btn__arrow">&rarr;</span>
+        </a>
+        <a class="gl-btn" href="/work/">
+          view the work <span class="gl-btn__arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <aside class="hero__hud">
+      <div class="gl-panel">
+        <span class="gl-panel__corner gl-panel__corner--tl"></span>
+        <span class="gl-panel__corner gl-panel__corner--bl"></span>
+        <span class="gl-panel__corner gl-panel__corner--br"></span>
+        <p class="hud__label">STACK · LIVE</p>
+        <ul class="hud__list">
+          <li><span>s3 + cloudfront</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>lambda + api-gw</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>dynamodb (pitr)</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>ses (verified)</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>athena + glue</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>synthetics canary</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>x-ray tracing</span><span class="gl-dot gl-dot--ok"></span></li>
+          <li><span>multi-region s3</span><span class="gl-dot gl-dot--ok"></span></li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+
+  <section class="gl-shell tiles">
+    <div class="tiles__grid">
+      <a class="tile" href="/work/">
+        <p class="tile__num">01</p>
+        <h3 class="tile__title">work</h3>
+        <p class="tile__desc">Tokyo Zero — three themed storefronts (misc / psg / nso), full character illustration + typography system.</p>
+        <span class="tile__arrow">&rarr;</span>
+      </a>
+      <a class="tile" href="/process/">
+        <p class="tile__num">02</p>
+        <h3 class="tile__title">process</h3>
+        <p class="tile__desc">Design case study — brand voice, typography stack, color palette, character work.</p>
+        <span class="tile__arrow">&rarr;</span>
+      </a>
+      <a class="tile" href="/architecture/">
+        <p class="tile__num">03</p>
+        <h3 class="tile__title">architecture</h3>
+        <p class="tile__desc">Full AWS stack breakdown — 12 services, $5/mo, Terraform-defined, OIDC-deployed.</p>
+        <span class="tile__arrow">&rarr;</span>
+      </a>
+      <a class="tile tile--live" href="/status/">
+        <p class="tile__num">04</p>
+        <h3 class="tile__title">status <span class="gl-tag gl-tag--green">live</span></h3>
+        <p class="tile__desc">Hourly Synthetics canary probe results across 3 endpoints — dashboard reads Synthetics API nightly.</p>
+        <span class="tile__arrow">&rarr;</span>
+      </a>
+      <a class="tile tile--live" href="/cost/">
+        <p class="tile__num">05</p>
+        <h3 class="tile__title">cost <span class="gl-tag gl-tag--amber">live</span></h3>
+        <p class="tile__desc">Actual monthly spend broken down by service, pulled from Cost Explorer nightly. Budget-capped at $25.</p>
+        <span class="tile__arrow">&rarr;</span>
+      </a>
+      <a class="tile tile--live" href="/insights/">
+        <p class="tile__num">06</p>
+        <h3 class="tile__title">insights <span class="gl-tag">live</span></h3>
+        <p class="tile__desc">Athena queries over CloudFront logs — top pages, geo, cache hit rate. Sub-cent per query.</p>
+        <span class="tile__arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <style>
+    .hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(48px, 8vw, 96px) clamp(20px, 4vw, 48px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+      gap: clamp(32px, 5vw, 72px);
+      align-items: center;
+    }
+    .hero__eyebrow {
+      font-family: var(--gl-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gl-ink-dim);
+      margin: 0 0 24px;
+    }
+    .hero__eyebrow em {
+      font-style: normal;
+      color: var(--gl-cyan);
+    }
+    .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hud__label {
+      font-family: var(--gl-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gl-cyan);
+      margin: 0 0 16px;
+    }
+    .hud__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .hud__list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--gl-mono);
+      font-size: 0.82rem;
+      color: var(--gl-ink-soft);
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--gl-line);
+    }
+    .hud__list li:last-child { border-bottom: 0; }
+
+    .tiles__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .tile {
+      position: relative;
+      display: block;
+      padding: 24px;
+      background: var(--gl-bg-panel);
+      border: 1px solid var(--gl-line);
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+      overflow: hidden;
+    }
+    .tile:hover {
+      border-color: var(--gl-cyan);
+      background: var(--gl-bg-elev);
+      transform: translateY(-3px);
+    }
+    .tile__num {
+      font-family: var(--gl-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: var(--gl-ink-dim);
+      margin: 0 0 12px;
+    }
+    .tile__title {
+      font-family: var(--gl-display);
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      color: var(--gl-ink);
+      margin: 0 0 14px;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tile__desc {
+      font-family: var(--gl-sans);
+      font-size: 0.92rem;
+      color: var(--gl-ink-soft);
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+    .tile__arrow {
+      font-family: var(--gl-mono);
+      color: var(--gl-cyan);
+      opacity: 0.7;
+    }
+    .tile:hover .tile__arrow { opacity: 1; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .tiles__grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .tiles__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</Gryphline>

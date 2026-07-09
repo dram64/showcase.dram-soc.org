@@ -1,23 +1,20 @@
 ---
 export const prerender = true;
-import Base from "../layouts/Base.astro";
+import Gryphline from "../layouts/Gryphline.astro";
 ---
+<Gryphline title="process">
+  <section class="gl-shell">
+    <p class="gl-kicker">case study · graphic design</p>
+    <h1 class="gl-h1">the process<em>.</em></h1>
+    <p class="gl-lede">
+      Tokyo Zero is a small-drop anime merch project — 47 products, three thematic
+      storefronts, one voice. Here's how the brand system, typography, and page
+      architecture came together.
+    </p>
 
-<Base title="process — tokyo zero design case study">
-  <article class="doc">
-    <header class="doc__head">
-      <p class="doc__kicker">case study · graphic design</p>
-      <h1 class="doc__title">tokyo zero — building a three-theme merch line</h1>
-      <p class="doc__lede">
-        Tokyo Zero is a small-drop anime merch project — 47 products, three thematic
-        storefronts, one voice. Here's how the brand system, typography, and page
-        architecture came together.
-      </p>
-    </header>
-
-    <section class="sec">
-      <h2 class="sec__h">01 · voice + audience</h2>
-      <p>
+    <div class="gl-section">
+      <h2 class="gl-h2">01 · voice + audience</h2>
+      <p class="para">
         The core reader is the person who already knows the reference — Panty &amp; Stocking with
         Garterbelt, Needy Streamer Overload, Genshin, HoYo, Vtubers. The brand assumes fluency
         instead of explaining. Copy is short, lowercase, punchy — closer to a Discord message
@@ -26,250 +23,177 @@ import Base from "../layouts/Base.astro";
       <blockquote class="pull">
         "small drops. heavy print. character work for the people who already know."
       </blockquote>
-    </section>
+    </div>
 
-    <section class="sec">
-      <h2 class="sec__h">02 · three storefronts, one system</h2>
-      <div class="grid grid--3">
-        <div class="tile">
-          <p class="tile__label">misc</p>
-          <h3 class="tile__title">catalog, curated</h3>
-          <p>
-            The neutral hub — magazine-style catalog with numbered cards, hairline dividers,
-            slate-violet accent. Serves as the anchor when the themed rooms feel too loud.
-          </p>
+    <div class="gl-section">
+      <h2 class="gl-h2">02 · three storefronts, one system</h2>
+      <div class="tri">
+        <div class="tri__cell">
+          <p class="tri__label">misc</p>
+          <h3 class="tri__title">catalog, curated</h3>
+          <p>Magazine-style catalog with numbered cards, hairline dividers, slate-violet accent. The neutral hub between themed rooms.</p>
         </div>
-        <div class="tile">
-          <p class="tile__label">psg</p>
-          <h3 class="tile__title">candy-halftone spectacle</h3>
-          <p>
-            Panty &amp; Stocking pastiche — hot pink frills, halftone circles, 7-card
-            product showcase on a tilted cyan slab. Loads with a slam-drop TOKYO ZERO intro.
-          </p>
+        <div class="tri__cell">
+          <p class="tri__label">psg</p>
+          <h3 class="tri__title">candy-halftone spectacle</h3>
+          <p>Panty &amp; Stocking pastiche — hot pink frills, halftone circles, 7-card product showcase on a tilted cyan slab.</p>
         </div>
-        <div class="tile">
-          <p class="tile__label">nso</p>
-          <h3 class="tile__title">crt streamer decay</h3>
-          <p>
-            Needy Streamer Overload homage — chrome background, RGB-glitching popup product
-            boxes, scanlines everywhere. Character sprites for Ame + KAngel anchor the hero.
-          </p>
+        <div class="tri__cell">
+          <p class="tri__label">nso</p>
+          <h3 class="tri__title">crt streamer decay</h3>
+          <p>Needy Streamer Overload homage — chrome bg, RGB-glitching popups, scanlines. Ame + KAngel sprites in the hero.</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="sec">
-      <h2 class="sec__h">03 · typography</h2>
-      <div class="grid grid--2">
+    <div class="gl-section">
+      <h2 class="gl-h2">03 · typography</h2>
+      <div class="type-grid">
         <div class="face">
           <p class="face__name">Apex Mk3</p>
-          <p class="face__sample" style="font-family: var(--mono);">.contact</p>
-          <p class="face__role">Monospace. Titles, labels, navigation. Reads as terminal
-            output — matches the "design + code" story.</p>
+          <p class="face__sample" style="font-family: var(--gl-mono);">.contact</p>
+          <p class="face__role">Monospace. Titles, labels, navigation. Reads as terminal output — matches the "design + code" story.</p>
         </div>
         <div class="face">
           <p class="face__name">Beam Visionary</p>
-          <p class="face__sample" style="font-family: var(--serif); font-style: italic;">from the desk.</p>
-          <p class="face__role">Script. Eyebrows, brand marks. The one moment of handwriting
-            in an otherwise-mechanical system.</p>
+          <p class="face__sample" style="font-style: italic;">from the desk.</p>
+          <p class="face__role">Script. Eyebrows, brand marks. The one moment of handwriting in an otherwise-mechanical system.</p>
         </div>
         <div class="face">
           <p class="face__name">Branding Pro</p>
           <p class="face__sample">Body copy, running text, product descriptions.</p>
-          <p class="face__role">Sans. Body / product copy. Neutral, wide x-height, five weights.
-            Does the invisible work.</p>
+          <p class="face__role">Sans. Body copy. Neutral, wide x-height, five weights. Does the invisible work.</p>
         </div>
         <div class="face">
           <p class="face__name">NSO CRT</p>
-          <p class="face__sample" style="font-family: var(--mono); letter-spacing: 0.06em;">SIGNAL &gt; NO SYNC</p>
-          <p class="face__role">Pixel bitmap. NSO theme only. Chyrons, popup labels, HUD text.
-            Ties the CRT visual metaphor together.</p>
+          <p class="face__sample" style="font-family: var(--gl-mono); letter-spacing: 0.06em;">SIGNAL &gt; NO SYNC</p>
+          <p class="face__role">Pixel bitmap. NSO theme only. Chyrons, popup labels, HUD text. Ties the CRT visual metaphor together.</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="sec">
-      <h2 class="sec__h">04 · color</h2>
-      <p>
-        Base palette locks the catalog in a soft-white / slate-violet universe.
-        Each themed room breaks that mold on purpose — PSG goes hot pink + cyan + gold,
-        NSO goes chrome + magenta + electric blue. The themes are supposed to feel like
-        walking into a different shop; the misc is the hallway between.
+    <div class="gl-section">
+      <h2 class="gl-h2">04 · color</h2>
+      <p class="para">
+        Base palette locks the catalog in a soft-white / slate-violet universe. Each themed room
+        breaks that mold — PSG goes hot pink + cyan + gold, NSO goes chrome + magenta + electric
+        blue. The themes are supposed to feel like different shops; misc is the hallway between.
       </p>
       <div class="swatches">
-        <div class="sw"><span style="background: #f5f4f0"></span>#f5f4f0 base</div>
-        <div class="sw"><span style="background: #14131a"></span>#14131a ink</div>
-        <div class="sw"><span style="background: #5061b9"></span>#5061b9 slate-violet</div>
-        <div class="sw"><span style="background: #ff4da6"></span>#ff4da6 psg pink</div>
-        <div class="sw"><span style="background: #3deaff"></span>#3deaff psg cyan</div>
-        <div class="sw"><span style="background: #fd7ac0"></span>#fd7ac0 nso magenta</div>
+        <div class="sw"><span style="background: #f5f4f0"></span>#f5f4f0 · misc base</div>
+        <div class="sw"><span style="background: #5061b9"></span>#5061b9 · slate violet</div>
+        <div class="sw"><span style="background: #ff4da6"></span>#ff4da6 · psg pink</div>
+        <div class="sw"><span style="background: #3deaff"></span>#3deaff · psg cyan</div>
+        <div class="sw"><span style="background: #fd7ac0"></span>#fd7ac0 · nso magenta</div>
+        <div class="sw"><span style="background: #ffb84d"></span>#ffb84d · nso amber</div>
       </div>
-    </section>
+    </div>
 
-    <section class="sec">
-      <h2 class="sec__h">05 · character work</h2>
-      <p>
+    <div class="gl-section">
+      <h2 class="gl-h2">05 · character work</h2>
+      <p class="para">
         Every product carries a hand-illustrated character. Deskmats print at 900×400mm with
         rounded corners; tapestries at 60×90cm on polyester with grommets; prints at 12×18in
         on satin card stock. The full character roster spans Genshin, Star Rail, HoYo IPs,
-        Vtuber and Hololive members, and the two flagship PSG/NSO castings.
+        Vtuber + Hololive members, and the two flagship PSG/NSO castings.
       </p>
-    </section>
+    </div>
 
-    <section class="sec sec--cta">
-      <p class="sec__cta-kicker">next</p>
-      <h2 class="sec__cta-h">how it ships →</h2>
-      <p>
+    <div class="gl-panel gl-panel--elev cta">
+      <span class="gl-panel__corner gl-panel__corner--tl"></span>
+      <span class="gl-panel__corner gl-panel__corner--bl"></span>
+      <span class="gl-panel__corner gl-panel__corner--br"></span>
+      <p class="gl-kicker">next</p>
+      <h2 class="gl-h2 cta__h">how it ships &rarr;</h2>
+      <p class="gl-lede" style="margin-bottom: 20px;">
         The whole storefront runs on a serverless AWS stack provisioned with Terraform.
-        <a href="/architecture/">Walk through the infrastructure</a> or
-        <a href="/work/">browse the catalog</a>.
+        Walk through the infrastructure or browse the catalog.
       </p>
-    </section>
-  </article>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <a class="gl-btn gl-btn--primary" href="/architecture/">architecture <span class="gl-btn__arrow">&rarr;</span></a>
+        <a class="gl-btn" href="/catalog/">catalog <span class="gl-btn__arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
 
   <style>
-    .doc {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px) clamp(48px, 8vw, 96px);
-    }
-    .doc__head { margin-bottom: 8vh; }
-    .doc__kicker {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 20px;
-    }
-    .doc__title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin: 0 0 24px;
-    }
-    .doc__lede {
-      font-size: 1.1rem;
-      line-height: 1.55;
-      color: var(--ink-soft);
-      margin: 0;
-      max-width: 620px;
-    }
-    .sec { margin-bottom: 8vh; }
-    .sec__h {
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: 0.82rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin: 0 0 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
-    }
-    .sec p, .sec li {
-      font-size: 1.02rem;
-      line-height: 1.6;
+    .para {
+      font-family: var(--gl-sans);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--gl-ink-soft);
       margin: 0 0 16px;
+      max-width: 720px;
     }
     .pull {
       margin: 24px 0 0;
       padding: 20px 24px;
-      background: var(--accent-soft);
-      border-left: 3px solid var(--accent);
-      font-family: var(--serif);
+      background: var(--gl-cyan-soft);
+      border-left: 3px solid var(--gl-cyan);
+      font-family: var(--gl-display);
       font-style: italic;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       line-height: 1.4;
+      color: var(--gl-ink);
     }
-    .grid {
-      display: grid;
-      gap: 24px;
-      margin-top: 24px;
+    .tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+    .tri__cell {
+      padding: 22px;
+      background: var(--gl-bg-panel);
+      border: 1px solid var(--gl-line);
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
     }
-    .grid--2 { grid-template-columns: 1fr 1fr; }
-    .grid--3 { grid-template-columns: 1fr 1fr 1fr; }
-    .tile, .face {
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-    }
-    .tile__label, .face__name {
-      font-family: var(--mono);
-      font-size: 0.72rem;
+    .tri__label {
+      font-family: var(--gl-mono);
+      font-size: 0.68rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--gl-cyan);
       margin: 0 0 10px;
     }
-    .tile__title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 1.35rem;
+    .tri__title {
+      font-family: var(--gl-display);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--gl-ink);
       margin: 0 0 12px;
-      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
-    .tile p { font-size: 0.92rem; margin: 0; color: var(--ink-soft); }
+    .tri p { font-family: var(--gl-sans); font-size: 0.9rem; color: var(--gl-ink-soft); margin: 0; line-height: 1.5; }
+
+    .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+    .face {
+      padding: 20px;
+      background: var(--gl-bg-panel);
+      border: 1px solid var(--gl-line);
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    }
+    .face__name {
+      font-family: var(--gl-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gl-cyan);
+      margin: 0 0 10px;
+    }
     .face__sample {
       font-size: 1.6rem;
       margin: 4px 0 14px;
       line-height: 1.1;
+      color: var(--gl-ink);
     }
-    .face__role {
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      margin: 0;
-    }
-    .swatches {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .sw {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--ink-soft);
-    }
-    .sw span {
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 1px solid var(--line);
-    }
-    .sec--cta {
-      padding: 32px;
-      background: var(--accent-soft);
-      border-radius: 12px;
-    }
-    .sec__cta-kicker {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 8px;
-    }
-    .sec__cta-h {
-      font-family: var(--serif);
-      font-size: 1.8rem;
-      margin: 0 0 12px;
-    }
-    .sec--cta p { margin: 0; }
-    .sec--cta a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
+    .face__role { font-size: 0.85rem; color: var(--gl-ink-soft); margin: 0; }
+
+    .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 20px; }
+    .sw { display: flex; align-items: center; gap: 10px; font-family: var(--gl-mono); font-size: 0.78rem; color: var(--gl-ink-soft); }
+    .sw span { display: inline-block; width: 28px; height: 28px; border: 1px solid var(--gl-line-strong); }
+
+    .cta { margin-top: 6vh; }
+    .cta__h { margin-bottom: 16px; }
+
     @media (max-width: 700px) {
-      .grid--2, .grid--3 { grid-template-columns: 1fr; }
+      .tri, .type-grid { grid-template-columns: 1fr; }
     }
   </style>
-</Base>
+</Gryphline>

@@ -1,0 +1,43 @@
+---
+import GryphlineNav from "../components/GryphlineNav.astro";
+import GryphlineFooter from "../components/GryphlineFooter.astro";
+import "@fontsource/chakra-petch/400.css";
+import "@fontsource/chakra-petch/500.css";
+import "@fontsource/chakra-petch/600.css";
+import "@fontsource/chakra-petch/700.css";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/gryphline.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = "dram-soc.org — design + cloud portfolio. Tokyo Zero merch on serverless AWS.",
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-theme="gryphline">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0d12" />
+    <title>{title} — dram-soc.ops</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).toString()} />
+    <meta property="og:title" content={`${title} — dram-soc.ops`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <a class="skip-to-content" href="#MainContent" style="position:absolute;left:-9999px;">Skip to content</a>
+    <GryphlineNav />
+    <main id="MainContent" role="main">
+      <slot />
+    </main>
+    <GryphlineFooter />
+  </body>
+</html>

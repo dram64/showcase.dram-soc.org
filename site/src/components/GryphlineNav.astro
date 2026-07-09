@@ -1,0 +1,21 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const links = [
+  { href: "/work",         label: "work" },
+  { href: "/process",      label: "process" },
+  { href: "/architecture", label: "arch" },
+  { href: "/status",       label: "status" },
+  { href: "/cost",         label: "cost" },
+  { href: "/insights",     label: "insights" },
+  { href: "/contact",      label: "contact" },
+];
+---
+<nav class="gl-nav" role="navigation" aria-label="Primary">
+  <a class="gl-nav__brand" href="/">
+    <span class="gl-nav__brand-mark" aria-hidden="true"></span>
+    dram-soc.<em>ops</em>
+  </a>
+  <div class="gl-nav__links">
+    {links.map(l => <a href={l.href} aria-current={path === l.href ? "page" : undefined}>{l.label}</a>)}
+  </div>
+</nav>

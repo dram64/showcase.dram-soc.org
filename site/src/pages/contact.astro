@@ -1,61 +1,70 @@
 ---
 export const prerender = true;
-import Base from "../layouts/Base.astro";
-
+import Gryphline from "../layouts/Gryphline.astro";
 const contactApi = import.meta.env.PUBLIC_CONTACT_API || "";
 ---
-
-<Base title="contact">
-  <section class="ct">
-    <p class="ct__kicker">get in touch</p>
-    <h1 class="ct__title">say hi.</h1>
-    <p class="ct__lede">
+<Gryphline title="contact">
+  <section class="gl-shell" style="max-width: 720px;">
+    <p class="gl-kicker">signal · establish contact</p>
+    <h1 class="gl-h1">contact<em>.</em></h1>
+    <p class="gl-lede">
       Portfolio inquiries, collab pitches, "how did you do X" — send a note. This form
-      submits to a Lambda that stores your message in DynamoDB and emails me via SES.
+      POSTs to a Lambda that validates &amp; stores your message in DynamoDB and forwards
+      it via <strong>SES</strong>. Response time: <code>2-4 days</code>.
     </p>
 
-    <form class="ct__form" id="contact-form">
+    <form class="gl-panel" id="contact-form" style="display: grid; gap: 22px;">
+      <span class="gl-panel__corner gl-panel__corner--tl"></span>
+      <span class="gl-panel__corner gl-panel__corner--bl"></span>
+      <span class="gl-panel__corner gl-panel__corner--br"></span>
+
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true" />
+
+      <div class="row">
+        <label class="fld">
+          <span class="fld__label">&gt; name</span>
+          <input type="text" name="name" required maxlength="120" autocomplete="name" />
+        </label>
+        <label class="fld">
+          <span class="fld__label">&gt; email</span>
+          <input type="email" name="email" required maxlength="200" autocomplete="email" />
+        </label>
+      </div>
+
       <label class="fld">
-        <span>name</span>
-        <input type="text" name="name" required maxlength="120" autocomplete="name" />
+        <span class="fld__label">&gt; subject</span>
+        <input type="text" name="subject" maxlength="200" placeholder="collab, hire me, question&hellip;" />
       </label>
+
       <label class="fld">
-        <span>email</span>
-        <input type="email" name="email" required maxlength="200" autocomplete="email" />
-      </label>
-      <label class="fld">
-        <span>subject</span>
-        <input type="text" name="subject" maxlength="200" placeholder="collab, question, hire me…" />
-      </label>
-      <label class="fld">
-        <span>message</span>
+        <span class="fld__label">&gt; message</span>
         <textarea name="body" required rows="6" maxlength="4000"></textarea>
       </label>
-      <button class="ct__cta" type="submit">
-        <span>send</span> <span class="ct__arrow">→</span>
+
+      <button class="gl-btn gl-btn--primary" type="submit" style="justify-self: start;">
+        transmit <span class="gl-btn__arrow">&rarr;</span>
       </button>
-      <p class="ct__status" role="status" aria-live="polite"></p>
+      <p class="status" role="status" aria-live="polite"></p>
     </form>
   </section>
 
   <script is:inline define:vars={{ contactApi }}>
     (function () {
       const form = document.getElementById("contact-form");
-      const status = form.querySelector(".ct__status");
-      const cta = form.querySelector(".ct__cta");
+      const status = form.querySelector(".status");
+      const cta = form.querySelector("button[type=submit]");
       if (!contactApi) {
-        status.textContent = "contact endpoint not configured — set PUBLIC_CONTACT_API in the build env.";
-        status.classList.add("is-error");
+        status.textContent = "// contact endpoint not configured";
+        status.classList.add("is-bad");
         cta.disabled = true;
         return;
       }
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         status.textContent = "";
-        status.className = "ct__status";
+        status.className = "status";
         cta.disabled = true;
-        cta.querySelector("span:first-child").textContent = "sending";
+        cta.firstChild.textContent = "transmitting ";
         const data = Object.fromEntries(new FormData(form).entries());
         try {
           const res = await fetch(contactApi, {
@@ -65,111 +74,58 @@ const contactApi = import.meta.env.PUBLIC_CONTACT_API || "";
           });
           const payload = await res.json().catch(() => ({}));
           if (!res.ok) throw new Error(payload.error || "send failed");
-          status.textContent = "sent. i'll reply within a few days.";
+          status.textContent = "// signal received. will reply within a few days.";
           status.classList.add("is-ok");
           form.reset();
         } catch (err) {
-          status.textContent = err.message || "something broke. try again in a minute.";
-          status.classList.add("is-error");
+          status.textContent = "// " + (err.message || "transmission failed");
+          status.classList.add("is-bad");
         } finally {
           cta.disabled = false;
-          cta.querySelector("span:first-child").textContent = "send";
+          cta.firstChild.textContent = "transmit ";
         }
       });
     })();
   </script>
 
   <style>
-    .ct {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px);
-    }
-    .ct__kicker {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 16px;
-    }
-    .ct__title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(3rem, 8vw, 5rem);
-      line-height: 1;
-      margin: 0 0 20px;
-    }
-    .ct__lede {
-      font-size: 1.05rem;
-      line-height: 1.55;
-      color: var(--ink-soft);
-      margin: 0 0 40px;
-    }
-    .ct__form {
-      display: grid;
-      gap: 22px;
-    }
-    .fld {
-      display: grid;
-      gap: 6px;
-    }
-    .fld span {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-    }
-    .fld input, .fld textarea {
-      font-family: var(--sans);
-      font-size: 1rem;
-      color: var(--ink);
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--line);
-      padding: 8px 0;
-      transition: border-color 140ms ease;
-    }
-    .fld textarea {
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      padding: 12px;
-      background: #fff;
-      resize: vertical;
-      min-height: 140px;
-    }
-    .fld input:focus, .fld textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .ct__cta {
-      justify-self: start;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--mono);
-      font-size: 0.85rem;
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .fld { display: grid; gap: 6px; }
+    .fld__label {
+      font-family: var(--gl-mono);
+      font-size: 0.7rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      background: var(--ink);
-      color: var(--bg);
-      border: none;
-      padding: 14px 28px;
-      border-radius: 999px;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: background 140ms ease, padding 140ms ease;
+      color: var(--gl-cyan);
     }
-    .ct__cta:hover { background: var(--accent); padding-right: 34px; }
-    .ct__cta:disabled { opacity: 0.6; cursor: wait; }
-    .ct__arrow { font-family: var(--mono); }
-    .ct__status {
-      font-family: var(--mono);
-      font-size: 0.88rem;
+    .fld input, .fld textarea {
+      font-family: var(--gl-sans);
+      font-size: 1rem;
+      color: var(--gl-ink);
+      background: transparent;
+      border: 1px solid var(--gl-line-strong);
+      padding: 12px 14px;
+      transition: border-color 140ms ease;
+    }
+    .fld textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
+    .fld input:focus, .fld textarea:focus {
+      outline: none;
+      border-color: var(--gl-cyan);
+      box-shadow: 0 0 0 2px var(--gl-cyan-soft);
+    }
+    .fld input::placeholder, .fld textarea::placeholder {
+      color: var(--gl-ink-dim);
+      font-style: italic;
+    }
+    .status {
+      font-family: var(--gl-mono);
+      font-size: 0.85rem;
       margin: 0;
+      color: var(--gl-ink-soft);
     }
-    .ct__status.is-ok    { color: var(--accent); }
-    .ct__status.is-error { color: #b53030; }
+    .status.is-ok  { color: var(--gl-green); }
+    .status.is-bad { color: var(--gl-red); }
+
+    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
   </style>
-</Base>
+</Gryphline>

@@ -1,59 +1,55 @@
 ---
 export const prerender = true;
-import Base from "../../layouts/Base.astro";
+import Gryphline from "../../layouts/Gryphline.astro";
 ---
-<Base title="status" miscTitle="status" showAnnouncement={false}>
-  <section class="ops">
-    <p class="ops__kicker">availability · uptime · latency</p>
-    <h1 class="ops__title">status.</h1>
-    <p class="ops__lede">
+<Gryphline title="status">
+  <section class="gl-shell">
+    <p class="gl-kicker">availability · uptime · latency</p>
+    <h1 class="gl-h1">status<em>.</em></h1>
+    <p class="gl-lede">
       Live from a <strong>CloudWatch Synthetics canary</strong> running every hour against three pages,
       published nightly by a scheduled Lambda. Failures page an SNS topic that emails
-      <code>dez6220@gmail.com</code>. Full metric history and screenshots in the
-      <a id="cw-link" href="#">CloudWatch console →</a>
+      <code>dez6220@gmail.com</code>. Full metric history + screenshots in the
+      <a id="cw-link" href="#">CloudWatch console &rarr;</a>
     </p>
 
-    <div class="ops__grid" id="cw-grid" aria-live="polite">
-      <div class="ops__stat"><span class="ops__stat-label">last run</span><span class="ops__stat-value" id="s-status">…</span></div>
-      <div class="ops__stat"><span class="ops__stat-label">at</span><span class="ops__stat-value" id="s-at">…</span></div>
-      <div class="ops__stat"><span class="ops__stat-label">duration</span><span class="ops__stat-value" id="s-dur">…</span></div>
-      <div class="ops__stat"><span class="ops__stat-label">canary</span><span class="ops__stat-value" id="s-name">…</span></div>
+    <div class="gl-stats">
+      <div class="gl-stat">
+        <p class="gl-stat__label">last run</p>
+        <p class="gl-stat__value" id="s-status">&mdash;</p>
+      </div>
+      <div class="gl-stat">
+        <p class="gl-stat__label">at</p>
+        <p class="gl-stat__value" id="s-at">&mdash;</p>
+      </div>
+      <div class="gl-stat">
+        <p class="gl-stat__label">duration</p>
+        <p class="gl-stat__value" id="s-dur">&mdash;</p>
+      </div>
+      <div class="gl-stat">
+        <p class="gl-stat__label">canary</p>
+        <p class="gl-stat__value" id="s-name">&mdash;</p>
+      </div>
     </div>
 
-    <p class="ops__note" id="s-generated">loading…</p>
+    <p class="gl-kicker" id="s-generated" style="margin-top: 32px;">loading&hellip;</p>
   </section>
 
   <script is:inline>
     fetch("/status.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
       const set = (id, v) => document.getElementById(id).textContent = v;
-      set("s-name",   d.canary || "—");
-      set("s-status", d.lastRunStatus === "PASSED" ? "PASSED" : (d.lastRunStatus || "unknown"));
-      set("s-at",     d.lastRunAt ? new Date(d.lastRunAt).toLocaleString() : "—");
-      set("s-dur",    d.lastRunDurationMs ? (d.lastRunDurationMs / 1000).toFixed(1) + " s" : "—");
-      set("s-generated", "digest generated " + new Date(d.generatedAt).toLocaleString());
+      set("s-name",   d.canary || "-");
+      set("s-at",     d.lastRunAt ? new Date(d.lastRunAt).toLocaleString() : "-");
+      set("s-dur",    d.lastRunDurationMs ? (d.lastRunDurationMs / 1000).toFixed(1) + " s" : "-");
+      set("s-generated", "// digest generated " + new Date(d.generatedAt).toLocaleString());
       const link = document.getElementById("cw-link");
       if (d.statusUrl) link.href = d.statusUrl;
       const pill = document.getElementById("s-status");
-      if (d.lastRunStatus === "PASSED") pill.classList.add("ok");
-      else if (d.lastRunStatus === "FAILED") pill.classList.add("bad");
-    }).catch(e => {
-      document.getElementById("s-generated").textContent = "digest not available yet — try again in a minute.";
+      pill.textContent = d.lastRunStatus || "unknown";
+      if (d.lastRunStatus === "PASSED") pill.classList.add("gl-ok");
+      else if (d.lastRunStatus === "FAILED") pill.classList.add("gl-bad");
+    }).catch(() => {
+      document.getElementById("s-generated").textContent = "// digest not available yet";
     });
   </script>
-
-  <style>
-    .ops { max-width: 900px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px); }
-    .ops__kicker { font-family: 'Apex Mk3', monospace; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--misc-accent); margin: 0 0 16px; }
-    .ops__title { font-family: 'Apex Mk3', monospace; font-weight: 300; font-size: clamp(3rem, 8vw, 5rem); line-height: 1; margin: 0 0 20px; text-transform: lowercase; letter-spacing: -0.02em; }
-    .ops__lede { font-family: 'Branding Pro', sans-serif; font-size: 1.05rem; line-height: 1.55; color: var(--misc-ink-soft); margin: 0 0 5vh; max-width: 620px; }
-    .ops__lede a, .ops__lede code { color: var(--misc-accent); }
-    .ops__lede code { font-family: 'Apex Mk3', monospace; font-size: 0.9rem; }
-    .ops__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .ops__stat { padding: 20px; border: 1px solid var(--misc-line); border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 8px; }
-    .ops__stat-label { font-family: 'Apex Mk3', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--misc-ink-soft); }
-    .ops__stat-value { font-family: 'Branding Pro', sans-serif; font-size: 1.15rem; color: var(--misc-ink); }
-    .ops__stat-value.ok  { color: #2c8a3f; }
-    .ops__stat-value.bad { color: #b53030; }
-    .ops__note { font-family: 'Apex Mk3', monospace; font-size: 0.82rem; color: var(--misc-ink-soft); }
-  </style>
-</Base>
+</Gryphline>

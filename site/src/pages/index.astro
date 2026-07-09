@@ -821,24 +821,25 @@ const roster = [
       }
     }
 
-    /* Kill the shopify theme.css .content-for-layout padding so the hero + sections can go edge-to-edge. */
+    /* Full-bleed the entire content wrapper so every section child
+       (hero, strip, dividers, sec02-05, themes) touches the viewport
+       edges without needing per-section overrides. */
     body.page-index .content-for-layout {
       padding: 0 !important;
       max-width: none !important;
+      width: 100vw !important;
+      margin-left: calc((100% - 100vw) / 2) !important;
+      box-sizing: border-box;
     }
 
     /* ============================================================
        SECTION 01 · HERO — full-viewport cinematic
        ============================================================ */
-    /* Hero: back in the normal flow (scrolls away as user scrolls),
-       full-bleed via 100vw with margin-calc so its edges hit the viewport
-       edges even inside a padded parent. body has overflow-x:hidden which
-       clips the small scrollbar overhang. */
+    /* Hero — parent .content-for-layout is now full-bleed, so width:100% works. */
     .hero {
       position: relative;
       display: block;
-      width: 100vw;
-      margin-left: calc((100% - 100vw) / 2);
+      width: 100%;
       height: 100vh;
       height: 100svh;
       overflow: hidden;

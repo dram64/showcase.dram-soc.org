@@ -88,46 +88,13 @@ const roster = [
     <!-- Full-bleed hero backdrop artwork -->
     <img class="hero__art" src="/hero/nso-hero.webp" alt="Tokyo Zero hero artwork" />
 
-    <!-- Darkening / vignette layers over the artwork -->
-    <div class="hero__scrim" aria-hidden="true"></div>
-    <div class="hero__grain" aria-hidden="true"></div>
-    <div class="ef-grid-bg ef-grid-bg--dark" aria-hidden="true"></div>
-
-    <!-- Watermark backdrop -->
-    <div class="ef-watermark ef-watermark--light" style="top: 8%; left: 50%; transform: translateX(-50%); font-size: clamp(6rem, 22vw, 24rem);">CHROMADIPITY</div>
-    <div class="ef-watermark ef-watermark--yellow" style="bottom: 12%; left: 3%; font-size: clamp(3rem, 8vw, 8rem);">/ / TZ.001</div>
-
-    <!-- Ambient corner + edge labels -->
+    <!-- Ambient corner + edge labels — sit ON the artwork -->
     <span class="ef-coord" style="top: 24px; right: 90px;">N 34.05° · W 118.24° · LOS ANGELES</span>
     <span class="ef-coord" style="bottom: 110px; right: 90px;">BUILD 2026.07 · REV.001</span>
     <span class="ef-coord" style="top: 45%; left: 90px;">** TRACK: 03/12 · IDX.T-04</span>
     <span class="ef-coord" style="top: 24%; right: 90px;">SIG.RSSI -42 dBm · LOCKED</span>
     <span class="ef-coord" style="bottom: 22%; left: 90px;">CH.7 // CHROMADIPITY</span>
     <span class="ef-coord" style="top: 70%; right: 90px;">FRAME.T-04 · REC.OK</span>
-
-    <!-- Center frame -->
-    <div class="hero__frame">
-      <p class="hero__meta">
-        <span class="ef-brk"><span class="rec-dot" style="width:8px;height:8px;border-radius:50%;background:#ff5566;box-shadow:0 0 8px #ff5566;display:inline-block;"></span> REC</span>
-        <span class="hero__meta-sep">/</span>
-        <span>01/06 · portfolio</span>
-      </p>
-      <div class="hero__title-wrap">
-        <h1 class="hero__title">TOKYO<br/>ZERO</h1>
-        <p class="hero__title-sub">chromadipity core</p>
-      </div>
-      <p class="hero__lede">
-        Three themed anime merch storefronts &mdash; hand-illustrated character work,
-        magazine-style catalog, shipped on a serverless AWS stack provisioned via Terraform.
-      </p>
-      <div class="hero__cta">
-        <a class="ef-btn" href="/catalog/">
-          <span class="ef-btn__bar"></span>
-          <span class="ef-btn__body">▶ Enter Catalog</span>
-        </a>
-        <a class="hero__cta-alt" href="/architecture/">// the aws stack &rarr;</a>
-      </div>
-    </div>
 
     <!-- Scroll indicator -->
     <a class="hero__scroll" href="#graphic" aria-label="scroll to next section">
@@ -844,7 +811,17 @@ const roster = [
     }
 
     /* ============================================================
-       SECTION 01 · HERO — dark cinematic
+       FULL-BLEED — override shopify theme.css .content-for-layout
+       padding so the hero + all sections touch the screen edges.
+       Each section provides its own internal padding.
+       ============================================================ */
+    body.page-index .content-for-layout {
+      padding: 0 !important;
+      max-width: none !important;
+    }
+
+    /* ============================================================
+       SECTION 01 · HERO — full-viewport cinematic
        ============================================================ */
     .hero {
       position: relative;
@@ -875,29 +852,6 @@ const roster = [
     @keyframes hero-drift {
       0%   { transform: scale(1.02) translate(0, 0); }
       100% { transform: scale(1.06) translate(-1.2%, -0.8%); }
-    }
-
-    /* Cinematic scrim — darkens edges + top/bottom for text legibility */
-    .hero__scrim {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(20, 19, 26, 0.25) 55%, rgba(20, 19, 26, 0.7) 100%),
-        linear-gradient(180deg, rgba(20, 19, 26, 0.55) 0%, transparent 25%, transparent 60%, rgba(20, 19, 26, 0.8) 100%);
-    }
-    .hero__grain {
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 30%, transparent 2px, rgba(255,255,255,0.02) 3px),
-        radial-gradient(circle at 80% 70%, transparent 2px, rgba(255,255,255,0.02) 3px);
-      background-size: 4px 4px, 6px 6px;
-      opacity: 0.5;
-      pointer-events: none;
-      z-index: 2;
-      mix-blend-mode: overlay;
     }
 
     /* Scroll indicator at bottom center */

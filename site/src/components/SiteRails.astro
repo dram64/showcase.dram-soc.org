@@ -53,48 +53,65 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    background: rgba(20, 19, 26, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     pointer-events: auto;
+    /* Default (light) — matches misc palette */
+    background: rgba(253, 252, 249, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 320ms ease, border-color 320ms ease;
   }
   .site-rail--l {
     left: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.10);
+    border-right: 1px solid rgba(0, 0, 0, 0.10);
     gap: 32px;
   }
   .site-rail--r {
     right: 0;
-    border-left: 1px solid rgba(255, 255, 255, 0.10);
+    border-left: 1px solid rgba(0, 0, 0, 0.10);
     gap: 20px;
     justify-content: center;
   }
   .site-rail__mark {
     display: block;
-    width: 22px;
-    height: 22px;
-    background: #fff;
+    width: 20px;
+    height: 20px;
+    background: #5061b9;
     clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%);
+    transition: background 320ms ease;
   }
   .site-rail__vrail {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: rgba(245, 244, 240, 0.55);
+    color: rgba(20, 19, 26, 0.55);
     white-space: nowrap;
+    transition: color 320ms ease;
   }
   .site-rail--r a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.7);
-    transition: color 140ms ease, transform 140ms ease;
+    color: rgba(20, 19, 26, 0.6);
+    transition: color 320ms ease, transform 140ms ease;
   }
-  .site-rail--r a:hover { color: #ffee00; transform: scale(1.1); }
+  .site-rail--r a:hover { color: #5061b9; transform: scale(1.1); }
   .site-rail--r svg { width: 20px; height: 20px; }
+
+  /* Dark mode — activated by JS on pages with a dark hero (e.g. landing).
+     Wraps a class on <html data-rail="dark"> to smoothly transition. */
+  html[data-rail="dark"] .site-rail {
+    background: rgba(20, 19, 26, 0.82);
+    border-color: rgba(255, 255, 255, 0.10);
+  }
+  html[data-rail="dark"] .site-rail--l { border-right-color: rgba(255, 255, 255, 0.10); }
+  html[data-rail="dark"] .site-rail--r { border-left-color: rgba(255, 255, 255, 0.10); }
+  html[data-rail="dark"] .site-rail__mark { background: #fff; }
+  html[data-rail="dark"] .site-rail__vrail { color: rgba(245, 244, 240, 0.55); }
+  html[data-rail="dark"] .site-rail--r a { color: rgba(255, 255, 255, 0.7); }
+  html[data-rail="dark"] .site-rail--r a:hover { color: #ffee00; }
 
   @media (max-width: 500px) {
     .site-rail__vrail { font-size: 0.6rem; letter-spacing: 0.22em; }

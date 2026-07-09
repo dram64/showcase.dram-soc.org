@@ -377,6 +377,22 @@ const roster = [
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
+
+    // Rail dark/light transition — dark while hero is in view (matches the
+    // NSOHero backdrop), fades to light misc palette once scrolled past.
+    (function () {
+      const html = document.documentElement;
+      const heroEl = document.getElementById("hero");
+      if (!heroEl) return;
+      // Start in dark mode (page loads on hero)
+      html.setAttribute("data-rail", "dark");
+      const railObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          html.setAttribute("data-rail", e.isIntersecting && e.intersectionRatio > 0.2 ? "dark" : "light");
+        });
+      }, { threshold: [0, 0.2, 0.5, 0.8, 1] });
+      railObs.observe(heroEl);
+    })();
   </script>
 
   <style>
@@ -581,14 +597,19 @@ const roster = [
     }
 
     /* ============================================================
-       SHARED — section shell (used by sec02 through sec06)
+       SHARED — section shell (used by sec02 through sec06).
+       Sections fill the full space between rails (main padding = --rails-w)
+       with a small internal breathing gutter so content doesn't touch
+       the rail edges.
        ============================================================ */
     .sec {
-      padding: clamp(60px, 8vw, 100px) 0;
-      max-width: 1280px;
+      padding: clamp(60px, 8vw, 100px) clamp(24px, 4vw, 64px);
+      max-width: none;
+      width: 100%;
       margin: 0 auto;
+      box-sizing: border-box;
     }
-    .sec__head { margin-bottom: 5vh; max-width: 720px; }
+    .sec__head { margin-bottom: 5vh; max-width: 820px; }
     .sec__num {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;

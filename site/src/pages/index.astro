@@ -822,13 +822,25 @@ const roster = [
     }
 
     /* ============================================================
-       FULL-BLEED — override shopify theme.css .content-for-layout
-       padding so the hero + all sections touch the screen edges.
-       Each section provides its own internal padding.
+       FULL-BLEED — force every ancestor of the hero to be a true
+       full-width container. Kills the shopify theme.css padding and
+       any inherited max-width so the hero (width:100%) truly spans
+       the full visible viewport with no right-side offset.
        ============================================================ */
-    body.page-index .content-for-layout {
+    html, body.page-index {
+      margin: 0 !important;
       padding: 0 !important;
-      max-width: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+    }
+    body.page-index main,
+    body.page-index .content-for-layout {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box;
     }
 
     /* ============================================================
@@ -836,21 +848,17 @@ const roster = [
        ============================================================ */
     .hero {
       position: relative;
-      /* Full-bleed — force 100vw regardless of any parent constraints */
-      width: 100vw;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
+      /* Fill the parent (which is padding:0 via .content-for-layout override) — safer than 100vw which includes scrollbar */
+      width: 100%;
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
       min-height: 100svh;
       height: 100vh;
       overflow: hidden;
-      /* Solid dark bg so no page-background whitespace can peek through */
       background: #14131a;
       isolation: isolate;
       display: block;
-      /* Remove any inline gap under image */
       line-height: 0;
       font-size: 0;
     }

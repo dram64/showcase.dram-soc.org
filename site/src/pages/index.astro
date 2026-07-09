@@ -1,39 +1,73 @@
 ---
 export const prerender = true;
 import Base from "../layouts/Base.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { products } from "../data/products.ts";
+
+// Curated 8 for the featured strip — a mix across categories.
+const featured = [
+  "deskmat-yuzuha-alice",
+  "tapestry-astra-yao",
+  "print-yuzuha",
+  "sticker-blanc-bunny",
+  "deskmat-toki-bunny",
+  "tapestry-citlali",
+  "print-castorice",
+  "sticker-alice",
+].map(slug => products.find(p => p.slug === slug)).filter(Boolean);
 ---
-<Base title="portfolio" pageClass="page-index" miscTitle="dram" showAnnouncement={false}>
-  <section class="hero">
-    <div class="hero__inner">
-      <p class="hero__kicker"><span class="kicker-dot"></span>portfolio &middot; design &amp; cloud</p>
-      <h1 class="hero__title">character work,<br/>shipped clean.</h1>
+<Base title="portfolio" pageClass="page-index" miscTitle="dram" showAnnouncement={false} showHeader={false}>
+
+  <!-- ================ GACHA-STYLE HERO ================ -->
+  <section class="hero" aria-label="hero">
+    <div class="hero__glow hero__glow--l" aria-hidden="true"></div>
+    <div class="hero__glow hero__glow--r" aria-hidden="true"></div>
+
+    <img class="hero__char hero__char--l" src="/assets/psg-panty.webp"    alt="Panty" />
+    <img class="hero__char hero__char--r" src="/assets/psg-stocking.webp" alt="Stocking" />
+
+    <div class="hero__floor" aria-hidden="true"></div>
+
+    <div class="hero__frame">
+      <p class="hero__kicker"><span class="dot"></span>portfolio &middot; design &amp; cloud</p>
+      <h1 class="hero__title">
+        <span class="hero__brand">TOKYO ZERO</span>
+        <span class="hero__stamp">chromadipity core</span>
+      </h1>
+      <p class="hero__tag">character work, shipped clean.</p>
       <p class="hero__lede">
-        <strong>Tokyo Zero</strong> — three themed anime merch storefronts, 40+ hand-illustrated
-        character pieces, a custom typography stack, and the serverless AWS pipeline that ships
-        them. Design + code, one portfolio.
+        Three themed anime merch storefronts &mdash; hand-illustrated character work,
+        custom typography, magazine-style catalog. Shipped on a serverless AWS stack
+        provisioned entirely with Terraform.
       </p>
       <div class="hero__cta">
-        <a class="hero__btn hero__btn--primary" href="/work/">explore the work &rarr;</a>
-        <a class="hero__btn" href="/architecture/">see the aws stack &rarr;</a>
+        <a class="cta cta--primary" href="/catalog/">
+          <span class="cta__ico" aria-hidden="true">▶</span>
+          view catalog
+        </a>
+        <a class="cta" href="/architecture/">the aws stack &rarr;</a>
       </div>
-      <ul class="hero__stack">
-        <li><span>DESIGN</span>Astro &middot; Space Grotesk &middot; Branding Pro &middot; Chakra Petch</li>
-        <li><span>CLOUD</span>S3 &middot; CloudFront &middot; Lambda &middot; Athena &middot; Terraform</li>
-        <li><span>SPEND</span>~$2/mo · <a href="/cost/">/cost</a> &middot; <a href="/status/">/status</a> &middot; <a href="/insights/">/insights</a></li>
-      </ul>
+    </div>
+
+    <div class="hero__ticker" aria-hidden="true">
+      <span class="hero__ticker-item"><em>DESIGN</em> Astro · Space Grotesk · Chakra Petch · Beam Visionary</span>
+      <span class="hero__ticker-item"><em>CLOUD</em> S3 · CloudFront · Lambda · Athena · Terraform</span>
+      <span class="hero__ticker-item"><em>SPEND</em> ~$2/mo — <a href="/cost/">/cost</a> · <a href="/status/">/status</a> · <a href="/insights/">/insights</a></span>
     </div>
   </section>
 
-  <section class="showcase" id="characters">
+  <!-- ================ CHARACTER ILLUSTRATION SHOWCASE ================ -->
+  <section class="showcase" id="illustration">
     <div class="showcase__head">
-      <p class="showcase__kicker">// character showcase</p>
-      <h2 class="showcase__title">01. illustration</h2>
+      <p class="showcase__kicker">// character illustration</p>
+      <h2 class="showcase__title">the roster.</h2>
       <p class="showcase__lede">
-        A curated slice from the roster — Genshin, HoYo, Vtuber, and OC work. Six of forty.
+        Six of forty &mdash; Genshin, HoYo, Vtuber, OC. Each piece is the source for a
+        deskmat, tapestry, print, or sticker in the catalog.
       </p>
     </div>
-    <div class="showcase__grid showcase__grid--chars">
-      <figure class="art art--tall">
+    <div class="art-columns">
+      <figure class="art">
         <img src="/portfolio/kafka.webp" alt="Kafka" loading="lazy" />
         <figcaption><span class="art__num">01</span> Kafka <em>&mdash; HSR</em></figcaption>
       </figure>
@@ -46,74 +80,94 @@ import Base from "../layouts/Base.astro";
         <figcaption><span class="art__num">03</span> Panty &amp; Stocking <em>&mdash; PSG</em></figcaption>
       </figure>
       <figure class="art">
-        <img src="/portfolio/jane.webp" alt="Jane Doe" loading="lazy" />
-        <figcaption><span class="art__num">04</span> Jane Doe <em>&mdash; OC</em></figcaption>
+        <img src="/portfolio/ayaka.webp" alt="Ayaka" loading="lazy" />
+        <figcaption><span class="art__num">04</span> Kamisato Ayaka <em>&mdash; Genshin</em></figcaption>
       </figure>
       <figure class="art">
-        <img src="/portfolio/ayaka.webp" alt="Ayaka" loading="lazy" />
-        <figcaption><span class="art__num">05</span> Kamisato Ayaka <em>&mdash; Genshin</em></figcaption>
+        <img src="/portfolio/jane.webp" alt="Jane Doe" loading="lazy" />
+        <figcaption><span class="art__num">05</span> Jane Doe <em>&mdash; OC</em></figcaption>
       </figure>
-      <figure class="art art--tall">
+      <figure class="art">
         <img src="/portfolio/ironmouse.webp" alt="Ironmouse" loading="lazy" />
         <figcaption><span class="art__num">06</span> Ironmouse <em>&mdash; VShojo</em></figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="showcase">
+  <!-- ================ SHOPIFY-STYLE FEATURED PRODUCTS ================ -->
+  <section class="showcase" id="featured">
+    <div class="showcase__head">
+      <p class="showcase__kicker">// featured drops</p>
+      <h2 class="showcase__title">from the catalog.</h2>
+      <p class="showcase__lede">
+        A curated eight from the 30-piece Tokyo Zero drop. Deskmats, tapestries, prints,
+        and stickers &mdash; each carries a character. Full catalog below.
+      </p>
+    </div>
+    <div class="misc__grid">
+      {featured.map((p, i) => (
+        <ProductCard product={p} index={String(i + 1).padStart(2, "0")} category={p.category} />
+      ))}
+    </div>
+    <a class="showcase__more" href="/catalog/">see the full catalog &rarr;</a>
+  </section>
+
+  <!-- ================ PRODUCT PHOTOGRAPHY ================ -->
+  <section class="showcase" id="photography">
     <div class="showcase__head">
       <p class="showcase__kicker">// product photography</p>
-      <h2 class="showcase__title">02. finished pieces</h2>
+      <h2 class="showcase__title">finished pieces.</h2>
       <p class="showcase__lede">
         Illustration &rarr; production &rarr; photography. Four physical drops from the roster.
       </p>
     </div>
-    <div class="showcase__grid showcase__grid--products">
+    <div class="prod-grid">
       <figure class="prod">
-        <img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" />
+        <div class="prod__img"><img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" /></div>
         <figcaption>
           <span class="prod__label">acrylic stand</span>
           <span class="prod__name">Kafka</span>
-          <span class="prod__spec">5.6 × 7.4 in &middot; clear acrylic &middot; screen-print</span>
+          <span class="prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
         </figcaption>
       </figure>
       <figure class="prod">
-        <img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" />
+        <div class="prod__img"><img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" /></div>
         <figcaption>
           <span class="prod__label">acrylic stand</span>
           <span class="prod__name">Topaz</span>
-          <span class="prod__spec">5.6 × 7.4 in &middot; clear acrylic &middot; screen-print</span>
+          <span class="prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
         </figcaption>
       </figure>
       <figure class="prod">
-        <img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" />
+        <div class="prod__img"><img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" /></div>
         <figcaption>
           <span class="prod__label">deskmat</span>
           <span class="prod__name">Faruzan</span>
-          <span class="prod__spec">900 × 400 mm &middot; sublimated &middot; rubber base</span>
+          <span class="prod__spec">900 &times; 400 mm &middot; sublimated</span>
         </figcaption>
       </figure>
       <figure class="prod">
-        <img src="/portfolio/prod-miku.webp" alt="Miku" loading="lazy" />
+        <div class="prod__img"><img src="/portfolio/prod-miku.webp" alt="Cinna Miku" loading="lazy" /></div>
         <figcaption>
           <span class="prod__label">print</span>
           <span class="prod__name">Cinna Miku</span>
-          <span class="prod__spec">12 × 18 in &middot; satin card stock &middot; 300 dpi</span>
+          <span class="prod__spec">12 &times; 18 in &middot; satin card stock</span>
         </figcaption>
       </figure>
     </div>
   </section>
 
+  <!-- ================ PATHS ================ -->
   <section class="showcase" id="paths">
     <div class="showcase__head">
       <p class="showcase__kicker">// keep going</p>
-      <h2 class="showcase__title">03. paths</h2>
+      <h2 class="showcase__title">paths.</h2>
     </div>
     <div class="paths">
-      <a class="path" href="/catalog/">
+      <a class="path" href="/work/">
         <p class="path__num">&rarr; 01</p>
-        <h3 class="path__title">the full catalog</h3>
-        <p class="path__desc">30+ curated Tokyo Zero products in the misc magazine layout.</p>
+        <h3 class="path__title">the three themes</h3>
+        <p class="path__desc">PSG · NSO · MISC &mdash; each with a distinct visual system.</p>
       </a>
       <a class="path" href="/process/">
         <p class="path__num">&rarr; 02</p>
@@ -123,114 +177,215 @@ import Base from "../layouts/Base.astro";
       <a class="path" href="/architecture/">
         <p class="path__num">&rarr; 03</p>
         <h3 class="path__title">the aws stack</h3>
-        <p class="path__desc">Serverless breakdown &mdash; 12 services, ~$2/mo, live status.</p>
+        <p class="path__desc">Serverless breakdown — 12 services, ~$2/mo, live status.</p>
       </a>
     </div>
   </section>
 
   <style>
-    /* ================ HERO ================ */
+    /* ============================================================
+       GACHA HERO — full-bleed atmospheric character banner
+       Two side sprites bleeding off the edges, cinematic gradient,
+       title centered, ticker at the bottom.
+       ============================================================ */
     .hero {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: clamp(48px, 8vw, 96px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 72px);
+      position: relative;
+      min-height: min(88vh, 820px);
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(80, 97, 185, 0.20) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(255, 129, 176, 0.14) 0%, transparent 55%),
+        linear-gradient(180deg, #14131a 0%, #1c1a26 40%, #1a1622 100%);
+      color: #f5f4f0;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      isolation: isolate;
     }
-    .hero__inner { max-width: 900px; }
+    .hero__glow {
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      max-width: 900px;
+      max-height: 900px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero__glow--l { background: rgba(80, 97, 185, 0.35);  top: -20%; left: -25%; }
+    .hero__glow--r { background: rgba(255, 129, 176, 0.35); bottom: -30%; right: -25%; }
+
+    .hero__char {
+      position: absolute;
+      bottom: 0;
+      height: 95%;
+      width: auto;
+      max-width: 42%;
+      object-fit: contain;
+      object-position: bottom center;
+      z-index: 2;
+      filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
+      pointer-events: none;
+    }
+    .hero__char--l { left: -3%; transform: scaleX(1); }
+    .hero__char--r { right: -3%; }
+
+    .hero__floor {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 30%;
+      background: linear-gradient(180deg, transparent 0%, rgba(20, 19, 26, 0.55) 60%, rgba(20, 19, 26, 0.9) 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hero__frame {
+      position: relative;
+      z-index: 5;
+      align-self: center;
+      justify-self: center;
+      text-align: center;
+      max-width: 720px;
+      padding: 8vh clamp(24px, 5vw, 48px) 4vh;
+    }
     .hero__kicker {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
+      font-family: 'JetBrains Mono', 'Apex Mk3', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--misc-accent, #5061b9);
-      margin: 0 0 28px;
+      color: #d9e2ff;
+      opacity: 0.7;
+      margin: 0 0 24px;
     }
-    .kicker-dot {
-      display: inline-block;
-      width: 8px; height: 8px;
+    .dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: var(--misc-accent, #5061b9);
-      box-shadow: 0 0 8px currentColor;
+      background: #3deaff;
+      box-shadow: 0 0 10px #3deaff;
       animation: pulse 2s ease-in-out infinite;
     }
     @keyframes pulse { 50% { opacity: 0.35; } }
 
     .hero__title {
-      font-family: 'Apex Mk3', 'Space Grotesk', system-ui, sans-serif;
-      font-weight: 300;
-      font-size: clamp(2.8rem, 7vw, 5rem);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: var(--misc-ink, #1a1a1a);
-      margin: 0 0 24px;
-      text-transform: lowercase;
+      margin: 0 0 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
-    .hero__lede {
-      font-family: 'Branding Pro', system-ui, sans-serif;
+    .hero__brand {
+      font-family: 'Apex Mk3', 'Chakra Petch', sans-serif;
       font-weight: 300;
-      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-      line-height: 1.55;
-      color: var(--misc-ink-soft, #6b6b6b);
-      max-width: 620px;
-      margin: 0 0 36px;
+      font-size: clamp(3.4rem, 9vw, 6.4rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      text-shadow: 0 4px 24px rgba(80, 97, 185, 0.35);
     }
-    .hero__lede strong { font-weight: 500; color: var(--misc-ink, #1a1a1a); }
-
-    .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
-    .hero__btn {
-      font-family: 'Apex Mk3', monospace;
-      font-size: 0.82rem;
+    .hero__stamp {
+      font-family: 'Beam Visionary', cursive;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      color: #ffd6ea;
+      letter-spacing: 0.06em;
+    }
+    .hero__tag {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
       letter-spacing: 0.14em;
       text-transform: lowercase;
-      padding: 14px 26px;
-      border: 1px solid var(--misc-ink, #1a1a1a);
-      color: var(--misc-ink, #1a1a1a);
-      background: transparent;
-      text-decoration: none;
-      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
-      /* subtle Gryphline corner clip — softer than the ops pages */
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+      color: #f5f4f0;
+      margin: 12px 0 20px;
     }
-    .hero__btn:hover { background: var(--misc-ink, #1a1a1a); color: #fff; }
-    .hero__btn--primary { background: var(--misc-ink, #1a1a1a); color: #fff; }
-    .hero__btn--primary:hover { background: var(--misc-accent, #5061b9); border-color: var(--misc-accent, #5061b9); }
-
-    .hero__stack {
-      list-style: none;
-      padding: 24px 0 0;
-      margin: 0;
-      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.14));
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .hero__stack li {
+    .hero__lede {
       font-family: 'Branding Pro', sans-serif;
-      font-size: 0.82rem;
-      color: var(--misc-ink-soft, #6b6b6b);
+      font-size: clamp(0.92rem, 1.1vw, 1rem);
+      line-height: 1.6;
+      color: rgba(245, 244, 240, 0.75);
+      margin: 0 auto 32px;
+      max-width: 540px;
     }
-    .hero__stack span {
-      display: block;
-      font-family: 'Apex Mk3', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--misc-accent, #5061b9);
-      margin-bottom: 6px;
-    }
-    .hero__stack a { color: var(--misc-accent, #5061b9); text-decoration: none; border-bottom: 1px solid currentColor; }
 
-    /* ================ SHOWCASE SHELL ================ */
+    .hero__cta {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.86rem;
+      letter-spacing: 0.16em;
+      text-transform: lowercase;
+      padding: 14px 26px;
+      color: #f5f4f0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .cta:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+    .cta--primary {
+      background: #ffd93d;
+      color: #14131a;
+      border-color: #ffd93d;
+    }
+    .cta--primary:hover { background: #fff28a; border-color: #fff28a; }
+    .cta__ico { font-size: 0.75rem; opacity: 0.75; }
+
+    .hero__ticker {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 14px clamp(24px, 5vw, 48px);
+      background: rgba(20, 19, 26, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: rgba(245, 244, 240, 0.7);
+      flex-wrap: wrap;
+    }
+    .hero__ticker-item em {
+      font-style: normal;
+      color: #3deaff;
+      font-weight: 500;
+      margin-right: 8px;
+      letter-spacing: 0.22em;
+    }
+    .hero__ticker-item a { color: #ffd6ea; text-decoration: none; border-bottom: 1px solid rgba(255,214,234,0.4); }
+
+    @media (max-width: 800px) {
+      .hero__char { max-width: 55%; opacity: 0.55; }
+      .hero__brand { letter-spacing: 0.01em; }
+      .hero__ticker { flex-direction: column; gap: 8px; padding: 12px 20px; }
+    }
+
+    /* ============================================================
+       SHOWCASE SHELL — soft misc palette
+       ============================================================ */
     .showcase {
       max-width: 1280px;
-      margin: 0 auto clamp(56px, 8vw, 96px);
+      margin: clamp(56px, 8vw, 96px) auto;
       padding: 0 clamp(20px, 4vw, 48px);
     }
     .showcase__head { margin-bottom: 40px; max-width: 640px; }
     .showcase__kicker {
-      font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
+      font-family: 'JetBrains Mono', 'Apex Mk3', monospace;
       font-size: 0.72rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
@@ -238,7 +393,7 @@ import Base from "../layouts/Base.astro";
       margin: 0 0 10px;
     }
     .showcase__title {
-      font-family: 'Apex Mk3', 'Space Grotesk', system-ui, sans-serif;
+      font-family: 'Apex Mk3', sans-serif;
       font-weight: 300;
       font-size: clamp(1.8rem, 3.5vw, 2.6rem);
       color: var(--misc-ink, #1a1a1a);
@@ -253,44 +408,52 @@ import Base from "../layouts/Base.astro";
       color: var(--misc-ink-soft, #6b6b6b);
       margin: 0;
     }
+    .showcase__more {
+      display: inline-block;
+      margin-top: 32px;
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      color: var(--misc-accent, #5061b9);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 140ms ease;
+    }
+    .showcase__more:hover { border-bottom-color: var(--misc-accent, #5061b9); }
 
-    /* ================ CHARACTER GRID ================ */
-    .showcase__grid--chars {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 1fr;
-      gap: clamp(12px, 1.5vw, 20px);
+    /* ============================================================
+       CHARACTER GRID — CSS multi-column masonry, natural aspect ratios
+       ============================================================ */
+    .art-columns {
+      column-count: 3;
+      column-gap: 20px;
     }
     .art {
-      position: relative;
-      margin: 0;
+      break-inside: avoid;
+      margin: 0 0 20px;
       background: #fff;
       border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       overflow: hidden;
+      display: block;
       transition: border-color 200ms ease, transform 200ms ease;
-      /* Gryphline corner clip on the top-right of each frame */
-      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
-      aspect-ratio: 4/5;
     }
-    .art--tall { grid-row: span 2; aspect-ratio: 4/10; }
     .art:hover { border-color: var(--misc-accent, #5061b9); transform: translateY(-2px); }
     .art img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       display: block;
+      width: 100%;
+      height: auto;   /* preserves aspect ratio */
     }
     .art figcaption {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      padding: 12px 16px;
-      background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
+      padding: 10px 14px;
       font-family: 'Apex Mk3', monospace;
       font-size: 0.82rem;
-      color: var(--misc-ink, #1a1a1a);
+      color: var(--misc-ink);
       display: flex;
       align-items: baseline;
       gap: 8px;
+      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.08));
     }
     .art__num {
       font-family: 'JetBrains Mono', monospace;
@@ -302,58 +465,75 @@ import Base from "../layouts/Base.astro";
     .art figcaption em {
       margin-left: auto;
       font-style: normal;
-      color: var(--misc-ink-soft, #6b6b6b);
+      color: var(--misc-ink-soft);
       font-size: 0.7rem;
     }
+    @media (max-width: 900px) { .art-columns { column-count: 2; } }
+    @media (max-width: 500px) { .art-columns { column-count: 1; } }
 
-    /* ================ PRODUCT GRID ================ */
-    .showcase__grid--products {
+    /* ============================================================
+       PRODUCT PHOTOGRAPHY — clean 4-up card grid, natural aspect
+       ============================================================ */
+    .prod-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: clamp(12px, 1.5vw, 20px);
+      gap: 20px;
     }
     .prod {
-      position: relative;
       margin: 0;
       background: #fff;
       border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       overflow: hidden;
       transition: transform 200ms ease, border-color 200ms ease;
+      display: flex;
+      flex-direction: column;
     }
-    .prod:hover { transform: translateY(-3px); border-color: var(--misc-accent, #5061b9); }
-    .prod img {
-      width: 100%;
+    .prod:hover { transform: translateY(-3px); border-color: var(--misc-accent); }
+    .prod__img {
+      background: #f7f6f2;
       aspect-ratio: 4/5;
-      object-fit: cover;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .prod__img img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
     }
     .prod figcaption {
-      padding: 16px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
       gap: 4px;
-      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+      border-top: 1px solid var(--misc-line);
     }
     .prod__label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--misc-accent, #5061b9);
+      color: var(--misc-accent);
     }
     .prod__name {
-      font-family: 'Apex Mk3', 'Space Grotesk', sans-serif;
+      font-family: 'Apex Mk3', sans-serif;
       font-size: 1.05rem;
-      color: var(--misc-ink, #1a1a1a);
+      color: var(--misc-ink);
     }
     .prod__spec {
       font-family: 'Branding Pro', sans-serif;
       font-size: 0.78rem;
-      color: var(--misc-ink-soft, #6b6b6b);
+      color: var(--misc-ink-soft);
       line-height: 1.4;
     }
+    @media (max-width: 900px) { .prod-grid { grid-template-columns: repeat(2, 1fr); } }
 
-    /* ================ PATHS ================ */
+    /* ============================================================
+       PATHS — three navigation cards
+       ============================================================ */
     .paths {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -367,40 +547,29 @@ import Base from "../layouts/Base.astro";
       text-decoration: none;
       color: inherit;
       transition: border-color 180ms ease, transform 180ms ease;
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
     }
-    .path:hover { border-color: var(--misc-accent, #5061b9); transform: translateY(-2px); }
+    .path:hover { border-color: var(--misc-accent); transform: translateY(-2px); }
     .path__num {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.68rem;
       letter-spacing: 0.18em;
-      color: var(--misc-accent, #5061b9);
+      color: var(--misc-accent);
       margin: 0 0 12px;
     }
     .path__title {
       font-family: 'Apex Mk3', sans-serif;
-      font-size: 1.25rem;
-      color: var(--misc-ink, #1a1a1a);
+      font-size: 1.2rem;
+      color: var(--misc-ink);
       margin: 0 0 8px;
       font-weight: 400;
     }
     .path__desc {
       font-family: 'Branding Pro', sans-serif;
       font-size: 0.9rem;
-      color: var(--misc-ink-soft, #6b6b6b);
+      color: var(--misc-ink-soft);
       margin: 0;
       line-height: 1.5;
     }
-
-    /* ================ RESPONSIVE ================ */
-    @media (max-width: 900px) {
-      .hero__stack { grid-template-columns: 1fr; gap: 14px; }
-      .showcase__grid--products { grid-template-columns: repeat(2, 1fr); }
-      .paths { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      .showcase__grid--chars { grid-template-columns: repeat(2, 1fr); }
-      .art--tall { grid-row: span 1; aspect-ratio: 4/5; }
-    }
+    @media (max-width: 700px) { .paths { grid-template-columns: 1fr; } }
   </style>
 </Base>

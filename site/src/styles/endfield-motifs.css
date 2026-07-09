@@ -271,6 +271,292 @@
 }
 .ef-portrait:hover { transform: scale(1.06); }
 
+/* ==== BACKGROUND OVERLAYS + DECORATIVE MOTIFS ==== */
+
+/* Watermark — massive display text bleeding behind content */
+.ef-watermark {
+  position: absolute;
+  font-family: var(--ef-display);
+  font-weight: 700;
+  font-size: clamp(6rem, 18vw, 20rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: rgba(20, 19, 26, 0.04);
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+}
+.ef-watermark--light { color: rgba(255, 255, 255, 0.05); }
+.ef-watermark--yellow { color: rgba(255, 238, 0, 0.09); }
+.ef-watermark--accent { color: rgba(80, 97, 185, 0.06); }
+
+/* Small coordinate label — like N 34.05° W 118.24° in corner */
+.ef-coord {
+  position: absolute;
+  font-family: var(--ef-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  z-index: 6;
+  pointer-events: none;
+}
+.ef-coord::before { content: "// "; opacity: 0.55; }
+.ef-coord--dark { color: rgba(20, 19, 26, 0.35); }
+
+/* System code tag — [T-01], [SYS.001] etc */
+.ef-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--ef-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--misc-ink-soft, #6b6b6b);
+  padding: 3px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+}
+.ef-code--dark {
+  background: rgba(20, 19, 26, 0.55);
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.ef-code--yellow {
+  background: var(--ef-yellow);
+  color: var(--ef-black);
+  border-color: var(--ef-yellow);
+}
+
+/* Grid pattern background */
+.ef-grid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(20, 19, 26, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 19, 26, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 85%);
+}
+.ef-grid-bg--dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+.ef-grid-bg--fine { background-size: 22px 22px; }
+
+/* Topographic contour lines (SVG-generated feel via repeating radial gradients) */
+.ef-contour {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    repeating-radial-gradient(ellipse at 30% 40%,
+      transparent 0,
+      transparent 40px,
+      rgba(20, 19, 26, 0.035) 40px,
+      rgba(20, 19, 26, 0.035) 41px),
+    repeating-radial-gradient(ellipse at 70% 60%,
+      transparent 0,
+      transparent 55px,
+      rgba(20, 19, 26, 0.025) 55px,
+      rgba(20, 19, 26, 0.025) 56px);
+  mask-image: linear-gradient(180deg, #000 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%);
+}
+.ef-contour--dark {
+  background:
+    repeating-radial-gradient(ellipse at 30% 40%,
+      transparent 0, transparent 40px,
+      rgba(255, 255, 255, 0.04) 40px, rgba(255, 255, 255, 0.04) 41px),
+    repeating-radial-gradient(ellipse at 70% 60%,
+      transparent 0, transparent 55px,
+      rgba(255, 255, 255, 0.03) 55px, rgba(255, 255, 255, 0.03) 56px);
+}
+
+/* Section divider strip */
+.ef-divider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px clamp(20px, 4vw, 48px);
+  border-top: 1px solid rgba(20, 19, 26, 0.10);
+  border-bottom: 1px solid rgba(20, 19, 26, 0.10);
+  background: rgba(20, 19, 26, 0.02);
+  font-family: var(--ef-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--misc-ink-soft, #6b6b6b);
+}
+.ef-divider--dark {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(20, 19, 26, 0.75);
+  color: rgba(255, 255, 255, 0.55);
+}
+.ef-divider__mark {
+  color: var(--ef-yellow);
+  font-size: 0.9rem;
+}
+.ef-divider__code em {
+  font-style: normal;
+  color: var(--misc-ink, #14131a);
+  font-weight: 500;
+}
+.ef-divider--dark .ef-divider__code em { color: #fff; }
+
+/* Annotation with dashed leader — decorative pointer */
+.ef-annotation {
+  position: absolute;
+  z-index: 5;
+  font-family: var(--ef-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(20, 19, 26, 0.55);
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(20, 19, 26, 0.12);
+  pointer-events: none;
+  max-width: 180px;
+}
+.ef-annotation::before {
+  content: "";
+  position: absolute;
+  border-top: 1px dashed rgba(20, 19, 26, 0.35);
+}
+.ef-annotation--dark {
+  background: rgba(20, 19, 26, 0.75);
+  color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Barcode strip — decorative technical detail */
+.ef-barcode {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ef-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--misc-ink-soft, #6b6b6b);
+}
+.ef-barcode::before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 90px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--misc-ink, #14131a) 0px, var(--misc-ink, #14131a) 1.5px,
+    transparent 1.5px, transparent 3px,
+    var(--misc-ink, #14131a) 3px, var(--misc-ink, #14131a) 3.5px,
+    transparent 3.5px, transparent 6px,
+    var(--misc-ink, #14131a) 6px, var(--misc-ink, #14131a) 7px,
+    transparent 7px, transparent 9px
+  );
+}
+.ef-barcode--light::before {
+  background: repeating-linear-gradient(
+    90deg,
+    #fff 0px, #fff 1.5px,
+    transparent 1.5px, transparent 3px,
+    #fff 3px, #fff 3.5px,
+    transparent 3.5px, transparent 6px,
+    #fff 6px, #fff 7px,
+    transparent 7px, transparent 9px
+  );
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Data readout — like an ambient telemetry chip */
+.ef-readout {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  padding: 8px 12px;
+  background: rgba(20, 19, 26, 0.04);
+  border-left: 2px solid var(--ef-yellow);
+  font-family: var(--ef-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--misc-ink-soft, #6b6b6b);
+}
+.ef-readout dt {
+  color: var(--misc-accent, #5061b9);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.ef-readout dd {
+  margin: 0;
+  color: var(--misc-ink, #14131a);
+  font-variant-numeric: tabular-nums;
+}
+.ef-readout--dark {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.65);
+}
+.ef-readout--dark dd { color: #fff; }
+
+/* Silhouette wash — big character behind at very low opacity */
+.ef-silhouette {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  filter: grayscale(1) contrast(1.5);
+  mix-blend-mode: multiply;
+}
+.ef-silhouette--dark {
+  opacity: 0.10;
+  mix-blend-mode: screen;
+  filter: grayscale(1) contrast(1.2) invert(1);
+}
+
+/* Corner tick marks — small crosshairs at container corners */
+.ef-ticks::before,
+.ef-ticks::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background:
+    linear-gradient(to right,  currentColor 8px, transparent 8px, transparent 16px, currentColor 16px) top    / 100% 1px no-repeat,
+    linear-gradient(to bottom, currentColor 8px, transparent 8px, transparent 16px, currentColor 16px) left   / 1px 100% no-repeat;
+  color: var(--misc-accent, #5061b9);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.ef-ticks::before { top: -2px; left: -2px; }
+.ef-ticks::after  { bottom: -2px; right: -2px; transform: rotate(180deg); }
+
+/* Sample sprite thumbs — tiny character strip like Endfield operator select */
+.ef-sprite-strip {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  background: rgba(20, 19, 26, 0.04);
+  border: 1px solid rgba(20, 19, 26, 0.08);
+}
+.ef-sprite-strip img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  opacity: 0.65;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+.ef-sprite-strip img:hover { opacity: 1; transform: scale(1.15); }
+
 /* ==== Tab bar (Themed Gallery tabs) ==== */
 
 .ef-tabs {

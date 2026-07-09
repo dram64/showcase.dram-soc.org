@@ -851,7 +851,7 @@ const roster = [
       display: block;
     }
 
-    /* Full-bleed hero artwork — spans full width edge to edge */
+    /* Full-bleed hero artwork — static, full quality, aspect preserved */
     .hero__art {
       position: absolute;
       inset: 0;
@@ -862,11 +862,6 @@ const roster = [
       z-index: 0;
       display: block;
       pointer-events: none;
-      animation: hero-drift 22s ease-in-out infinite alternate;
-    }
-    @keyframes hero-drift {
-      0%   { transform: scale(1.02) translate(0, 0); }
-      100% { transform: scale(1.06) translate(-1.2%, -0.8%); }
     }
 
     /* Left/Right rails — FIXED to viewport, guaranteed flush to screen edges.

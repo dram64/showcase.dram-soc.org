@@ -86,8 +86,8 @@ const roster = [
     </div>
   </div>
 
-  <!-- ============ SECTION DIVIDER ============ -->
-  <div class="ef-divider ef-divider--dark">
+  <!-- ============ SECTION DIVIDER (BOUNDARY — last full-bleed element) ============ -->
+  <div class="ef-divider ef-divider--dark ef-divider--boundary">
     <span class="ef-divider__mark">◤</span>
     <span class="ef-divider__code">SYS.02 · <em>GRAPHIC INTERFACES</em> · DROP-01 · REV.2026.07</span>
     <span class="ef-divider__mark">◢</span>
@@ -791,17 +791,14 @@ const roster = [
       padding: 0 !important;
       max-width: none !important;
     }
-    /* Full-bleed each top-level landing section — hero + strips + dividers +
-       sec02-05 + themes. Uses 100vw with a margin-calc to bleed past any
-       parent constraints. body's overflow-x:hidden clips the scrollbar overhang. */
+    /* Full-bleed ONLY the top-of-page elements — hero, post-hero-strip, and
+       the boundary SYS.02 divider. These pierce past the rail padding and
+       reach the viewport edges. Everything after (sec02, sec03, sec04,
+       sec-themes, sec05, plus dividers between them) respects the parent's
+       --rails-w padding and stays INSIDE the rails. */
     .hero,
     .post-hero-strip,
-    .ef-divider,
-    .sec02,
-    .sec03,
-    .sec04,
-    .sec-themes,
-    .sec05 {
+    .ef-divider--boundary {
       width: 100vw;
       margin-left: calc((100% - 100vw) / 2);
       max-width: 100vw;

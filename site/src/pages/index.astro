@@ -66,25 +66,6 @@ const roster = [
        SECTION 01 · HERO — dark cinematic banner
        ============================================================ -->
   <section id="hero" class="hero" aria-label="hero">
-    <!-- Left rail — vertical brand + section indicator -->
-    <div class="hero__rail hero__rail--l" aria-hidden="true">
-      <span class="hero__mark"></span>
-      <span class="ef-vrail">// TOKYO ZERO · CHROMADIPITY CORE</span>
-    </div>
-
-    <!-- Right rail — social icons -->
-    <div class="hero__rail hero__rail--r">
-      <a href="https://www.instagram.com/tokyozeroofficial/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg>
-      </a>
-      <a href="https://github.com/dram64" target="_blank" rel="noopener" aria-label="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.9.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0012 2z" fill="currentColor"/></svg>
-      </a>
-      <a href="mailto:dez6220@gmail.com" aria-label="Email">
-        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 6l8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      </a>
-    </div>
-
     <!-- Full-bleed hero backdrop artwork — that's it, just the art -->
     <img class="hero__art" src="/hero/nso-hero.webp" alt="Tokyo Zero hero artwork" />
   </section>
@@ -695,23 +676,7 @@ const roster = [
       });
     });
 
-    // Hide fixed rails once user scrolls past the hero; slide tracker back to
-    // the edge when the rails go away.
-    const heroEl = document.getElementById("hero");
-    const railL = document.querySelector(".hero__rail--l");
-    const railR = document.querySelector(".hero__rail--r");
-    const tracker = document.querySelector(".tracker");
-    if (heroEl && railL && railR) {
-      const heroObs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const inHero = entry.isIntersecting && entry.intersectionRatio > 0.15;
-          railL.classList.toggle("is-hidden", !inHero);
-          railR.classList.toggle("is-hidden", !inHero);
-          if (tracker) tracker.style.right = inHero ? "76px" : "24px";
-        });
-      }, { threshold: [0, 0.15, 0.3, 0.6, 1] });
-      heroObs.observe(heroEl);
-    }
+    // (rail-hiding JS removed — site rails now always visible via SiteRails)
   </script>
 
   <style>
@@ -720,10 +685,10 @@ const roster = [
        ============================================================ */
     .tracker {
       position: fixed;
-      right: 76px; /* clear the 60px right rail + 16px gap */
+      right: calc(var(--rails-w, 60px) + 16px);
       top: 50%;
       transform: translateY(-50%);
-      z-index: 91;
+      z-index: 96;
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -889,60 +854,7 @@ const roster = [
       min-height: 100%;
     }
 
-    /* Left/Right rails — FIXED to viewport, guaranteed flush to screen edges.
-       Only visible while the hero is in view (JS toggles .is-hidden below). */
-    .hero__rail {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      width: 60px;
-      z-index: 90;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      background: rgba(20, 19, 26, 0.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: opacity 260ms ease, transform 260ms ease;
-    }
-    .hero__rail.is-hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .hero__rail--l {
-      left: 0;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      gap: 32px;
-    }
-    .hero__rail--l.is-hidden { transform: translateX(-100%); }
-    .hero__rail--r {
-      right: 0;
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-      gap: 20px;
-      justify-content: center;
-    }
-    .hero__rail--r.is-hidden { transform: translateX(100%); }
-    .hero__mark {
-      display: block;
-      width: 22px; height: 22px;
-      background: #fff;
-      clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%);
-    }
-    .hero__rail--r a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.65);
-      transition: color 140ms ease;
-    }
-    .hero__rail--r a:hover { color: #ffee00; }
-    .hero__rail--r svg { width: 20px; height: 20px; }
-    .hero__rail .ef-vrail { color: rgba(245, 244, 240, 0.55); }
-
-    @media (max-width: 800px) {
-      .hero__rail { width: 40px; }
-    }
+    /* (Hero-specific rails removed — global SiteRails.astro handles them site-wide) */
 
     /* ============================================================
        POST-HERO STRIP — the info + coord labels that used to sit

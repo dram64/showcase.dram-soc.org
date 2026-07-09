@@ -6,6 +6,11 @@ interface Props {
   category: string;
 }
 const { product, index, category } = Astro.props;
+
+// Every product card links out to its live Shopify product page.
+// Sold-out items link to the same page (Shopify will show it as out of stock).
+const SHOPIFY_BASE = "https://ac41ps-i0.myshopify.com";
+const shopifyUrl = `${SHOPIFY_BASE}/products/${product.slug}`;
 ---
 <article
   class:list={[
@@ -16,7 +21,7 @@ const { product, index, category } = Astro.props;
   data-category={category}
 >
   <span class="misc__card-num" aria-hidden="true">{index}</span>
-  <div class="misc__link" style="cursor: default;">
+  <a class="misc__link" href={shopifyUrl} target="_blank" rel="noopener" aria-label={`View ${product.title} on Shopify`}>
     <div class="misc__media">
       {product.soldOut && (
         <span class="misc__sold-out" aria-label="Sold out">sold out</span>
@@ -32,5 +37,5 @@ const { product, index, category } = Astro.props;
       <span class="misc__name">{product.title}</span>
       <span class="misc__price">${product.price.toFixed(2)}</span>
     </div>
-  </div>
+  </a>
 </article>

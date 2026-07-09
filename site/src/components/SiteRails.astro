@@ -1,0 +1,104 @@
+---
+// Site-wide fixed left+right rails. Displayed on every page via Base.astro
+// and Gryphline.astro. Brand mark + vertical text on the left, socials on
+// the right. Width matches the --rails-w CSS variable which content pads
+// against.
+---
+<div class="site-rail site-rail--l" aria-hidden="true">
+  <span class="site-rail__mark"></span>
+  <span class="site-rail__vrail">// TOKYO ZERO · CHROMADIPITY CORE</span>
+</div>
+<div class="site-rail site-rail--r">
+  <a href="https://www.instagram.com/tokyozeroofficial/" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg>
+  </a>
+  <a href="https://github.com/dram64" target="_blank" rel="noopener" aria-label="GitHub">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.9.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0012 2z" fill="currentColor"/></svg>
+  </a>
+  <a href="https://ac41ps-i0.myshopify.com" target="_blank" rel="noopener" aria-label="Shop">
+    <svg viewBox="0 0 24 24"><path d="M6 8h12l-1.2 10.4a2 2 0 0 1-2 1.6H9.2a2 2 0 0 1-2-1.6L6 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+  </a>
+  <a href="mailto:dez6220@gmail.com" aria-label="Email">
+    <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 6l8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+  </a>
+</div>
+
+<style is:global>
+  :root {
+    --rails-w: 60px;
+  }
+  @media (max-width: 800px) {
+    :root { --rails-w: 44px; }
+  }
+  @media (max-width: 500px) {
+    :root { --rails-w: 36px; }
+  }
+
+  /* Global content inset so text doesn't slip under the rails. Applied to
+     the shared main wrapper; every page that uses Base.astro / Gryphline
+     inherits it automatically. */
+  main.content-for-layout {
+    padding-left: var(--rails-w) !important;
+    padding-right: var(--rails-w) !important;
+    box-sizing: border-box;
+  }
+
+  .site-rail {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: var(--rails-w);
+    z-index: 95;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    background: rgba(20, 19, 26, 0.62);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    pointer-events: auto;
+  }
+  .site-rail--l {
+    left: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.10);
+    gap: 32px;
+  }
+  .site-rail--r {
+    right: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.10);
+    gap: 20px;
+    justify-content: center;
+  }
+  .site-rail__mark {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%);
+  }
+  .site-rail__vrail {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(245, 244, 240, 0.55);
+    white-space: nowrap;
+  }
+  .site-rail--r a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 140ms ease, transform 140ms ease;
+  }
+  .site-rail--r a:hover { color: #ffee00; transform: scale(1.1); }
+  .site-rail--r svg { width: 20px; height: 20px; }
+
+  @media (max-width: 500px) {
+    .site-rail__vrail { font-size: 0.6rem; letter-spacing: 0.22em; }
+    .site-rail--r svg { width: 16px; height: 16px; }
+    .site-rail { padding: 12px 0; gap: 20px; }
+  }
+</style>

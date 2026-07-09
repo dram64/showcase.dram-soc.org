@@ -1,198 +1,406 @@
 ---
 export const prerender = true;
-import Gryphline from "../layouts/Gryphline.astro";
+import Base from "../layouts/Base.astro";
 ---
-<Gryphline title="ops">
+<Base title="portfolio" pageClass="page-index" miscTitle="dram" showAnnouncement={false}>
   <section class="hero">
-    <div class="hero__meta">
-      <p class="hero__eyebrow">
-        <span class="gl-dot gl-dot--ok"></span>SYSTEM ONLINE
-        · region: <em>us-west-2</em>
-        · failover: <em>us-east-1</em>
+    <div class="hero__inner">
+      <p class="hero__kicker"><span class="kicker-dot"></span>portfolio &middot; design &amp; cloud</p>
+      <h1 class="hero__title">character work,<br/>shipped clean.</h1>
+      <p class="hero__lede">
+        <strong>Tokyo Zero</strong> — three themed anime merch storefronts, 40+ hand-illustrated
+        character pieces, a custom typography stack, and the serverless AWS pipeline that ships
+        them. Design + code, one portfolio.
       </p>
-      <h1 class="gl-h1">design <em>&</em> cloud<br/>portfolio.</h1>
-      <p class="gl-lede">
-        Paired case study — <strong>Tokyo Zero</strong>, a 3-theme anime merch brand
-        (design + character work), shipped on a <strong>serverless AWS stack</strong>
-        provisioned entirely via Terraform. Every ops page below reads live data from
-        Cost Explorer, Synthetics, and Athena.
-      </p>
-      <div class="hero__actions">
-        <a class="gl-btn gl-btn--primary" href="/architecture/">
-          view the stack <span class="gl-btn__arrow">&rarr;</span>
-        </a>
-        <a class="gl-btn" href="/work/">
-          view the work <span class="gl-btn__arrow">&rarr;</span>
-        </a>
+      <div class="hero__cta">
+        <a class="hero__btn hero__btn--primary" href="/work/">explore the work &rarr;</a>
+        <a class="hero__btn" href="/architecture/">see the aws stack &rarr;</a>
       </div>
+      <ul class="hero__stack">
+        <li><span>DESIGN</span>Astro &middot; Space Grotesk &middot; Branding Pro &middot; Chakra Petch</li>
+        <li><span>CLOUD</span>S3 &middot; CloudFront &middot; Lambda &middot; Athena &middot; Terraform</li>
+        <li><span>SPEND</span>~$2/mo · <a href="/cost/">/cost</a> &middot; <a href="/status/">/status</a> &middot; <a href="/insights/">/insights</a></li>
+      </ul>
     </div>
-
-    <aside class="hero__hud">
-      <div class="gl-panel">
-        <span class="gl-panel__corner gl-panel__corner--tl"></span>
-        <span class="gl-panel__corner gl-panel__corner--bl"></span>
-        <span class="gl-panel__corner gl-panel__corner--br"></span>
-        <p class="hud__label">STACK · LIVE</p>
-        <ul class="hud__list">
-          <li><span>s3 + cloudfront</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>lambda + api-gw</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>dynamodb (pitr)</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>ses (verified)</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>athena + glue</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>synthetics canary</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>x-ray tracing</span><span class="gl-dot gl-dot--ok"></span></li>
-          <li><span>multi-region s3</span><span class="gl-dot gl-dot--ok"></span></li>
-        </ul>
-      </div>
-    </aside>
   </section>
 
-  <section class="gl-shell tiles">
-    <div class="tiles__grid">
-      <a class="tile" href="/work/">
-        <p class="tile__num">01</p>
-        <h3 class="tile__title">work</h3>
-        <p class="tile__desc">Tokyo Zero — three themed storefronts (misc / psg / nso), full character illustration + typography system.</p>
-        <span class="tile__arrow">&rarr;</span>
+  <section class="showcase" id="characters">
+    <div class="showcase__head">
+      <p class="showcase__kicker">// character showcase</p>
+      <h2 class="showcase__title">01. illustration</h2>
+      <p class="showcase__lede">
+        A curated slice from the roster — Genshin, HoYo, Vtuber, and OC work. Six of forty.
+      </p>
+    </div>
+    <div class="showcase__grid showcase__grid--chars">
+      <figure class="art art--tall">
+        <img src="/portfolio/kafka.webp" alt="Kafka" loading="lazy" />
+        <figcaption><span class="art__num">01</span> Kafka <em>&mdash; HSR</em></figcaption>
+      </figure>
+      <figure class="art">
+        <img src="/portfolio/topaz.webp" alt="Topaz" loading="lazy" />
+        <figcaption><span class="art__num">02</span> Topaz <em>&mdash; HSR</em></figcaption>
+      </figure>
+      <figure class="art">
+        <img src="/portfolio/psg.webp" alt="Panty & Stocking" loading="lazy" />
+        <figcaption><span class="art__num">03</span> Panty &amp; Stocking <em>&mdash; PSG</em></figcaption>
+      </figure>
+      <figure class="art">
+        <img src="/portfolio/jane.webp" alt="Jane Doe" loading="lazy" />
+        <figcaption><span class="art__num">04</span> Jane Doe <em>&mdash; OC</em></figcaption>
+      </figure>
+      <figure class="art">
+        <img src="/portfolio/ayaka.webp" alt="Ayaka" loading="lazy" />
+        <figcaption><span class="art__num">05</span> Kamisato Ayaka <em>&mdash; Genshin</em></figcaption>
+      </figure>
+      <figure class="art art--tall">
+        <img src="/portfolio/ironmouse.webp" alt="Ironmouse" loading="lazy" />
+        <figcaption><span class="art__num">06</span> Ironmouse <em>&mdash; VShojo</em></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="showcase">
+    <div class="showcase__head">
+      <p class="showcase__kicker">// product photography</p>
+      <h2 class="showcase__title">02. finished pieces</h2>
+      <p class="showcase__lede">
+        Illustration &rarr; production &rarr; photography. Four physical drops from the roster.
+      </p>
+    </div>
+    <div class="showcase__grid showcase__grid--products">
+      <figure class="prod">
+        <img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" />
+        <figcaption>
+          <span class="prod__label">acrylic stand</span>
+          <span class="prod__name">Kafka</span>
+          <span class="prod__spec">5.6 × 7.4 in &middot; clear acrylic &middot; screen-print</span>
+        </figcaption>
+      </figure>
+      <figure class="prod">
+        <img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" />
+        <figcaption>
+          <span class="prod__label">acrylic stand</span>
+          <span class="prod__name">Topaz</span>
+          <span class="prod__spec">5.6 × 7.4 in &middot; clear acrylic &middot; screen-print</span>
+        </figcaption>
+      </figure>
+      <figure class="prod">
+        <img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" />
+        <figcaption>
+          <span class="prod__label">deskmat</span>
+          <span class="prod__name">Faruzan</span>
+          <span class="prod__spec">900 × 400 mm &middot; sublimated &middot; rubber base</span>
+        </figcaption>
+      </figure>
+      <figure class="prod">
+        <img src="/portfolio/prod-miku.webp" alt="Miku" loading="lazy" />
+        <figcaption>
+          <span class="prod__label">print</span>
+          <span class="prod__name">Cinna Miku</span>
+          <span class="prod__spec">12 × 18 in &middot; satin card stock &middot; 300 dpi</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="showcase" id="paths">
+    <div class="showcase__head">
+      <p class="showcase__kicker">// keep going</p>
+      <h2 class="showcase__title">03. paths</h2>
+    </div>
+    <div class="paths">
+      <a class="path" href="/catalog/">
+        <p class="path__num">&rarr; 01</p>
+        <h3 class="path__title">the full catalog</h3>
+        <p class="path__desc">30+ curated Tokyo Zero products in the misc magazine layout.</p>
       </a>
-      <a class="tile" href="/process/">
-        <p class="tile__num">02</p>
-        <h3 class="tile__title">process</h3>
-        <p class="tile__desc">Design case study — brand voice, typography stack, color palette, character work.</p>
-        <span class="tile__arrow">&rarr;</span>
+      <a class="path" href="/process/">
+        <p class="path__num">&rarr; 02</p>
+        <h3 class="path__title">design case study</h3>
+        <p class="path__desc">Voice, typography stack, color, three-theme system.</p>
       </a>
-      <a class="tile" href="/architecture/">
-        <p class="tile__num">03</p>
-        <h3 class="tile__title">architecture</h3>
-        <p class="tile__desc">Full AWS stack breakdown — 12 services, $5/mo, Terraform-defined, OIDC-deployed.</p>
-        <span class="tile__arrow">&rarr;</span>
-      </a>
-      <a class="tile tile--live" href="/status/">
-        <p class="tile__num">04</p>
-        <h3 class="tile__title">status <span class="gl-tag gl-tag--green">live</span></h3>
-        <p class="tile__desc">Hourly Synthetics canary probe results across 3 endpoints — dashboard reads Synthetics API nightly.</p>
-        <span class="tile__arrow">&rarr;</span>
-      </a>
-      <a class="tile tile--live" href="/cost/">
-        <p class="tile__num">05</p>
-        <h3 class="tile__title">cost <span class="gl-tag gl-tag--amber">live</span></h3>
-        <p class="tile__desc">Actual monthly spend broken down by service, pulled from Cost Explorer nightly. Budget-capped at $25.</p>
-        <span class="tile__arrow">&rarr;</span>
-      </a>
-      <a class="tile tile--live" href="/insights/">
-        <p class="tile__num">06</p>
-        <h3 class="tile__title">insights <span class="gl-tag">live</span></h3>
-        <p class="tile__desc">Athena queries over CloudFront logs — top pages, geo, cache hit rate. Sub-cent per query.</p>
-        <span class="tile__arrow">&rarr;</span>
+      <a class="path" href="/architecture/">
+        <p class="path__num">&rarr; 03</p>
+        <h3 class="path__title">the aws stack</h3>
+        <p class="path__desc">Serverless breakdown &mdash; 12 services, ~$2/mo, live status.</p>
       </a>
     </div>
   </section>
 
   <style>
+    /* ================ HERO ================ */
     .hero {
       max-width: 1280px;
       margin: 0 auto;
-      padding: clamp(48px, 8vw, 96px) clamp(20px, 4vw, 48px);
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
-      gap: clamp(32px, 5vw, 72px);
+      padding: clamp(48px, 8vw, 96px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 72px);
+    }
+    .hero__inner { max-width: 900px; }
+    .hero__kicker {
+      display: inline-flex;
       align-items: center;
-    }
-    .hero__eyebrow {
-      font-family: var(--gl-mono);
+      gap: 10px;
+      font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
       font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gl-ink-dim);
-      margin: 0 0 24px;
-    }
-    .hero__eyebrow em {
-      font-style: normal;
-      color: var(--gl-cyan);
-    }
-    .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; }
-    .hud__label {
-      font-family: var(--gl-mono);
-      font-size: 0.7rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gl-cyan);
-      margin: 0 0 16px;
+      color: var(--misc-accent, #5061b9);
+      margin: 0 0 28px;
     }
-    .hud__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-    .hud__list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--gl-mono);
-      font-size: 0.82rem;
-      color: var(--gl-ink-soft);
-      padding: 8px 0;
-      border-bottom: 1px dashed var(--gl-line);
+    .kicker-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--misc-accent, #5061b9);
+      box-shadow: 0 0 8px currentColor;
+      animation: pulse 2s ease-in-out infinite;
     }
-    .hud__list li:last-child { border-bottom: 0; }
+    @keyframes pulse { 50% { opacity: 0.35; } }
 
-    .tiles__grid {
+    .hero__title {
+      font-family: 'Apex Mk3', 'Space Grotesk', system-ui, sans-serif;
+      font-weight: 300;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--misc-ink, #1a1a1a);
+      margin: 0 0 24px;
+      text-transform: lowercase;
+    }
+    .hero__lede {
+      font-family: 'Branding Pro', system-ui, sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      line-height: 1.55;
+      color: var(--misc-ink-soft, #6b6b6b);
+      max-width: 620px;
+      margin: 0 0 36px;
+    }
+    .hero__lede strong { font-weight: 500; color: var(--misc-ink, #1a1a1a); }
+
+    .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .hero__btn {
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: lowercase;
+      padding: 14px 26px;
+      border: 1px solid var(--misc-ink, #1a1a1a);
+      color: var(--misc-ink, #1a1a1a);
+      background: transparent;
+      text-decoration: none;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+      /* subtle Gryphline corner clip — softer than the ops pages */
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+    }
+    .hero__btn:hover { background: var(--misc-ink, #1a1a1a); color: #fff; }
+    .hero__btn--primary { background: var(--misc-ink, #1a1a1a); color: #fff; }
+    .hero__btn--primary:hover { background: var(--misc-accent, #5061b9); border-color: var(--misc-accent, #5061b9); }
+
+    .hero__stack {
+      list-style: none;
+      padding: 24px 0 0;
+      margin: 0;
+      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
-    .tile {
+    .hero__stack li {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.82rem;
+      color: var(--misc-ink-soft, #6b6b6b);
+    }
+    .hero__stack span {
+      display: block;
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+      margin-bottom: 6px;
+    }
+    .hero__stack a { color: var(--misc-accent, #5061b9); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+    /* ================ SHOWCASE SHELL ================ */
+    .showcase {
+      max-width: 1280px;
+      margin: 0 auto clamp(56px, 8vw, 96px);
+      padding: 0 clamp(20px, 4vw, 48px);
+    }
+    .showcase__head { margin-bottom: 40px; max-width: 640px; }
+    .showcase__kicker {
+      font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+      margin: 0 0 10px;
+    }
+    .showcase__title {
+      font-family: 'Apex Mk3', 'Space Grotesk', system-ui, sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--misc-ink, #1a1a1a);
+      margin: 0 0 12px;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
+    }
+    .showcase__lede {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: var(--misc-ink-soft, #6b6b6b);
+      margin: 0;
+    }
+
+    /* ================ CHARACTER GRID ================ */
+    .showcase__grid--chars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: clamp(12px, 1.5vw, 20px);
+    }
+    .art {
       position: relative;
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+      overflow: hidden;
+      transition: border-color 200ms ease, transform 200ms ease;
+      /* Gryphline corner clip on the top-right of each frame */
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+      aspect-ratio: 4/5;
+    }
+    .art--tall { grid-row: span 2; aspect-ratio: 4/10; }
+    .art:hover { border-color: var(--misc-accent, #5061b9); transform: translateY(-2px); }
+    .art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .art figcaption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 12px 16px;
+      background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.82rem;
+      color: var(--misc-ink, #1a1a1a);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .art__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      color: var(--misc-accent, #5061b9);
+      opacity: 0.8;
+    }
+    .art figcaption em {
+      margin-left: auto;
+      font-style: normal;
+      color: var(--misc-ink-soft, #6b6b6b);
+      font-size: 0.7rem;
+    }
+
+    /* ================ PRODUCT GRID ================ */
+    .showcase__grid--products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(12px, 1.5vw, 20px);
+    }
+    .prod {
+      position: relative;
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+      overflow: hidden;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .prod:hover { transform: translateY(-3px); border-color: var(--misc-accent, #5061b9); }
+    .prod img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+    .prod figcaption {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+    }
+    .prod__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+    }
+    .prod__name {
+      font-family: 'Apex Mk3', 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      color: var(--misc-ink, #1a1a1a);
+    }
+    .prod__spec {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.78rem;
+      color: var(--misc-ink-soft, #6b6b6b);
+      line-height: 1.4;
+    }
+
+    /* ================ PATHS ================ */
+    .paths {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .path {
       display: block;
       padding: 24px;
-      background: var(--gl-bg-panel);
-      border: 1px solid var(--gl-line);
-      color: inherit;
+      background: #fff;
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       text-decoration: none;
-      transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
-      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
-      overflow: hidden;
+      color: inherit;
+      transition: border-color 180ms ease, transform 180ms ease;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
     }
-    .tile:hover {
-      border-color: var(--gl-cyan);
-      background: var(--gl-bg-elev);
-      transform: translateY(-3px);
-    }
-    .tile__num {
-      font-family: var(--gl-mono);
+    .path:hover { border-color: var(--misc-accent, #5061b9); transform: translateY(-2px); }
+    .path__num {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.68rem;
       letter-spacing: 0.18em;
-      color: var(--gl-ink-dim);
+      color: var(--misc-accent, #5061b9);
       margin: 0 0 12px;
     }
-    .tile__title {
-      font-family: var(--gl-display);
-      font-weight: 600;
-      font-size: 1.4rem;
-      text-transform: uppercase;
-      color: var(--gl-ink);
-      margin: 0 0 14px;
-      letter-spacing: 0.02em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .path__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-size: 1.25rem;
+      color: var(--misc-ink, #1a1a1a);
+      margin: 0 0 8px;
+      font-weight: 400;
     }
-    .tile__desc {
-      font-family: var(--gl-sans);
-      font-size: 0.92rem;
-      color: var(--gl-ink-soft);
-      margin: 0 0 12px;
+    .path__desc {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.9rem;
+      color: var(--misc-ink-soft, #6b6b6b);
+      margin: 0;
       line-height: 1.5;
     }
-    .tile__arrow {
-      font-family: var(--gl-mono);
-      color: var(--gl-cyan);
-      opacity: 0.7;
-    }
-    .tile:hover .tile__arrow { opacity: 1; }
 
+    /* ================ RESPONSIVE ================ */
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .tiles__grid { grid-template-columns: 1fr 1fr; }
+      .hero__stack { grid-template-columns: 1fr; gap: 14px; }
+      .showcase__grid--products { grid-template-columns: repeat(2, 1fr); }
+      .paths { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
-      .tiles__grid { grid-template-columns: 1fr; }
+      .showcase__grid--chars { grid-template-columns: repeat(2, 1fr); }
+      .art--tall { grid-row: span 1; aspect-ratio: 4/5; }
     }
   </style>
-</Gryphline>
+</Base>

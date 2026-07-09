@@ -1,130 +1,132 @@
 ---
 export const prerender = true;
-import Gryphline from "../../layouts/Gryphline.astro";
+import Base from "../../layouts/Base.astro";
 ---
-<Gryphline title="work">
-  <section class="gl-shell">
-    <p class="gl-kicker">tokyo zero · chromadipity core</p>
-    <h1 class="gl-h1">the work<em>.</em></h1>
-    <p class="gl-lede">
-      Three storefronts, distinct aesthetics, one brand voice. <strong>PSG</strong> for hot-pink
-      Panty &amp; Stocking pastiche. <strong>NSO</strong> for CRT / chrome Needy Streamer Overload
-      homage. <strong>MISC</strong> for the neutral catalog hub. Design + product photography +
-      typography, all mine.
+<Base title="work" miscTitle="work" showAnnouncement={false}>
+  <section class="work">
+    <p class="work__kicker">// three themed storefronts</p>
+    <h1 class="work__title">tokyo zero.</h1>
+    <p class="work__lede">
+      Panty &amp; Stocking pastiche, Needy Streamer Overload homage, and a neutral catalog hub &mdash;
+      all one brand voice. Click through for the full themed pages.
     </p>
 
-    <div class="work-grid">
-      <a class="node node--psg" href="/work/psg/">
-        <span class="gl-panel__corner gl-panel__corner--tl"></span>
-        <span class="gl-panel__corner gl-panel__corner--bl"></span>
-        <div class="node__cover">
-          <img src="/assets/psg-panty-sticker.webp" alt="Panty" class="node__char node__char--l" />
-          <img src="/assets/psg-stocking-sticker.webp" alt="Stocking" class="node__char node__char--r" />
-        </div>
-        <div class="node__meta">
-          <p class="node__id">01 · PSG</p>
-          <h3 class="node__name">Panty &amp; Stocking</h3>
-          <p class="node__desc">Candy-halftone showcase. 7-item product spread on a tilted cyan slab, pink scallop frill drop, TOKYO ZERO slam-drop intro.</p>
-          <span class="gl-tag">enter &rarr;</span>
+    <div class="work__grid">
+      <a class="w-tile w-tile--psg" href="/work/psg/">
+        <img class="w-tile__char w-tile__char--l" src="/assets/psg-panty-sticker.webp" alt="Panty" />
+        <img class="w-tile__char w-tile__char--r" src="/assets/psg-stocking-sticker.webp" alt="Stocking" />
+        <div class="w-tile__meta">
+          <p class="w-tile__num">01</p>
+          <h2 class="w-tile__name">PSG</h2>
+          <p class="w-tile__desc">Panty &amp; Stocking pastiche &mdash; candy halftones, hot pink frills, 7-card showcase.</p>
         </div>
       </a>
 
-      <a class="node node--nso" href="/work/nso/">
-        <span class="gl-panel__corner gl-panel__corner--tl"></span>
-        <span class="gl-panel__corner gl-panel__corner--bl"></span>
-        <div class="node__cover">
-          <img src="/assets/nso-ame-sticker.webp" alt="Ame" class="node__char node__char--l" />
-          <img src="/assets/nso-kangel-sticker.webp" alt="KAngel" class="node__char node__char--r" />
-        </div>
-        <div class="node__meta">
-          <p class="node__id">02 · NSO</p>
-          <h3 class="node__name">Needy Streamer Overload</h3>
-          <p class="node__desc">CRT / chrome background, RGB-glitching popup boxes, 3D flip-card product previews. Character sprites for Ame + KAngel.</p>
-          <span class="gl-tag gl-tag--amber">enter &rarr;</span>
+      <a class="w-tile w-tile--nso" href="/work/nso/">
+        <img class="w-tile__char w-tile__char--l" src="/assets/nso-ame-sticker.webp" alt="Ame" />
+        <img class="w-tile__char w-tile__char--r" src="/assets/nso-kangel-sticker.webp" alt="KAngel" />
+        <div class="w-tile__meta">
+          <p class="w-tile__num">02</p>
+          <h2 class="w-tile__name">NSO</h2>
+          <p class="w-tile__desc">Needy Streamer Overload homage &mdash; CRT scanlines, RGB glitching, chrome bg.</p>
         </div>
       </a>
 
-      <a class="node node--misc" href="/catalog/">
-        <span class="gl-panel__corner gl-panel__corner--tl"></span>
-        <span class="gl-panel__corner gl-panel__corner--bl"></span>
-        <div class="node__meta">
-          <p class="node__id">03 · MISC</p>
-          <h3 class="node__name">the catalog</h3>
-          <p class="node__desc">Nyalra magazine catalog — 30+ curated products, numbered cards, slate-violet accent. Deskmats · tapestries · prints · stickers · flags.</p>
-          <span class="gl-tag gl-tag--green">enter &rarr;</span>
+      <a class="w-tile w-tile--misc" href="/catalog/">
+        <div class="w-tile__meta">
+          <p class="w-tile__num">03</p>
+          <h2 class="w-tile__name">MISC</h2>
+          <p class="w-tile__desc">Neutral hub &mdash; magazine catalog, numbered cards, slate-violet accent, 30+ products.</p>
         </div>
       </a>
     </div>
   </section>
 
   <style>
-    .work-grid {
+    .work { max-width: 1200px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px); }
+    .work__kicker {
+      font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+      margin: 0 0 16px;
+    }
+    .work__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 8vw, 5rem);
+      line-height: 1;
+      margin: 0 0 20px;
+      text-transform: lowercase;
+    }
+    .work__lede {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--misc-ink-soft, #6b6b6b);
+      margin: 0 0 6vh;
+      max-width: 620px;
+    }
+    .work__grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      margin-top: 6vh;
     }
-    .node {
+    .w-tile {
       position: relative;
       display: block;
-      background: var(--gl-bg-panel);
-      border: 1px solid var(--gl-line);
+      aspect-ratio: 3 / 4;
+      padding: 28px 24px;
+      background: #fff;
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       overflow: hidden;
       text-decoration: none;
       color: inherit;
-      transition: transform 180ms ease, border-color 180ms ease;
-      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+      transition: transform 200ms ease, border-color 200ms ease;
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
     }
-    .node:hover { transform: translateY(-4px); border-color: var(--gl-cyan); }
-    .node--nso:hover { border-color: var(--gl-amber); }
-    .node--misc:hover { border-color: var(--gl-green); }
-
-    .node__cover {
-      position: relative;
-      aspect-ratio: 5 / 3;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      background: linear-gradient(135deg, rgba(61, 234, 255, 0.05) 0%, rgba(255, 184, 77, 0.03) 100%);
-    }
-    .node--psg .node__cover { background: linear-gradient(135deg, rgba(255, 77, 166, 0.1) 0%, rgba(61, 234, 255, 0.06) 100%); }
-    .node--nso .node__cover { background: linear-gradient(135deg, rgba(255, 184, 77, 0.08) 0%, rgba(253, 122, 192, 0.06) 100%); }
-
-    .node__char {
+    .w-tile:hover { transform: translateY(-4px); border-color: var(--misc-accent); }
+    .w-tile--psg  { background: linear-gradient(150deg, #ffe0eb 0%, #fff4fa 60%, #d6f8ff 100%); }
+    .w-tile--nso  { background: linear-gradient(150deg, #e0e6ff 0%, #f6f2ff 60%, #ffe0f4 100%); }
+    .w-tile__char {
       position: absolute;
       bottom: -8%;
-      height: 92%;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+      height: 62%;
+      pointer-events: none;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+      z-index: 1;
     }
-    .node__char--l { left: -6%; }
-    .node__char--r { right: -6%; }
-
-    .node__meta { padding: 20px 22px; }
-    .node__id {
-      font-family: var(--gl-mono);
-      font-size: 0.68rem;
+    .w-tile__char--l { left: -6%; }
+    .w-tile__char--r { right: -6%; }
+    .w-tile__meta { position: relative; z-index: 2; }
+    .w-tile__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
       letter-spacing: 0.18em;
-      color: var(--gl-cyan);
-      margin: 0 0 8px;
-      text-transform: uppercase;
-    }
-    .node__name {
-      font-family: var(--gl-display);
-      font-weight: 600;
-      font-size: 1.25rem;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      color: var(--gl-ink);
+      color: var(--misc-accent, #5061b9);
       margin: 0 0 10px;
     }
-    .node__desc {
-      font-family: var(--gl-sans);
+    .w-tile__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin: 0 0 12px;
+      line-height: 1;
+      color: var(--misc-ink, #1a1a1a);
+    }
+    .w-tile__desc {
+      font-family: 'Branding Pro', sans-serif;
       font-size: 0.9rem;
       line-height: 1.5;
-      color: var(--gl-ink-soft);
-      margin: 0 0 14px;
+      color: var(--misc-ink-soft, #6b6b6b);
+      margin: 0;
+      max-width: 90%;
     }
-    @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } .node__cover { aspect-ratio: 5 / 2; } }
+    @media (max-width: 900px) {
+      .work__grid { grid-template-columns: 1fr; }
+      .w-tile { aspect-ratio: 5/3; }
+      .w-tile__char { height: 90%; }
+    }
   </style>
-</Gryphline>
+</Base>

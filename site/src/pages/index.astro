@@ -846,22 +846,34 @@ const roster = [
       min-height: 100svh;
       height: 100vh;
       overflow: hidden;
-      background: transparent;
+      /* Solid dark bg so no page-background whitespace can peek through */
+      background: #14131a;
       isolation: isolate;
       display: block;
+      /* Remove any inline gap under image */
+      line-height: 0;
+      font-size: 0;
     }
 
-    /* Full-bleed hero artwork — static, full quality, aspect preserved */
+    /* Full-bleed hero artwork — static, full quality, aspect preserved,
+       centered both axes so cropping (if any) is symmetric */
     .hero__art {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: 50% 50%;
       z-index: 0;
       display: block;
       pointer-events: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      /* Belt-and-braces: guarantee no sub-pixel gap */
+      min-width: 100%;
+      min-height: 100%;
     }
 
     /* Left/Right rails — FIXED to viewport, guaranteed flush to screen edges.

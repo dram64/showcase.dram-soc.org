@@ -821,25 +821,35 @@ const roster = [
       }
     }
 
-    /* Full-bleed the entire content wrapper so every section child
-       (hero, strip, dividers, sec02-05, themes) touches the viewport
-       edges without needing per-section overrides. */
+    /* Kill the shopify theme.css .content-for-layout padding. */
     body.page-index .content-for-layout {
       padding: 0 !important;
       max-width: none !important;
-      width: 100vw !important;
-      margin-left: calc((100% - 100vw) / 2) !important;
+    }
+    /* Full-bleed each top-level landing section — hero + strips + dividers +
+       sec02-05 + themes. Uses 100vw with a margin-calc to bleed past any
+       parent constraints. body's overflow-x:hidden clips the scrollbar overhang. */
+    .hero,
+    .post-hero-strip,
+    .ef-divider,
+    .sec02,
+    .sec03,
+    .sec04,
+    .sec-themes,
+    .sec05 {
+      width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      max-width: 100vw;
       box-sizing: border-box;
     }
 
     /* ============================================================
        SECTION 01 · HERO — full-viewport cinematic
        ============================================================ */
-    /* Hero — parent .content-for-layout is now full-bleed, so width:100% works. */
+    /* Hero — width comes from the shared full-bleed rule above (100vw + margin-calc). */
     .hero {
       position: relative;
       display: block;
-      width: 100%;
       height: 100vh;
       height: 100svh;
       overflow: hidden;
@@ -847,7 +857,6 @@ const roster = [
       isolation: isolate;
       line-height: 0;
       font-size: 0;
-      box-sizing: border-box;
     }
     /* Scrollbar styling — dark track matching the hero + theme so the
        right-side scrollbar area doesn't read as bright whitespace against

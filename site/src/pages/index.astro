@@ -148,12 +148,21 @@ const roster = [
 
       <div class="gd-mark"><span>&mdash; editorial spread</span></div>
 
-      <!-- Row B · 3-col split — cover + smaller vertical reel + character key art -->
-      <div class="gd-row gd-row--3 gd-row--baseline gd-row--sm-mid">
+      <!-- Masonry · 9 cells auto-packed into 3 columns.
+           Each cell keeps its native aspect ratio and the browser fits
+           them shortest-column-first so there is no dead space between
+           images. Order flows column-by-column visually. -->
+      <div class="gd-mason">
         <figure class="gd-cell" style="--ar: 0.80" data-idx="02" data-name="cover 04" data-ratio="4:5" data-dim="2178×2718">
           <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
         </figure>
-        <figure class="gd-cell gd-cell--video" style="--ar: 0.5625" data-idx="03" data-name="comp 1_1 · vertical reel" data-ratio="9:16" data-dim="1440×2560">
+        <figure class="gd-cell" style="--ar: 1" data-idx="03" data-name="concept square" data-ratio="1:1" data-dim="6000×6000">
+          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
+        </figure>
+        <figure class="gd-cell" style="--ar: 0.55" data-idx="04" data-name="cipher · vertical" data-ratio="11:20" data-dim="2196×3996">
+          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
+        </figure>
+        <figure class="gd-cell gd-cell--video" style="--ar: 0.5625" data-idx="05" data-name="comp 1_1 · vertical reel" data-ratio="9:16" data-dim="1440×2560">
           <video
             poster="/showcase/motion/comp-1-1-poster.jpg"
             muted loop playsinline autoplay preload="metadata"
@@ -164,35 +173,17 @@ const roster = [
           </video>
           <span class="gd-cell__pulse" aria-hidden="true"></span>
         </figure>
-        <figure class="gd-cell" style="--ar: 0.79" data-idx="04" data-name="citlali · key art" data-ratio="11:14" data-dim="6600×8400">
-          <img src="/showcase/graphics/citlali.webp" alt="Citlali key art" loading="lazy" />
-        </figure>
-      </div>
-
-      <div class="gd-mark"><span>&mdash; square set &amp; prints</span></div>
-
-      <!-- Row C · 4-col square/near-square grid -->
-      <div class="gd-row gd-row--4">
-        <figure class="gd-cell" style="--ar: 1" data-idx="05" data-name="concept square" data-ratio="1:1" data-dim="6000×6000">
-          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 1" data-idx="06" data-name="product square" data-ratio="1:1" data-dim="2700×2700">
-          <img src="/showcase/graphics/product-square.webp" alt="Cipher product square" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 1.25" data-idx="07" data-name="topbox" data-ratio="5:4" data-dim="3038×2438">
+        <figure class="gd-cell" style="--ar: 1.25" data-idx="06" data-name="topbox" data-ratio="5:4" data-dim="3038×2438">
           <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
         </figure>
-        <figure class="gd-cell" style="--ar: 0.80" data-idx="08" data-name="fmig post" data-ratio="4:5" data-dim="2160×2700">
-          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
+        <figure class="gd-cell" style="--ar: 1" data-idx="07" data-name="product square" data-ratio="1:1" data-dim="2700×2700">
+          <img src="/showcase/graphics/product-square.webp" alt="Cipher product square" loading="lazy" />
         </figure>
-      </div>
-
-      <div class="gd-mark"><span>&mdash; tall banners</span></div>
-
-      <!-- Row D · 2-col tall banner pair (constrained width, centered) -->
-      <div class="gd-row gd-row--2 gd-row--baseline gd-row--slim">
-        <figure class="gd-cell" style="--ar: 0.55" data-idx="09" data-name="cipher · vertical" data-ratio="11:20" data-dim="2196×3996">
-          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
+        <figure class="gd-cell" style="--ar: 0.79" data-idx="08" data-name="citlali · key art" data-ratio="11:14" data-dim="6600×8400">
+          <img src="/showcase/graphics/citlali.webp" alt="Citlali key art" loading="lazy" />
+        </figure>
+        <figure class="gd-cell" style="--ar: 0.80" data-idx="09" data-name="fmig post" data-ratio="4:5" data-dim="2160×2700">
+          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
         </figure>
         <figure class="gd-cell" style="--ar: 0.61" data-idx="10" data-name="fuwawa · tall banner" data-ratio="23:38" data-dim="2760×4560">
           <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa banner" loading="lazy" />
@@ -1085,12 +1076,34 @@ const roster = [
     /* ============================================================
        Cinema editorial board (dark) — .gd-board container
        ============================================================ */
+    #graphic {
+      padding-top: clamp(40px, 5vw, 72px);
+      padding-bottom: clamp(40px, 5vw, 72px);
+    }
     .gd-board {
       display: flex;
       flex-direction: column;
-      gap: clamp(20px, 2.8vw, 40px);
-      padding: clamp(8px, 1.5vw, 20px) 0;
+      gap: clamp(12px, 1.6vw, 22px);
+      padding: clamp(6px, 1vw, 12px) 0;
     }
+    /* Masonry — packs cells shortest-column-first so no white space is
+       left between images within a column. Column-order visually, but
+       every cell keeps its native aspect ratio (--ar). */
+    .gd-mason {
+      columns: 3;
+      column-gap: clamp(10px, 1.2vw, 16px);
+      break-inside: avoid;
+    }
+    .gd-mason .gd-cell {
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      margin: 0 0 clamp(10px, 1.2vw, 16px) 0;
+      width: 100%;
+      display: block;
+    }
+    @media (max-width: 900px) { .gd-mason { columns: 2; } }
+    @media (max-width: 560px) { .gd-mason { columns: 1; } }
 
     /* Editorial marks — mono pills that thread through the spread */
     .gd-mark {

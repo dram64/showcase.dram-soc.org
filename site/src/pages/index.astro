@@ -101,61 +101,96 @@ const roster = [
       <a class="sec-tab">vtuber</a>
     </div>
 
-    <div class="graphic-grid">
-      <div class="graphic-stage">
-        <div class="gd-grid">
-          <!-- 01 · wide editorial banner -->
-          <figure class="gd-cell gd-w6" style="--ar: 2.37" data-idx="01" data-ratio="2.37:1">
-            <img src="/showcase/graphics/citlali-header.webp" alt="Citlali key art header" loading="lazy" />
-          </figure>
-
-          <!-- 02 · 4:5 magazine cover -->
-          <figure class="gd-cell gd-w3" style="--ar: 0.80" data-idx="02" data-ratio="4:5">
-            <img src="/showcase/graphics/cover.webp" alt="Magazine cover" loading="lazy" />
-          </figure>
-          <!-- 03 · 1:1 concept square -->
-          <figure class="gd-cell gd-w3" style="--ar: 1" data-idx="03" data-ratio="1:1">
-            <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
-          </figure>
-
-          <!-- 04 · 5:4 landscape -->
-          <figure class="gd-cell gd-w2" style="--ar: 1.25" data-idx="04" data-ratio="5:4">
-            <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
-          </figure>
-          <!-- 05 · 1:1 product square -->
-          <figure class="gd-cell gd-w2" style="--ar: 1" data-idx="05" data-ratio="1:1">
-            <img src="/showcase/graphics/product-square.webp" alt="Cipher product square" loading="lazy" />
-          </figure>
-          <!-- 06 · tall vertical banner -->
-          <figure class="gd-cell gd-w2" style="--ar: 0.55" data-idx="06" data-ratio="11:20">
-            <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
-          </figure>
-
-          <!-- 07 · widescreen illustration -->
-          <figure class="gd-cell gd-w4" style="--ar: 2.22" data-idx="07" data-ratio="20:9">
-            <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
-          </figure>
-          <!-- 08 · character key art -->
-          <figure class="gd-cell gd-w2" style="--ar: 0.79" data-idx="08" data-ratio="11:14">
-            <img src="/showcase/graphics/citlali.webp" alt="Citlali portrait" loading="lazy" />
-          </figure>
-
-          <!-- 09 · social post 4:5 -->
-          <figure class="gd-cell gd-w3" style="--ar: 0.80" data-idx="09" data-ratio="4:5">
-            <img src="/showcase/graphics/fmig-post.webp" alt="FMIG social post" loading="lazy" />
-          </figure>
-          <!-- 10 · tall banner -->
-          <figure class="gd-cell gd-w3" style="--ar: 0.61" data-idx="10" data-ratio="23:38">
-            <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa tall banner" loading="lazy" />
-          </figure>
-        </div>
-
-        <p class="graphic-caption">&mdash; ten pieces &middot; every image at its native aspect ratio.</p>
+    <!-- ============================================================
+         Cinema editorial board — dark mode, motion + still spread,
+         every cell at native aspect ratio, blueprint numerals + hover
+         metadata reveal, video cells auto-play muted looped.
+         ============================================================ -->
+    <div class="gd-board">
+      <div class="gd-mark gd-mark--head">
+        <span class="gd-mark__dot" aria-hidden="true"></span>
+        <span>no. 01</span>
+        <span class="gd-mark__sep">/</span>
+        <span>drop 01</span>
+        <span class="gd-mark__sep">/</span>
+        <span>chromadipity core</span>
+        <span class="gd-mark__sep">/</span>
+        <span>11 stills &middot; 2 reels</span>
       </div>
 
-      <aside class="graphic-vrail">
-        <span>chromadipity core &middot; drop 01</span>
-      </aside>
+      <!-- Row A · widescreen still opener (20:9) -->
+      <div class="gd-row gd-row--hero">
+        <figure class="gd-cell" style="--ar: 2.22" data-idx="01" data-name="chii · widescreen" data-ratio="20:9" data-dim="5377×2424">
+          <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
+        </figure>
+      </div>
+
+      <div class="gd-mark"><span>&mdash; editorial spread</span></div>
+
+      <!-- Row B · 3-col split — cover + vertical reel + character key art -->
+      <div class="gd-row gd-row--3 gd-row--baseline">
+        <figure class="gd-cell" style="--ar: 0.80" data-idx="02" data-name="cover 04" data-ratio="4:5" data-dim="2178×2718">
+          <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
+        </figure>
+        <figure class="gd-cell gd-cell--video" style="--ar: 0.5625" data-idx="03" data-name="comp 1_1 · vertical reel" data-ratio="9:16" data-dim="1440×2560">
+          <video
+            poster="/showcase/motion/comp-1-1-poster.jpg"
+            muted loop playsinline autoplay preload="metadata"
+            aria-label="Comp 1_1 vertical motion piece"
+          >
+            <source src="/showcase/motion/comp-1-1.webm" type="video/webm" />
+            <source src="/showcase/motion/comp-1-1.mp4" type="video/mp4" />
+          </video>
+          <span class="gd-cell__pulse" aria-hidden="true"></span>
+        </figure>
+        <figure class="gd-cell" style="--ar: 0.79" data-idx="04" data-name="citlali · key art" data-ratio="11:14" data-dim="6600×8400">
+          <img src="/showcase/graphics/citlali.webp" alt="Citlali key art" loading="lazy" />
+        </figure>
+      </div>
+
+      <div class="gd-mark"><span>&mdash; square set &amp; prints</span></div>
+
+      <!-- Row C · 4-col square/near-square grid -->
+      <div class="gd-row gd-row--4">
+        <figure class="gd-cell" style="--ar: 1" data-idx="05" data-name="concept square" data-ratio="1:1" data-dim="6000×6000">
+          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
+        </figure>
+        <figure class="gd-cell" style="--ar: 1" data-idx="06" data-name="product square" data-ratio="1:1" data-dim="2700×2700">
+          <img src="/showcase/graphics/product-square.webp" alt="Cipher product square" loading="lazy" />
+        </figure>
+        <figure class="gd-cell" style="--ar: 1.25" data-idx="07" data-name="topbox" data-ratio="5:4" data-dim="3038×2438">
+          <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
+        </figure>
+        <figure class="gd-cell" style="--ar: 0.80" data-idx="08" data-name="fmig post" data-ratio="4:5" data-dim="2160×2700">
+          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
+        </figure>
+      </div>
+
+      <div class="gd-mark"><span>&mdash; tall banners</span></div>
+
+      <!-- Row D · 2-col tall banner pair -->
+      <div class="gd-row gd-row--2 gd-row--baseline">
+        <figure class="gd-cell" style="--ar: 0.55" data-idx="09" data-name="cipher · vertical" data-ratio="11:20" data-dim="2196×3996">
+          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
+        </figure>
+        <figure class="gd-cell" style="--ar: 0.61" data-idx="10" data-name="fuwawa · tall banner" data-ratio="23:38" data-dim="2760×4560">
+          <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa banner" loading="lazy" />
+        </figure>
+      </div>
+
+      <div class="gd-mark"><span>&mdash; closing frame</span></div>
+
+      <!-- Row E · closing wide banner (21:9) -->
+      <div class="gd-row gd-row--hero">
+        <figure class="gd-cell" style="--ar: 2.37" data-idx="11" data-name="citlali · header" data-ratio="21:9" data-dim="3840×1619">
+          <img src="/showcase/graphics/citlali-header.webp" alt="Citlali header" loading="lazy" />
+        </figure>
+      </div>
+
+      <div class="gd-mark gd-mark--foot">
+        <span class="gd-mark__dot" aria-hidden="true"></span>
+        <span>end of drop 01</span>
+      </div>
     </div>
 
     <div class="sec-foot">
@@ -169,13 +204,20 @@ const roster = [
   </section>
 
   <!-- ================================================================
-       INTERLUDE — wide 2.37:1 editorial banner between graphic + roster
+       INTERLUDE — 2.37:1 wide motion cut between graphic + roster
        ================================================================ -->
-  <figure class="interlude interlude--wide">
-    <img src="/showcase/graphics/dodgers-ayaka-header.webp" alt="Dodgers Ayaka header" loading="lazy" />
+  <figure class="interlude interlude--wide interlude--video">
+    <video
+      poster="/showcase/motion/header-mograph-poster.jpg"
+      muted loop playsinline autoplay preload="metadata"
+      aria-label="Header mograph motion piece"
+    >
+      <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
+      <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
+    </video>
     <figcaption>
-      <span class="interlude__lbl">ayaka key art &middot; misc drop</span>
-      <span class="interlude__ratio">2.37 : 1</span>
+      <span class="interlude__lbl">header mograph &middot; misc drop</span>
+      <span class="interlude__ratio">2.37 : 1 &middot; motion</span>
     </figcaption>
   </figure>
 
@@ -486,6 +528,29 @@ const roster = [
         });
       }, { threshold: [0, 0.2, 0.5, 0.8, 1] });
       railObs.observe(heroEl);
+    })();
+
+    // Autoplay-when-visible for editorial motion pieces (graphic-section
+     // vertical reel + graphic→roster interlude). Videos paused off-screen
+     // to save CPU/battery; resumed only when >20% visible. Respects the
+     // user's prefers-reduced-motion setting — videos stay paused if set.
+    (function () {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const videos = document.querySelectorAll("#graphic video, .interlude--video video");
+      if (!videos.length) return;
+      if (reduce) { videos.forEach(v => v.pause()); return; }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          const v = e.target;
+          if (e.isIntersecting && e.intersectionRatio > 0.2) {
+            const p = v.play();
+            if (p && typeof p.catch === "function") p.catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: [0, 0.2, 0.6, 1] });
+      videos.forEach(v => io.observe(v));
     })();
 
     // 3D coverflow carousel for the featured product photography section.
@@ -1002,96 +1067,164 @@ const roster = [
       border: 1px dashed rgba(80, 97, 185, 0.4);
     }
 
-    /* ---- Native-ratio editorial grid: 10 pieces spanning wide banners to tall portraits ---- */
-    .graphic-stage {
+    /* ============================================================
+       Cinema editorial board (dark) — .gd-board container
+       ============================================================ */
+    .gd-board {
       display: flex;
       flex-direction: column;
-      gap: clamp(14px, 1.6vw, 22px);
+      gap: clamp(20px, 2.8vw, 40px);
+      padding: clamp(8px, 1.5vw, 20px) 0;
     }
-    .gd-grid {
+
+    /* Editorial marks — mono pills that thread through the spread */
+    .gd-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      align-self: flex-start;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: lowercase;
+      color: rgba(255, 255, 255, 0.72);
+      white-space: nowrap;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .gd-mark--head,
+    .gd-mark--foot {
+      background: rgba(255, 238, 0, 0.06);
+      border-color: rgba(255, 238, 0, 0.28);
+      color: #ffee00;
+    }
+    .gd-mark__dot {
+      width: 8px; height: 8px;
+      background: #ffee00;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(255, 238, 0, 0.55);
+      animation: gdMarkPulse 2.2s ease-in-out infinite;
+    }
+    .gd-mark__sep { color: rgba(255, 255, 255, 0.24); }
+    @keyframes gdMarkPulse {
+      0%, 100% { opacity: 0.65; }
+      50%      { opacity: 1;    box-shadow: 0 0 18px rgba(255, 238, 0, 0.8); }
+    }
+
+    /* Rows */
+    .gd-row {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: clamp(12px, 1.4vw, 20px);
+      gap: clamp(12px, 1.4vw, 22px);
       align-items: start;
     }
-    .gd-w2 { grid-column: span 2; }
-    .gd-w3 { grid-column: span 3; }
-    .gd-w4 { grid-column: span 4; }
-    .gd-w6 { grid-column: span 6; }
+    .gd-row--hero { grid-template-columns: 1fr; }
+    .gd-row--3    { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); }
+    .gd-row--4    { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .gd-row--2    { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    /* Rows where mixed aspect ratios should align at their bottom edge */
+    .gd-row--baseline { align-items: end; }
+
+    /* Cells — every one uses native aspect-ratio (--ar) */
     .gd-cell {
       position: relative;
       margin: 0;
       aspect-ratio: var(--ar, 1);
       overflow: hidden;
-      background: #f7f6f2;
-      border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
-      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      background: #0a0913;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 340ms cubic-bezier(0.34, 1.20, 0.64, 1),
+                  border-color 220ms ease,
+                  box-shadow 340ms ease;
     }
     .gd-cell:hover {
-      transform: translateY(-3px);
-      border-color: var(--misc-accent, #5061b9);
-      box-shadow: 0 20px 40px -22px rgba(20, 19, 26, 0.28);
+      transform: translateY(-4px);
+      border-color: rgba(255, 238, 0, 0.7);
+      box-shadow: 0 26px 48px -22px rgba(0, 0, 0, 0.6);
     }
-    .gd-cell img {
+    .gd-cell img,
+    .gd-cell video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
     }
-    /* Idx tag (top-left) */
+    /* Blueprint numeral top-left — big, light-weight, translucent */
     .gd-cell::before {
       content: attr(data-idx);
       position: absolute;
       top: 10px;
-      left: 12px;
-      z-index: 2;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      color: #fff;
-      background: rgba(20, 19, 26, 0.55);
-      padding: 3px 8px;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      left: 14px;
+      z-index: 3;
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+      line-height: 0.85;
+      color: rgba(255, 255, 255, 0.78);
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+      letter-spacing: -0.04em;
       pointer-events: none;
     }
-    /* Ratio pill (bottom-right) */
+    /* Metadata caption — reveals on hover from the bottom */
     .gd-cell::after {
-      content: attr(data-ratio);
+      content: attr(data-name) " · " attr(data-ratio) " · " attr(data-dim);
       position: absolute;
-      bottom: 10px;
-      right: 12px;
-      z-index: 2;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.16em;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      padding: 10px 14px 10px 14px;
+      background: linear-gradient(180deg, transparent 0%, rgba(20, 19, 26, 0.82) 100%);
       color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: lowercase;
+      text-align: right;
       opacity: 0;
-      background: rgba(20, 19, 26, 0.55);
-      padding: 3px 8px;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      transition: opacity 220ms ease;
+      transform: translateY(6px);
+      transition: opacity 260ms ease, transform 260ms ease;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gd-cell:hover::after { opacity: 1; transform: translateY(0); }
+
+    /* Video cell — small yellow "playing" pulse */
+    .gd-cell--video .gd-cell__pulse {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 8px;
+      height: 8px;
+      background: #ffee00;
+      border-radius: 50%;
+      z-index: 3;
+      animation: gdPulse 1.6s ease-in-out infinite;
       pointer-events: none;
     }
-    .gd-cell:hover::after { opacity: 1; }
+    @keyframes gdPulse {
+      0%, 100% { opacity: 0.55; transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 238, 0, 0.55); }
+      50%      { opacity: 1;    transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 238, 0, 0); }
+    }
 
+    /* Responsive collapse */
     @media (max-width: 900px) {
       .graphic-grid { grid-template-columns: 1fr; }
       .graphic-vrail { display: none; }
-      .gd-grid { grid-template-columns: repeat(4, 1fr); }
-      .gd-w2 { grid-column: span 2; }
-      .gd-w3 { grid-column: span 2; }
-      .gd-w4 { grid-column: span 4; }
-      .gd-w6 { grid-column: span 4; }
+      .gd-row--3, .gd-row--4 { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 560px) {
-      .gd-grid { grid-template-columns: repeat(2, 1fr); }
-      .gd-w2, .gd-w3, .gd-w4, .gd-w6 { grid-column: span 2; }
+      .gd-row--3, .gd-row--4, .gd-row--2 { grid-template-columns: 1fr; }
     }
 
-    /* ---- Interlude — full-bleed editorial banner between sections ---- */
+    /* ============================================================
+       Interlude — full-bleed editorial cut (video or still)
+       ============================================================ */
     .interlude {
       position: relative;
       margin: clamp(28px, 4vw, 56px) 0;
@@ -1103,7 +1236,8 @@ const roster = [
       overflow: hidden;
       display: block;
     }
-    .interlude img {
+    .interlude img,
+    .interlude video {
       width: 100%;
       height: auto;
       display: block;
@@ -1132,6 +1266,19 @@ const roster = [
       letter-spacing: 0.22em;
       border-left: 1px solid rgba(255,255,255,0.28);
       padding-left: 12px;
+    }
+    /* Motion badge on video interludes */
+    .interlude--video::before {
+      content: "";
+      position: absolute;
+      top: clamp(16px, 2vw, 28px);
+      left: clamp(20px, 3vw, 44px);
+      width: 10px;
+      height: 10px;
+      background: #ffee00;
+      border-radius: 50%;
+      z-index: 2;
+      animation: gdPulse 1.6s ease-in-out infinite;
     }
     @media (max-width: 600px) {
       .interlude figcaption { font-size: 0.58rem; padding: 4px 8px; }
@@ -1516,7 +1663,6 @@ const roster = [
        ENHANCEMENTS — Illustration + Roster + Editorial Photography + Themes mini
        ========================================================================= */
 
-    #graphic,
     #roster {
       background:
         radial-gradient(circle at 8% 12%, rgba(80, 97, 185, 0.05) 0%, transparent 45%),
@@ -1525,6 +1671,29 @@ const roster = [
       position: relative;
       overflow: hidden;
     }
+    /* Cinema editorial dark mode — graphic section only */
+    #graphic {
+      background:
+        radial-gradient(circle at 8% 12%, rgba(80, 97, 185, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 92% 88%, rgba(255, 129, 176, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #0d0c13 0%, #14131a 100%);
+      color: #f5f4f0;
+      position: relative;
+      overflow: hidden;
+    }
+    #graphic .sec__num       { color: rgba(255, 255, 255, 0.55); }
+    #graphic .sec__eyebrow   { color: #ffee00; }
+    #graphic .sec__title     { color: #fff; }
+    #graphic .sec__lede      { color: rgba(255, 255, 255, 0.72); }
+    #graphic .sec-tabs       { border-bottom-color: rgba(255, 255, 255, 0.12); }
+    #graphic .sec-tab        { color: rgba(255, 255, 255, 0.55); }
+    #graphic .sec-tab:hover  { color: #fff; }
+    #graphic .sec-tab.is-active { color: #fff; border-bottom-color: #ffee00; }
+    #graphic .sec-foot       { border-top-color: rgba(255, 255, 255, 0.10); }
+    #graphic .sec-foot__meta { color: rgba(255, 255, 255, 0.55); }
+    #graphic .pager button   { border-color: rgba(255, 255, 255, 0.18); color: #fff; background: transparent; }
+    #graphic .pager button:hover { background: #ffee00; border-color: #ffee00; color: #14131a; }
+    #graphic .pager__nums    { color: #fff; }
 
     /* ---- Illustration ---- */
     #graphic .graphic-slot {

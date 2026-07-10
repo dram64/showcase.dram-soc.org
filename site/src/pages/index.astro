@@ -51,10 +51,16 @@ const roster = [
   </nav>
 
   <!-- ================================================================
-       01 · HERO — NSOHero.png backdrop, full-viewport
+       01 · HERO — auto-crossfade carousel between NSO + Yuzuha/Alice
        ================================================================ -->
   <section id="hero" class="hero" aria-label="hero">
-    <img class="hero__art" src="/hero/nso-hero.webp" alt="Tokyo Zero hero artwork" />
+    <img class="hero__art is-active" src="/hero/nso-hero.webp"          alt="NSO — Ame &amp; KAngel key art" data-slide="0" />
+    <img class="hero__art"           src="/hero/yuzuha-alice-hero.webp" alt="Yuzuha &amp; Alice key art"     data-slide="1" />
+
+    <div class="hero__dots" role="tablist" aria-label="Hero carousel">
+      <button class="hero__dot is-active" data-goto="0" aria-label="Slide 1"></button>
+      <button class="hero__dot"           data-goto="1" aria-label="Slide 2"></button>
+    </div>
   </section>
 
   <!-- ================================================================
@@ -379,12 +385,11 @@ const roster = [
     });
 
     // Rail dark/light transition — dark while hero is in view (matches the
-    // NSOHero backdrop), fades to light misc palette once scrolled past.
+    // hero backdrop), fades to light misc palette once scrolled past.
     (function () {
       const html = document.documentElement;
       const heroEl = document.getElementById("hero");
       if (!heroEl) return;
-      // Start in dark mode (page loads on hero)
       html.setAttribute("data-rail", "dark");
       const railObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -392,6 +397,40 @@ const roster = [
         });
       }, { threshold: [0, 0.2, 0.5, 0.8, 1] });
       railObs.observe(heroEl);
+    })();
+
+    // Hero carousel — auto-crossfade between NSO and Yuzuha/Alice keyart.
+    // Pauses while the tab isn't visible. Click a dot to jump to a slide
+    // and reset the auto-timer.
+    (function () {
+      const slides = Array.from(document.querySelectorAll(".hero__art[data-slide]"));
+      const dots   = Array.from(document.querySelectorAll(".hero__dot[data-goto]"));
+      if (slides.length < 2) return;
+      const INTERVAL_MS = 6500;
+      let current = 0;
+      let timer   = null;
+
+      const show = (idx) => {
+        current = ((idx % slides.length) + slides.length) % slides.length;
+        slides.forEach((el, i) => el.classList.toggle("is-active", i === current));
+        dots.forEach((el, i)   => el.classList.toggle("is-active", i === current));
+      };
+      const advance = () => show(current + 1);
+      const start = () => { stop(); timer = setInterval(advance, INTERVAL_MS); };
+      const stop  = () => { if (timer) { clearInterval(timer); timer = null; } };
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const idx = parseInt(dot.dataset.goto, 10);
+          if (!Number.isNaN(idx)) { show(idx); start(); }
+        });
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) stop(); else start();
+      });
+
+      start();
     })();
   </script>
 
@@ -515,9 +554,48 @@ const roster = [
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      /* Anchor the top of the image to the top of the container so nothing
+         above the horizon line ever gets clipped. Cropping (if any due to
+         viewport aspect mismatch) happens at the bottom only. */
+      object-position: center top;
       display: block;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 900ms ease-in-out;
+      will-change: opacity;
+    }
+    .hero__art.is-active { opacity: 1; }
+
+    .hero__dots {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(20, 19, 26, 0.4);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+    }
+    .hero__dot {
+      width: 32px;
+      height: 6px;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.35);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 260ms ease, width 260ms ease;
+    }
+    .hero__dot:hover { background: rgba(255, 255, 255, 0.6); }
+    .hero__dot.is-active {
+      background: #ffee00;
+      width: 44px;
     }
     /* Shared CTA button — used by other sections that reference .btn */
     .btn {

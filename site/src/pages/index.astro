@@ -39,11 +39,11 @@ const roster = [
     <a class="tracker__item" data-section="roster" href="#roster">
       <span class="tracker__bar"></span><span class="tracker__num">03</span><span class="tracker__lbl">roster</span>
     </a>
-    <a class="tracker__item" data-section="catalog" href="#catalog">
-      <span class="tracker__bar"></span><span class="tracker__num">04</span><span class="tracker__lbl">catalog</span>
-    </a>
     <a class="tracker__item" data-section="photo" href="#photo">
-      <span class="tracker__bar"></span><span class="tracker__num">05</span><span class="tracker__lbl">photo</span>
+      <span class="tracker__bar"></span><span class="tracker__num">04</span><span class="tracker__lbl">photo</span>
+    </a>
+    <a class="tracker__item" data-section="catalog" href="#catalog">
+      <span class="tracker__bar"></span><span class="tracker__num">05</span><span class="tracker__lbl">catalog</span>
     </a>
   </nav>
 
@@ -103,25 +103,25 @@ const roster = [
 
     <div class="graphic-grid">
       <div class="graphic-stage">
-        <!-- 01 · Past Designs — user drops a title-card / hero graphic -->
-        <div class="slot slot--past">
+        <!-- 01 · Past Designs — title-card graphic -->
+        <div class="slot slot--past has-img">
+          <img class="slot__img" src="/showcase/graphics/past-designs.webp" alt="Past designs — Cipher digital cover" loading="lazy" />
           <span class="slot__idx">01</span>
           <span class="slot__label">past designs</span>
-          <span class="slot__dim">2400 &times; 800 &middot; drop title graphic here</span>
         </div>
 
-        <!-- 02 · Character close-ups — screen-width wide filmstrip -->
-        <div class="slot slot--wide">
+        <!-- 02 · Character close-ups — screen-width filmstrip -->
+        <div class="slot slot--wide has-img">
+          <img class="slot__img" src="/showcase/graphics/character-close-ups.webp" alt="Character close-ups — Cipher long graphic" loading="lazy" />
           <span class="slot__idx">02</span>
           <span class="slot__label">character close-ups</span>
-          <span class="slot__dim">3600 &times; 720 &middot; drop character banner here</span>
         </div>
 
         <!-- 03 · Bigger graphics — squarish featured slot -->
-        <div class="slot slot--big">
+        <div class="slot slot--big has-img">
+          <img class="slot__img" src="/showcase/graphics/bigger-graphics.webp" alt="Bigger graphics — concept square" loading="lazy" />
           <span class="slot__idx">03</span>
           <span class="slot__label">bigger graphics</span>
-          <span class="slot__dim">2400 &times; 1800 &middot; drop featured piece here</span>
         </div>
 
         <p class="graphic-caption">&mdash; three slots &middot; portrait &amp; landscape both fit.</p>
@@ -215,11 +215,138 @@ const roster = [
   </section>
 
   <!-- ================================================================
-       04 · CATALOG — misc__card grid, shopify-native
+       04 · PRODUCT PHOTOGRAPHY — 3D coverflow carousel + editorial sidebar
+       ================================================================ -->
+  <section id="photo" class="sec">
+    <!-- viewport-fit wrapper: header + carousel take one screen height -->
+    <div class="photo-viewport">
+      <div class="sec__head">
+        <p class="sec__num">04 / 05</p>
+        <p class="sec__eyebrow">product photography</p>
+        <h2 class="sec__title">finished pieces.</h2>
+        <p class="sec__lede">
+          Illustration &rarr; production &rarr; photography. Ten frames from the
+          drop &mdash; deskmats, prints, stickers, packaging, flat-lays.
+        </p>
+      </div>
+
+      <div class="photo-editorial">
+        <!-- 3D coverflow carousel — auto-rotates through 10 photo frames -->
+        <div class="lead-3d" aria-label="Product photography carousel">
+          <div class="lead-3d__stage">
+            <button class="lead-3d__card" data-i="0" aria-label="Frame 01">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-01.webp" alt="Product photography frame 01" loading="lazy" />
+                <span class="lead-3d__card-tag">01</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="1" aria-label="Frame 02">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-02.webp" alt="Product photography frame 02" loading="lazy" />
+                <span class="lead-3d__card-tag">02</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="2" aria-label="Frame 03">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-03.webp" alt="Product photography frame 03" loading="lazy" />
+                <span class="lead-3d__card-tag">03</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="3" aria-label="Frame 04">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-04.webp" alt="Product photography frame 04" loading="lazy" />
+                <span class="lead-3d__card-tag">04</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="4" aria-label="Frame 05">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-05.webp" alt="Product photography frame 05" loading="lazy" />
+                <span class="lead-3d__card-tag">05</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="5" aria-label="Frame 06">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-06.webp" alt="Product photography frame 06" loading="lazy" />
+                <span class="lead-3d__card-tag">06</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="6" aria-label="Frame 07">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-07.webp" alt="Product photography frame 07" loading="lazy" />
+                <span class="lead-3d__card-tag">07</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="7" aria-label="Frame 08">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-08.webp" alt="Product photography frame 08" loading="lazy" />
+                <span class="lead-3d__card-tag">08</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="8" aria-label="Frame 09">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-09.webp" alt="Product photography frame 09" loading="lazy" />
+                <span class="lead-3d__card-tag">09</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="9" aria-label="Frame 10">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-10.webp" alt="Product photography frame 10" loading="lazy" />
+                <span class="lead-3d__card-tag">10</span>
+              </div>
+            </button>
+          </div>
+
+          <div class="lead-3d__ctrl">
+            <button class="lead-3d__arrow" data-nav="prev" aria-label="Previous">&larr;</button>
+            <div class="lead-3d__dots">
+              <button class="is-active" data-goto="0" aria-label="Frame 01"></button>
+              <button                   data-goto="1" aria-label="Frame 02"></button>
+              <button                   data-goto="2" aria-label="Frame 03"></button>
+              <button                   data-goto="3" aria-label="Frame 04"></button>
+              <button                   data-goto="4" aria-label="Frame 05"></button>
+              <button                   data-goto="5" aria-label="Frame 06"></button>
+              <button                   data-goto="6" aria-label="Frame 07"></button>
+              <button                   data-goto="7" aria-label="Frame 08"></button>
+              <button                   data-goto="8" aria-label="Frame 09"></button>
+              <button                   data-goto="9" aria-label="Frame 10"></button>
+            </div>
+            <button class="lead-3d__arrow" data-nav="next" aria-label="Next">&rarr;</button>
+          </div>
+        </div>
+
+        <!-- Editorial sidebar — dynamic caption for the active card -->
+        <aside class="photo-side">
+          <p class="photo-side__label">// featured</p>
+          <h3 class="photo-side__title">the drop.</h3>
+
+          <div class="photo-side__cap" data-target="side-cap">
+            <p class="photo-side__idx" data-target="side-idx">01</p>
+            <p class="photo-side__cap-label" data-target="side-label">flat-lay</p>
+            <h4 class="photo-side__cap-name">
+              <span data-target="side-name">Frame 01</span><span class="photo-side__dot">.</span>
+            </h4>
+            <div class="photo-side__specs" data-target="side-specs">
+              <span><em>set</em>studio &middot; natural light</span>
+              <span><em>capture</em>a7iii &middot; 35mm</span>
+              <span><em>process</em>color &middot; retouch</span>
+            </div>
+          </div>
+
+          <div class="photo-side__quote">
+            <p>&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
+            <span class="photo-side__by">&mdash; from the desk.</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       05 · CATALOG — misc__card grid, shopify-native
        ================================================================ -->
   <section id="catalog" class="sec">
     <div class="sec__head">
-      <p class="sec__num">04 / 05</p>
+      <p class="sec__num">05 / 05</p>
       <p class="sec__eyebrow">from the catalog</p>
       <h2 class="sec__title">the drops.</h2>
       <p class="sec__lede">
@@ -237,129 +364,8 @@ const roster = [
     <div class="sec-foot">
       <a class="btn btn--primary" href="https://ac41ps-i0.myshopify.com" target="_blank" rel="noopener">shop the full catalog &rarr;</a>
     </div>
-  </section>
 
-  <!-- ================================================================
-       05 · PRODUCT PHOTOGRAPHY — 3D coverflow carousel + editorial sidebar
-       ================================================================ -->
-  <section id="photo" class="sec">
-    <!-- viewport-fit wrapper: header + carousel take one screen height -->
-    <div class="photo-viewport">
-      <div class="sec__head">
-        <p class="sec__num">05 / 05</p>
-        <p class="sec__eyebrow">product photography</p>
-        <h2 class="sec__title">finished pieces.</h2>
-        <p class="sec__lede">
-          Illustration &rarr; production &rarr; photography. Four physical
-          drops from the roster.
-        </p>
-      </div>
-
-      <div class="photo-editorial">
-        <!-- 3D coverflow carousel — auto-rotates through 4 products -->
-        <div class="lead-3d" aria-label="Product photography carousel">
-          <div class="lead-3d__stage">
-            <button class="lead-3d__card" data-i="0" aria-label="Kafka Acrylic Stand">
-              <div class="lead-3d__card-inner">
-                <img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" />
-                <span class="lead-3d__card-tag">01</span>
-              </div>
-            </button>
-            <button class="lead-3d__card" data-i="1" aria-label="Topaz Acrylic Stand">
-              <div class="lead-3d__card-inner">
-                <img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" />
-                <span class="lead-3d__card-tag">02</span>
-              </div>
-            </button>
-            <button class="lead-3d__card" data-i="2" aria-label="Faruzan Deskmat">
-              <div class="lead-3d__card-inner">
-                <img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" />
-                <span class="lead-3d__card-tag">03</span>
-              </div>
-            </button>
-            <button class="lead-3d__card" data-i="3" aria-label="Cinna Miku Print">
-              <div class="lead-3d__card-inner">
-                <img src="/portfolio/prod-miku.webp" alt="Cinna Miku Print" loading="lazy" />
-                <span class="lead-3d__card-tag">04</span>
-              </div>
-            </button>
-          </div>
-
-          <div class="lead-3d__ctrl">
-            <button class="lead-3d__arrow" data-nav="prev" aria-label="Previous">&larr;</button>
-            <div class="lead-3d__dots">
-              <button class="is-active" data-goto="0" aria-label="Kafka"></button>
-              <button                   data-goto="1" aria-label="Topaz"></button>
-              <button                   data-goto="2" aria-label="Faruzan"></button>
-              <button                   data-goto="3" aria-label="Miku"></button>
-            </div>
-            <button class="lead-3d__arrow" data-nav="next" aria-label="Next">&rarr;</button>
-          </div>
-        </div>
-
-        <!-- Editorial sidebar — dynamic caption for the active card -->
-        <aside class="photo-side">
-          <p class="photo-side__label">// featured</p>
-          <h3 class="photo-side__title">the drop.</h3>
-
-          <div class="photo-side__cap" data-target="side-cap">
-            <p class="photo-side__idx" data-target="side-idx">01</p>
-            <p class="photo-side__cap-label" data-target="side-label">acrylic stand</p>
-            <h4 class="photo-side__cap-name">
-              <span data-target="side-name">Kafka</span><span class="photo-side__dot">.</span>
-            </h4>
-            <div class="photo-side__specs" data-target="side-specs">
-              <span><em>size</em>5.6 &times; 7.4 in</span>
-              <span><em>material</em>clear acrylic</span>
-              <span><em>print</em>screen &middot; 4-color</span>
-            </div>
-          </div>
-
-          <div class="photo-side__quote">
-            <p>&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
-            <span class="photo-side__by">&mdash; from the desk.</span>
-          </div>
-        </aside>
-      </div>
-    </div>
-
-    <!-- Three-up strip below (outside the viewport-fit) -->
-    <div class="photo-strip">
-      <figure class="photo-thumb">
-        <span class="photo-thumb__num">02</span>
-        <div class="photo-thumb__img">
-          <img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" />
-        </div>
-        <figcaption>
-          <span class="photo-thumb__label">acrylic stand</span>
-          <span class="photo-thumb__name">Topaz</span>
-          <span class="photo-thumb__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
-        </figcaption>
-      </figure>
-      <figure class="photo-thumb">
-        <span class="photo-thumb__num">03</span>
-        <div class="photo-thumb__img">
-          <img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" />
-        </div>
-        <figcaption>
-          <span class="photo-thumb__label">deskmat</span>
-          <span class="photo-thumb__name">Faruzan</span>
-          <span class="photo-thumb__spec">900 &times; 400 mm &middot; sublimated</span>
-        </figcaption>
-      </figure>
-      <figure class="photo-thumb">
-        <span class="photo-thumb__num">04</span>
-        <div class="photo-thumb__img">
-          <img src="/portfolio/prod-miku.webp" alt="Cinna Miku Print" loading="lazy" />
-        </div>
-        <figcaption>
-          <span class="photo-thumb__label">print</span>
-          <span class="photo-thumb__name">Cinna Miku</span>
-          <span class="photo-thumb__spec">12 &times; 18 in &middot; satin card stock</span>
-        </figcaption>
-      </figure>
-    </div>
-
+    <!-- Closing nav: three paths to keep exploring -->
     <div class="paths">
       <a class="path" href="/work/">
         <p class="path__num">&mdash; 01</p>
@@ -403,7 +409,7 @@ const roster = [
 
     // Tracker — IntersectionObserver highlights the active section + smooth-scroll on click
     const trackerItems = document.querySelectorAll(".tracker__item[data-section]");
-    const sectionIds = ["hero", "graphic", "roster", "catalog", "photo"];
+    const sectionIds = ["hero", "graphic", "roster", "photo", "catalog"];
     const setActive = (id) => trackerItems.forEach(el => el.classList.toggle("is-active", el.dataset.section === id));
     const io = new IntersectionObserver((entries) => {
       let best = null;
@@ -448,14 +454,26 @@ const roster = [
         next: document.querySelector('.lead-3d__arrow[data-nav="next"]'),
       };
       const products = [
-        { name: "Kafka",       label: "acrylic stand", idx: "01",
-          specs: [["size","5.6 × 7.4 in"], ["material","clear acrylic"], ["print","screen · 4-color"]] },
-        { name: "Topaz",       label: "acrylic stand", idx: "02",
-          specs: [["size","5.6 × 7.4 in"], ["material","clear acrylic"], ["print","screen · 4-color"]] },
-        { name: "Faruzan",     label: "deskmat",       idx: "03",
-          specs: [["size","900 × 400 mm"], ["material","sublimated rubber base"], ["print","300 dpi"]] },
-        { name: "Cinna Miku",  label: "print",         idx: "04",
-          specs: [["size","12 × 18 in"], ["material","satin card stock"], ["print","4-color"]] },
+        { name: "Frame 01", label: "flat-lay",     idx: "01",
+          specs: [["set","studio · natural light"], ["capture","a7iii · 35mm"], ["process","color · retouch"]] },
+        { name: "Frame 02", label: "portrait",     idx: "02",
+          specs: [["set","tabletop · softbox"],    ["capture","a7iii · 50mm"], ["process","color · dodge"]] },
+        { name: "Frame 03", label: "flat-lay",     idx: "03",
+          specs: [["set","overhead · daylight"],   ["capture","a7iii · 35mm"], ["process","color · sharpen"]] },
+        { name: "Frame 04", label: "editorial",    idx: "04",
+          specs: [["set","studio · rim light"],    ["capture","a7iii · 85mm"], ["process","tone · retouch"]] },
+        { name: "Frame 05", label: "lifestyle",    idx: "05",
+          specs: [["set","desk build · daylight"], ["capture","a7iii · 35mm"], ["process","color · balance"]] },
+        { name: "Frame 06", label: "detail",       idx: "06",
+          specs: [["set","macro · softbox"],       ["capture","a7iii · 90mm"], ["process","tone · dodge"]] },
+        { name: "Frame 07", label: "editorial",    idx: "07",
+          specs: [["set","seamless · softbox"],    ["capture","a7iii · 50mm"], ["process","color · retouch"]] },
+        { name: "Frame 08", label: "flat-lay",     idx: "08",
+          specs: [["set","overhead · daylight"],   ["capture","a7iii · 35mm"], ["process","color · balance"]] },
+        { name: "Frame 09", label: "portrait",     idx: "09",
+          specs: [["set","studio · window light"], ["capture","a7iii · 85mm"], ["process","tone · retouch"]] },
+        { name: "Frame 10", label: "lifestyle",    idx: "10",
+          specs: [["set","desk build · softbox"],  ["capture","a7iii · 35mm"], ["process","color · sharpen"]] },
       ];
       const N = cards.length;
       let current = 0;
@@ -971,6 +989,36 @@ const roster = [
     .slot:hover {
       border-color: rgba(80, 97, 185, 0.7);
     }
+    /* Slot image — cover-fills the slot; label + idx float on top */
+    .slot__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      z-index: 1;
+    }
+    .slot.has-img { border-style: solid; border-color: var(--misc-line, rgba(0,0,0,0.12)); }
+    .slot.has-img::before { border-color: rgba(255, 255, 255, 0.35); z-index: 2; }
+    .slot.has-img .slot__label {
+      position: absolute;
+      bottom: 16px;
+      left: 20px;
+      right: auto;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px 14px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    }
+    .slot.has-img .slot__idx {
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 0 2px 8px rgba(20, 19, 26, 0.35);
+    }
+    .slot.has-img .slot__dim { display: none; }
     .slot__idx {
       position: absolute;
       top: 16px;
@@ -981,7 +1029,7 @@ const roster = [
       line-height: 0.8;
       color: rgba(80, 97, 185, 0.20);
       letter-spacing: -0.04em;
-      z-index: 2;
+      z-index: 3;
     }
     .slot__label {
       font-family: 'Apex Mk3', sans-serif;
@@ -993,7 +1041,7 @@ const roster = [
       letter-spacing: -0.01em;
       text-align: center;
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
     .slot__dim {
       position: absolute;
@@ -1606,25 +1654,25 @@ const roster = [
 
     /* ---- Compact theme selector at bottom of roster ---- */
     .theme-mini {
-      margin-top: clamp(48px, 6vw, 80px);
-      padding-top: clamp(32px, 4vw, 48px);
+      margin-top: clamp(56px, 7vw, 96px);
+      padding-top: clamp(40px, 4.5vw, 56px);
       border-top: 1px solid var(--misc-line, rgba(0,0,0,0.12));
       display: grid;
-      grid-template-columns: minmax(260px, 320px) 1fr;
-      gap: clamp(24px, 4vw, 56px);
+      grid-template-columns: minmax(260px, 340px) 1fr;
+      gap: clamp(24px, 4vw, 64px);
       align-items: center;
     }
     .theme-mini__eyebrow {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--misc-accent);
-      margin: 0 0 8px;
+      margin: 0 0 10px;
     }
     .theme-mini__lede {
       font-family: 'Branding Pro', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1rem;
       line-height: 1.5;
       color: var(--misc-ink-soft);
       margin: 0;
@@ -1632,8 +1680,8 @@ const roster = [
     .theme-mini__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      max-width: 480px;
+      gap: 20px;
+      max-width: 760px;
       justify-self: end;
     }
     .theme-sq {
@@ -1641,22 +1689,27 @@ const roster = [
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      aspect-ratio: 1.6 / 1;
+      aspect-ratio: 1.4 / 1;
       background: #fff;
       border: 1px solid var(--misc-line);
       overflow: hidden;
       text-decoration: none;
-      transition: transform 200ms ease, border-color 200ms ease;
+      transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+      box-shadow: 0 8px 22px -12px rgba(20, 19, 26, 0.10);
     }
-    .theme-sq:hover { transform: translateY(-2px); border-color: var(--misc-accent); }
+    .theme-sq:hover {
+      transform: translateY(-3px);
+      border-color: var(--misc-accent);
+      box-shadow: 0 16px 32px -14px rgba(20, 19, 26, 0.18);
+    }
     .theme-sq--psg { background: linear-gradient(180deg, #ffe0eb 0%, #fff4fa 60%, #d6f8ff 100%); }
     .theme-sq--nso { background: linear-gradient(180deg, #e0e6ff 0%, #f6f2ff 60%, #ffe0f4 100%); }
     .theme-sq__char {
       position: absolute;
       bottom: 0;
-      height: 88%;
+      height: 92%;
       width: auto;
-      max-width: 46%;
+      max-width: 48%;
     }
     .theme-sq__char--l { left: 3%; }
     .theme-sq__char--r { right: 3%; }
@@ -1664,13 +1717,13 @@ const roster = [
       position: relative;
       z-index: 2;
       font-family: 'Apex Mk3', monospace;
-      font-size: 0.72rem;
+      font-size: 0.9rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--misc-ink);
-      background: rgba(255, 255, 255, 0.9);
-      padding: 3px 12px;
-      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 5px 16px;
+      margin-bottom: 12px;
     }
     @media (max-width: 800px) {
       .theme-mini { grid-template-columns: 1fr; }
@@ -1737,7 +1790,7 @@ const roster = [
     .lead-3d__stage {
       position: relative;
       flex: 1;
-      min-height: 340px;
+      min-height: 480px;
       transform-style: preserve-3d;
       display: block;
     }
@@ -1745,7 +1798,7 @@ const roster = [
       position: absolute;
       top: 50%;
       left: 50%;
-      width: clamp(240px, 32vw, 460px);
+      width: clamp(340px, 44vw, 640px);
       aspect-ratio: 4 / 5;
       background: transparent;
       border: none;
@@ -1776,8 +1829,8 @@ const roster = [
     }
     /* Product image floats with a soft render-style drop-shadow */
     .lead-3d__card-inner img {
-      max-width: 92%;
-      max-height: 92%;
+      max-width: 98%;
+      max-height: 98%;
       object-fit: contain;
       filter:
         drop-shadow(0 8px 16px rgba(20, 19, 26, 0.18))
@@ -2144,80 +2197,8 @@ const roster = [
       color: var(--misc-ink-soft);
     }
 
-    .photo-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: clamp(40px, 5vw, 60px);
-    }
-    .photo-thumb {
-      position: relative;
-      margin: 0;
-      background: #fff;
-      border: 1px solid var(--misc-line);
-      overflow: hidden;
-      transition: transform 200ms ease, border-color 200ms ease;
-    }
-    .photo-thumb:hover { transform: translateY(-3px); border-color: var(--misc-accent); }
-    .photo-thumb__num {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 2;
-      background: #fff;
-      color: var(--misc-accent);
-      padding: 3px 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      border: 1px solid var(--misc-line);
-    }
-    .photo-thumb__img {
-      background: linear-gradient(180deg, #f7f6f2 0%, #eeece4 100%);
-      aspect-ratio: 4 / 5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .photo-thumb__img img {
-      max-width: 78%;
-      max-height: 82%;
-      object-fit: contain;
-      filter: drop-shadow(0 15px 22px rgba(20, 19, 26, 0.12));
-    }
-    .photo-thumb figcaption {
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      border-top: 1px solid var(--misc-line);
-    }
-    .photo-thumb__label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--misc-accent);
-    }
-    .photo-thumb__name {
-      font-family: 'Apex Mk3', sans-serif;
-      font-size: 1.05rem;
-      color: var(--misc-ink);
-    }
-    .photo-thumb__spec {
-      font-family: 'Branding Pro', sans-serif;
-      font-size: 0.78rem;
-      color: var(--misc-ink-soft);
-      line-height: 1.4;
-    }
-
     @media (max-width: 900px) {
       .photo-editorial { grid-template-columns: 1fr; }
-      .photo-strip { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 600px) {
-      .photo-strip { grid-template-columns: 1fr; }
     }
   </style>
 </Base>

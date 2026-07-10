@@ -49,6 +49,24 @@ export const products: Product[] = [
   // Flags
   { slug: "flag-gigi", title: "Gigi Flag", price: 20, category: "flag", image: "/assets/Gigi.webp" },
   { slug: "flag-ironmouse", title: "Ironmouse Flag", price: 20, category: "flag", image: "/assets/Ironmouse.webp" },
+
+  // PSG drop
+  { slug: "psg-deskmat",           title: "PSG Deskmat",             price: 25, category: "deskmat",  image: "/assets/psg-deskmat.webp" },
+  { slug: "psg-panty-tapestry",    title: "Panty Tapestry",          price: 25, category: "tapestry", image: "/assets/psg-panty-tapestry.webp" },
+  { slug: "psg-stocking-tapestry", title: "Stocking Tapestry",       price: 25, category: "tapestry", image: "/assets/psg-stocking-tapestry.webp" },
+  { slug: "psg-panty-acrylic",     title: "Panty Acrylic Stand",     price: 12, category: "print",    image: "/assets/psg-panty-acrylic.webp" },
+  { slug: "psg-stocking-acrylic",  title: "Stocking Acrylic Stand",  price: 12, category: "print",    image: "/assets/psg-stocking-acrylic.webp" },
+  { slug: "psg-print",             title: "PSG Print",               price: 5,  category: "print",    image: "/assets/psg-print.webp" },
+  { slug: "psg-panty-sticker",     title: "Panty Sticker",           price: 3,  category: "sticker",  image: "/assets/psg-panty-sticker.webp" },
+  { slug: "psg-stocking-sticker",  title: "Stocking Sticker",        price: 3,  category: "sticker",  image: "/assets/psg-stocking-sticker.webp" },
+
+  // NSO drop
+  { slug: "nso-deskmat",           title: "NSO Deskmat",             price: 25, category: "deskmat",  image: "/assets/nso-deskmat.webp" },
+  { slug: "nso-ame-tapestry",      title: "Ame Tapestry",            price: 25, category: "tapestry", image: "/assets/nso-ame-tapestry.webp" },
+  { slug: "nso-kangel-tapestry",   title: "K.Angel Tapestry",        price: 25, category: "tapestry", image: "/assets/nso-kangel-tapestry.webp" },
+  { slug: "nso-print",             title: "NSO Print",               price: 5,  category: "print",    image: "/assets/nso-print.webp" },
+  { slug: "nso-ame-sticker",       title: "Ame Sticker",             price: 3,  category: "sticker",  image: "/assets/nso-ame-sticker.webp" },
+  { slug: "nso-kangel-sticker",    title: "K.Angel Sticker",         price: 3,  category: "sticker",  image: "/assets/nso-kangel-sticker.webp" },
 ];
 
 export const categories = [

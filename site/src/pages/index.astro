@@ -4,15 +4,28 @@ import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
 import { products } from "../data/products.ts";
 
+// 16 featured items across the four most-recent drops: NSO, PSG,
+// Yuzuha/Alice and misc. Excludes Toki, Blanc Bunny and Evelyn.
 const featured = [
+  // Yuzuha & Alice
   "deskmat-yuzuha-alice",
-  "tapestry-astra-yao",
   "print-yuzuha",
-  "sticker-blanc-bunny",
-  "deskmat-toki-bunny",
-  "tapestry-citlali",
-  "print-castorice",
+  "print-alice",
+  "sticker-yuzuha",
   "sticker-alice",
+  // PSG drop
+  "psg-deskmat",
+  "psg-panty-tapestry",
+  "psg-stocking-tapestry",
+  "psg-panty-acrylic",
+  "psg-stocking-acrylic",
+  "psg-panty-sticker",
+  // NSO drop
+  "nso-deskmat",
+  "nso-ame-tapestry",
+  "nso-kangel-tapestry",
+  "nso-print",
+  "nso-ame-sticker",
 ].map(slug => products.find(p => p.slug === slug)).filter(Boolean);
 
 const roster = [
@@ -118,17 +131,25 @@ const roster = [
         <span>11 stills &middot; 2 reels</span>
       </div>
 
-      <!-- Row A · widescreen still opener (20:9) -->
+      <!-- Row A · widescreen motion opener (2.37:1) -->
       <div class="gd-row gd-row--hero">
-        <figure class="gd-cell" style="--ar: 2.22" data-idx="01" data-name="chii · widescreen" data-ratio="20:9" data-dim="5377×2424">
-          <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
+        <figure class="gd-cell gd-cell--video" style="--ar: 2.37" data-idx="01" data-name="header mograph · misc drop" data-ratio="2.37:1" data-dim="3840×1618">
+          <video
+            poster="/showcase/motion/header-mograph-poster.jpg"
+            muted loop playsinline autoplay preload="metadata"
+            aria-label="Header mograph motion piece"
+          >
+            <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
+            <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
+          </video>
+          <span class="gd-cell__pulse" aria-hidden="true"></span>
         </figure>
       </div>
 
       <div class="gd-mark"><span>&mdash; editorial spread</span></div>
 
-      <!-- Row B · 3-col split — cover + vertical reel + character key art -->
-      <div class="gd-row gd-row--3 gd-row--baseline">
+      <!-- Row B · 3-col split — cover + smaller vertical reel + character key art -->
+      <div class="gd-row gd-row--3 gd-row--baseline gd-row--sm-mid">
         <figure class="gd-cell" style="--ar: 0.80" data-idx="02" data-name="cover 04" data-ratio="4:5" data-dim="2178×2718">
           <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
         </figure>
@@ -204,20 +225,13 @@ const roster = [
   </section>
 
   <!-- ================================================================
-       INTERLUDE — 2.37:1 wide motion cut between graphic + roster
+       INTERLUDE — chii widescreen still between graphic + roster
        ================================================================ -->
-  <figure class="interlude interlude--wide interlude--video">
-    <video
-      poster="/showcase/motion/header-mograph-poster.jpg"
-      muted loop playsinline autoplay preload="metadata"
-      aria-label="Header mograph motion piece"
-    >
-      <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
-      <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
-    </video>
+  <figure class="interlude interlude--wide">
+    <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
     <figcaption>
-      <span class="interlude__lbl">header mograph &middot; misc drop</span>
-      <span class="interlude__ratio">2.37 : 1 &middot; motion</span>
+      <span class="interlude__lbl">chii &middot; widescreen illustration</span>
+      <span class="interlude__ratio">20 : 9</span>
     </figcaption>
   </figure>
 
@@ -440,8 +454,9 @@ const roster = [
       <p class="sec__eyebrow">from the catalog</p>
       <h2 class="sec__title">the drops.</h2>
       <p class="sec__lede">
-        A curated eight from the 30-piece drop &mdash; deskmats, tapestries,
-        prints, stickers. Each carries a character. Full catalog on shopify.
+        Sixteen recent drops &mdash; NSO, PSG, Yuzuha &amp; Alice.
+        Deskmats, tapestries, prints, stickers, acrylic stands. Each carries
+        a character. Full catalog on shopify.
       </p>
     </div>
 
@@ -1126,6 +1141,10 @@ const roster = [
     .gd-row--2    { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     /* Rows where mixed aspect ratios should align at their bottom edge */
     .gd-row--baseline { align-items: end; }
+    /* Narrow-middle 3-col — for accents that shouldn't dominate their neighbors */
+    .gd-row--sm-mid.gd-row--3 {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.55fr) minmax(0, 1.5fr);
+    }
 
     /* Cells — every one uses native aspect-ratio (--ar) */
     .gd-cell {

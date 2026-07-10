@@ -1256,5 +1256,338 @@ const roster = [
       .prod-grid { grid-template-columns: repeat(2, 1fr); }
       .paths { grid-template-columns: 1fr; }
     }
+
+    /* =========================================================================
+       RETRO-FUTURISM OVERLAY — Meet the Robinsons / Ray Gunn atompunk vibe.
+       Scoped to #graphic + #roster only; rest of the site stays misc-aesthetic.
+       Palette: cream / teal / coral / mustard / deep navy.
+       Motifs: halftone dots · atomic orbits · chrome bezels · starbursts.
+       ========================================================================= */
+    #graphic,
+    #roster {
+      --retro-cream:   #f5efdb;
+      --retro-cream-2: #efe6ca;
+      --retro-teal:    #3ec6e0;
+      --retro-teal-2:  #4dd0c1;
+      --retro-coral:   #ff6b6b;
+      --retro-mustard: #f4c33b;
+      --retro-ink:     #1a1a2e;
+      --retro-chrome:  linear-gradient(135deg, #dfe4ec 0%, #f2f5f9 45%, #c8d0dc 100%);
+    }
+
+    /* -- shared: retro backdrop with halftone + orbit -- */
+    #graphic, #roster {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(62, 198, 224, 0.16) 0%, transparent 30%),
+        radial-gradient(circle at 90% 88%, rgba(255, 107, 107, 0.14) 0%, transparent 34%),
+        radial-gradient(rgba(26, 26, 46, 0.08) 1.2px, transparent 1.3px) 0 0 / 22px 22px,
+        var(--retro-cream);
+      color: var(--retro-ink);
+      position: relative;
+      overflow: hidden;
+    }
+    #graphic::before, #roster::before {
+      content: "";
+      position: absolute;
+      top: 6%;
+      right: -6%;
+      width: 42%;
+      aspect-ratio: 1;
+      max-width: 520px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(62, 198, 224, 0.35);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #graphic::after, #roster::after {
+      content: "";
+      position: absolute;
+      top: 12%;
+      right: 0%;
+      width: 28%;
+      aspect-ratio: 1;
+      max-width: 340px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 107, 107, 0.35);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #graphic > *, #roster > * { position: relative; z-index: 1; }
+
+    /* -- shared: retro typography -- */
+    #graphic .sec__num, #roster .sec__num {
+      display: inline-block;
+      color: var(--retro-ink);
+      background: var(--retro-mustard);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1.5px solid var(--retro-ink);
+      box-shadow: 3px 3px 0 var(--retro-ink);
+    }
+    #graphic .sec__eyebrow, #roster .sec__eyebrow {
+      color: var(--retro-coral);
+      font-weight: 600;
+    }
+    #graphic .sec__title, #roster .sec__title {
+      color: var(--retro-ink);
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 400;
+      text-transform: lowercase;
+      letter-spacing: -0.02em;
+      text-shadow:
+        3px 3px 0 rgba(62, 198, 224, 0.5),
+        6px 6px 0 rgba(255, 107, 107, 0.3);
+    }
+    #graphic .sec__lede, #roster .sec__lede {
+      color: rgba(26, 26, 46, 0.75);
+    }
+
+    /* ===== GRAPHIC DESIGN — retro treatment ===== */
+
+    /* Rounded pill tabs with chrome */
+    #graphic .sec-tabs {
+      border-bottom: 2px solid rgba(26, 26, 46, 0.14);
+      padding-bottom: 20px;
+    }
+    #graphic .sec-tab {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1.5px solid rgba(26, 26, 46, 0.14);
+      color: var(--retro-ink);
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    #graphic .sec-tab:hover {
+      background: #fff;
+      transform: translateY(-1px);
+    }
+    #graphic .sec-tab.is-active {
+      background: var(--retro-teal);
+      border-color: var(--retro-ink);
+      color: var(--retro-ink);
+      box-shadow: 3px 3px 0 var(--retro-ink);
+    }
+
+    /* Left rail: starburst chip + coral labels */
+    #graphic .graphic-chip {
+      width: 42px;
+      height: 42px;
+      background: var(--retro-coral);
+      border: 2px solid var(--retro-ink);
+      border-radius: 50%;
+      position: relative;
+    }
+    #graphic .graphic-chip::before,
+    #graphic .graphic-chip::after {
+      content: "";
+      position: absolute;
+      background: var(--retro-ink);
+      left: 50%;
+      top: 50%;
+    }
+    #graphic .graphic-chip::before {
+      width: 68px; height: 2px;
+      transform: translate(-50%, -50%);
+    }
+    #graphic .graphic-chip::after {
+      width: 2px; height: 68px;
+      transform: translate(-50%, -50%);
+    }
+    #graphic .graphic-meta em {
+      color: var(--retro-coral);
+      font-weight: 700;
+    }
+    #graphic .graphic-meta p { color: var(--retro-ink); }
+    #graphic .graphic-signature {
+      color: var(--retro-coral);
+    }
+    #graphic .graphic-vrail span {
+      color: var(--retro-teal);
+      font-weight: 500;
+    }
+
+    /* Filler slot: chrome bezel + orbit ring */
+    #graphic .graphic-stage { position: relative; }
+    #graphic .graphic-stage::before {
+      content: "";
+      position: absolute;
+      inset: -30px;
+      border-radius: 30px;
+      border: 1.5px dashed rgba(62, 198, 224, 0.5);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #graphic .graphic-slot {
+      background:
+        radial-gradient(rgba(26, 26, 46, 0.10) 1.4px, transparent 1.5px) 0 0 / 18px 18px,
+        linear-gradient(180deg, #fff 0%, #f7f4e7 100%);
+      border: 2.5px solid var(--retro-ink);
+      border-radius: 24px;
+      box-shadow:
+        6px 6px 0 var(--retro-ink),
+        inset 0 2px 0 rgba(255, 255, 255, 0.8);
+      position: relative;
+      z-index: 1;
+    }
+    #graphic .graphic-slot__label {
+      color: var(--retro-coral);
+      font-weight: 700;
+    }
+    #graphic .graphic-slot__icon {
+      color: var(--retro-teal);
+      opacity: 0.85;
+    }
+    #graphic .graphic-slot__dim { color: rgba(26, 26, 46, 0.6); }
+    #graphic .graphic-caption { color: var(--retro-coral); }
+
+    /* Pager: chrome */
+    #graphic .pager button {
+      border-radius: 999px;
+      border: 2px solid var(--retro-ink);
+      background: var(--retro-cream);
+      color: var(--retro-ink);
+      box-shadow: 3px 3px 0 var(--retro-ink);
+    }
+    #graphic .pager button:hover {
+      background: var(--retro-teal);
+      color: var(--retro-ink);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--retro-ink);
+    }
+    #graphic .pager__nums { color: var(--retro-ink); font-weight: 600; }
+    #graphic .sec-foot { border-top-color: rgba(26, 26, 46, 0.14); }
+    #graphic .sec-foot__meta { color: var(--retro-coral); }
+
+    /* ===== ROSTER — retro treatment ===== */
+
+    /* Portrait carousel: chrome bezels */
+    #roster .portrait {
+      border: 3px solid var(--retro-ink);
+      background: #fff;
+      box-shadow: 3px 3px 0 var(--retro-ink);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    #roster .portrait:hover {
+      transform: translate(-1px, -1px) scale(1.06);
+      box-shadow: 5px 5px 0 var(--retro-ink);
+    }
+    #roster .portrait.is-active {
+      border-color: var(--retro-coral);
+      box-shadow: 3px 3px 0 var(--retro-coral);
+    }
+    #roster .roster-all {
+      border: 2px solid var(--retro-ink);
+      background: var(--retro-mustard);
+      color: var(--retro-ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--retro-ink);
+      text-transform: lowercase;
+    }
+    #roster .roster-all:hover {
+      background: var(--retro-coral);
+      color: var(--retro-ink);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--retro-ink);
+    }
+
+    /* Stage: teal block instead of slate-violet, chrome frame, orbit ring */
+    #roster .roster-block {
+      background: var(--retro-teal);
+      opacity: 0.22;
+      border-radius: 24px;
+    }
+    #roster .roster-letters {
+      color: var(--retro-coral);
+      opacity: 0.12;
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 900;
+      -webkit-text-stroke: 2px var(--retro-coral);
+      text-shadow:
+        4px 4px 0 rgba(62, 198, 224, 0.35);
+    }
+    #roster .roster-hero {
+      position: relative;
+    }
+    #roster .roster-hero::before {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(62, 198, 224, 0.5);
+      pointer-events: none;
+    }
+    #roster .roster-hero::after {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 107, 107, 0.35);
+      pointer-events: none;
+    }
+    #roster .roster-img {
+      border: 3px solid var(--retro-ink);
+      border-radius: 24px;
+      background:
+        radial-gradient(rgba(26, 26, 46, 0.08) 1.2px, transparent 1.3px) 0 0 / 18px 18px,
+        #fff;
+      box-shadow:
+        6px 6px 0 var(--retro-ink);
+      max-width: 520px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    /* Info card: retro chrome frame with corner starburst */
+    #roster .roster-card {
+      background:
+        linear-gradient(180deg, #fff 0%, #f7f4e7 100%);
+      border: 2.5px solid var(--retro-ink);
+      border-radius: 20px;
+      box-shadow: 6px 6px 0 var(--retro-ink);
+      position: relative;
+    }
+    #roster .roster-card::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 28px;
+      height: 28px;
+      background: var(--retro-mustard);
+      border: 2px solid var(--retro-ink);
+      border-radius: 50%;
+      z-index: 2;
+    }
+    #roster .roster-card__num {
+      color: var(--retro-coral);
+      font-weight: 700;
+    }
+    #roster .roster-card__name {
+      color: var(--retro-ink);
+      font-weight: 400;
+    }
+    #roster .roster-card__rule {
+      background: rgba(26, 26, 46, 0.12);
+    }
+    #roster .roster-card__rule::after {
+      background: var(--retro-coral);
+      height: 3px;
+      width: 64px;
+    }
+    #roster .roster-card__dl dt {
+      background: var(--retro-teal);
+      color: var(--retro-ink);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      justify-self: start;
+      align-self: center;
+      border: 1.5px solid var(--retro-ink);
+    }
+    #roster .roster-card__dl dd { color: var(--retro-ink); }
+    #roster .roster-card__desc { color: rgba(26, 26, 46, 0.72); }
   </style>
 </Base>

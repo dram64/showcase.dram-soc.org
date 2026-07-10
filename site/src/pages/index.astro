@@ -16,12 +16,12 @@ const featured = [
 ].map(slug => products.find(p => p.slug === slug)).filter(Boolean);
 
 const roster = [
-  { key: "kafka",     img: "/portfolio/kafka.webp",     name: "Kafka",             faction: "Stellaron Hunters",           universe: "Honkai: Star Rail", tag: "HSR" },
-  { key: "topaz",     img: "/portfolio/topaz.webp",     name: "Topaz",             faction: "IPC · Strategic Investment", universe: "Honkai: Star Rail", tag: "HSR" },
-  { key: "psg",       img: "/portfolio/psg.webp",       name: "Panty & Stocking",  faction: "Daten City Church",           universe: "Panty & Stocking",  tag: "PSG" },
-  { key: "ayaka",     img: "/portfolio/ayaka.webp",     name: "Kamisato Ayaka",    faction: "Kamisato Clan",               universe: "Genshin Impact",     tag: "GI" },
-  { key: "jane",      img: "/portfolio/jane.webp",      name: "Jane Doe",          faction: "Tokyo Zero Original",         universe: "Chromadipity Core",  tag: "OC" },
-  { key: "ironmouse", img: "/portfolio/ironmouse.webp", name: "Ironmouse",         faction: "VShojo",                      universe: "Vtuber",             tag: "VT" },
+  { key: "ame",      img: "/showcase/roster/ame.webp",      name: "Ame",       faction: "Off &amp; online",           universe: "Needy Streamer Overload", tag: "NSO" },
+  { key: "kangel",   img: "/showcase/roster/kangel.webp",   name: "K.Angel",   faction: "Public-face streamer",       universe: "Needy Streamer Overload", tag: "NSO" },
+  { key: "panty",    img: "/showcase/roster/panty.webp",    name: "Panty",     faction: "Anarchy sisters",            universe: "Panty &amp; Stocking",    tag: "PSG" },
+  { key: "stocking", img: "/showcase/roster/stocking.webp", name: "Stocking",  faction: "Anarchy sisters",            universe: "Panty &amp; Stocking",    tag: "PSG" },
+  { key: "yuzuha",   img: "/showcase/roster/yuzuha.webp",   name: "Yuzuha",    faction: "Tokyo Zero original",        universe: "Chromadipity Core",       tag: "OC" },
+  { key: "chii",     img: "/showcase/roster/chii.webp",     name: "Chii",      faction: "Vtuber commission",          universe: "Independent commission",  tag: "VT" },
 ];
 ---
 <Base title="portfolio" pageClass="page-index" showHeader={false} showFooter={true}>
@@ -247,20 +247,20 @@ const roster = [
 
       <div class="roster-stage">
         <div class="roster-block" aria-hidden="true"></div>
-        <div class="roster-letters" data-target="letters" aria-hidden="true">KAFKA</div>
+        <div class="roster-letters" data-target="letters" aria-hidden="true">AME</div>
 
         <div class="roster-hero">
-          <img class="roster-img" src="/portfolio/kafka.webp" alt="Kafka" data-target="img" />
+          <img class="roster-img" src="/showcase/roster/ame.webp" alt="Ame" data-target="img" />
         </div>
 
         <div class="roster-card">
           <p class="roster-card__num" data-target="num">01 / 06</p>
-          <h3 class="roster-card__name" data-target="name">Kafka</h3>
+          <h3 class="roster-card__name" data-target="name">Ame</h3>
           <div class="roster-card__rule"></div>
           <dl class="roster-card__dl">
-            <dt>faction</dt><dd data-target="faction">Stellaron Hunters</dd>
-            <dt>universe</dt><dd data-target="universe">Honkai: Star Rail</dd>
-            <dt>tag</dt><dd data-target="tag">HSR</dd>
+            <dt>faction</dt><dd data-target="faction">Off &amp; online</dd>
+            <dt>universe</dt><dd data-target="universe">Needy Streamer Overload</dd>
+            <dt>tag</dt><dd data-target="tag">NSO</dd>
           </dl>
           <p class="roster-card__desc">
             Hand-illustrated character work &mdash; portraits, key art, chibi
@@ -477,12 +477,12 @@ const roster = [
 
   <script is:inline>
     const roster = {
-      kafka:     { name: "Kafka",             letters: "KAFKA", faction: "Stellaron Hunters",           universe: "Honkai: Star Rail", tag: "HSR", img: "/portfolio/kafka.webp",     num: "01" },
-      topaz:     { name: "Topaz",             letters: "TOPAZ", faction: "IPC · Strategic Investment", universe: "Honkai: Star Rail", tag: "HSR", img: "/portfolio/topaz.webp",     num: "02" },
-      psg:       { name: "Panty & Stocking",  letters: "PSG",   faction: "Daten City Church",           universe: "Panty & Stocking",  tag: "PSG", img: "/portfolio/psg.webp",       num: "03" },
-      ayaka:     { name: "Kamisato Ayaka",    letters: "AYAKA", faction: "Kamisato Clan",               universe: "Genshin Impact",     tag: "GI",  img: "/portfolio/ayaka.webp",     num: "04" },
-      jane:      { name: "Jane Doe",          letters: "JANE",  faction: "Tokyo Zero Original",         universe: "Chromadipity Core",  tag: "OC",  img: "/portfolio/jane.webp",      num: "05" },
-      ironmouse: { name: "Ironmouse",         letters: "MOUSE", faction: "VShojo",                      universe: "Vtuber",             tag: "VT",  img: "/portfolio/ironmouse.webp", num: "06" },
+      ame:      { name: "Ame",      letters: "AME",      faction: "Off & online",         universe: "Needy Streamer Overload", tag: "NSO", img: "/showcase/roster/ame.webp",      num: "01" },
+      kangel:   { name: "K.Angel",  letters: "KANGEL",   faction: "Public-face streamer", universe: "Needy Streamer Overload", tag: "NSO", img: "/showcase/roster/kangel.webp",   num: "02" },
+      panty:    { name: "Panty",    letters: "PANTY",    faction: "Anarchy sisters",      universe: "Panty & Stocking",        tag: "PSG", img: "/showcase/roster/panty.webp",    num: "03" },
+      stocking: { name: "Stocking", letters: "STOCKING", faction: "Anarchy sisters",      universe: "Panty & Stocking",        tag: "PSG", img: "/showcase/roster/stocking.webp", num: "04" },
+      yuzuha:   { name: "Yuzuha",   letters: "YUZUHA",   faction: "Tokyo Zero original",  universe: "Chromadipity Core",       tag: "OC",  img: "/showcase/roster/yuzuha.webp",   num: "05" },
+      chii:     { name: "Chii",     letters: "CHII",     faction: "Vtuber commission",    universe: "Independent commission",  tag: "VT",  img: "/showcase/roster/chii.webp",     num: "06" },
     };
     document.querySelectorAll(".portrait[data-key]").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -1312,7 +1312,7 @@ const roster = [
       padding: 0;
       transition: border-color 180ms ease, transform 180ms ease;
     }
-    .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
     .portrait:hover { transform: scale(1.05); }
     .portrait.is-active {
       border-color: var(--misc-accent, #5061b9);
@@ -1747,32 +1747,32 @@ const roster = [
       color: rgba(80, 97, 185, 0.06);
     }
     #roster .roster-img {
-      max-width: 560px;
-      padding: 8px;
-      background: #fff;
-      border: 1px solid var(--misc-line);
-      box-shadow: 0 20px 40px -20px rgba(20, 19, 26, 0.12);
+      max-width: 620px;
+      max-height: 640px;
+      width: auto;
+      height: auto;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      filter: drop-shadow(0 22px 34px rgba(20, 19, 26, 0.22))
+              drop-shadow(0 6px 12px rgba(20, 19, 26, 0.14));
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      transition: filter 220ms ease, transform 320ms cubic-bezier(0.34, 1.20, 0.64, 1);
     }
-    #roster .roster-hero { position: relative; }
-    #roster .roster-hero::before {
-      content: "";
-      position: absolute;
-      top: -14px; left: -14px;
-      width: 32px; height: 32px;
-      border-top: 2px solid var(--misc-accent);
-      border-left: 2px solid var(--misc-accent);
-      pointer-events: none;
-      z-index: 3;
+    #roster .roster-img:hover {
+      transform: translateY(-3px);
+      filter: drop-shadow(0 30px 42px rgba(20, 19, 26, 0.28))
+              drop-shadow(0 10px 18px rgba(20, 19, 26, 0.16));
     }
-    #roster .roster-hero::after {
-      content: "";
-      position: absolute;
-      bottom: -14px; right: -14px;
-      width: 32px; height: 32px;
-      border-bottom: 2px solid var(--misc-accent);
-      border-right: 2px solid var(--misc-accent);
-      pointer-events: none;
-      z-index: 3;
+    #roster .roster-hero {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      min-height: 460px;
     }
     #roster .roster-card {
       padding: 32px 28px;

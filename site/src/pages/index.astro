@@ -42,11 +42,8 @@ const roster = [
     <a class="tracker__item" data-section="catalog" href="#catalog">
       <span class="tracker__bar"></span><span class="tracker__num">04</span><span class="tracker__lbl">catalog</span>
     </a>
-    <a class="tracker__item" data-section="themes" href="#themes">
-      <span class="tracker__bar"></span><span class="tracker__num">05</span><span class="tracker__lbl">themes</span>
-    </a>
     <a class="tracker__item" data-section="photo" href="#photo">
-      <span class="tracker__bar"></span><span class="tracker__num">06</span><span class="tracker__lbl">photo</span>
+      <span class="tracker__bar"></span><span class="tracker__num">05</span><span class="tracker__lbl">photo</span>
     </a>
   </nav>
 
@@ -86,7 +83,7 @@ const roster = [
        ================================================================ -->
   <section id="graphic" class="sec">
     <div class="sec__head">
-      <p class="sec__num">02 / 06</p>
+      <p class="sec__num">02 / 05</p>
       <p class="sec__eyebrow">graphic design</p>
       <h2 class="sec__title">the illustration.</h2>
       <p class="sec__lede">
@@ -147,7 +144,7 @@ const roster = [
        ================================================================ -->
   <section id="roster" class="sec">
     <div class="sec__head">
-      <p class="sec__num">03 / 06</p>
+      <p class="sec__num">03 / 05</p>
       <p class="sec__eyebrow">the roster</p>
       <h2 class="sec__title">character work.</h2>
       <p class="sec__lede">
@@ -192,6 +189,26 @@ const roster = [
         </div>
       </div>
     </div>
+
+    <!-- Compact theme selector — small aside inside the roster -->
+    <div class="theme-mini">
+      <div class="theme-mini__head">
+        <p class="theme-mini__eyebrow">experimental &middot; themed rooms</p>
+        <p class="theme-mini__lede">two alternate storefronts &mdash; each takes over the full page.</p>
+      </div>
+      <div class="theme-mini__grid">
+        <a class="theme-sq theme-sq--psg" href="/work/psg/" aria-label="Enter PSG storefront">
+          <img class="theme-sq__char theme-sq__char--l" src="/assets/psg-panty-sticker.webp"    alt="" aria-hidden="true" />
+          <img class="theme-sq__char theme-sq__char--r" src="/assets/psg-stocking-sticker.webp" alt="" aria-hidden="true" />
+          <span class="theme-sq__label">psg</span>
+        </a>
+        <a class="theme-sq theme-sq--nso" href="/work/nso/" aria-label="Enter NSO storefront">
+          <img class="theme-sq__char theme-sq__char--l" src="/assets/nso-ame-sticker.webp"    alt="" aria-hidden="true" />
+          <img class="theme-sq__char theme-sq__char--r" src="/assets/nso-kangel-sticker.webp" alt="" aria-hidden="true" />
+          <span class="theme-sq__label">nso</span>
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- ================================================================
@@ -199,7 +216,7 @@ const roster = [
        ================================================================ -->
   <section id="catalog" class="sec">
     <div class="sec__head">
-      <p class="sec__num">04 / 06</p>
+      <p class="sec__num">04 / 05</p>
       <p class="sec__eyebrow">from the catalog</p>
       <h2 class="sec__title">the drops.</h2>
       <p class="sec__lede">
@@ -220,107 +237,90 @@ const roster = [
   </section>
 
   <!-- ================================================================
-       05 · THEMED ROOMS
-       ================================================================ -->
-  <section id="themes" class="sec">
-    <div class="sec__head">
-      <p class="sec__num">05 / 06</p>
-      <p class="sec__eyebrow">experimental &middot; themed rooms</p>
-      <h2 class="sec__title">select storefront.</h2>
-      <p class="sec__lede">
-        Two alternate storefronts &mdash; each with its own hero, product
-        spread, typography, and vibe. Enter one and it takes over the full page.
-      </p>
-    </div>
-
-    <div class="rooms">
-      <a class="room room--psg" href="/work/psg/">
-        <div class="room__meta-top">
-          <span class="room__tag">room 01 · psg</span>
-          <span class="room__live">live</span>
-        </div>
-        <div class="room__chars">
-          <img class="room__char room__char--l" src="/assets/psg-panty.webp" alt="Panty" />
-          <img class="room__char room__char--r" src="/assets/psg-stocking.webp" alt="Stocking" />
-        </div>
-        <div class="room__title-wrap">
-          <p class="room__eyebrow">panty &amp; stocking with garterbelt</p>
-          <h3 class="room__title">psg.</h3>
-          <p class="room__sub">candy-halftone spectacle</p>
-        </div>
-        <div class="room__foot">
-          <span class="room__enter">enter psg &rarr;</span>
-          <span class="room__specs">7 items &middot; hot pink · cyan · gold &middot; fw &rsquo;26 drop 01</span>
-        </div>
-      </a>
-
-      <a class="room room--nso" href="/work/nso/">
-        <div class="room__meta-top">
-          <span class="room__tag">room 02 · nso</span>
-          <span class="room__live">live</span>
-        </div>
-        <div class="room__chars">
-          <img class="room__char room__char--l" src="/assets/nso-ame-sticker.webp"    alt="Ame" />
-          <img class="room__char room__char--r" src="/assets/nso-kangel-sticker.webp" alt="KAngel" />
-        </div>
-        <div class="room__title-wrap">
-          <p class="room__eyebrow">needy streamer overload</p>
-          <h3 class="room__title">nso.</h3>
-          <p class="room__sub">crt streamer decay</p>
-        </div>
-        <div class="room__foot">
-          <span class="room__enter">enter nso &rarr;</span>
-          <span class="room__specs">6 items &middot; chrome · magenta · amber &middot; fw &rsquo;26 drop 02</span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- ================================================================
-       06 · PRODUCT PHOTOGRAPHY + PATHS
+       05 · PRODUCT PHOTOGRAPHY — editorial magazine spread
        ================================================================ -->
   <section id="photo" class="sec">
     <div class="sec__head">
-      <p class="sec__num">06 / 06</p>
+      <p class="sec__num">05 / 05</p>
       <p class="sec__eyebrow">product photography</p>
       <h2 class="sec__title">finished pieces.</h2>
       <p class="sec__lede">
         Illustration &rarr; production &rarr; photography. Four physical
-        drops from the roster.
+        drops from the roster, shot at 300 DPI on natural desk light.
       </p>
     </div>
 
-    <div class="prod-grid">
-      <figure class="prod">
-        <div class="prod__img"><img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" /></div>
-        <figcaption>
-          <span class="prod__label">acrylic stand</span>
-          <span class="prod__name">Kafka</span>
-          <span class="prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
+    <!-- ============ EDITORIAL SPREAD ============ -->
+    <!-- The featured lead product occupies a large half; a numbered magazine
+         index sits alongside; three smaller thumbs run in a strip below. -->
+    <div class="photo-editorial">
+      <!-- Lead product — big -->
+      <figure class="photo-lead">
+        <span class="photo-lead__num">01</span>
+        <div class="photo-lead__img">
+          <img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" />
+        </div>
+        <figcaption class="photo-lead__cap">
+          <p class="photo-lead__label">acrylic stand</p>
+          <h3 class="photo-lead__name">Kafka<span class="photo-lead__dot">.</span></h3>
+          <div class="photo-lead__specs">
+            <span><em>size</em>5.6 &times; 7.4 in</span>
+            <span><em>material</em>clear acrylic</span>
+            <span><em>print</em>screen · 4-color</span>
+          </div>
         </figcaption>
       </figure>
-      <figure class="prod">
-        <div class="prod__img"><img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" /></div>
+
+      <!-- Magazine index sidebar -->
+      <aside class="photo-index">
+        <p class="photo-index__label">// featured</p>
+        <p class="photo-index__title">the drop.</p>
+        <div class="photo-index__list">
+          <span><em>01</em>Kafka Acrylic</span>
+          <span><em>02</em>Topaz Acrylic</span>
+          <span><em>03</em>Faruzan Deskmat</span>
+          <span><em>04</em>Cinna Miku Print</span>
+        </div>
+        <div class="photo-index__quote">
+          <p>&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
+          <span class="photo-index__by">&mdash; from the desk.</span>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Three-up strip below -->
+    <div class="photo-strip">
+      <figure class="photo-thumb">
+        <span class="photo-thumb__num">02</span>
+        <div class="photo-thumb__img">
+          <img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" />
+        </div>
         <figcaption>
-          <span class="prod__label">acrylic stand</span>
-          <span class="prod__name">Topaz</span>
-          <span class="prod__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
+          <span class="photo-thumb__label">acrylic stand</span>
+          <span class="photo-thumb__name">Topaz</span>
+          <span class="photo-thumb__spec">5.6 &times; 7.4 in &middot; clear acrylic</span>
         </figcaption>
       </figure>
-      <figure class="prod">
-        <div class="prod__img"><img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" /></div>
+      <figure class="photo-thumb">
+        <span class="photo-thumb__num">03</span>
+        <div class="photo-thumb__img">
+          <img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" />
+        </div>
         <figcaption>
-          <span class="prod__label">deskmat</span>
-          <span class="prod__name">Faruzan</span>
-          <span class="prod__spec">900 &times; 400 mm &middot; sublimated</span>
+          <span class="photo-thumb__label">deskmat</span>
+          <span class="photo-thumb__name">Faruzan</span>
+          <span class="photo-thumb__spec">900 &times; 400 mm &middot; sublimated</span>
         </figcaption>
       </figure>
-      <figure class="prod">
-        <div class="prod__img"><img src="/portfolio/prod-miku.webp" alt="Cinna Miku" loading="lazy" /></div>
+      <figure class="photo-thumb">
+        <span class="photo-thumb__num">04</span>
+        <div class="photo-thumb__img">
+          <img src="/portfolio/prod-miku.webp" alt="Cinna Miku Print" loading="lazy" />
+        </div>
         <figcaption>
-          <span class="prod__label">print</span>
-          <span class="prod__name">Cinna Miku</span>
-          <span class="prod__spec">12 &times; 18 in &middot; satin card stock</span>
+          <span class="photo-thumb__label">print</span>
+          <span class="photo-thumb__name">Cinna Miku</span>
+          <span class="photo-thumb__spec">12 &times; 18 in &middot; satin card stock</span>
         </figcaption>
       </figure>
     </div>
@@ -361,14 +361,14 @@ const roster = [
         btn.classList.add("is-active");
         const set = (t, v) => { const el = document.querySelector(`[data-target="${t}"]`); if (el) el.textContent = v; };
         set("name", r.name); set("letters", r.letters); set("faction", r.faction); set("universe", r.universe); set("tag", r.tag);
-        set("num", r.num + " / 06");
+        set("num", r.num + " / 06");  // roster carousel counter (kept — 6 characters)
         const img = document.querySelector('[data-target="img"]'); if (img) img.src = r.img;
       });
     });
 
     // Tracker — IntersectionObserver highlights the active section + smooth-scroll on click
     const trackerItems = document.querySelectorAll(".tracker__item[data-section]");
-    const sectionIds = ["hero", "graphic", "roster", "catalog", "themes", "photo"];
+    const sectionIds = ["hero", "graphic", "roster", "catalog", "photo"];
     const setActive = (id) => trackerItems.forEach(el => el.classList.toggle("is-active", el.dataset.section === id));
     const io = new IntersectionObserver((entries) => {
       let best = null;
@@ -1258,336 +1258,458 @@ const roster = [
     }
 
     /* =========================================================================
-       RETRO-FUTURISM OVERLAY — Meet the Robinsons / Ray Gunn atompunk vibe.
-       Scoped to #graphic + #roster only; rest of the site stays misc-aesthetic.
-       Palette: cream / teal / coral / mustard / deep navy.
-       Motifs: halftone dots · atomic orbits · chrome bezels · starbursts.
+       ENHANCEMENTS — Illustration + Roster + Editorial Photography + Themes mini
        ========================================================================= */
+
     #graphic,
     #roster {
-      --retro-cream:   #f5efdb;
-      --retro-cream-2: #efe6ca;
-      --retro-teal:    #3ec6e0;
-      --retro-teal-2:  #4dd0c1;
-      --retro-coral:   #ff6b6b;
-      --retro-mustard: #f4c33b;
-      --retro-ink:     #1a1a2e;
-      --retro-chrome:  linear-gradient(135deg, #dfe4ec 0%, #f2f5f9 45%, #c8d0dc 100%);
-    }
-
-    /* -- shared: retro backdrop with halftone + orbit -- */
-    #graphic, #roster {
       background:
-        radial-gradient(circle at 12% 18%, rgba(62, 198, 224, 0.16) 0%, transparent 30%),
-        radial-gradient(circle at 90% 88%, rgba(255, 107, 107, 0.14) 0%, transparent 34%),
-        radial-gradient(rgba(26, 26, 46, 0.08) 1.2px, transparent 1.3px) 0 0 / 22px 22px,
-        var(--retro-cream);
-      color: var(--retro-ink);
+        radial-gradient(circle at 8% 12%, rgba(80, 97, 185, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 92% 88%, rgba(255, 129, 176, 0.045) 0%, transparent 50%),
+        var(--misc-bg, #fdfcf9);
       position: relative;
       overflow: hidden;
     }
-    #graphic::before, #roster::before {
-      content: "";
-      position: absolute;
-      top: 6%;
-      right: -6%;
-      width: 42%;
-      aspect-ratio: 1;
-      max-width: 520px;
-      border-radius: 50%;
-      border: 1.5px dashed rgba(62, 198, 224, 0.35);
-      pointer-events: none;
-      z-index: 0;
-    }
-    #graphic::after, #roster::after {
-      content: "";
-      position: absolute;
-      top: 12%;
-      right: 0%;
-      width: 28%;
-      aspect-ratio: 1;
-      max-width: 340px;
-      border-radius: 50%;
-      border: 1px dashed rgba(255, 107, 107, 0.35);
-      pointer-events: none;
-      z-index: 0;
-    }
-    #graphic > *, #roster > * { position: relative; z-index: 1; }
 
-    /* -- shared: retro typography -- */
-    #graphic .sec__num, #roster .sec__num {
-      display: inline-block;
-      color: var(--retro-ink);
-      background: var(--retro-mustard);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-weight: 600;
-      border: 1.5px solid var(--retro-ink);
-      box-shadow: 3px 3px 0 var(--retro-ink);
-    }
-    #graphic .sec__eyebrow, #roster .sec__eyebrow {
-      color: var(--retro-coral);
-      font-weight: 600;
-    }
-    #graphic .sec__title, #roster .sec__title {
-      color: var(--retro-ink);
-      font-family: 'Apex Mk3', sans-serif;
-      font-weight: 400;
-      text-transform: lowercase;
-      letter-spacing: -0.02em;
-      text-shadow:
-        3px 3px 0 rgba(62, 198, 224, 0.5),
-        6px 6px 0 rgba(255, 107, 107, 0.3);
-    }
-    #graphic .sec__lede, #roster .sec__lede {
-      color: rgba(26, 26, 46, 0.75);
-    }
-
-    /* ===== GRAPHIC DESIGN — retro treatment ===== */
-
-    /* Rounded pill tabs with chrome */
-    #graphic .sec-tabs {
-      border-bottom: 2px solid rgba(26, 26, 46, 0.14);
-      padding-bottom: 20px;
-    }
-    #graphic .sec-tab {
-      padding: 8px 18px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.65);
-      border: 1.5px solid rgba(26, 26, 46, 0.14);
-      color: var(--retro-ink);
-      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
-    }
-    #graphic .sec-tab:hover {
-      background: #fff;
-      transform: translateY(-1px);
-    }
-    #graphic .sec-tab.is-active {
-      background: var(--retro-teal);
-      border-color: var(--retro-ink);
-      color: var(--retro-ink);
-      box-shadow: 3px 3px 0 var(--retro-ink);
-    }
-
-    /* Left rail: starburst chip + coral labels */
-    #graphic .graphic-chip {
-      width: 42px;
-      height: 42px;
-      background: var(--retro-coral);
-      border: 2px solid var(--retro-ink);
-      border-radius: 50%;
+    /* ---- Illustration ---- */
+    #graphic .graphic-slot {
+      min-height: 520px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.9) 0%, transparent 50%),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(80, 97, 185, 0.04) 0px,
+          rgba(80, 97, 185, 0.04) 8px,
+          transparent 8px,
+          transparent 22px
+        ),
+        #fff;
+      border: 1px dashed rgba(80, 97, 185, 0.35);
       position: relative;
     }
-    #graphic .graphic-chip::before,
-    #graphic .graphic-chip::after {
+    #graphic .graphic-slot::before {
       content: "";
       position: absolute;
-      background: var(--retro-ink);
-      left: 50%;
-      top: 50%;
+      inset: 12px;
+      border: 1px solid rgba(80, 97, 185, 0.1);
+      pointer-events: none;
     }
-    #graphic .graphic-chip::before {
-      width: 68px; height: 2px;
-      transform: translate(-50%, -50%);
+    #graphic .graphic-slot__icon { font-size: 3rem; opacity: 0.55; }
+    #graphic .graphic-slot__label {
+      font-size: 0.78rem;
+      color: var(--misc-accent);
+      font-weight: 600;
+      letter-spacing: 0.24em;
     }
-    #graphic .graphic-chip::after {
-      width: 2px; height: 68px;
-      transform: translate(-50%, -50%);
-    }
-    #graphic .graphic-meta em {
-      color: var(--retro-coral);
-      font-weight: 700;
-    }
-    #graphic .graphic-meta p { color: var(--retro-ink); }
-    #graphic .graphic-signature {
-      color: var(--retro-coral);
-    }
-    #graphic .graphic-vrail span {
-      color: var(--retro-teal);
-      font-weight: 500;
-    }
-
-    /* Filler slot: chrome bezel + orbit ring */
     #graphic .graphic-stage { position: relative; }
     #graphic .graphic-stage::before {
-      content: "";
+      content: "n° 01 / drop 01";
       position: absolute;
-      inset: -30px;
-      border-radius: 30px;
-      border: 1.5px dashed rgba(62, 198, 224, 0.5);
-      pointer-events: none;
-      z-index: 0;
+      top: -14px;
+      left: 24px;
+      background: var(--misc-bg, #fdfcf9);
+      padding: 4px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
+      z-index: 2;
     }
-    #graphic .graphic-slot {
-      background:
-        radial-gradient(rgba(26, 26, 46, 0.10) 1.4px, transparent 1.5px) 0 0 / 18px 18px,
-        linear-gradient(180deg, #fff 0%, #f7f4e7 100%);
-      border: 2.5px solid var(--retro-ink);
-      border-radius: 24px;
-      box-shadow:
-        6px 6px 0 var(--retro-ink),
-        inset 0 2px 0 rgba(255, 255, 255, 0.8);
-      position: relative;
-      z-index: 1;
+    #graphic .graphic-chip {
+      width: 46px; height: 46px;
+      background: var(--misc-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: 'Beam Visionary', cursive;
+      font-size: 1.6rem;
+      line-height: 1;
+      padding-bottom: 4px;
     }
-    #graphic .graphic-slot__label {
-      color: var(--retro-coral);
-      font-weight: 700;
-    }
-    #graphic .graphic-slot__icon {
-      color: var(--retro-teal);
-      opacity: 0.85;
-    }
-    #graphic .graphic-slot__dim { color: rgba(26, 26, 46, 0.6); }
-    #graphic .graphic-caption { color: var(--retro-coral); }
+    #graphic .graphic-chip::after { content: "d"; }
 
-    /* Pager: chrome */
-    #graphic .pager button {
-      border-radius: 999px;
-      border: 2px solid var(--retro-ink);
-      background: var(--retro-cream);
-      color: var(--retro-ink);
-      box-shadow: 3px 3px 0 var(--retro-ink);
+    /* ---- Roster ---- */
+    #roster .roster-stage {
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 380px);
+      gap: clamp(28px, 5vw, 72px);
     }
-    #graphic .pager button:hover {
-      background: var(--retro-teal);
-      color: var(--retro-ink);
-      transform: translate(-1px, -1px);
-      box-shadow: 4px 4px 0 var(--retro-ink);
-    }
-    #graphic .pager__nums { color: var(--retro-ink); font-weight: 600; }
-    #graphic .sec-foot { border-top-color: rgba(26, 26, 46, 0.14); }
-    #graphic .sec-foot__meta { color: var(--retro-coral); }
-
-    /* ===== ROSTER — retro treatment ===== */
-
-    /* Portrait carousel: chrome bezels */
-    #roster .portrait {
-      border: 3px solid var(--retro-ink);
-      background: #fff;
-      box-shadow: 3px 3px 0 var(--retro-ink);
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-    #roster .portrait:hover {
-      transform: translate(-1px, -1px) scale(1.06);
-      box-shadow: 5px 5px 0 var(--retro-ink);
-    }
-    #roster .portrait.is-active {
-      border-color: var(--retro-coral);
-      box-shadow: 3px 3px 0 var(--retro-coral);
-    }
-    #roster .roster-all {
-      border: 2px solid var(--retro-ink);
-      background: var(--retro-mustard);
-      color: var(--retro-ink);
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-weight: 700;
-      box-shadow: 3px 3px 0 var(--retro-ink);
-      text-transform: lowercase;
-    }
-    #roster .roster-all:hover {
-      background: var(--retro-coral);
-      color: var(--retro-ink);
-      transform: translate(-1px, -1px);
-      box-shadow: 4px 4px 0 var(--retro-ink);
-    }
-
-    /* Stage: teal block instead of slate-violet, chrome frame, orbit ring */
     #roster .roster-block {
-      background: var(--retro-teal);
-      opacity: 0.22;
-      border-radius: 24px;
+      top: 2%;
+      right: 26%;
+      width: 62%;
+      height: 96%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 129, 176, 0.05) 0%, transparent 60%),
+        rgba(80, 97, 185, 0.06);
     }
     #roster .roster-letters {
-      color: var(--retro-coral);
-      opacity: 0.12;
-      font-family: 'Apex Mk3', sans-serif;
-      font-weight: 900;
-      -webkit-text-stroke: 2px var(--retro-coral);
-      text-shadow:
-        4px 4px 0 rgba(62, 198, 224, 0.35);
+      font-size: clamp(7rem, 22vw, 20rem);
+      color: rgba(80, 97, 185, 0.06);
     }
-    #roster .roster-hero {
-      position: relative;
+    #roster .roster-img {
+      max-width: 560px;
+      padding: 8px;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      box-shadow: 0 20px 40px -20px rgba(20, 19, 26, 0.12);
     }
+    #roster .roster-hero { position: relative; }
     #roster .roster-hero::before {
       content: "";
       position: absolute;
-      inset: -22px;
-      border-radius: 50%;
-      border: 1.5px dashed rgba(62, 198, 224, 0.5);
+      top: -14px; left: -14px;
+      width: 32px; height: 32px;
+      border-top: 2px solid var(--misc-accent);
+      border-left: 2px solid var(--misc-accent);
       pointer-events: none;
+      z-index: 3;
     }
     #roster .roster-hero::after {
       content: "";
       position: absolute;
-      inset: -40px;
-      border-radius: 50%;
-      border: 1px dashed rgba(255, 107, 107, 0.35);
+      bottom: -14px; right: -14px;
+      width: 32px; height: 32px;
+      border-bottom: 2px solid var(--misc-accent);
+      border-right: 2px solid var(--misc-accent);
       pointer-events: none;
+      z-index: 3;
     }
-    #roster .roster-img {
-      border: 3px solid var(--retro-ink);
-      border-radius: 24px;
-      background:
-        radial-gradient(rgba(26, 26, 46, 0.08) 1.2px, transparent 1.3px) 0 0 / 18px 18px,
-        #fff;
-      box-shadow:
-        6px 6px 0 var(--retro-ink);
-      max-width: 520px;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    /* Info card: retro chrome frame with corner starburst */
     #roster .roster-card {
-      background:
-        linear-gradient(180deg, #fff 0%, #f7f4e7 100%);
-      border: 2.5px solid var(--retro-ink);
-      border-radius: 20px;
-      box-shadow: 6px 6px 0 var(--retro-ink);
+      padding: 32px 28px;
+      background: linear-gradient(180deg, #fff 0%, #faf9f5 100%);
+      border: 1px solid var(--misc-line);
+      box-shadow: 0 20px 40px -20px rgba(20, 19, 26, 0.10);
       position: relative;
     }
     #roster .roster-card::before {
-      content: "";
+      content: "profile";
       position: absolute;
-      top: -8px;
-      right: -8px;
-      width: 28px;
-      height: 28px;
-      background: var(--retro-mustard);
-      border: 2px solid var(--retro-ink);
-      border-radius: 50%;
-      z-index: 2;
+      top: -12px;
+      right: 20px;
+      background: var(--misc-accent);
+      color: #fff;
+      padding: 3px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
     }
-    #roster .roster-card__num {
-      color: var(--retro-coral);
-      font-weight: 700;
-    }
-    #roster .roster-card__name {
-      color: var(--retro-ink);
-      font-weight: 400;
-    }
-    #roster .roster-card__rule {
-      background: rgba(26, 26, 46, 0.12);
-    }
-    #roster .roster-card__rule::after {
-      background: var(--retro-coral);
-      height: 3px;
-      width: 64px;
+    #roster .roster-card__dl {
+      grid-template-columns: auto 1fr;
+      gap: 10px 16px;
+      align-items: center;
     }
     #roster .roster-card__dl dt {
-      background: var(--retro-teal);
-      color: var(--retro-ink);
-      padding: 2px 10px;
+      background: rgba(80, 97, 185, 0.10);
+      color: var(--misc-accent);
+      padding: 3px 10px;
       border-radius: 999px;
-      font-weight: 700;
+      font-size: 0.6rem;
       justify-self: start;
-      align-self: center;
-      border: 1.5px solid var(--retro-ink);
+      font-weight: 600;
     }
-    #roster .roster-card__dl dd { color: var(--retro-ink); }
-    #roster .roster-card__desc { color: rgba(26, 26, 46, 0.72); }
+
+    /* ---- Compact theme selector at bottom of roster ---- */
+    .theme-mini {
+      margin-top: clamp(48px, 6vw, 80px);
+      padding-top: clamp(32px, 4vw, 48px);
+      border-top: 1px solid var(--misc-line, rgba(0,0,0,0.12));
+      display: grid;
+      grid-template-columns: minmax(260px, 320px) 1fr;
+      gap: clamp(24px, 4vw, 56px);
+      align-items: center;
+    }
+    .theme-mini__eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+      margin: 0 0 8px;
+    }
+    .theme-mini__lede {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--misc-ink-soft);
+      margin: 0;
+    }
+    .theme-mini__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 480px;
+      justify-self: end;
+    }
+    .theme-sq {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      aspect-ratio: 1.6 / 1;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      overflow: hidden;
+      text-decoration: none;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .theme-sq:hover { transform: translateY(-2px); border-color: var(--misc-accent); }
+    .theme-sq--psg { background: linear-gradient(180deg, #ffe0eb 0%, #fff4fa 60%, #d6f8ff 100%); }
+    .theme-sq--nso { background: linear-gradient(180deg, #e0e6ff 0%, #f6f2ff 60%, #ffe0f4 100%); }
+    .theme-sq__char {
+      position: absolute;
+      bottom: 0;
+      height: 88%;
+      width: auto;
+      max-width: 46%;
+    }
+    .theme-sq__char--l { left: 3%; }
+    .theme-sq__char--r { right: 3%; }
+    .theme-sq__label {
+      position: relative;
+      z-index: 2;
+      font-family: 'Apex Mk3', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--misc-ink);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 3px 12px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 800px) {
+      .theme-mini { grid-template-columns: 1fr; }
+      .theme-mini__grid { justify-self: stretch; max-width: none; }
+    }
+
+    /* ---- Editorial photography ---- */
+    .photo-editorial {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 380px);
+      gap: clamp(24px, 4vw, 56px);
+      margin-bottom: clamp(40px, 5vw, 60px);
+    }
+    .photo-lead {
+      position: relative;
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      overflow: hidden;
+    }
+    .photo-lead__num {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: 0.8;
+      color: rgba(80, 97, 185, 0.10);
+      letter-spacing: -0.04em;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .photo-lead__img {
+      background: linear-gradient(180deg, #f7f6f2 0%, #efece4 100%);
+      aspect-ratio: 5 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .photo-lead__img img {
+      max-width: 78%;
+      max-height: 82%;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 30px rgba(20, 19, 26, 0.15));
+    }
+    .photo-lead__cap {
+      padding: 28px clamp(24px, 3vw, 40px);
+      display: grid;
+      gap: 12px;
+      border-top: 1px solid var(--misc-line);
+    }
+    .photo-lead__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+      margin: 0;
+    }
+    .photo-lead__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--misc-ink);
+      margin: 0;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
+    }
+    .photo-lead__dot { color: var(--misc-accent); }
+    .photo-lead__specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      margin-top: 6px;
+    }
+    .photo-lead__specs span {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.9rem;
+      color: var(--misc-ink);
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .photo-lead__specs em {
+      font-style: normal;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--misc-ink-soft);
+    }
+
+    .photo-index { padding: 8px 4px; }
+    .photo-index__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+      margin: 0 0 8px;
+    }
+    .photo-index__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2.2rem, 3.5vw, 3rem);
+      line-height: 0.95;
+      color: var(--misc-ink);
+      margin: 0 0 20px;
+      letter-spacing: -0.02em;
+      text-transform: lowercase;
+    }
+    .photo-index__list {
+      display: grid;
+      gap: 8px;
+      padding: 16px 0;
+      border-top: 1px solid var(--misc-line);
+      border-bottom: 1px solid var(--misc-line);
+      margin-bottom: 20px;
+    }
+    .photo-index__list span {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.92rem;
+      color: var(--misc-ink);
+    }
+    .photo-index__list em {
+      font-style: normal;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      color: var(--misc-accent);
+      align-self: center;
+    }
+    .photo-index__quote {
+      padding: 16px;
+      background: rgba(80, 97, 185, 0.06);
+      border-left: 3px solid var(--misc-accent);
+    }
+    .photo-index__quote p {
+      font-family: 'Beam Visionary', cursive;
+      font-size: 1.15rem;
+      line-height: 1.4;
+      color: var(--misc-ink);
+      margin: 0 0 6px;
+    }
+    .photo-index__by {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: var(--misc-ink-soft);
+    }
+
+    .photo-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: clamp(40px, 5vw, 60px);
+    }
+    .photo-thumb {
+      position: relative;
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--misc-line);
+      overflow: hidden;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .photo-thumb:hover { transform: translateY(-3px); border-color: var(--misc-accent); }
+    .photo-thumb__num {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      background: #fff;
+      color: var(--misc-accent);
+      padding: 3px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      border: 1px solid var(--misc-line);
+    }
+    .photo-thumb__img {
+      background: linear-gradient(180deg, #f7f6f2 0%, #eeece4 100%);
+      aspect-ratio: 4 / 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .photo-thumb__img img {
+      max-width: 78%;
+      max-height: 82%;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 22px rgba(20, 19, 26, 0.12));
+    }
+    .photo-thumb figcaption {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border-top: 1px solid var(--misc-line);
+    }
+    .photo-thumb__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent);
+    }
+    .photo-thumb__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-size: 1.05rem;
+      color: var(--misc-ink);
+    }
+    .photo-thumb__spec {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.78rem;
+      color: var(--misc-ink-soft);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 900px) {
+      .photo-editorial { grid-template-columns: 1fr; }
+      .photo-strip { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .photo-strip { grid-template-columns: 1fr; }
+    }
   </style>
 </Base>

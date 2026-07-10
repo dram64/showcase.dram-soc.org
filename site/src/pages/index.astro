@@ -237,58 +237,90 @@ const roster = [
   </section>
 
   <!-- ================================================================
-       05 · PRODUCT PHOTOGRAPHY — editorial magazine spread
+       05 · PRODUCT PHOTOGRAPHY — 3D coverflow carousel + editorial sidebar
        ================================================================ -->
   <section id="photo" class="sec">
-    <div class="sec__head">
-      <p class="sec__num">05 / 05</p>
-      <p class="sec__eyebrow">product photography</p>
-      <h2 class="sec__title">finished pieces.</h2>
-      <p class="sec__lede">
-        Illustration &rarr; production &rarr; photography. Four physical
-        drops from the roster, shot at 300 DPI on natural desk light.
-      </p>
-    </div>
+    <!-- viewport-fit wrapper: header + carousel take one screen height -->
+    <div class="photo-viewport">
+      <div class="sec__head">
+        <p class="sec__num">05 / 05</p>
+        <p class="sec__eyebrow">product photography</p>
+        <h2 class="sec__title">finished pieces.</h2>
+        <p class="sec__lede">
+          Illustration &rarr; production &rarr; photography. Four physical
+          drops from the roster.
+        </p>
+      </div>
 
-    <!-- ============ EDITORIAL SPREAD ============ -->
-    <!-- The featured lead product occupies a large half; a numbered magazine
-         index sits alongside; three smaller thumbs run in a strip below. -->
-    <div class="photo-editorial">
-      <!-- Lead product — big -->
-      <figure class="photo-lead">
-        <span class="photo-lead__num">01</span>
-        <div class="photo-lead__img">
-          <img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" />
-        </div>
-        <figcaption class="photo-lead__cap">
-          <p class="photo-lead__label">acrylic stand</p>
-          <h3 class="photo-lead__name">Kafka<span class="photo-lead__dot">.</span></h3>
-          <div class="photo-lead__specs">
-            <span><em>size</em>5.6 &times; 7.4 in</span>
-            <span><em>material</em>clear acrylic</span>
-            <span><em>print</em>screen · 4-color</span>
+      <div class="photo-editorial">
+        <!-- 3D coverflow carousel — auto-rotates through 4 products -->
+        <div class="lead-3d" aria-label="Product photography carousel">
+          <div class="lead-3d__stage">
+            <button class="lead-3d__card" data-i="0" aria-label="Kafka Acrylic Stand">
+              <div class="lead-3d__card-inner">
+                <img src="/portfolio/prod-kafka-acrylic.webp" alt="Kafka Acrylic Stand" loading="lazy" />
+                <span class="lead-3d__card-tag">01</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="1" aria-label="Topaz Acrylic Stand">
+              <div class="lead-3d__card-inner">
+                <img src="/portfolio/prod-topaz-acrylic.webp" alt="Topaz Acrylic Stand" loading="lazy" />
+                <span class="lead-3d__card-tag">02</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="2" aria-label="Faruzan Deskmat">
+              <div class="lead-3d__card-inner">
+                <img src="/portfolio/prod-faruzan.webp" alt="Faruzan Deskmat" loading="lazy" />
+                <span class="lead-3d__card-tag">03</span>
+              </div>
+            </button>
+            <button class="lead-3d__card" data-i="3" aria-label="Cinna Miku Print">
+              <div class="lead-3d__card-inner">
+                <img src="/portfolio/prod-miku.webp" alt="Cinna Miku Print" loading="lazy" />
+                <span class="lead-3d__card-tag">04</span>
+              </div>
+            </button>
           </div>
-        </figcaption>
-      </figure>
 
-      <!-- Magazine index sidebar -->
-      <aside class="photo-index">
-        <p class="photo-index__label">// featured</p>
-        <p class="photo-index__title">the drop.</p>
-        <div class="photo-index__list">
-          <span><em>01</em>Kafka Acrylic</span>
-          <span><em>02</em>Topaz Acrylic</span>
-          <span><em>03</em>Faruzan Deskmat</span>
-          <span><em>04</em>Cinna Miku Print</span>
+          <div class="lead-3d__ctrl">
+            <button class="lead-3d__arrow" data-nav="prev" aria-label="Previous">&larr;</button>
+            <div class="lead-3d__dots">
+              <button class="is-active" data-goto="0" aria-label="Kafka"></button>
+              <button                   data-goto="1" aria-label="Topaz"></button>
+              <button                   data-goto="2" aria-label="Faruzan"></button>
+              <button                   data-goto="3" aria-label="Miku"></button>
+            </div>
+            <button class="lead-3d__arrow" data-nav="next" aria-label="Next">&rarr;</button>
+          </div>
         </div>
-        <div class="photo-index__quote">
-          <p>&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
-          <span class="photo-index__by">&mdash; from the desk.</span>
-        </div>
-      </aside>
+
+        <!-- Editorial sidebar — dynamic caption for the active card -->
+        <aside class="photo-side">
+          <p class="photo-side__label">// featured</p>
+          <h3 class="photo-side__title">the drop.</h3>
+
+          <div class="photo-side__cap" data-target="side-cap">
+            <p class="photo-side__idx" data-target="side-idx">01</p>
+            <p class="photo-side__cap-label" data-target="side-label">acrylic stand</p>
+            <h4 class="photo-side__cap-name">
+              <span data-target="side-name">Kafka</span><span class="photo-side__dot">.</span>
+            </h4>
+            <div class="photo-side__specs" data-target="side-specs">
+              <span><em>size</em>5.6 &times; 7.4 in</span>
+              <span><em>material</em>clear acrylic</span>
+              <span><em>print</em>screen &middot; 4-color</span>
+            </div>
+          </div>
+
+          <div class="photo-side__quote">
+            <p>&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
+            <span class="photo-side__by">&mdash; from the desk.</span>
+          </div>
+        </aside>
+      </div>
     </div>
 
-    <!-- Three-up strip below -->
+    <!-- Three-up strip below (outside the viewport-fit) -->
     <div class="photo-strip">
       <figure class="photo-thumb">
         <span class="photo-thumb__num">02</span>
@@ -397,6 +429,80 @@ const roster = [
         });
       }, { threshold: [0, 0.2, 0.5, 0.8, 1] });
       railObs.observe(heroEl);
+    })();
+
+    // 3D coverflow carousel for the featured product photography section.
+    // Auto-advances every 4.5s; click any card, dot, or arrow to control.
+    // Center card is bright + forward; side cards angle back at ~35deg with
+    // reduced opacity for depth.
+    (function () {
+      const stage = document.querySelector(".lead-3d__stage");
+      if (!stage) return;
+      const cards = Array.from(stage.querySelectorAll(".lead-3d__card"));
+      const dots  = Array.from(document.querySelectorAll(".lead-3d__dots button[data-goto]"));
+      const nav = {
+        prev: document.querySelector('.lead-3d__arrow[data-nav="prev"]'),
+        next: document.querySelector('.lead-3d__arrow[data-nav="next"]'),
+      };
+      const products = [
+        { name: "Kafka",       label: "acrylic stand", idx: "01",
+          specs: [["size","5.6 × 7.4 in"], ["material","clear acrylic"], ["print","screen · 4-color"]] },
+        { name: "Topaz",       label: "acrylic stand", idx: "02",
+          specs: [["size","5.6 × 7.4 in"], ["material","clear acrylic"], ["print","screen · 4-color"]] },
+        { name: "Faruzan",     label: "deskmat",       idx: "03",
+          specs: [["size","900 × 400 mm"], ["material","sublimated rubber base"], ["print","300 dpi"]] },
+        { name: "Cinna Miku",  label: "print",         idx: "04",
+          specs: [["size","12 × 18 in"], ["material","satin card stock"], ["print","4-color"]] },
+      ];
+      const N = cards.length;
+      let current = 0;
+      let timer = null;
+      const INTERVAL = 4500;
+
+      const paint = () => {
+        cards.forEach((card, i) => {
+          let diff = i - current;
+          if (diff >  N / 2) diff -= N;
+          if (diff < -N / 2) diff += N;
+          const abs = Math.abs(diff);
+          const isCenter = diff === 0;
+          const x   = diff * 60;                    // horizontal spread
+          const z   = isCenter ? 0 : -180 - abs * 60;
+          const rot = -diff * 32;                    // rotate around Y
+          const scale = isCenter ? 1 : 0.85 - (abs - 1) * 0.05;
+          card.style.transform =
+            `translate(-50%, -50%) translateX(${x}%) translateZ(${z}px) rotateY(${rot}deg) scale(${scale})`;
+          card.style.zIndex   = String(20 - abs);
+          card.style.opacity  = String(abs > 2 ? 0 : abs > 1 ? 0.25 : abs > 0 ? 0.55 : 1);
+          card.classList.toggle("is-center", isCenter);
+          card.tabIndex = isCenter ? 0 : -1;
+        });
+        dots.forEach((d, i) => d.classList.toggle("is-active", i === current));
+        const p = products[current] || {};
+        const setEl = (t, v) => { const el = document.querySelector(`[data-target="${t}"]`); if (el) el.textContent = v; };
+        setEl("side-idx",   p.idx);
+        setEl("side-label", p.label);
+        setEl("side-name",  p.name);
+        const specsEl = document.querySelector('[data-target="side-specs"]');
+        if (specsEl && p.specs) {
+          specsEl.innerHTML = p.specs.map(([k, v]) => `<span><em>${k}</em>${v}</span>`).join("");
+        }
+      };
+
+      const advance = () => { current = (current + 1) % N; paint(); };
+      const back    = () => { current = (current - 1 + N) % N; paint(); };
+      const start   = () => { stop(); timer = setInterval(advance, INTERVAL); };
+      const stop    = () => { if (timer) { clearInterval(timer); timer = null; } };
+
+      cards.forEach((card, i) => card.addEventListener("click", () => { current = i; paint(); start(); }));
+      dots.forEach((dot, i) => dot.addEventListener("click", () => { current = i; paint(); start(); }));
+      if (nav.prev) nav.prev.addEventListener("click", () => { back();    start(); });
+      if (nav.next) nav.next.addEventListener("click", () => { advance(); start(); });
+
+      document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else start(); });
+
+      paint();
+      start();
     })();
 
     // Hero carousel — auto-crossfade between NSO and Yuzuha/Alice keyart.
@@ -1485,12 +1591,261 @@ const roster = [
       .theme-mini__grid { justify-self: stretch; max-width: none; }
     }
 
-    /* ---- Editorial photography ---- */
+    /* ---- Editorial photography — viewport-fit wrapper ---- */
+    #photo {
+      padding-top: clamp(48px, 6vh, 88px);
+      padding-bottom: clamp(48px, 6vw, 100px);
+    }
+    #photo .photo-viewport {
+      min-height: calc(100vh - clamp(96px, 12vh, 176px));
+      min-height: calc(100svh - clamp(96px, 12vh, 176px));
+      display: flex;
+      flex-direction: column;
+      gap: clamp(24px, 3vh, 40px);
+      margin-bottom: clamp(56px, 6vw, 96px);
+    }
+    #photo .photo-viewport .sec__head { margin-bottom: 0; }
+
     .photo-editorial {
       display: grid;
-      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 380px);
+      grid-template-columns: minmax(0, 1.65fr) minmax(280px, 380px);
       gap: clamp(24px, 4vw, 56px);
-      margin-bottom: clamp(40px, 5vw, 60px);
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    /* ---- 3D coverflow carousel ---- */
+    .lead-3d {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 0;
+      perspective: 1600px;
+      perspective-origin: 50% 55%;
+    }
+    .lead-3d__stage {
+      position: relative;
+      flex: 1;
+      min-height: 340px;
+      transform-style: preserve-3d;
+      display: block;
+    }
+    .lead-3d__card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(240px, 32vw, 420px);
+      aspect-ratio: 4 / 5;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transform-origin: center center;
+      transform-style: preserve-3d;
+      transition:
+        transform 780ms cubic-bezier(0.34, 1.20, 0.64, 1),
+        opacity 620ms ease,
+        z-index 0ms 320ms;
+      will-change: transform, opacity;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lead-3d__card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #f7f6f2 0%, #eeece4 100%);
+      border: 1px solid var(--misc-line, rgba(0, 0, 0, 0.12));
+      box-shadow: 0 20px 45px -18px rgba(20, 19, 26, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 300ms ease, box-shadow 300ms ease;
+    }
+    .lead-3d__card-inner img {
+      max-width: 84%;
+      max-height: 84%;
+      object-fit: contain;
+      filter: drop-shadow(0 22px 26px rgba(20, 19, 26, 0.18));
+      transition: filter 300ms ease;
+    }
+    .lead-3d__card-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #fff;
+      color: var(--misc-accent, #5061b9);
+      padding: 3px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      border: 1px solid var(--misc-line, rgba(0, 0, 0, 0.12));
+    }
+    .lead-3d__card.is-center .lead-3d__card-inner {
+      border-color: var(--misc-accent, #5061b9);
+      box-shadow: 0 40px 70px -24px rgba(80, 97, 185, 0.35);
+    }
+    .lead-3d__card.is-center .lead-3d__card-inner img {
+      filter: drop-shadow(0 28px 34px rgba(20, 19, 26, 0.24));
+    }
+
+    /* Carousel controls */
+    .lead-3d__ctrl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 16px 0 0;
+    }
+    .lead-3d__arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--misc-line, rgba(0, 0, 0, 0.14));
+      background: #fff;
+      color: var(--misc-ink, #14131a);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+    .lead-3d__arrow:hover {
+      background: var(--misc-accent, #5061b9);
+      color: #fff;
+      border-color: var(--misc-accent, #5061b9);
+      transform: translateY(-1px);
+    }
+    .lead-3d__dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lead-3d__dots button {
+      width: 28px;
+      height: 4px;
+      padding: 0;
+      border: none;
+      background: rgba(0, 0, 0, 0.16);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 220ms ease, width 220ms ease;
+    }
+    .lead-3d__dots button:hover { background: rgba(0, 0, 0, 0.3); }
+    .lead-3d__dots button.is-active {
+      background: var(--misc-accent, #5061b9);
+      width: 42px;
+    }
+
+    /* ---- Editorial sidebar ---- */
+    .photo-side {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 4px;
+      min-height: 0;
+    }
+    .photo-side__label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+      margin: 0 0 8px;
+    }
+    .photo-side__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.4vw, 2.8rem);
+      line-height: 0.95;
+      color: var(--misc-ink, #14131a);
+      margin: 0 0 24px;
+      text-transform: lowercase;
+      letter-spacing: -0.02em;
+    }
+
+    /* Dynamic caption block */
+    .photo-side__cap {
+      padding: 20px 20px 22px;
+      background: #fff;
+      border: 1px solid var(--misc-line, rgba(0, 0, 0, 0.12));
+      border-left: 3px solid var(--misc-accent, #5061b9);
+      margin-bottom: 20px;
+    }
+    .photo-side__idx {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: 2.4rem;
+      line-height: 0.9;
+      color: rgba(80, 97, 185, 0.35);
+      margin: 0 0 4px;
+      letter-spacing: -0.04em;
+    }
+    .photo-side__cap-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--misc-accent, #5061b9);
+      margin: 0 0 4px;
+    }
+    .photo-side__cap-name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: 1.7rem;
+      line-height: 1;
+      color: var(--misc-ink, #14131a);
+      margin: 0 0 12px;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
+    }
+    .photo-side__dot { color: var(--misc-accent, #5061b9); }
+    .photo-side__specs {
+      display: grid;
+      gap: 6px;
+    }
+    .photo-side__specs span {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.88rem;
+      color: var(--misc-ink, #14131a);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: baseline;
+    }
+    .photo-side__specs em {
+      font-style: normal;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--misc-ink-soft, #6b6b6b);
+    }
+
+    .photo-side__quote {
+      padding: 16px;
+      background: rgba(80, 97, 185, 0.06);
+      border-left: 3px solid var(--misc-accent, #5061b9);
+      margin-top: auto;
+    }
+    .photo-side__quote p {
+      font-family: 'Beam Visionary', cursive;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      color: var(--misc-ink, #14131a);
+      margin: 0 0 6px;
+    }
+    .photo-side__by {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      color: var(--misc-ink-soft, #6b6b6b);
+    }
+
+    @media (max-width: 900px) {
+      #photo .photo-viewport { min-height: 0; }
+      .photo-editorial { grid-template-columns: 1fr; }
+      .lead-3d__stage { min-height: 320px; }
     }
     .photo-lead {
       position: relative;

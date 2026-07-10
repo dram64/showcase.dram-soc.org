@@ -119,89 +119,254 @@ const roster = [
          every cell at native aspect ratio, blueprint numerals + hover
          metadata reveal, video cells auto-play muted looped.
          ============================================================ -->
-    <div class="gd-board">
+    <div class="gd-board gd-board--variants">
       <div class="gd-mark gd-mark--head">
         <span class="gd-mark__dot" aria-hidden="true"></span>
         <span>no. 01</span>
         <span class="gd-mark__sep">/</span>
         <span>drop 01</span>
         <span class="gd-mark__sep">/</span>
-        <span>chromadipity core</span>
+        <span>six presentations</span>
         <span class="gd-mark__sep">/</span>
-        <span>11 stills &middot; 2 reels</span>
+        <span>pick a lane</span>
       </div>
 
-      <!-- Row A · widescreen motion opener (2.37:1) -->
-      <div class="gd-row gd-row--hero">
-        <figure class="gd-cell gd-cell--video" style="--ar: 2.37" data-idx="01" data-name="header mograph · misc drop" data-ratio="2.37:1" data-dim="3840×1618">
-          <video
-            poster="/showcase/motion/header-mograph-poster.jpg"
-            muted loop playsinline autoplay preload="metadata"
-            aria-label="Header mograph motion piece"
-          >
-            <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
-            <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
-          </video>
-          <span class="gd-cell__pulse" aria-hidden="true"></span>
-        </figure>
-      </div>
+      <!-- ================================================================
+           01 · KINETIC BLUEPRINT — drafting board · dimension lines
+           ================================================================ -->
+      <section class="gd-variant gd-variant--blueprint" aria-labelledby="v01">
+        <div class="gd-variant__label">
+          <span class="gd-variant__num">01</span>
+          <h3 class="gd-variant__name" id="v01">kinetic blueprint</h3>
+          <span class="gd-variant__desc">technical drafting board &middot; dimensions marked on every piece</span>
+        </div>
+        <div class="bp-grid">
+          <figure class="bp-sheet" style="--ar: 2.22">
+            <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen" loading="lazy" />
+            <span class="bp-name">chii &middot; widescreen · 20:9</span>
+            <span class="bp-dim bp-dim--w">&larr;&nbsp;&nbsp;5377 px&nbsp;&nbsp;&rarr;</span>
+            <span class="bp-dim bp-dim--h">&larr;&nbsp;&nbsp;2424 px&nbsp;&nbsp;&rarr;</span>
+          </figure>
+          <figure class="bp-sheet" style="--ar: 0.80">
+            <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
+            <span class="bp-name">cover 04 &middot; 4:5</span>
+            <span class="bp-dim bp-dim--w">&larr;&nbsp;&nbsp;2178 px&nbsp;&nbsp;&rarr;</span>
+            <span class="bp-dim bp-dim--h">&larr;&nbsp;&nbsp;2718 px&nbsp;&nbsp;&rarr;</span>
+          </figure>
+          <figure class="bp-sheet" style="--ar: 0.79">
+            <img src="/showcase/graphics/citlali.webp" alt="Citlali key art" loading="lazy" />
+            <span class="bp-name">citlali &middot; key art &middot; 11:14</span>
+            <span class="bp-dim bp-dim--w">&larr;&nbsp;&nbsp;6600 px&nbsp;&nbsp;&rarr;</span>
+            <span class="bp-dim bp-dim--h">&larr;&nbsp;&nbsp;8400 px&nbsp;&nbsp;&rarr;</span>
+          </figure>
+        </div>
+      </section>
 
-      <div class="gd-mark"><span>&mdash; editorial spread</span></div>
+      <!-- ================================================================
+           02 · CONTACT-SHEET LIGHTBOX — warm 35mm slides
+           ================================================================ -->
+      <section class="gd-variant gd-variant--lightbox" aria-labelledby="v02">
+        <div class="gd-variant__label">
+          <span class="gd-variant__num">02</span>
+          <h3 class="gd-variant__name" id="v02">contact-sheet lightbox</h3>
+          <span class="gd-variant__desc">35mm slides on a warm illuminated table</span>
+        </div>
+        <div class="lb-table">
+          <figure class="lb-slide">
+            <div class="lb-slide__mount" style="--ar: 0.55">
+              <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical" loading="lazy" />
+            </div>
+            <figcaption>
+              <span class="lb-slide__idx">no. 04</span>
+              <span class="lb-slide__meta">cipher &middot; vertical &middot; 11:20</span>
+            </figcaption>
+          </figure>
+          <figure class="lb-slide">
+            <div class="lb-slide__mount" style="--ar: 0.61">
+              <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa banner" loading="lazy" />
+            </div>
+            <figcaption>
+              <span class="lb-slide__idx">no. 07</span>
+              <span class="lb-slide__meta">fuwawa &middot; tall banner &middot; 23:38</span>
+            </figcaption>
+          </figure>
+          <figure class="lb-slide">
+            <div class="lb-slide__mount" style="--ar: 0.80">
+              <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
+            </div>
+            <figcaption>
+              <span class="lb-slide__idx">no. 11</span>
+              <span class="lb-slide__meta">fmig &middot; post &middot; 4:5</span>
+            </figcaption>
+          </figure>
+          <figure class="lb-slide">
+            <div class="lb-slide__mount" style="--ar: 0.80">
+              <img src="/showcase/graphics/cover.webp" alt="Cover" loading="lazy" />
+            </div>
+            <figcaption>
+              <span class="lb-slide__idx">no. 02</span>
+              <span class="lb-slide__meta">cover 04 &middot; 4:5</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-      <!-- Masonry · 9 cells auto-packed into 3 columns.
-           Each cell keeps its native aspect ratio and the browser fits
-           them shortest-column-first so there is no dead space between
-           images. Order flows column-by-column visually. -->
-      <div class="gd-mason">
-        <figure class="gd-cell" style="--ar: 0.80" data-idx="02" data-name="cover 04" data-ratio="4:5" data-dim="2178×2718">
-          <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 1" data-idx="03" data-name="concept square" data-ratio="1:1" data-dim="6000×6000">
-          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 0.55" data-idx="04" data-name="cipher · vertical" data-ratio="11:20" data-dim="2196×3996">
-          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
-        </figure>
-        <figure class="gd-cell gd-cell--video" style="--ar: 0.5625" data-idx="05" data-name="comp 1_1 · vertical reel" data-ratio="9:16" data-dim="1440×2560">
-          <video
-            poster="/showcase/motion/comp-1-1-poster.jpg"
-            muted loop playsinline autoplay preload="metadata"
-            aria-label="Comp 1_1 vertical motion piece"
-          >
-            <source src="/showcase/motion/comp-1-1.webm" type="video/webm" />
-            <source src="/showcase/motion/comp-1-1.mp4" type="video/mp4" />
-          </video>
-          <span class="gd-cell__pulse" aria-hidden="true"></span>
-        </figure>
-        <figure class="gd-cell" style="--ar: 1.25" data-idx="06" data-name="topbox" data-ratio="5:4" data-dim="3038×2438">
-          <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 1" data-idx="07" data-name="product square" data-ratio="1:1" data-dim="2700×2700">
-          <img src="/showcase/graphics/product-square.webp" alt="Cipher product square" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 0.79" data-idx="08" data-name="citlali · key art" data-ratio="11:14" data-dim="6600×8400">
-          <img src="/showcase/graphics/citlali.webp" alt="Citlali key art" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 0.80" data-idx="09" data-name="fmig post" data-ratio="4:5" data-dim="2160×2700">
-          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
-        </figure>
-        <figure class="gd-cell" style="--ar: 0.61" data-idx="10" data-name="fuwawa · tall banner" data-ratio="23:38" data-dim="2760×4560">
-          <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa banner" loading="lazy" />
-        </figure>
-      </div>
+      <!-- ================================================================
+           03 · TERMINAL / CLI — dev-log portfolio
+           ================================================================ -->
+      <section class="gd-variant gd-variant--terminal" aria-labelledby="v03">
+        <div class="gd-variant__label">
+          <span class="gd-variant__num">03</span>
+          <h3 class="gd-variant__name" id="v03">terminal &middot; dev-log</h3>
+          <span class="gd-variant__desc">running command-line session &middot; design as commands</span>
+        </div>
+        <div class="cli-win">
+          <div class="cli-win__bar">
+            <span class="cli-win__dot cli-win__dot--r"></span>
+            <span class="cli-win__dot cli-win__dot--y"></span>
+            <span class="cli-win__dot cli-win__dot--g"></span>
+            <span class="cli-win__title">dram@drop-01 &middot; ~/graphic/showcase</span>
+          </div>
+          <div class="cli-win__body">
+            <p class="cli-line"><span class="cli-prompt">dram@drop-01</span><span class="cli-sep">:~$</span> show --piece header-mograph --mode motion --ratio 2.37</p>
+            <figure class="cli-frame" style="--ar: 2.37">
+              <video muted loop playsinline autoplay preload="metadata" poster="/showcase/motion/header-mograph-poster.jpg">
+                <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
+                <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
+              </video>
+            </figure>
+            <p class="cli-line"><span class="cli-prompt">dram@drop-01</span><span class="cli-sep">:~$</span> show --piece topbox --ratio 5:4</p>
+            <figure class="cli-frame" style="--ar: 1.25">
+              <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
+            </figure>
+            <p class="cli-line"><span class="cli-prompt">dram@drop-01</span><span class="cli-sep">:~$</span> <span class="cli-cursor" aria-hidden="true"></span></p>
+          </div>
+        </div>
+      </section>
 
-      <div class="gd-mark"><span>&mdash; closing frame</span></div>
+      <!-- ================================================================
+           04 · MUSEUM WALL — matted &amp; plaqued
+           ================================================================ -->
+      <section class="gd-variant gd-variant--museum" aria-labelledby="v04">
+        <div class="gd-variant__label">
+          <span class="gd-variant__num">04</span>
+          <h3 class="gd-variant__name" id="v04">museum wall</h3>
+          <span class="gd-variant__desc">matted &amp; plaqued &middot; gallery ambient</span>
+        </div>
+        <div class="mw-hang">
+          <figure class="mw-piece">
+            <div class="mw-mat" style="--ar: 2.22">
+              <img src="/showcase/graphics/chii3.webp" alt="Chii" loading="lazy" />
+            </div>
+            <figcaption class="mw-plaque">
+              <span class="mw-plaque__title">Chii &nbsp;<em>widescreen</em></span>
+              <span class="mw-plaque__meta">Digital &middot; 2025 &middot; 5377 &times; 2424 px</span>
+              <span class="mw-plaque__credit">Tokyo Zero &middot; Chromadipity Core</span>
+            </figcaption>
+          </figure>
+          <figure class="mw-piece">
+            <div class="mw-mat" style="--ar: 1">
+              <img src="/showcase/graphics/product-square.webp" alt="Product square" loading="lazy" />
+            </div>
+            <figcaption class="mw-plaque">
+              <span class="mw-plaque__title">Cipher &nbsp;<em>product study</em></span>
+              <span class="mw-plaque__meta">Digital &middot; 2025 &middot; 2700 &times; 2700 px</span>
+              <span class="mw-plaque__credit">Tokyo Zero &middot; Cipher collection</span>
+            </figcaption>
+          </figure>
+          <figure class="mw-piece">
+            <div class="mw-mat" style="--ar: 0.80">
+              <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
+            </div>
+            <figcaption class="mw-plaque">
+              <span class="mw-plaque__title">FMIG &nbsp;<em>post</em></span>
+              <span class="mw-plaque__meta">Digital &middot; 2025 &middot; 2160 &times; 2700 px</span>
+              <span class="mw-plaque__credit">Tokyo Zero &middot; Instagram feature</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-      <!-- Row E · closing widescreen still (20:9) -->
-      <div class="gd-row gd-row--hero">
-        <figure class="gd-cell" style="--ar: 2.22" data-idx="11" data-name="chii · widescreen" data-ratio="20:9" data-dim="5377×2424">
-          <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
-        </figure>
-      </div>
+      <!-- ================================================================
+           05 · EDITORIAL MAGAZINE SPREAD — page-fold, serif quotes
+           ================================================================ -->
+      <section class="gd-variant gd-variant--editorial" aria-labelledby="v05">
+        <div class="gd-variant__label">
+          <span class="gd-variant__num">05</span>
+          <h3 class="gd-variant__name" id="v05">editorial spread</h3>
+          <span class="gd-variant__desc">page-fold magazine &middot; type IS the layout</span>
+        </div>
+        <div class="em-spread">
+          <span class="em-folio em-folio--l">14 &nbsp;&nbsp;&middot;&nbsp;&nbsp; issue no. 01</span>
+          <span class="em-folio em-folio--r">issue no. 01 &nbsp;&nbsp;&middot;&nbsp;&nbsp; 15</span>
+          <div class="em-crease" aria-hidden="true"></div>
+          <div class="em-page em-page--l">
+            <p class="em-kicker">the cover series</p>
+            <p class="em-quote">&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
+            <figure class="em-fig">
+              <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" style="--ar: 0.80" />
+              <figcaption><em>Cover 04.</em> Model: Yuzuha. 4 : 5 &middot; 2178 &times; 2718 px.</figcaption>
+            </figure>
+          </div>
+          <div class="em-page em-page--r">
+            <figure class="em-fig em-fig--hero">
+              <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen" loading="lazy" style="--ar: 2.22" />
+              <figcaption><em>Chii.</em> Widescreen illustration. 20 : 9 &middot; 5377 &times; 2424 px.</figcaption>
+            </figure>
+            <p class="em-kicker em-kicker--r">the widescreen study</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           06 · CONSTELLATION NETWORK — nodes, edges, relationships
+           ================================================================ -->
+      <section class="gd-variant gd-variant--constellation" aria-labelledby="v06">
+        <div class="gd-variant__label">
+          <span class="gd-variant__num">06</span>
+          <h3 class="gd-variant__name" id="v06">constellation</h3>
+          <span class="gd-variant__desc">nodes in a graph &middot; edges = relationships</span>
+        </div>
+        <div class="cn-space">
+          <svg class="cn-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <line class="cn-edge" x1="18" y1="30" x2="48" y2="52" />
+            <line class="cn-edge" x1="48" y1="52" x2="82" y2="28" />
+            <line class="cn-edge" x1="48" y1="52" x2="34" y2="80" />
+            <line class="cn-edge" x1="48" y1="52" x2="72" y2="78" />
+            <line class="cn-edge" x1="82" y1="28" x2="72" y2="78" />
+            <line class="cn-edge" x1="18" y1="30" x2="15" y2="62" />
+            <line class="cn-edge" x1="15" y1="62" x2="34" y2="80" />
+          </svg>
+          <figure class="cn-node cn-node--a" style="--ar: 0.80">
+            <img src="/showcase/graphics/cover.webp" alt="Cover" loading="lazy" />
+            <span class="cn-node__tag">cover 04</span>
+          </figure>
+          <figure class="cn-node cn-node--b" style="--ar: 1">
+            <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
+            <span class="cn-node__tag">concept</span>
+          </figure>
+          <figure class="cn-node cn-node--c" style="--ar: 0.79">
+            <img src="/showcase/graphics/citlali.webp" alt="Citlali" loading="lazy" />
+            <span class="cn-node__tag">citlali</span>
+          </figure>
+          <figure class="cn-node cn-node--d" style="--ar: 1.25">
+            <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
+            <span class="cn-node__tag">topbox</span>
+          </figure>
+          <figure class="cn-node cn-node--e" style="--ar: 1">
+            <img src="/showcase/graphics/product-square.webp" alt="Product square" loading="lazy" />
+            <span class="cn-node__tag">product</span>
+          </figure>
+          <figure class="cn-node cn-node--f" style="--ar: 0.55">
+            <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical" loading="lazy" />
+            <span class="cn-node__tag">vertical</span>
+          </figure>
+        </div>
+      </section>
 
       <div class="gd-mark gd-mark--foot">
         <span class="gd-mark__dot" aria-hidden="true"></span>
-        <span>end of drop 01</span>
+        <span>end of drop 01 &middot; tell me which lane</span>
       </div>
     </div>
 
@@ -1093,6 +1258,561 @@ const roster = [
     }
     @media (max-width: 900px) { .gd-mason { columns: 2; } }
     @media (max-width: 560px) { .gd-mason { columns: 1; } }
+
+    /* ============================================================
+       Six presentation variants — shared frame
+       ============================================================ */
+    .gd-board--variants { gap: 0; padding: 0; }
+    .gd-variant {
+      position: relative;
+      width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      max-width: 100vw;
+      box-sizing: border-box;
+      padding: clamp(48px, 6vw, 88px) clamp(24px, 5vw, 96px);
+      overflow: hidden;
+    }
+    .gd-variant__label {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: baseline;
+      gap: clamp(12px, 2vw, 28px);
+      margin-bottom: clamp(24px, 3vw, 48px);
+      padding-bottom: 14px;
+      border-bottom: 1px solid currentColor;
+      opacity: 0.92;
+    }
+    .gd-variant__num {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2.6rem, 4vw, 4rem);
+      line-height: 0.85;
+      letter-spacing: -0.03em;
+      opacity: 0.62;
+    }
+    .gd-variant__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      text-transform: lowercase;
+      margin: 0;
+    }
+    .gd-variant__desc {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: lowercase;
+      opacity: 0.6;
+      align-self: end;
+      padding-bottom: 4px;
+      text-align: right;
+    }
+    @media (max-width: 700px) {
+      .gd-variant__label { grid-template-columns: auto 1fr; }
+      .gd-variant__desc { grid-column: 1 / -1; text-align: left; }
+    }
+
+    /* ============================================================
+       01 · KINETIC BLUEPRINT
+       ============================================================ */
+    .gd-variant--blueprint {
+      background:
+        linear-gradient(to right,  rgba(20, 40, 100, 0.09) 1px, transparent 1px) 0 0 / 40px 40px,
+        linear-gradient(to bottom, rgba(20, 40, 100, 0.09) 1px, transparent 1px) 0 0 / 40px 40px,
+        linear-gradient(to right,  rgba(20, 40, 100, 0.04) 1px, transparent 1px) 0 0 / 8px 8px,
+        linear-gradient(to bottom, rgba(20, 40, 100, 0.04) 1px, transparent 1px) 0 0 / 8px 8px,
+        #eef2f8;
+      color: #14264a;
+    }
+    .gd-variant--blueprint .gd-variant__num,
+    .gd-variant--blueprint .gd-variant__name,
+    .gd-variant--blueprint .gd-variant__desc { color: #14264a; }
+    .bp-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: clamp(56px, 6vw, 112px);
+      align-items: end;
+      padding: 40px 30px 30px;
+    }
+    .bp-sheet {
+      position: relative;
+      margin: 0;
+      aspect-ratio: var(--ar, 1);
+      background: #fff;
+      border: 1px solid #14264a;
+      box-shadow: 5px 5px 0 rgba(20, 40, 100, 0.14);
+    }
+    .bp-sheet img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bp-name {
+      position: absolute;
+      top: -24px;
+      left: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      color: #14264a;
+      text-transform: lowercase;
+    }
+    .bp-dim {
+      position: absolute;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: #14264a;
+      background: #eef2f8;
+      padding: 2px 8px;
+      border: 1px solid #14264a;
+      white-space: nowrap;
+      z-index: 2;
+    }
+    .bp-dim--w {
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .bp-dim--h {
+      top: 50%;
+      right: -14px;
+      transform: translate(50%, -50%) rotate(90deg);
+      transform-origin: center;
+    }
+    @media (max-width: 900px) {
+      .bp-grid { grid-template-columns: 1fr; gap: 60px; }
+      .bp-dim--h { display: none; }
+    }
+
+    /* ============================================================
+       02 · CONTACT-SHEET LIGHTBOX
+       ============================================================ */
+    .gd-variant--lightbox {
+      background: radial-gradient(ellipse at center, #201d17 0%, #0d0b08 100%);
+      color: #d9c9a8;
+    }
+    .gd-variant--lightbox .gd-variant__num,
+    .gd-variant--lightbox .gd-variant__name,
+    .gd-variant--lightbox .gd-variant__desc { color: #d9c9a8; }
+    .lb-table {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(24px, 3vw, 44px);
+      align-items: end;
+      padding: clamp(24px, 4vw, 56px) 0;
+      background:
+        radial-gradient(ellipse at 50% 100%, rgba(255, 210, 130, 0.14) 0%, transparent 70%);
+    }
+    .lb-slide { position: relative; margin: 0; }
+    .lb-slide__mount {
+      position: relative;
+      padding: clamp(12px, 1.4vw, 18px);
+      background: #f4efe4;
+      border: 1px solid rgba(0, 0, 0, 0.30);
+      box-shadow:
+        inset 0 0 0 1px #d3c8a8,
+        0 14px 44px rgba(255, 220, 150, 0.28);
+      aspect-ratio: var(--ar, 1);
+      overflow: hidden;
+      transition: box-shadow 260ms ease, transform 260ms ease;
+    }
+    .lb-slide__mount::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255, 235, 180, 0.35) 0%, transparent 70%);
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+    .lb-slide__mount img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.96) saturate(1.05);
+      z-index: 0;
+    }
+    .lb-slide:hover .lb-slide__mount {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow:
+        inset 0 0 0 1px #d3c8a8,
+        0 24px 68px rgba(255, 220, 150, 0.48);
+    }
+    .lb-slide figcaption {
+      display: block;
+      margin-top: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: lowercase;
+      color: #b8a884;
+    }
+    .lb-slide__idx {
+      display: block;
+      color: #ffd07a;
+      margin-bottom: 4px;
+    }
+    @media (max-width: 900px) { .lb-table { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .lb-table { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       03 · TERMINAL / CLI
+       ============================================================ */
+    .gd-variant--terminal {
+      background: #0a0a0a;
+      color: #ffb648;
+    }
+    .gd-variant--terminal .gd-variant__num,
+    .gd-variant--terminal .gd-variant__name,
+    .gd-variant--terminal .gd-variant__desc { color: #ffb648; }
+    .cli-win {
+      border: 1px solid #2a2a2a;
+      background: #050505;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .cli-win__bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: #101010;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .cli-win__dot { width: 12px; height: 12px; border-radius: 50%; }
+    .cli-win__dot--r { background: #ff5f56; }
+    .cli-win__dot--y { background: #ffbd2e; }
+    .cli-win__dot--g { background: #27c93f; }
+    .cli-win__title {
+      flex: 1;
+      text-align: center;
+      color: #666;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.10em;
+      padding-right: 60px;
+    }
+    .cli-win__body {
+      padding: clamp(20px, 3vw, 40px);
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.02) 50%, transparent 50%) 0 0 / 100% 3px,
+        #050505;
+      min-height: 400px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cli-line {
+      font-size: 0.9rem;
+      color: #b0a888;
+      margin: 20px 0 14px;
+      line-height: 1.6;
+    }
+    .cli-prompt { color: #7ccf67; }
+    .cli-sep { color: #666; margin: 0 8px 0 0; }
+    .cli-frame {
+      margin: 0 0 20px;
+      padding: 0;
+      aspect-ratio: var(--ar, 1);
+      border: 1px solid #2a2a2a;
+      overflow: hidden;
+      background: #0a0a0a;
+      max-width: 900px;
+    }
+    .cli-frame img,
+    .cli-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.96);
+    }
+    .cli-cursor {
+      display: inline-block;
+      width: 9px;
+      height: 1.1em;
+      background: #ffb648;
+      vertical-align: -3px;
+      animation: cliBlink 1s steps(1) infinite;
+    }
+    @keyframes cliBlink { 50% { opacity: 0; } }
+
+    /* ============================================================
+       04 · MUSEUM WALL
+       ============================================================ */
+    .gd-variant--museum {
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(255, 244, 220, 0.85) 0%, transparent 60%),
+        #efe9df;
+      color: #2c261e;
+    }
+    .gd-variant--museum .gd-variant__num,
+    .gd-variant--museum .gd-variant__name,
+    .gd-variant--museum .gd-variant__desc { color: #2c261e; }
+    .mw-hang {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(48px, 5vw, 96px);
+      align-items: start;
+      padding: clamp(20px, 3vw, 40px) 0;
+    }
+    .mw-piece {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 26px;
+    }
+    .mw-mat {
+      position: relative;
+      padding: clamp(20px, 3vw, 44px);
+      background: #fbf7ee;
+      border: 1px solid rgba(60, 45, 20, 0.15);
+      box-shadow:
+        0 30px 50px -20px rgba(60, 45, 20, 0.25),
+        0 8px 16px -8px rgba(60, 45, 20, 0.20);
+      transition: transform 320ms ease, box-shadow 320ms ease;
+      aspect-ratio: var(--ar, 1);
+      width: 100%;
+      overflow: hidden;
+    }
+    .mw-mat::before {
+      content: "";
+      position: absolute;
+      inset: clamp(10px, 1.5vw, 22px);
+      border: 1px solid rgba(60, 45, 20, 0.28);
+      pointer-events: none;
+    }
+    .mw-mat img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .mw-piece:hover .mw-mat {
+      transform: translateY(-4px);
+      box-shadow:
+        0 40px 60px -20px rgba(60, 45, 20, 0.35),
+        0 12px 20px -8px rgba(60, 45, 20, 0.25);
+    }
+    .mw-plaque {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-align: center;
+      max-width: 320px;
+    }
+    .mw-plaque__title {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      color: #2c261e;
+      letter-spacing: 0.01em;
+    }
+    .mw-plaque__title em {
+      font-style: italic;
+      font-weight: 300;
+      color: #5a4b32;
+    }
+    .mw-plaque__meta,
+    .mw-plaque__credit {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: #706250;
+      text-transform: lowercase;
+    }
+    @media (max-width: 900px) { .mw-hang { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       05 · EDITORIAL MAGAZINE SPREAD
+       ============================================================ */
+    .gd-variant--editorial {
+      background: #faf8f2;
+      color: #1a1815;
+    }
+    .gd-variant--editorial .gd-variant__num,
+    .gd-variant--editorial .gd-variant__name,
+    .gd-variant--editorial .gd-variant__desc { color: #1a1815; }
+    .em-spread {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 4vw, 72px);
+      padding: 40px clamp(0px, 2vw, 40px) 0;
+      min-height: 620px;
+    }
+    .em-folio {
+      position: absolute;
+      top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26, 24, 21, 0.55);
+    }
+    .em-folio--l { left: 0; }
+    .em-folio--r { right: 0; }
+    .em-crease {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(26, 24, 21, 0.12) 20%,
+        rgba(26, 24, 21, 0.32) 50%,
+        rgba(26, 24, 21, 0.12) 80%,
+        transparent 100%);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .em-page {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 2.6vw, 36px);
+    }
+    .em-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #7a6a40;
+      margin: 0;
+    }
+    .em-kicker--r { text-align: right; }
+    .em-quote {
+      font-family: 'Beam Visionary', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 3.4vw, 3.4rem);
+      line-height: 1.05;
+      color: #1a1815;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    .em-fig { margin: 0; }
+    .em-fig img {
+      width: 100%;
+      aspect-ratio: var(--ar, 1);
+      object-fit: cover;
+      display: block;
+      border-radius: 1px;
+    }
+    .em-fig figcaption {
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      color: #7a6a40;
+      text-transform: lowercase;
+    }
+    .em-fig figcaption em {
+      font-family: 'Beam Visionary', serif;
+      font-style: italic;
+      color: #1a1815;
+      margin-right: 6px;
+      font-size: 0.92rem;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    @media (max-width: 900px) {
+      .em-spread { grid-template-columns: 1fr; min-height: 0; }
+      .em-crease { display: none; }
+    }
+
+    /* ============================================================
+       06 · CONSTELLATION NETWORK
+       ============================================================ */
+    .gd-variant--constellation {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(80, 97, 185, 0.12) 0%, transparent 50%),
+        #05050a;
+      color: #d0d4e2;
+    }
+    .gd-variant--constellation .gd-variant__num,
+    .gd-variant--constellation .gd-variant__name,
+    .gd-variant--constellation .gd-variant__desc { color: #d0d4e2; }
+    .cn-space {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 520px;
+      max-height: 720px;
+    }
+    .cn-edges {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .cn-edge {
+      stroke: rgba(255, 255, 255, 0.22);
+      stroke-width: 0.18;
+      fill: none;
+      vector-effect: non-scaling-stroke;
+      stroke-dasharray: 2 2.5;
+      animation: cnFlow 12s linear infinite;
+    }
+    @keyframes cnFlow {
+      from { stroke-dashoffset: 0; }
+      to   { stroke-dashoffset: -22; }
+    }
+    .cn-node {
+      position: absolute;
+      margin: 0;
+      aspect-ratio: var(--ar, 1);
+      width: clamp(90px, 12vw, 160px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #0a0a0a;
+      transition: transform 400ms cubic-bezier(0.34, 1.2, 0.64, 1),
+                  border-color 260ms ease,
+                  box-shadow 400ms ease;
+    }
+    .cn-node img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cn-node__tag {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 3px 6px;
+      text-transform: lowercase;
+      pointer-events: none;
+    }
+    .cn-node:hover {
+      transform: translate(-50%, -50%) scale(1.12);
+      border-color: #ffee00;
+      box-shadow: 0 0 44px rgba(255, 238, 0, 0.4);
+      z-index: 5;
+    }
+    /* Absolute node positions in the SVG viewBox — match the edge coords */
+    .cn-node--a { top: 30%; left: 18%; transform: translate(-50%, -50%); }
+    .cn-node--b { top: 52%; left: 48%; transform: translate(-50%, -50%); }
+    .cn-node--c { top: 28%; left: 82%; transform: translate(-50%, -50%); }
+    .cn-node--d { top: 80%; left: 34%; transform: translate(-50%, -50%); }
+    .cn-node--e { top: 78%; left: 72%; transform: translate(-50%, -50%); }
+    .cn-node--f { top: 62%; left: 15%; transform: translate(-50%, -50%); }
+    @media (max-width: 900px) {
+      .cn-space { aspect-ratio: 3 / 4; min-height: 720px; }
+      .cn-node { width: clamp(70px, 22vw, 120px); }
+    }
 
     /* Editorial marks — mono pills that thread through the spread */
     .gd-mark {

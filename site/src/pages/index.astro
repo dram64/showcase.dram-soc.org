@@ -7,12 +7,12 @@ import { products } from "../data/products.ts";
 // 16 featured items across the four most-recent drops: NSO, PSG,
 // Yuzuha/Alice and misc. Excludes Toki, Blanc Bunny and Evelyn.
 const featured = [
-  // Yuzuha & Alice
-  "deskmat-yuzuha-alice",
-  "print-yuzuha",
-  "print-alice",
-  "sticker-yuzuha",
-  "sticker-alice",
+  // NSO drop
+  "nso-deskmat",
+  "nso-ame-tapestry",
+  "nso-kangel-tapestry",
+  "nso-print",
+  "nso-ame-sticker",
   // PSG drop
   "psg-deskmat",
   "psg-panty-tapestry",
@@ -20,12 +20,12 @@ const featured = [
   "psg-panty-acrylic",
   "psg-stocking-acrylic",
   "psg-panty-sticker",
-  // NSO drop
-  "nso-deskmat",
-  "nso-ame-tapestry",
-  "nso-kangel-tapestry",
-  "nso-print",
-  "nso-ame-sticker",
+  // Yuzuha & Alice
+  "deskmat-yuzuha-alice",
+  "print-yuzuha",
+  "print-alice",
+  "sticker-yuzuha",
+  "sticker-alice",
 ].map(slug => products.find(p => p.slug === slug)).filter(Boolean);
 
 const roster = [
@@ -189,8 +189,8 @@ const roster = [
 
       <div class="gd-mark"><span>&mdash; tall banners</span></div>
 
-      <!-- Row D · 2-col tall banner pair -->
-      <div class="gd-row gd-row--2 gd-row--baseline">
+      <!-- Row D · 2-col tall banner pair (constrained width, centered) -->
+      <div class="gd-row gd-row--2 gd-row--baseline gd-row--slim">
         <figure class="gd-cell" style="--ar: 0.55" data-idx="09" data-name="cipher · vertical" data-ratio="11:20" data-dim="2196×3996">
           <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
         </figure>
@@ -1144,6 +1144,16 @@ const roster = [
     /* Narrow-middle 3-col — for accents that shouldn't dominate their neighbors */
     .gd-row--sm-mid.gd-row--3 {
       grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.55fr) minmax(0, 1.5fr);
+    }
+    /* Slim row — constrained max-width, centered. Use for tall banner
+       pairs so they don't render at full section width. */
+    .gd-row--slim {
+      max-width: 72%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 900px) {
+      .gd-row--slim { max-width: 100%; }
     }
 
     /* Cells — every one uses native aspect-ratio (--ar) */

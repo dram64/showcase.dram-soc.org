@@ -102,19 +102,6 @@ const roster = [
     </div>
 
     <div class="graphic-grid">
-      <aside class="graphic-rail">
-        <span class="graphic-chip"></span>
-        <div class="graphic-meta">
-          <p><em>theme</em>&mdash; chromadipity core</p>
-          <p><em>creator</em>&mdash; dram</p>
-          <p><em>format</em>&mdash; digital painting</p>
-          <p><em>size</em>&mdash; 2400 &times; 1600</p>
-          <p><em>roster</em>&mdash; 40+ pcs</p>
-          <p><em>index</em>&mdash; 01 of 12</p>
-        </div>
-        <p class="graphic-signature">from the desk.</p>
-      </aside>
-
       <div class="graphic-stage">
         <!-- 01 · Past Designs — user drops a title-card / hero graphic -->
         <div class="slot slot--past">
@@ -909,35 +896,8 @@ const roster = [
     }
     .graphic-grid {
       display: grid;
-      grid-template-columns: 240px minmax(0, 1fr) 60px;
+      grid-template-columns: minmax(0, 1fr) 60px;
       gap: 32px;
-    }
-    .graphic-rail { display: flex; flex-direction: column; gap: 16px; }
-    .graphic-chip {
-      width: 32px; height: 32px;
-      background: rgba(80, 97, 185, 0.15);
-      border: 2px solid var(--misc-accent, #5061b9);
-    }
-    .graphic-meta {
-      font-family: 'Branding Pro', sans-serif;
-      font-size: 0.9rem;
-      color: var(--misc-ink, #1a1a1a);
-    }
-    .graphic-meta p { margin: 0 0 6px; }
-    .graphic-meta em {
-      font-family: 'JetBrains Mono', monospace;
-      font-style: normal;
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--misc-accent, #5061b9);
-      margin-right: 8px;
-    }
-    .graphic-signature {
-      font-family: 'Beam Visionary', cursive;
-      font-size: 1.4rem;
-      color: var(--misc-accent, #5061b9);
-      margin: 8px 0 0;
     }
     .graphic-vrail {
       display: flex;
@@ -1561,19 +1521,7 @@ const roster = [
       border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
       z-index: 2;
     }
-    #graphic .graphic-chip {
-      width: 46px; height: 46px;
-      background: var(--misc-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-family: 'Beam Visionary', cursive;
-      font-size: 1.6rem;
-      line-height: 1;
-      padding-bottom: 4px;
-    }
-    #graphic .graphic-chip::after { content: "d"; }
+    /* (Left graphic-rail removed) */
 
     /* ---- Roster ---- */
     #roster .roster-stage {
@@ -1753,15 +1701,38 @@ const roster = [
       align-items: stretch;
     }
 
-    /* ---- 3D coverflow carousel ---- */
+    /* ---- 3D coverflow carousel — PSP/PS2 magazine-showcase aesthetic
+           Products float freely with cast floor shadows, no frames or
+           borders, subtle soft floor plane suggests a gallery display. ---- */
     .lead-3d {
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-height: 0;
-      perspective: 1600px;
-      perspective-origin: 50% 55%;
+      perspective: 1800px;
+      perspective-origin: 50% 60%;
+      background:
+        radial-gradient(ellipse at 50% 100%, rgba(80, 97, 185, 0.05) 0%, transparent 60%),
+        linear-gradient(180deg, transparent 40%, rgba(80, 97, 185, 0.02) 100%);
+    }
+    /* Soft horizon floor line, receding into distance */
+    .lead-3d::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 68px;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(80, 97, 185, 0.15) 20%,
+        rgba(80, 97, 185, 0.30) 50%,
+        rgba(80, 97, 185, 0.15) 80%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 1;
     }
     .lead-3d__stage {
       position: relative;
@@ -1774,7 +1745,7 @@ const roster = [
       position: absolute;
       top: 50%;
       left: 50%;
-      width: clamp(240px, 32vw, 420px);
+      width: clamp(240px, 32vw, 460px);
       aspect-ratio: 4 / 5;
       background: transparent;
       border: none;
@@ -1790,44 +1761,88 @@ const roster = [
       will-change: transform, opacity;
       -webkit-tap-highlight-color: transparent;
     }
+    /* No frame, no background — just a stage for the product to float on */
     .lead-3d__card-inner {
       position: relative;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, #f7f6f2 0%, #eeece4 100%);
-      border: 1px solid var(--misc-line, rgba(0, 0, 0, 0.12));
-      box-shadow: 0 20px 45px -18px rgba(20, 19, 26, 0.22);
+      background: transparent;
+      border: none;
+      box-shadow: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      transition: border-color 300ms ease, box-shadow 300ms ease;
+      overflow: visible;
     }
+    /* Product image floats with a soft render-style drop-shadow */
     .lead-3d__card-inner img {
-      max-width: 84%;
-      max-height: 84%;
+      max-width: 92%;
+      max-height: 92%;
       object-fit: contain;
-      filter: drop-shadow(0 22px 26px rgba(20, 19, 26, 0.18));
-      transition: filter 300ms ease;
+      filter:
+        drop-shadow(0 8px 16px rgba(20, 19, 26, 0.18))
+        drop-shadow(0 22px 30px rgba(20, 19, 26, 0.22));
+      transition: filter 400ms ease, transform 400ms ease;
     }
+    /* Cast floor shadow — elliptical blur beneath the product, like a
+       game-asset render. Sits behind the image on the "floor" plane. */
+    .lead-3d__card-inner::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 3%;
+      width: 74%;
+      height: 22px;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse,
+        rgba(20, 19, 26, 0.42) 0%,
+        rgba(20, 19, 26, 0.15) 40%,
+        transparent 70%
+      );
+      filter: blur(6px);
+      opacity: 0.75;
+      transition: opacity 400ms ease, width 400ms ease, filter 400ms ease;
+      z-index: -1;
+      pointer-events: none;
+    }
+    /* Minimal numbered tag — no border, no bg, just a floating label */
     .lead-3d__card-tag {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #fff;
+      top: 8px;
+      left: 12px;
       color: var(--misc-accent, #5061b9);
-      padding: 3px 10px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      border: 1px solid var(--misc-line, rgba(0, 0, 0, 0.12));
+      font-size: 0.66rem;
+      letter-spacing: 0.24em;
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: 2;
+      background: transparent;
+      border: none;
+      padding: 0;
     }
-    .lead-3d__card.is-center .lead-3d__card-inner {
-      border-color: var(--misc-accent, #5061b9);
-      box-shadow: 0 40px 70px -24px rgba(80, 97, 185, 0.35);
-    }
+    /* Center card — brighter shadow, slightly larger shadow footprint */
     .lead-3d__card.is-center .lead-3d__card-inner img {
-      filter: drop-shadow(0 28px 34px rgba(20, 19, 26, 0.24));
+      filter:
+        drop-shadow(0 10px 20px rgba(20, 19, 26, 0.22))
+        drop-shadow(0 32px 44px rgba(20, 19, 26, 0.30));
+    }
+    .lead-3d__card.is-center .lead-3d__card-inner::after {
+      opacity: 1;
+      width: 82%;
+      filter: blur(8px);
+    }
+    /* Side cards fade their floor shadow so it doesn't compete with the center */
+    .lead-3d__card:not(.is-center) .lead-3d__card-inner::after {
+      opacity: 0.4;
+    }
+    /* On hover, subtle lift feel */
+    .lead-3d__card.is-center:hover .lead-3d__card-inner img {
+      transform: translateY(-4px);
+    }
+    .lead-3d__card.is-center:hover .lead-3d__card-inner::after {
+      width: 88%;
+      opacity: 0.6;
     }
 
     /* Carousel controls */

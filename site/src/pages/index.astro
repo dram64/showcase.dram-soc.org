@@ -76,7 +76,7 @@ const roster = [
   <!-- ================================================================
        POST-HERO STRIP — soft info bar
        ================================================================ -->
-  <div class="hero-strip" aria-hidden="true">
+  <div class="hero-strip" aria-hidden="true" data-reveal>
     <span><em>design</em> apex mk3 &middot; beam visionary &middot; branding pro</span>
     <span><em>cloud</em> s3 &middot; cloudfront &middot; lambda &middot; athena &middot; terraform</span>
     <span><em>spend</em> ~$2/mo &mdash; <a href="/status/">/status</a> &middot; <a href="/cost/">/cost</a></span>
@@ -85,7 +85,7 @@ const roster = [
   <!-- ================================================================
        BOUNDARY DIVIDER — last full-bleed element
        ================================================================ -->
-  <div class="section-divider section-divider--boundary">
+  <div class="section-divider section-divider--boundary" data-reveal>
     <span class="section-divider__num">01</span>
     <span class="section-divider__label">graphic interfaces &middot; drop 01</span>
     <span class="section-divider__mark"></span>
@@ -95,7 +95,7 @@ const roster = [
        02 · GRAPHIC DESIGN
        ================================================================ -->
   <section id="graphic" class="sec">
-    <div class="sec__head">
+    <div class="sec__head" data-reveal>
       <p class="sec__num">02 / 05</p>
       <p class="sec__eyebrow">graphic design</p>
       <h2 class="sec__title">the illustration.</h2>
@@ -270,7 +270,7 @@ const roster = [
        03 · CHARACTER ROSTER
        ================================================================ -->
   <section id="roster" class="sec">
-    <div class="sec__head">
+    <div class="sec__head" data-reveal>
       <p class="sec__num">03 / 05</p>
       <p class="sec__eyebrow">the roster</p>
       <h2 class="sec__title">character work.</h2>
@@ -298,7 +298,7 @@ const roster = [
           <img class="roster-img" src="/showcase/roster/ame.webp" alt="Ame" data-target="img" />
         </div>
 
-        <div class="roster-card">
+        <div class="roster-card" data-reveal>
           <p class="roster-card__num" data-target="num">01 / 06</p>
           <h3 class="roster-card__name" data-target="name">Ame</h3>
           <div class="roster-card__rule"></div>
@@ -318,7 +318,7 @@ const roster = [
     </div>
 
     <!-- Compact theme selector — small aside inside the roster -->
-    <div class="theme-mini">
+    <div class="theme-mini" data-reveal>
       <div class="theme-mini__head">
         <p class="theme-mini__eyebrow">experimental &middot; themed rooms</p>
         <p class="theme-mini__lede">two alternate storefronts &mdash; each takes over the full page.</p>
@@ -355,7 +355,7 @@ const roster = [
   <section id="photo" class="sec">
     <!-- viewport-fit wrapper: header + carousel take one screen height -->
     <div class="photo-viewport">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <p class="sec__num">04 / 05</p>
         <p class="sec__eyebrow">product photography</p>
         <h2 class="sec__title">finished pieces.</h2>
@@ -450,7 +450,7 @@ const roster = [
         </div>
 
         <!-- Editorial sidebar — dynamic caption for the active card -->
-        <aside class="photo-side">
+        <aside class="photo-side" data-reveal>
           <p class="photo-side__label">// featured</p>
           <h3 class="photo-side__title">the drop.</h3>
 
@@ -480,7 +480,7 @@ const roster = [
        05 · CATALOG — misc__card grid, shopify-native
        ================================================================ -->
   <section id="catalog" class="sec">
-    <div class="sec__head">
+    <div class="sec__head" data-reveal>
       <p class="sec__num">05 / 05</p>
       <p class="sec__eyebrow">from the catalog</p>
       <h2 class="sec__title">the drops.</h2>
@@ -491,7 +491,7 @@ const roster = [
       </p>
     </div>
 
-    <div class="misc__grid catalog-grid">
+    <div class="misc__grid catalog-grid" data-reveal>
       {featured.map((p, i) => (
         <ProductCard product={p} index={String(i + 1).padStart(2, "0")} category={p.category} />
       ))}
@@ -502,7 +502,7 @@ const roster = [
     </div>
 
     <!-- Closing nav: three paths to keep exploring -->
-    <div class="paths">
+    <div class="paths" data-reveal>
       <a class="path" href="/work/">
         <p class="path__num">&mdash; 01</p>
         <h3 class="path__title">the three themes</h3>
@@ -574,6 +574,46 @@ const roster = [
         });
       }, { threshold: [0, 0.2, 0.5, 0.8, 1] });
       railObs.observe(heroEl);
+    })();
+
+    // Scroll-reveal for elements marked [data-reveal] — fades + rises them
+    // in when they enter the viewport, respects prefers-reduced-motion.
+    // Uses a single IntersectionObserver, unobserves once shown, cheap.
+    (function () {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = document.querySelectorAll("[data-reveal]");
+      if (!els.length) return;
+      if (reduce) { els.forEach(el => el.classList.add("is-visible")); return; }
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Constellation scroll entrance — when .cn-space first enters view,
+    // stamp .is-entered on it so the CSS stagger-in cascade fires. Nodes
+    // rise + scale into position over ~1.4s, then join the ambient drift.
+    (function () {
+      const space = document.querySelector(".cn-space");
+      if (!space) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        space.classList.add("is-entered");
+        return;
+      }
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.intersectionRatio > 0.10) {
+            space.classList.add("is-entered");
+            obs.disconnect();
+          }
+        });
+      }, { threshold: [0, 0.1, 0.25] });
+      io.observe(space);
     })();
 
     // Autoplay-when-visible for editorial motion pieces (graphic-section
@@ -850,7 +890,72 @@ const roster = [
       transition: opacity 900ms ease-in-out;
       will-change: opacity;
     }
-    .hero__art.is-active { opacity: 1; }
+    .hero__art.is-active {
+      opacity: 1;
+      animation: heroKenBurns 22s ease-out both;
+    }
+    @keyframes heroKenBurns {
+      from { transform: scale(1); }
+      to   { transform: scale(1.06); }
+    }
+
+    /* ============================================================
+       Scroll-reveal — elements marked [data-reveal] fade + rise in
+       when they enter the viewport. Optional --r-delay multiplies a
+       base 60ms unit for stagger (used on catalog cards, path cards).
+       ============================================================ */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity 780ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 780ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--r-delay, 0) * 60ms);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Catalog + path grids stagger their children in individually as
+       the parent grid becomes visible — subtle cascade, not a wall */
+    .catalog-grid.is-visible > * {
+      opacity: 0;
+      animation: revealChild 640ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .catalog-grid.is-visible > *:nth-child(1)  { animation-delay:   0ms; }
+    .catalog-grid.is-visible > *:nth-child(2)  { animation-delay:  60ms; }
+    .catalog-grid.is-visible > *:nth-child(3)  { animation-delay: 120ms; }
+    .catalog-grid.is-visible > *:nth-child(4)  { animation-delay: 180ms; }
+    .catalog-grid.is-visible > *:nth-child(5)  { animation-delay: 220ms; }
+    .catalog-grid.is-visible > *:nth-child(6)  { animation-delay: 260ms; }
+    .catalog-grid.is-visible > *:nth-child(7)  { animation-delay: 300ms; }
+    .catalog-grid.is-visible > *:nth-child(8)  { animation-delay: 340ms; }
+    .catalog-grid.is-visible > *:nth-child(9)  { animation-delay: 360ms; }
+    .catalog-grid.is-visible > *:nth-child(10) { animation-delay: 380ms; }
+    .catalog-grid.is-visible > *:nth-child(11) { animation-delay: 400ms; }
+    .catalog-grid.is-visible > *:nth-child(12) { animation-delay: 420ms; }
+    .catalog-grid.is-visible > *:nth-child(13) { animation-delay: 440ms; }
+    .catalog-grid.is-visible > *:nth-child(14) { animation-delay: 460ms; }
+    .catalog-grid.is-visible > *:nth-child(15) { animation-delay: 480ms; }
+    .catalog-grid.is-visible > *:nth-child(16) { animation-delay: 500ms; }
+    .paths.is-visible > *:nth-child(1) { animation: revealChild 640ms cubic-bezier(0.16, 1, 0.3, 1)  40ms forwards; }
+    .paths.is-visible > *:nth-child(2) { animation: revealChild 640ms cubic-bezier(0.16, 1, 0.3, 1) 120ms forwards; }
+    .paths.is-visible > *:nth-child(3) { animation: revealChild 640ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards; }
+    .paths.is-visible > * { opacity: 0; }
+    @keyframes revealChild {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .catalog-grid.is-visible > *,
+      .paths.is-visible > * { opacity: 1; animation: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .hero__art.is-active { animation: none; }
+      .cn-node { animation: none !important; opacity: 1; transform: translate(-50%, -50%); }
+      .cn-edge { animation: none; }
+    }
 
     .hero__dots {
       position: absolute;
@@ -1156,9 +1261,9 @@ const roster = [
     .cn-space {
       position: relative;
       width: 100%;
-      min-height: 100vh;
-      min-height: 100svh;
-      padding: clamp(24px, 3vh, 40px) 0;
+      min-height: 130vh;
+      min-height: 130svh;
+      padding: clamp(32px, 4vh, 60px) 0;
       overflow: visible;
     }
     .cn-edges {
@@ -1202,14 +1307,27 @@ const roster = [
       border: 1px solid rgba(80, 97, 185, 0.35);
       background: #0a0913;
       z-index: 2;
-      transform: translate(-50%, -50%);
-      animation: cnFloat 16s ease-in-out infinite;
-      animation-delay: calc(var(--d, 0) * -1s);
-      transition: border-color 260ms ease,
+      /* Pre-entrance state: dim, small, off-position — scroll-triggered
+         entrance transitions each node in with a staggered --d delay */
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.72);
+      transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 260ms ease,
                   box-shadow 400ms ease,
                   filter 260ms ease,
                   z-index 0ms 260ms;
+      transition-delay: calc(var(--d, 0) * 90ms);
       will-change: transform;
+    }
+    .cn-space.is-entered .cn-node {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      animation: cnFloat 16s ease-in-out infinite;
+      /* Start the float only after the entrance transition finishes so the
+         two transforms don't fight — negative delay + a +1s offset makes
+         each node join the drift at a different phase */
+      animation-delay: calc(1400ms + var(--d, 0) * -1s);
     }
     .cn-node img,
     .cn-node video {
@@ -1265,11 +1383,11 @@ const roster = [
       animation: gdPulse 1.6s ease-in-out infinite;
       pointer-events: none;
     }
-    /* Size tiers */
-    .cn-node--xl { width: clamp(200px, 22vw, 380px); }
-    .cn-node--l  { width: clamp(150px, 16vw, 260px); }
-    .cn-node--m  { width: clamp(110px, 12vw, 190px); }
-    .cn-node--s  { width: clamp(80px, 9vw, 140px); }
+    /* Size tiers — bumped so pieces read at a glance, not as node dots */
+    .cn-node--xl { width: clamp(340px, 36vw, 640px); }
+    .cn-node--l  { width: clamp(260px, 26vw, 460px); }
+    .cn-node--m  { width: clamp(200px, 19vw, 340px); }
+    .cn-node--s  { width: clamp(150px, 14vw, 240px); }
     /* Subtle vertical drift — staggered via --d so nodes float out of sync */
     @keyframes cnFloat {
       0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
@@ -1289,9 +1407,15 @@ const roster = [
       .cn-edges { display: none; }
       .cn-node {
         position: static;
+        opacity: 1;
         transform: none;
         animation: none;
+        transition: border-color 260ms ease, box-shadow 260ms ease;
         display: block;
+      }
+      .cn-space.is-entered .cn-node {
+        transform: none;
+        animation: none;
       }
       .cn-node--xl, .cn-node--l, .cn-node--m, .cn-node--s {
         width: min(92%, 460px);

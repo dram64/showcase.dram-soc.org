@@ -103,28 +103,54 @@ const roster = [
 
     <div class="graphic-grid">
       <div class="graphic-stage">
-        <!-- 01 · Past Designs — title-card graphic -->
-        <div class="slot slot--past has-img">
-          <img class="slot__img" src="/showcase/graphics/past-designs.webp" alt="Past designs — Cipher digital cover" loading="lazy" />
-          <span class="slot__idx">01</span>
-          <span class="slot__label">past designs</span>
+        <div class="gd-grid">
+          <!-- 01 · wide editorial banner -->
+          <figure class="gd-cell gd-w6" style="--ar: 2.37" data-idx="01" data-ratio="2.37:1">
+            <img src="/showcase/graphics/citlali-header.webp" alt="Citlali key art header" loading="lazy" />
+          </figure>
+
+          <!-- 02 · 4:5 magazine cover -->
+          <figure class="gd-cell gd-w3" style="--ar: 0.80" data-idx="02" data-ratio="4:5">
+            <img src="/showcase/graphics/cover.webp" alt="Magazine cover" loading="lazy" />
+          </figure>
+          <!-- 03 · 1:1 concept square -->
+          <figure class="gd-cell gd-w3" style="--ar: 1" data-idx="03" data-ratio="1:1">
+            <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
+          </figure>
+
+          <!-- 04 · 5:4 landscape -->
+          <figure class="gd-cell gd-w2" style="--ar: 1.25" data-idx="04" data-ratio="5:4">
+            <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
+          </figure>
+          <!-- 05 · 1:1 product square -->
+          <figure class="gd-cell gd-w2" style="--ar: 1" data-idx="05" data-ratio="1:1">
+            <img src="/showcase/graphics/product-square.webp" alt="Cipher product square" loading="lazy" />
+          </figure>
+          <!-- 06 · tall vertical banner -->
+          <figure class="gd-cell gd-w2" style="--ar: 0.55" data-idx="06" data-ratio="11:20">
+            <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
+          </figure>
+
+          <!-- 07 · widescreen illustration -->
+          <figure class="gd-cell gd-w4" style="--ar: 2.22" data-idx="07" data-ratio="20:9">
+            <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
+          </figure>
+          <!-- 08 · character key art -->
+          <figure class="gd-cell gd-w2" style="--ar: 0.79" data-idx="08" data-ratio="11:14">
+            <img src="/showcase/graphics/citlali.webp" alt="Citlali portrait" loading="lazy" />
+          </figure>
+
+          <!-- 09 · social post 4:5 -->
+          <figure class="gd-cell gd-w3" style="--ar: 0.80" data-idx="09" data-ratio="4:5">
+            <img src="/showcase/graphics/fmig-post.webp" alt="FMIG social post" loading="lazy" />
+          </figure>
+          <!-- 10 · tall banner -->
+          <figure class="gd-cell gd-w3" style="--ar: 0.61" data-idx="10" data-ratio="23:38">
+            <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa tall banner" loading="lazy" />
+          </figure>
         </div>
 
-        <!-- 02 · Character close-ups — screen-width filmstrip -->
-        <div class="slot slot--wide has-img">
-          <img class="slot__img" src="/showcase/graphics/character-close-ups.webp" alt="Character close-ups — Cipher long graphic" loading="lazy" />
-          <span class="slot__idx">02</span>
-          <span class="slot__label">character close-ups</span>
-        </div>
-
-        <!-- 03 · Bigger graphics — squarish featured slot -->
-        <div class="slot slot--big has-img">
-          <img class="slot__img" src="/showcase/graphics/bigger-graphics.webp" alt="Bigger graphics — concept square" loading="lazy" />
-          <span class="slot__idx">03</span>
-          <span class="slot__label">bigger graphics</span>
-        </div>
-
-        <p class="graphic-caption">&mdash; three slots &middot; portrait &amp; landscape both fit.</p>
+        <p class="graphic-caption">&mdash; ten pieces &middot; every image at its native aspect ratio.</p>
       </div>
 
       <aside class="graphic-vrail">
@@ -141,6 +167,17 @@ const roster = [
       <p class="sec-foot__meta">graphic 02 &middot; system interfaces</p>
     </div>
   </section>
+
+  <!-- ================================================================
+       INTERLUDE — wide 2.37:1 editorial banner between graphic + roster
+       ================================================================ -->
+  <figure class="interlude interlude--wide">
+    <img src="/showcase/graphics/dodgers-ayaka-header.webp" alt="Dodgers Ayaka header" loading="lazy" />
+    <figcaption>
+      <span class="interlude__lbl">ayaka key art &middot; misc drop</span>
+      <span class="interlude__ratio">2.37 : 1</span>
+    </figcaption>
+  </figure>
 
   <!-- ================================================================
        03 · CHARACTER ROSTER
@@ -213,6 +250,17 @@ const roster = [
       </div>
     </div>
   </section>
+
+  <!-- ================================================================
+       INTERLUDE — 16:9 vtuber header between roster + photo
+       ================================================================ -->
+  <figure class="interlude interlude--wide">
+    <img src="/showcase/graphics/fuwamoco-header.webp" alt="FUWAMOCO header" loading="lazy" />
+    <figcaption>
+      <span class="interlude__lbl">fuwamoco header &middot; vtuber drop</span>
+      <span class="interlude__ratio">16 : 9</span>
+    </figcaption>
+  </figure>
 
   <!-- ================================================================
        04 · PRODUCT PHOTOGRAPHY — 3D coverflow carousel + editorial sidebar
@@ -954,185 +1002,140 @@ const roster = [
       border: 1px dashed rgba(80, 97, 185, 0.4);
     }
 
-    /* ---- New three-slot layout: past designs / character close-ups / bigger graphics ---- */
+    /* ---- Native-ratio editorial grid: 10 pieces spanning wide banners to tall portraits ---- */
     .graphic-stage {
       display: flex;
       flex-direction: column;
       gap: clamp(14px, 1.6vw, 22px);
     }
-    .slot {
+    .gd-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: clamp(12px, 1.4vw, 20px);
+      align-items: start;
+    }
+    .gd-w2 { grid-column: span 2; }
+    .gd-w3 { grid-column: span 3; }
+    .gd-w4 { grid-column: span 4; }
+    .gd-w6 { grid-column: span 6; }
+    .gd-cell {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        repeating-linear-gradient(
-          -45deg,
-          rgba(80, 97, 185, 0.03) 0px,
-          rgba(80, 97, 185, 0.03) 8px,
-          transparent 8px,
-          transparent 22px
-        ),
-        radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.9) 0%, transparent 60%),
-        #fff;
-      border: 1px dashed rgba(80, 97, 185, 0.4);
+      margin: 0;
+      aspect-ratio: var(--ar, 1);
       overflow: hidden;
-      transition: border-color 200ms ease, background-color 200ms ease;
+      background: #f7f6f2;
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
     }
-    .slot::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(80, 97, 185, 0.10);
-      pointer-events: none;
+    .gd-cell:hover {
+      transform: translateY(-3px);
+      border-color: var(--misc-accent, #5061b9);
+      box-shadow: 0 20px 40px -22px rgba(20, 19, 26, 0.28);
     }
-    .slot:hover {
-      border-color: rgba(80, 97, 185, 0.7);
-    }
-    /* Slot image — cover-fills the slot; label + idx float on top */
-    .slot__img {
-      position: absolute;
-      inset: 0;
+    .gd-cell img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
-      z-index: 1;
     }
-    .slot.has-img { border-style: solid; border-color: var(--misc-line, rgba(0,0,0,0.12)); }
-    .slot.has-img::before { border-color: rgba(255, 255, 255, 0.35); z-index: 2; }
-    .slot.has-img .slot__label {
+    /* Idx tag (top-left) */
+    .gd-cell::before {
+      content: attr(data-idx);
       position: absolute;
-      bottom: 16px;
-      left: 20px;
-      right: auto;
-      text-align: left;
-      background: rgba(255, 255, 255, 0.92);
-      padding: 6px 14px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      font-size: clamp(0.85rem, 1.4vw, 1.05rem);
-    }
-    .slot.has-img .slot__idx {
-      color: rgba(255, 255, 255, 0.85);
-      text-shadow: 0 2px 8px rgba(20, 19, 26, 0.35);
-    }
-    .slot.has-img .slot__dim { display: none; }
-    .slot__idx {
-      position: absolute;
-      top: 16px;
-      left: 20px;
-      font-family: 'Apex Mk3', sans-serif;
-      font-weight: 300;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 0.8;
-      color: rgba(80, 97, 185, 0.20);
-      letter-spacing: -0.04em;
-      z-index: 3;
-    }
-    .slot__label {
-      font-family: 'Apex Mk3', sans-serif;
-      font-weight: 300;
-      font-size: clamp(1.4rem, 3vw, 2.4rem);
-      line-height: 1;
-      text-transform: lowercase;
-      color: var(--misc-ink, #14131a);
-      letter-spacing: -0.01em;
-      text-align: center;
-      position: relative;
-      z-index: 3;
-    }
-    .slot__dim {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--misc-ink-soft, #6b6b6b);
-      letter-spacing: 0.14em;
-      text-transform: lowercase;
+      top: 10px;
+      left: 12px;
       z-index: 2;
-      white-space: nowrap;
-      max-width: 90%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Slot 01 · Past designs — moderate horizontal rectangle */
-    .slot--past {
-      aspect-ratio: 3.2 / 1;
-      min-height: 180px;
-    }
-    /* Slot 02 · Character close-ups — screen-wide filmstrip */
-    .slot--wide {
-      aspect-ratio: 5.6 / 1;
-      min-height: 140px;
-      background:
-        /* Vertical divider hints suggesting close-up frames */
-        linear-gradient(90deg,
-          transparent 0%, transparent calc(20% - 1px),
-          rgba(80, 97, 185, 0.08) calc(20% - 1px), rgba(80, 97, 185, 0.08) 20%,
-          transparent 20%, transparent calc(40% - 1px),
-          rgba(80, 97, 185, 0.08) calc(40% - 1px), rgba(80, 97, 185, 0.08) 40%,
-          transparent 40%, transparent calc(60% - 1px),
-          rgba(80, 97, 185, 0.08) calc(60% - 1px), rgba(80, 97, 185, 0.08) 60%,
-          transparent 60%, transparent calc(80% - 1px),
-          rgba(80, 97, 185, 0.08) calc(80% - 1px), rgba(80, 97, 185, 0.08) 80%,
-          transparent 80%
-        ),
-        repeating-linear-gradient(
-          -45deg,
-          rgba(80, 97, 185, 0.03) 0px,
-          rgba(80, 97, 185, 0.03) 8px,
-          transparent 8px,
-          transparent 22px
-        ),
-        #fff;
-    }
-    /* Slot 03 · Bigger graphics — squarish featured slot */
-    .slot--big {
-      aspect-ratio: 5 / 4;
-      max-height: 640px;
-      min-height: 380px;
-    }
-
-    /* Reposition the existing "n° 01 / drop 01" corner-mark so it only tags
-       the FIRST slot instead of hovering above the whole stage. */
-    #graphic .graphic-stage::before {
-      content: none !important;
-    }
-    #graphic .slot--past {
-      position: relative;
-    }
-    #graphic .slot--past::after {
-      content: "n° 01 / drop 01";
-      position: absolute;
-      top: -14px;
-      left: 24px;
-      background: var(--misc-bg, #fdfcf9);
-      padding: 4px 10px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.62rem;
       letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--misc-accent, #5061b9);
-      border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
-      z-index: 3;
+      color: #fff;
+      background: rgba(20, 19, 26, 0.55);
+      padding: 3px 8px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      pointer-events: none;
     }
+    /* Ratio pill (bottom-right) */
+    .gd-cell::after {
+      content: attr(data-ratio);
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      z-index: 2;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      color: #fff;
+      opacity: 0;
+      background: rgba(20, 19, 26, 0.55);
+      padding: 3px 8px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: opacity 220ms ease;
+      pointer-events: none;
+    }
+    .gd-cell:hover::after { opacity: 1; }
 
-    @media (max-width: 700px) {
-      .slot__label { font-size: 1.2rem; }
-      .slot__idx { font-size: 2rem; top: 10px; left: 14px; }
-      .slot__dim { font-size: 0.6rem; bottom: 10px; }
-      .slot--past { aspect-ratio: 2.4 / 1; }
-      .slot--wide { aspect-ratio: 3.5 / 1; }
-      .slot--big  { aspect-ratio: 4 / 3; }
-    }
     @media (max-width: 900px) {
       .graphic-grid { grid-template-columns: 1fr; }
       .graphic-vrail { display: none; }
+      .gd-grid { grid-template-columns: repeat(4, 1fr); }
+      .gd-w2 { grid-column: span 2; }
+      .gd-w3 { grid-column: span 2; }
+      .gd-w4 { grid-column: span 4; }
+      .gd-w6 { grid-column: span 4; }
+    }
+    @media (max-width: 560px) {
+      .gd-grid { grid-template-columns: repeat(2, 1fr); }
+      .gd-w2, .gd-w3, .gd-w4, .gd-w6 { grid-column: span 2; }
+    }
+
+    /* ---- Interlude — full-bleed editorial banner between sections ---- */
+    .interlude {
+      position: relative;
+      margin: clamp(28px, 4vw, 56px) 0;
+      width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      max-width: 100vw;
+      box-sizing: border-box;
+      background: #14131a;
+      overflow: hidden;
+      display: block;
+    }
+    .interlude img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    .interlude figcaption {
+      position: absolute;
+      right: clamp(20px, 3vw, 44px);
+      bottom: clamp(16px, 2vw, 28px);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 12px;
+      background: rgba(20, 19, 26, 0.55);
+      color: #fff;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: lowercase;
+    }
+    .interlude__lbl { opacity: 0.9; }
+    .interlude__ratio {
+      color: #ffee00;
+      letter-spacing: 0.22em;
+      border-left: 1px solid rgba(255,255,255,0.28);
+      padding-left: 12px;
+    }
+    @media (max-width: 600px) {
+      .interlude figcaption { font-size: 0.58rem; padding: 4px 8px; }
+      .interlude__ratio { padding-left: 8px; }
     }
 
     /* ============================================================
@@ -1554,21 +1557,6 @@ const roster = [
       letter-spacing: 0.24em;
     }
     #graphic .graphic-stage { position: relative; }
-    #graphic .graphic-stage::before {
-      content: "n° 01 / drop 01";
-      position: absolute;
-      top: -14px;
-      left: 24px;
-      background: var(--misc-bg, #fdfcf9);
-      padding: 4px 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--misc-accent);
-      border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
-      z-index: 2;
-    }
     /* (Left graphic-rail removed) */
 
     /* ---- Roster ---- */

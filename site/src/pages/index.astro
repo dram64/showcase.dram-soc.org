@@ -116,12 +116,28 @@ const roster = [
       </aside>
 
       <div class="graphic-stage">
-        <div class="graphic-slot">
-          <span class="graphic-slot__label">slot 01 &middot; featured illustration</span>
-          <span class="graphic-slot__icon">◇</span>
-          <span class="graphic-slot__dim">2400 &times; 1600 &middot; drop the graphic here</span>
+        <!-- 01 · Past Designs — user drops a title-card / hero graphic -->
+        <div class="slot slot--past">
+          <span class="slot__idx">01</span>
+          <span class="slot__label">past designs</span>
+          <span class="slot__dim">2400 &times; 800 &middot; drop title graphic here</span>
         </div>
-        <p class="graphic-caption">&mdash; swap freely; portrait &amp; landscape both fit.</p>
+
+        <!-- 02 · Character close-ups — screen-width wide filmstrip -->
+        <div class="slot slot--wide">
+          <span class="slot__idx">02</span>
+          <span class="slot__label">character close-ups</span>
+          <span class="slot__dim">3600 &times; 720 &middot; drop character banner here</span>
+        </div>
+
+        <!-- 03 · Bigger graphics — squarish featured slot -->
+        <div class="slot slot--big">
+          <span class="slot__idx">03</span>
+          <span class="slot__label">bigger graphics</span>
+          <span class="slot__dim">2400 &times; 1800 &middot; drop featured piece here</span>
+        </div>
+
+        <p class="graphic-caption">&mdash; three slots &middot; portrait &amp; landscape both fit.</p>
       </div>
 
       <aside class="graphic-vrail">
@@ -947,6 +963,7 @@ const roster = [
       margin: 16px 0 0;
       font-style: italic;
     }
+    /* Legacy single-slot (unused now; kept for safety) */
     .graphic-slot {
       display: flex;
       flex-direction: column;
@@ -955,34 +972,155 @@ const roster = [
       gap: 14px;
       padding: 60px;
       min-height: 460px;
+      background: #fff;
+      border: 1px dashed rgba(80, 97, 185, 0.4);
+    }
+
+    /* ---- New three-slot layout: past designs / character close-ups / bigger graphics ---- */
+    .graphic-stage {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(14px, 1.6vw, 22px);
+    }
+    .slot {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background:
         repeating-linear-gradient(
           -45deg,
           rgba(80, 97, 185, 0.03) 0px,
           rgba(80, 97, 185, 0.03) 8px,
           transparent 8px,
-          transparent 20px
+          transparent 22px
         ),
+        radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.9) 0%, transparent 60%),
         #fff;
       border: 1px dashed rgba(80, 97, 185, 0.4);
+      overflow: hidden;
+      transition: border-color 200ms ease, background-color 200ms ease;
     }
-    .graphic-slot__label {
+    .slot::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(80, 97, 185, 0.10);
+      pointer-events: none;
+    }
+    .slot:hover {
+      border-color: rgba(80, 97, 185, 0.7);
+    }
+    .slot__idx {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 0.8;
+      color: rgba(80, 97, 185, 0.20);
+      letter-spacing: -0.04em;
+      z-index: 2;
+    }
+    .slot__label {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      line-height: 1;
+      text-transform: lowercase;
+      color: var(--misc-ink, #14131a);
+      letter-spacing: -0.01em;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .slot__dim {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
+      color: var(--misc-ink-soft, #6b6b6b);
+      letter-spacing: 0.14em;
+      text-transform: lowercase;
+      z-index: 2;
+      white-space: nowrap;
+      max-width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Slot 01 · Past designs — moderate horizontal rectangle */
+    .slot--past {
+      aspect-ratio: 3.2 / 1;
+      min-height: 180px;
+    }
+    /* Slot 02 · Character close-ups — screen-wide filmstrip */
+    .slot--wide {
+      aspect-ratio: 5.6 / 1;
+      min-height: 140px;
+      background:
+        /* Vertical divider hints suggesting close-up frames */
+        linear-gradient(90deg,
+          transparent 0%, transparent calc(20% - 1px),
+          rgba(80, 97, 185, 0.08) calc(20% - 1px), rgba(80, 97, 185, 0.08) 20%,
+          transparent 20%, transparent calc(40% - 1px),
+          rgba(80, 97, 185, 0.08) calc(40% - 1px), rgba(80, 97, 185, 0.08) 40%,
+          transparent 40%, transparent calc(60% - 1px),
+          rgba(80, 97, 185, 0.08) calc(60% - 1px), rgba(80, 97, 185, 0.08) 60%,
+          transparent 60%, transparent calc(80% - 1px),
+          rgba(80, 97, 185, 0.08) calc(80% - 1px), rgba(80, 97, 185, 0.08) 80%,
+          transparent 80%
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(80, 97, 185, 0.03) 0px,
+          rgba(80, 97, 185, 0.03) 8px,
+          transparent 8px,
+          transparent 22px
+        ),
+        #fff;
+    }
+    /* Slot 03 · Bigger graphics — squarish featured slot */
+    .slot--big {
+      aspect-ratio: 5 / 4;
+      max-height: 640px;
+      min-height: 380px;
+    }
+
+    /* Reposition the existing "n° 01 / drop 01" corner-mark so it only tags
+       the FIRST slot instead of hovering above the whole stage. */
+    #graphic .graphic-stage::before {
+      content: none !important;
+    }
+    #graphic .slot--past {
+      position: relative;
+    }
+    #graphic .slot--past::after {
+      content: "n° 01 / drop 01";
+      position: absolute;
+      top: -14px;
+      left: 24px;
+      background: var(--misc-bg, #fdfcf9);
+      padding: 4px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--misc-accent, #5061b9);
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.12));
+      z-index: 3;
     }
-    .graphic-slot__icon {
-      font-size: 2rem;
-      color: var(--misc-accent, #5061b9);
-      opacity: 0.45;
-    }
-    .graphic-slot__dim {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--misc-ink-soft, #6b6b6b);
-      letter-spacing: 0.08em;
+
+    @media (max-width: 700px) {
+      .slot__label { font-size: 1.2rem; }
+      .slot__idx { font-size: 2rem; top: 10px; left: 14px; }
+      .slot__dim { font-size: 0.6rem; bottom: 10px; }
+      .slot--past { aspect-ratio: 2.4 / 1; }
+      .slot--wide { aspect-ratio: 3.5 / 1; }
+      .slot--big  { aspect-ratio: 4 / 3; }
     }
     @media (max-width: 900px) {
       .graphic-grid { grid-template-columns: 1fr; }

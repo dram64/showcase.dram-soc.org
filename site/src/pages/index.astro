@@ -217,9 +217,9 @@ const roster = [
           <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
           <span class="cn-node__tag">cover 04</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 70%; --y: 8%; --d: 3" data-tag="bigger graphics">
-          <img src="/showcase/graphics/bigger-graphics.webp" alt="Bigger graphics" loading="lazy" />
-          <span class="cn-node__tag">bigger graphics</span>
+        <figure class="cn-node cn-node--m" style="--ar: 2.22; --x: 70%; --y: 8%; --d: 3" data-tag="pdf · panty &amp; stocking deskmat">
+          <img src="/showcase/graphics/pdf-panty-stocking.webp" alt="Panty & Stocking deskmat PDF preview" loading="lazy" />
+          <span class="cn-node__tag">pdf &middot; panty &amp; stocking</span>
         </figure>
         <figure class="cn-node cn-node--m" style="--ar: 0.79; --x: 88%; --y: 10%; --d: 4" data-tag="citlali">
           <img src="/showcase/graphics/citlali.webp" alt="Citlali" loading="lazy" />
@@ -271,9 +271,9 @@ const roster = [
           <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
           <span class="cn-node__tag">topbox</span>
         </figure>
-        <figure class="cn-node cn-node--m" style="--ar: 0.55; --x: 92%; --y: 46%; --d: 14" data-tag="cipher · vertical">
-          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical" loading="lazy" />
-          <span class="cn-node__tag">cipher &middot; vertical</span>
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 92%; --y: 46%; --d: 14" data-tag="pdf · astra yao">
+          <img src="/showcase/graphics/pdf-astra-yao.webp" alt="Astra Yao PDF preview" loading="lazy" />
+          <span class="cn-node__tag">pdf &middot; astra yao</span>
         </figure>
 
         <!-- Row 4 · Middle-lower (y 58-62) -->
@@ -307,19 +307,23 @@ const roster = [
           <img src="/showcase/graphics/character-close-ups.webp" alt="Character close-ups strip" loading="lazy" />
           <span class="cn-node__tag">close-ups</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 22%; --y: 74%; --d: 22" data-tag="fuwamoco · illust">
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 18%; --y: 74%; --d: 22" data-tag="fuwamoco · illust">
           <img src="/showcase/graphics/fuwamoco-illust.webp" alt="Fuwamoco commercial illustration" loading="lazy" />
           <span class="cn-node__tag">fuwamoco &middot; illust</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 40%; --y: 76%; --d: 23" data-tag="portrait 03">
+        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 32%; --y: 76%; --d: 23" data-tag="portrait 03">
           <img src="/showcase/graphics/portrait-03.webp" alt="Portrait 03" loading="lazy" />
           <span class="cn-node__tag">portrait &middot; 03</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 0.56; --x: 56%; --y: 76%; --d: 24" data-tag="ig · pin promo">
-          <img src="/showcase/graphics/ig-pin-promo.webp" alt="IG pin promo" loading="lazy" />
-          <span class="cn-node__tag">ig &middot; pin promo</span>
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 46%; --y: 76%; --d: 24" data-tag="pdf · chii">
+          <img src="/showcase/graphics/pdf-chii.webp" alt="Chii PDF preview" loading="lazy" />
+          <span class="cn-node__tag">pdf &middot; chii</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 0.56; --x: 72%; --y: 76%; --d: 25" data-tag="yx · story">
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 60%; --y: 76%; --d: 24.5" data-tag="pdf · kafka">
+          <img src="/showcase/graphics/pdf-kafka.webp" alt="Kafka PDF preview" loading="lazy" />
+          <span class="cn-node__tag">pdf &middot; kafka</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.56; --x: 74%; --y: 76%; --d: 25" data-tag="yx · story">
           <img src="/showcase/graphics/yx-story.webp" alt="Yx story" loading="lazy" />
           <span class="cn-node__tag">yx &middot; story</span>
         </figure>
@@ -1371,7 +1375,6 @@ const roster = [
       fill: none;
       vector-effect: non-scaling-stroke;
       stroke-dasharray: 2 2.5;
-      animation: cnFlow 12s linear infinite;
     }
     .cn-edge--yellow {
       stroke: rgba(255, 238, 0, 0.42);
@@ -1382,11 +1385,6 @@ const roster = [
       stroke: rgba(255, 255, 255, 0.12);
       stroke-width: 0.10;
       stroke-dasharray: 1 3;
-      animation-duration: 18s;
-    }
-    @keyframes cnFlow {
-      from { stroke-dashoffset: 0; }
-      to   { stroke-dashoffset: -22; }
     }
     .cn-node {
       position: absolute;
@@ -1452,13 +1450,10 @@ const roster = [
     .cn-node:hover .cn-node__tag { opacity: 1; transform: translateY(0); }
     .cn-node:hover {
       animation-play-state: paused;
-      border-color: #ffee00;
-      box-shadow:
-        0 0 44px rgba(255, 238, 0, 0.45),
-        0 0 120px rgba(255, 238, 0, 0.20);
-      filter: brightness(1.08);
+      border-color: rgba(255, 238, 0, 0.85);
+      filter: brightness(1.05);
       z-index: 20;
-      transition: border-color 220ms ease, box-shadow 320ms ease, filter 220ms ease;
+      transition: border-color 220ms ease, filter 220ms ease;
     }
     /* Pulsing yellow "playing" dot on video nodes */
     .cn-node--video::before {

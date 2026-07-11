@@ -63,6 +63,27 @@ const featured = [
       <button class="hero__dot is-active" data-goto="0" aria-label="Slide 1"></button>
       <button class="hero__dot"           data-goto="1" aria-label="Slide 2"></button>
     </div>
+
+    <!-- Halftone dot pattern in the top-left corner + rotating 3D cube
+         in the bottom-right. Halftone gives Y2K/print vibe; the cube
+         is a slow-spinning wireframe that sells "there's motion here". -->
+    <div class="deco-halftone deco-halftone--tl" aria-hidden="true"></div>
+    <div class="deco-cube" aria-hidden="true">
+      <div class="deco-cube__box">
+        <span class="deco-cube__face deco-cube__face--f"></span>
+        <span class="deco-cube__face deco-cube__face--b"></span>
+        <span class="deco-cube__face deco-cube__face--r"></span>
+        <span class="deco-cube__face deco-cube__face--l"></span>
+        <span class="deco-cube__face deco-cube__face--t"></span>
+        <span class="deco-cube__face deco-cube__face--bo"></span>
+      </div>
+    </div>
+
+    <!-- Scroll hint — bottom-left, points at the hero-strip below -->
+    <a href="#graphic" class="scroll-hint" aria-label="Scroll to next section">
+      <span class="scroll-hint__label">scroll</span>
+      <span class="scroll-hint__arrow" aria-hidden="true">&darr;</span>
+    </a>
   </section>
 
   <!-- ================================================================
@@ -81,6 +102,8 @@ const featured = [
     <span class="section-divider__num">01</span>
     <span class="section-divider__label">graphic interfaces &middot; drop 01</span>
     <span class="section-divider__mark"></span>
+    <span class="deco-square deco-square--boundary" aria-hidden="true"></span>
+    <span class="deco-arrow deco-arrow--boundary" aria-hidden="true">&rarr;</span>
   </div>
 
   <!-- ================================================================
@@ -2898,6 +2921,164 @@ const featured = [
       font-size: 0.68rem;
       letter-spacing: 0.14em;
       color: var(--misc-ink-soft);
+    }
+
+    /* ============================================================
+       AMBIENT DECORATIONS — halftones, floating shapes, 3D cube,
+       scroll hint. Small pops of graphic language sprinkled
+       throughout the landing to give it real motion + rhythm.
+       ============================================================ */
+
+    /* Halftone dot pattern — Y2K/print-shop grain. Fades out with a
+       radial mask so the corners feel etched, not stamped. */
+    .deco-halftone {
+      position: absolute;
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0.55;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.45) 1.2px, transparent 1.8px);
+      background-size: 12px 12px;
+    }
+    .deco-halftone--tl {
+      top: 60px;
+      left: 60px;
+      width: 220px;
+      height: 220px;
+      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 75%);
+      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 75%);
+    }
+
+    /* Rotating wireframe 3D cube — slowly tumbling in the hero corner.
+       Lightweight: 6 CSS pseudo-face boxes on a preserve-3d parent. */
+    .deco-cube {
+      position: absolute;
+      right: 90px;
+      bottom: 90px;
+      width: 140px;
+      height: 140px;
+      perspective: 900px;
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0.85;
+      mix-blend-mode: screen;
+    }
+    .deco-cube__box {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: decoCubeSpin 18s linear infinite;
+    }
+    .deco-cube__face {
+      position: absolute;
+      inset: 0;
+      border: 1.4px solid rgba(255, 238, 0, 0.7);
+      background: rgba(255, 238, 0, 0.04);
+      box-shadow: inset 0 0 20px rgba(255, 238, 0, 0.10);
+    }
+    .deco-cube__face--f  { transform: translateZ(70px); }
+    .deco-cube__face--b  { transform: rotateY(180deg) translateZ(70px); }
+    .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(70px); }
+    .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(70px); }
+    .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(70px); }
+    .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(70px); }
+    @keyframes decoCubeSpin {
+      from { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
+      to   { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
+    }
+
+    /* Scroll hint — bottom-left of hero, points at graphic section */
+    .scroll-hint {
+      position: absolute;
+      left: calc(var(--rails-w, 60px) + 24px);
+      bottom: 24px;
+      z-index: 6;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      background: rgba(20, 19, 26, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: lowercase;
+      text-decoration: none;
+      transition: background 200ms ease, transform 200ms ease, border-color 200ms ease;
+    }
+    .scroll-hint:hover {
+      background: rgba(255, 238, 0, 0.18);
+      border-color: rgba(255, 238, 0, 0.6);
+      transform: translateY(-2px);
+      color: #ffee00;
+    }
+    .scroll-hint__arrow {
+      display: inline-block;
+      font-size: 0.9rem;
+      animation: scrollHintBob 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollHintBob {
+      0%, 100% { transform: translateY(0); opacity: 0.85; }
+      50%      { transform: translateY(4px); opacity: 1; }
+    }
+
+    /* Small floating square + arrow on the boundary divider */
+    .section-divider--boundary { position: relative; }
+    .deco-square {
+      position: absolute;
+      display: inline-block;
+      border: 1.4px solid var(--misc-accent, #5061b9);
+      background: transparent;
+    }
+    .deco-square--boundary {
+      right: 24px;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      transform: translateY(-50%) rotate(45deg);
+      animation: decoSpinSlow 12s linear infinite;
+    }
+    @keyframes decoSpinSlow {
+      to { transform: translateY(-50%) rotate(405deg); }
+    }
+    .deco-arrow {
+      position: absolute;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--misc-accent, #5061b9);
+      pointer-events: none;
+    }
+    .deco-arrow--boundary {
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: decoArrowSlide 2.6s ease-in-out infinite;
+    }
+    @keyframes decoArrowSlide {
+      0%, 100% { transform: translate(0, -50%); opacity: 0.5; }
+      50%      { transform: translate(6px, -50%); opacity: 1; }
+    }
+
+    @media (max-width: 700px) {
+      .deco-cube { width: 90px; height: 90px; right: 30px; bottom: 100px; }
+      .deco-cube__face--f  { transform: translateZ(45px); }
+      .deco-cube__face--b  { transform: rotateY(180deg) translateZ(45px); }
+      .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(45px); }
+      .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(45px); }
+      .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(45px); }
+      .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(45px); }
+      .deco-halftone--tl { width: 130px; height: 130px; top: 30px; left: 30px; }
+      .scroll-hint { left: 12px; }
+      .deco-arrow--boundary { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .deco-cube__box,
+      .deco-square--boundary,
+      .deco-arrow--boundary,
+      .scroll-hint__arrow { animation: none; }
     }
 
   </style>

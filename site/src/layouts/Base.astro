@@ -39,11 +39,99 @@ const {
   </head>
   <body class={pageClass}>
     <a class="skip-to-content" href="#MainContent">Skip to content</a>
+
+    <!-- Page-load transition. Solid slate-violet panel with brand mark
+         drops down over the page, then slides up off-screen once the
+         page has settled. JS removes it after paint. -->
+    <div id="siteLoader" class="site-loader" aria-hidden="true">
+      <div class="site-loader__brand">
+        <span class="site-loader__mark"></span>
+        <span class="site-loader__text">tokyo zero</span>
+      </div>
+      <span class="site-loader__ticker">// dram-soc.org &middot; loading</span>
+    </div>
+    <script is:inline>
+      (function () {
+        const el = document.getElementById("siteLoader");
+        if (!el) return;
+        const kill = () => setTimeout(() => el.classList.add("is-gone"), 220);
+        if (document.readyState === "complete") kill();
+        else window.addEventListener("load", kill, { once: true });
+        // Safety net in case load never fires (cached hero, etc.)
+        setTimeout(kill, 1600);
+      })();
+    </script>
+
     {showHeader && <MiscHeader title={miscTitle} showAnnouncement={showAnnouncement} />}
     <main id="MainContent" class="content-for-layout" role="main">
       <slot />
     </main>
     {showFooter && <MiscFooter />}
     <SiteRails />
+
+    <style is:global>
+      /* Loader — full-viewport panel that slides up off-screen. */
+      .site-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        background:
+          radial-gradient(circle at 50% 50%, #5061b9 0%, #3d4a90 60%, #2e3670 100%);
+        color: #fff;
+        transform: translateY(0);
+        transition:
+          transform 700ms cubic-bezier(0.76, 0, 0.24, 1) 260ms,
+          opacity 320ms ease 900ms;
+      }
+      .site-loader.is-gone {
+        transform: translateY(-101%);
+        opacity: 0;
+        pointer-events: none;
+      }
+      .site-loader__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
+        font-weight: 400;
+        font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+        letter-spacing: 0.32em;
+        text-transform: lowercase;
+        color: #fff;
+        opacity: 0;
+        transform: translateY(8px);
+        animation: siteLoaderFade 480ms cubic-bezier(0.16, 1, 0.3, 1) 120ms forwards;
+      }
+      .site-loader__mark {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        background: #ffee00;
+        clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%);
+        box-shadow: 0 0 24px rgba(255, 238, 0, 0.55);
+      }
+      .site-loader__ticker {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.32em;
+        text-transform: lowercase;
+        color: rgba(255, 255, 255, 0.6);
+        opacity: 0;
+        animation: siteLoaderFade 480ms cubic-bezier(0.16, 1, 0.3, 1) 280ms forwards;
+      }
+      @keyframes siteLoaderFade {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .site-loader { transition: opacity 200ms ease; }
+        .site-loader.is-gone { transform: none; }
+        .site-loader__brand, .site-loader__ticker { animation: none; opacity: 1; transform: none; }
+      }
+    </style>
   </body>
 </html>

@@ -1309,21 +1309,31 @@ const roster = [
        Palette matches the rest of the site: slate-violet + yellow
        #ffee00 on the graphite gradient already applied to #graphic.
        ============================================================ */
+    /* Constellation renders as a CSS-columns masonry so nodes pack
+       shortest-column-first — no dead vertical space, no forced
+       overlaps. Each node fills its column width and keeps its native
+       aspect ratio, so the horizontal footprint is uniform per column
+       and every piece reads at a real size on first scroll. */
     .cn-space {
       position: relative;
       width: 100%;
-      min-height: 150vh;
-      min-height: 150svh;
+      columns: 5;
+      column-gap: clamp(10px, 1vw, 16px);
       padding: clamp(20px, 2.5vh, 40px) 0;
       overflow: visible;
     }
+    @media (max-width: 1200px) { .cn-space { columns: 4; } }
+    @media (max-width: 900px)  { .cn-space { columns: 3; } }
+    @media (max-width: 560px)  { .cn-space { columns: 2; } }
+    @media (max-width: 380px)  { .cn-space { columns: 1; } }
     .cn-edges {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
+      display: none;
     }
     .cn-edge {
       stroke: rgba(80, 97, 185, 0.42);
@@ -1343,36 +1353,28 @@ const roster = [
       stroke-dasharray: 1 3;
     }
     .cn-node {
-      position: absolute;
-      top: var(--y, 50%);
-      left: var(--x, 50%);
-      margin: 0;
+      position: static;
+      display: block;
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      margin: 0 0 clamp(10px, 1vw, 16px) 0;
+      width: 100%;
       aspect-ratio: var(--ar, 1);
       overflow: hidden;
       border: 1px solid rgba(80, 97, 185, 0.35);
       background: #0a0913;
-      z-index: 2;
-      /* Pre-entrance state: dim, small, off-position — scroll-triggered
-         entrance transitions each node in with a staggered --d delay */
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.72);
-      transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform: translateY(24px) scale(0.96);
+      transition: opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 720ms cubic-bezier(0.16, 1, 0.3, 1),
                   border-color 260ms ease,
-                  box-shadow 400ms ease,
-                  filter 260ms ease,
-                  z-index 0ms 260ms;
-      transition-delay: calc(var(--d, 0) * 90ms);
-      will-change: transform;
+                  filter 260ms ease;
+      transition-delay: calc(var(--d, 0) * 60ms);
     }
     .cn-space.is-entered .cn-node {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      animation: cnFloat 16s ease-in-out infinite;
-      /* Start the float only after the entrance transition finishes so the
-         two transforms don't fight — negative delay + a +1s offset makes
-         each node join the drift at a different phase */
-      animation-delay: calc(1400ms + var(--d, 0) * -1s);
+      transform: translateY(0) scale(1);
     }
     .cn-node img,
     .cn-node video {
@@ -1405,10 +1407,8 @@ const roster = [
     }
     .cn-node:hover .cn-node__tag { opacity: 1; transform: translateY(0); }
     .cn-node:hover {
-      animation-play-state: paused;
       border-color: rgba(255, 238, 0, 0.85);
       filter: brightness(1.05);
-      z-index: 20;
       transition: border-color 220ms ease, filter 220ms ease;
     }
     /* Pulsing yellow "playing" dot on video nodes */
@@ -1425,18 +1425,25 @@ const roster = [
       animation: gdPulse 1.6s ease-in-out infinite;
       pointer-events: none;
     }
-    /* Size tiers — sized so tall portraits at typical viewport heights
-       don't extend into the next row (row spacing ~20% of 150svh
-       section is ~270px on a 900px viewport). --s handles 0.75-1
-       aspect portraits/squares, --xs is for tall 0.55-0.65 pieces so
-       their pixel height stays inside the row gap. */
-    .cn-node--xl { width: clamp(300px, 30vw, 540px); }
-    .cn-node--l  { width: clamp(230px, 22vw, 400px); }
-    .cn-node--m  { width: clamp(180px, 17vw, 320px); }
-    .cn-node--s  { width: clamp(150px, 13vw, 240px); }
-    .cn-node--xs { width: clamp(120px, 10vw, 190px); }
-    /* Slim vertical totem — the super-tall character close-ups strip */
-    .cn-node--totem { width: clamp(60px, 5vw, 100px); }
+    /* Size tiers are no-ops in the masonry layout — every cell fills
+       the column width. Classes remain for compatibility. */
+    .cn-node--xl, .cn-node--l, .cn-node--m,
+    .cn-node--s, .cn-node--xs { width: 100%; }
+    /* Character-close-ups strip is 0.13 aspect — at column width that
+       would be ~8x column height. Clamp it to a reasonable height so
+       the top portion shows without dominating a whole column. */
+    .cn-node--totem {
+      width: 100%;
+      aspect-ratio: unset;
+      max-height: clamp(320px, 42vh, 480px);
+    }
+    .cn-node--totem img {
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    /* Hide the ambient stars (were positioned relative to abs nodes) */
+    .cn-star { display: none; }
 
     /* Ambient constellation stars — small pulsing points that fill the gaps
        between nodes and reinforce the "night sky" feel. Slate-violet, with

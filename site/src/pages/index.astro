@@ -95,15 +95,28 @@ const roster = [
        02 · GRAPHIC DESIGN
        ================================================================ -->
   <section id="graphic" class="sec">
-    <div class="sec__head" data-reveal>
-      <p class="sec__num">02 / 05</p>
-      <p class="sec__eyebrow">graphic design</p>
-      <h2 class="sec__title">the illustration.</h2>
-      <p class="sec__lede">
-        Character studies, key art, print-ready compositions. A featured piece
-        rotates in this frame &mdash; each one is the source for something
-        in the catalog.
-      </p>
+    <div class="sec__head sec__head--with-themes" data-reveal>
+      <div class="sec__head-text">
+        <p class="sec__num">02 / 05</p>
+        <p class="sec__eyebrow">graphic design</p>
+        <h2 class="sec__title">the illustration.</h2>
+        <p class="sec__lede">
+          Character studies, key art, print-ready compositions. A featured piece
+          rotates in this frame &mdash; each one is the source for something
+          in the catalog.
+        </p>
+      </div>
+      <aside class="theme-picks" aria-label="Themed storefronts">
+        <span class="theme-picks__label">themed rooms</span>
+        <a class="theme-pick theme-pick--psg" href="/work/psg/" aria-label="Enter PSG storefront">
+          <span class="theme-pick__mark"></span>
+          <span class="theme-pick__name">psg</span>
+        </a>
+        <a class="theme-pick theme-pick--nso" href="/work/nso/" aria-label="Enter NSO storefront">
+          <span class="theme-pick__mark"></span>
+          <span class="theme-pick__name">nso</span>
+        </a>
+      </aside>
     </div>
 
     <div class="sec-tabs">
@@ -309,6 +322,16 @@ const roster = [
           <img src="/showcase/graphics/banner-02.webp" alt="Banner 02" loading="lazy" />
           <span class="cn-node__tag">banner &middot; 02</span>
         </figure>
+
+        <!-- Theme storefront screenshots -->
+        <figure class="cn-node cn-node--m" style="--ar: 1.45; --d: 24" data-tag="theme · psg">
+          <img src="/showcase/graphics/theme-psg.webp" alt="PSG themed storefront screenshot" loading="lazy" />
+          <span class="cn-node__tag">theme &middot; psg</span>
+        </figure>
+        <figure class="cn-node cn-node--m" style="--ar: 1.45; --d: 25" data-tag="theme · nso">
+          <img src="/showcase/graphics/theme-nso.webp" alt="NSO themed storefront screenshot" loading="lazy" />
+          <span class="cn-node__tag">theme &middot; nso</span>
+        </figure>
       </div>
 
       <div class="gd-mark gd-mark--foot">
@@ -378,25 +401,6 @@ const roster = [
       </div>
     </div>
 
-    <!-- Compact theme selector — small aside inside the roster -->
-    <div class="theme-mini" data-reveal>
-      <div class="theme-mini__head">
-        <p class="theme-mini__eyebrow">experimental &middot; themed rooms</p>
-        <p class="theme-mini__lede">two alternate storefronts &mdash; each takes over the full page.</p>
-      </div>
-      <div class="theme-mini__grid">
-        <a class="theme-sq theme-sq--psg" href="/work/psg/" aria-label="Enter PSG storefront">
-          <img class="theme-sq__char theme-sq__char--l" src="/assets/psg-panty-sticker.webp"    alt="" aria-hidden="true" />
-          <img class="theme-sq__char theme-sq__char--r" src="/assets/psg-stocking-sticker.webp" alt="" aria-hidden="true" />
-          <span class="theme-sq__label">psg</span>
-        </a>
-        <a class="theme-sq theme-sq--nso" href="/work/nso/" aria-label="Enter NSO storefront">
-          <img class="theme-sq__char theme-sq__char--l" src="/assets/nso-ame-sticker.webp"    alt="" aria-hidden="true" />
-          <img class="theme-sq__char theme-sq__char--r" src="/assets/nso-kangel-sticker.webp" alt="" aria-hidden="true" />
-          <span class="theme-sq__label">nso</span>
-        </a>
-      </div>
-    </div>
   </section>
 
   <!-- ================================================================
@@ -2297,7 +2301,84 @@ const roster = [
       font-weight: 600;
     }
 
-    /* ---- Compact theme selector at bottom of roster ---- */
+    /* ============================================================
+       Theme picks in #graphic sec__head — minimalist squares that
+       shove the eyebrow/title/lede to the left and dock the two
+       themed-storefront entry points on the right.
+       ============================================================ */
+    #graphic .sec__head--with-themes {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: clamp(24px, 4vw, 72px);
+      max-width: none;
+    }
+    #graphic .sec__head-text { max-width: 820px; }
+    .theme-picks {
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(10px, 1vw, 16px);
+      padding-bottom: 4px;
+    }
+    .theme-picks__label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: lowercase;
+      color: rgba(255, 255, 255, 0.55);
+      align-self: stretch;
+      padding: 4px 0;
+    }
+    .theme-pick {
+      position: relative;
+      width: clamp(60px, 6vw, 84px);
+      height: clamp(60px, 6vw, 84px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 0 8px;
+      text-decoration: none;
+      transition: border-color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+    .theme-pick:hover {
+      border-color: #ffee00;
+      background: rgba(255, 238, 0, 0.06);
+      transform: translateY(-2px);
+    }
+    .theme-pick__mark {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .theme-pick--psg .theme-pick__mark {
+      background: linear-gradient(135deg, #ff8bb6 0%, #d6f8ff 100%);
+      box-shadow: 0 0 10px rgba(255, 139, 182, 0.5);
+    }
+    .theme-pick--nso .theme-pick__mark {
+      background: linear-gradient(135deg, #a3b3ff 0%, #ffcae6 100%);
+      box-shadow: 0 0 10px rgba(163, 179, 255, 0.5);
+    }
+    .theme-pick__name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: lowercase;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    @media (max-width: 700px) {
+      #graphic .sec__head--with-themes { grid-template-columns: 1fr; }
+      .theme-picks { justify-content: flex-start; }
+      .theme-picks__label { writing-mode: horizontal-tb; transform: none; }
+    }
+
+    /* ---- Compact theme selector at bottom of roster (retired — kept for compat) ---- */
     .theme-mini {
       margin-top: clamp(56px, 7vw, 96px);
       padding-top: clamp(40px, 4.5vw, 56px);

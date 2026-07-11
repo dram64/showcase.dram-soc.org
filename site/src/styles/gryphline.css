@@ -58,7 +58,15 @@ html[data-theme="gryphline"] a:hover { color: var(--gl-ink); }
 .gl-nav {
   position: sticky;
   top: 0;
-  z-index: 50;
+  /* Clear the fixed SiteRails on both edges so the sticky bar doesn't
+     slip under them. --rails-w is defined globally in SiteRails.astro
+     (60px desktop / 44px ≤800px / 36px ≤500px). */
+  left: var(--rails-w, 60px);
+  right: var(--rails-w, 60px);
+  margin-left: var(--rails-w, 60px);
+  margin-right: var(--rails-w, 60px);
+  width: auto;
+  z-index: 90;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -215,7 +223,7 @@ html[data-theme="gryphline"] a:hover { color: var(--gl-ink); }
   border: 1px solid var(--gl-cyan);
   clip-path: polygon(0 0, 100% 0, 100% 60%, calc(100% - 8px) 100%, 0 100%);
 }
-.gl-tag--amber { color: var(--gl-amber); background: var(--gl-amber-soft); border-color: var(--gl-amber); }
+.gl-tag--amber { color: var(--gl-ink); background: rgba(255, 238, 0, 0.30); border-color: rgba(255, 238, 0, 0.65); }
 .gl-tag--green { color: var(--gl-green); background: rgba(109, 227, 142, 0.10); border-color: var(--gl-green); }
 .gl-tag--red   { color: var(--gl-red);   background: rgba(255, 85, 102, 0.10);  border-color: var(--gl-red); }
 .gl-tag::before {
@@ -349,10 +357,13 @@ html[data-theme="gryphline"] a:hover { color: var(--gl-ink); }
 .gl-tbl code {
   font-family: var(--gl-mono);
   font-size: 0.88rem;
-  color: var(--gl-amber);
-  background: var(--gl-amber-soft);
+  /* Was yellow-on-yellow — illegible on cream. Now dark ink on the
+     slate-violet-tinted misc chip look (matches gl-lede code). */
+  color: var(--gl-ink);
+  background: rgba(80, 97, 185, 0.14);
   padding: 2px 6px;
   border-radius: 2px;
+  font-weight: 500;
 }
 .gl-tbl__num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--gl-mono); }
 .gl-tbl__total td { border-bottom: none; border-top: 2px solid var(--gl-cyan); font-weight: 600; }

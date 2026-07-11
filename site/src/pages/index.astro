@@ -955,14 +955,7 @@ const roster = [
       transition: opacity 900ms ease-in-out;
       will-change: opacity;
     }
-    .hero__art.is-active {
-      opacity: 1;
-      animation: heroKenBurns 22s ease-out both;
-    }
-    @keyframes heroKenBurns {
-      from { transform: scale(1); }
-      to   { transform: scale(1.06); }
-    }
+    .hero__art.is-active { opacity: 1; }
 
     /* ============================================================
        Scroll-reveal — elements marked [data-reveal] fade + rise in
@@ -1017,7 +1010,6 @@ const roster = [
     }
     @media (prefers-reduced-motion: reduce) {
       [data-reveal] { opacity: 1; transform: none; transition: none; }
-      .hero__art.is-active { animation: none; }
       .cn-node { animation: none !important; opacity: 1; transform: translate(-50%, -50%); }
       .cn-edge { animation: none; }
     }
@@ -1326,9 +1318,9 @@ const roster = [
     .cn-space {
       position: relative;
       width: 100%;
-      min-height: 140vh;
-      min-height: 140svh;
-      padding: clamp(24px, 3vh, 40px) 0;
+      min-height: 110vh;
+      min-height: 110svh;
+      padding: clamp(16px, 2vh, 30px) 0;
       overflow: visible;
     }
     .cn-edges {
@@ -1439,14 +1431,15 @@ const roster = [
       animation: gdPulse 1.6s ease-in-out infinite;
       pointer-events: none;
     }
-    /* Size tiers — tuned for a 30-node canvas, avoids overlap while
-       keeping pieces readable (still ~2-3x the original constellation) */
-    .cn-node--xl { width: clamp(260px, 28vw, 500px); }
-    .cn-node--l  { width: clamp(200px, 20vw, 360px); }
-    .cn-node--m  { width: clamp(150px, 14vw, 260px); }
-    .cn-node--s  { width: clamp(110px, 10vw, 190px); }
+    /* Size tiers — bumped so graphics fill the section instead of
+       hovering in dead space. Wider than one 5-column slot for some
+       tiers, so nodes visually overlap into their neighbors' gutters. */
+    .cn-node--xl { width: clamp(360px, 38vw, 660px); }
+    .cn-node--l  { width: clamp(280px, 28vw, 500px); }
+    .cn-node--m  { width: clamp(210px, 20vw, 380px); }
+    .cn-node--s  { width: clamp(160px, 15vw, 280px); }
     /* Slim vertical totem — the super-tall character close-ups strip */
-    .cn-node--totem { width: clamp(50px, 5vw, 90px); }
+    .cn-node--totem { width: clamp(70px, 6vw, 110px); }
 
     /* Ambient constellation stars — small pulsing points that fill the gaps
        between nodes and reinforce the "night sky" feel. Slate-violet, with

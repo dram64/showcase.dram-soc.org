@@ -1,30 +1,29 @@
 /* ============================================================
-   GRYPHLINE — dark tech portfolio shell
-   Palette + typography + component primitives for the ops layer
-   of showcase.dram-soc.org. Applied via Base.astro when
-   theme !== "misc". Kept in one file so the compiled bundle is
-   scoped to the pages that opt in.
+   GRYPHLINE — was a dark tech ops shell; repainted to the misc
+   Tokyo Zero cream + slate-violet aesthetic so /status, /cost,
+   /insights, /architecture all match the landing page. Class
+   names kept intact so the page markup didn't need to change.
    ============================================================ */
 
 :root {
-  --gl-bg:          #0a0d12;   /* deep matte navy-black */
-  --gl-bg-panel:    #12161d;   /* subtly lighter for cards */
-  --gl-bg-elev:     #1a1f27;   /* hover / focus */
-  --gl-line:        rgba(230, 240, 245, 0.10);
-  --gl-line-strong: rgba(230, 240, 245, 0.22);
-  --gl-ink:         #e8ecef;
-  --gl-ink-soft:    rgba(232, 236, 239, 0.55);
-  --gl-ink-dim:     rgba(232, 236, 239, 0.32);
-  --gl-cyan:        #3DEAFF;   /* electric cyan accent */
-  --gl-cyan-soft:   rgba(61, 234, 255, 0.14);
-  --gl-amber:       #FFB84D;   /* warm secondary accent */
-  --gl-amber-soft:  rgba(255, 184, 77, 0.12);
-  --gl-red:         #FF5566;   /* status: bad */
-  --gl-green:       #6DE38E;   /* status: ok */
-  --gl-grid:        rgba(61, 234, 255, 0.04);
+  --gl-bg:          #fdfcf9;   /* misc cream */
+  --gl-bg-panel:    #ffffff;
+  --gl-bg-elev:     #f6f4ed;   /* hover / focus */
+  --gl-line:        rgba(20, 19, 26, 0.10);
+  --gl-line-strong: rgba(20, 19, 26, 0.22);
+  --gl-ink:         #14131a;   /* misc ink */
+  --gl-ink-soft:    rgba(20, 19, 26, 0.55);
+  --gl-ink-dim:     rgba(20, 19, 26, 0.32);
+  --gl-cyan:        #5061b9;   /* was electric cyan — now misc slate-violet */
+  --gl-cyan-soft:   rgba(80, 97, 185, 0.12);
+  --gl-amber:       #ffee00;   /* was tech amber — now misc yellow brand */
+  --gl-amber-soft:  rgba(255, 238, 0, 0.14);
+  --gl-red:         #d13a3a;   /* status: bad, softened for cream */
+  --gl-green:       #2e8b57;   /* status: ok, softened for cream */
+  --gl-grid:        rgba(80, 97, 185, 0.04);
 
-  --gl-display:     "Chakra Petch", "Rajdhani", ui-sans-serif, system-ui, sans-serif;
-  --gl-sans:        "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --gl-display:     "Apex Mk3", ui-sans-serif, system-ui, sans-serif;
+  --gl-sans:        "Branding Pro", "Apex Mk3", ui-sans-serif, system-ui, sans-serif;
   --gl-mono:        "JetBrains Mono", ui-monospace, Consolas, monospace;
 }
 
@@ -36,7 +35,7 @@ html[data-theme="gryphline"], html[data-theme="gryphline"] body {
   min-height: 100vh;
 }
 
-/* subtle scanline grid overlay across the whole shell */
+/* subtle grid overlay — kept but toned way down for cream bg */
 html[data-theme="gryphline"] body::before {
   content: "";
   position: fixed;
@@ -47,12 +46,12 @@ html[data-theme="gryphline"] body::before {
     linear-gradient(var(--gl-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--gl-grid) 1px, transparent 1px);
   background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 90%);
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 92%);
 }
 html[data-theme="gryphline"] main { position: relative; z-index: 1; }
 
 html[data-theme="gryphline"] a { color: var(--gl-cyan); text-decoration: none; }
-html[data-theme="gryphline"] a:hover { color: var(--gl-amber); }
+html[data-theme="gryphline"] a:hover { color: var(--gl-ink); }
 
 /* ==== TOP NAV BAR ==== */
 
@@ -65,7 +64,7 @@ html[data-theme="gryphline"] a:hover { color: var(--gl-amber); }
   align-items: center;
   padding: 14px clamp(20px, 4vw, 48px);
   border-bottom: 1px solid var(--gl-line);
-  background: rgba(10, 13, 18, 0.85);
+  background: rgba(253, 252, 249, 0.86);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }

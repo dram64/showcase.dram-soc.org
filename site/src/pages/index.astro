@@ -211,7 +211,6 @@ const featured = [
             <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
             <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
           </video>
-          <span class="cn-node__rec" aria-hidden="true">rec</span>
           <span class="cn-node__tag">header mograph &middot; motion</span>
         </figure>
         <figure class="cn-node cn-node--l" style="--ar: 2.37; --x: 60%; --y: 30%; --d: 6" data-tag="citlali · header">
@@ -237,7 +236,6 @@ const featured = [
             <source src="/showcase/motion/comp-1-1.webm" type="video/webm" />
             <source src="/showcase/motion/comp-1-1.mp4" type="video/mp4" />
           </video>
-          <span class="cn-node__rec" aria-hidden="true">rec</span>
           <span class="cn-node__tag">comp 1_1 &middot; reel</span>
         </figure>
         <figure class="cn-node cn-node--l" style="--ar: 2.22; --x: 52%; --y: 50%; --d: 11" data-tag="chii · widescreen">
@@ -1324,40 +1322,6 @@ const featured = [
       filter: saturate(1.05);
     }
 
-    /* Video cell REC indicator — small red dot + REC label in the
-       top-right corner. Replaces the earlier yellow gd-pulse; feels
-       more cinematic and matches the "we ship motion pieces too" cue. */
-    .cn-node--video .cn-node__rec {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      z-index: 3;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 2px 6px 2px 4px;
-      background: rgba(20, 19, 26, 0.72);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.56rem;
-      letter-spacing: 0.28em;
-      color: #ff6060;
-      pointer-events: none;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    .cn-node--video .cn-node__rec::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #ff4040;
-      box-shadow: 0 0 8px rgba(255, 64, 64, 0.55);
-      animation: recPulse 1.4s ease-in-out infinite;
-    }
-    @keyframes recPulse {
-      0%, 100% { opacity: 0.55; transform: scale(0.9); }
-      50%      { opacity: 1;    transform: scale(1.1); }
-    }
     /* Size tiers are no-ops in the masonry layout — every cell fills
        the column width. Classes remain for compatibility. */
     .cn-node--xl, .cn-node--l, .cn-node--m,

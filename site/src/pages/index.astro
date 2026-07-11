@@ -145,140 +145,201 @@ const roster = [
       <div class="cn-space" aria-label="Constellation of graphic design pieces">
         <svg class="cn-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <!-- Motion/hero triad (yellow — the two reels + widescreen) -->
-          <line class="cn-edge cn-edge--yellow" x1="46" y1="30" x2="66" y2="52" />
-          <line class="cn-edge cn-edge--yellow" x1="46" y1="30" x2="26" y2="52" />
-          <line class="cn-edge cn-edge--yellow" x1="26" y1="52" x2="66" y2="52" />
+          <line class="cn-edge cn-edge--yellow" x1="32" y1="24" x2="52" y2="44" />
+          <line class="cn-edge cn-edge--yellow" x1="32" y1="24" x2="28" y2="46" />
+          <line class="cn-edge cn-edge--yellow" x1="28" y1="46" x2="52" y2="44" />
 
-          <!-- Character portrait cluster (upper-left arc, 4 nodes) -->
-          <line class="cn-edge" x1="12" y1="20" x2="28" y2="10" />
-          <line class="cn-edge" x1="12" y1="20" x2="24" y2="30" />
-          <line class="cn-edge" x1="24" y1="30" x2="28" y2="10" />
-          <line class="cn-edge" x1="24" y1="30" x2="8"  y2="38" />
-          <line class="cn-edge" x1="12" y1="20" x2="8"  y2="38" />
+          <!-- Character cluster (upper-left) -->
+          <line class="cn-edge" x1="10" y1="12" x2="28" y2="8" />
+          <line class="cn-edge" x1="10" y1="12" x2="10" y2="28" />
+          <line class="cn-edge" x1="10" y1="28" x2="10" y2="44" />
+          <line class="cn-edge" x1="28" y1="8"  x2="50" y2="10" />
 
-          <!-- Wide + tall banner + bigger-graphics cluster (right) -->
-          <line class="cn-edge" x1="80" y1="18" x2="92" y2="42" />
-          <line class="cn-edge" x1="92" y1="42" x2="93" y2="65" />
-          <line class="cn-edge" x1="80" y1="18" x2="56" y2="20" />
-          <line class="cn-edge" x1="56" y1="20" x2="46" y2="30" />
+          <!-- Right cluster (banners + tall) -->
+          <line class="cn-edge" x1="58" y1="26" x2="88" y2="10" />
+          <line class="cn-edge" x1="88" y1="10" x2="94" y2="25" />
+          <line class="cn-edge" x1="94" y1="25" x2="92" y2="44" />
+          <line class="cn-edge" x1="92" y1="44" x2="94" y2="62" />
+          <line class="cn-edge" x1="94" y1="62" x2="88" y2="76" />
 
-          <!-- Square / print cluster (bottom center) -->
-          <line class="cn-edge" x1="36" y1="74" x2="52" y2="85" />
-          <line class="cn-edge" x1="52" y1="85" x2="68" y2="74" />
-          <line class="cn-edge" x1="36" y1="74" x2="68" y2="74" />
+          <!-- Middle grid (row 4) -->
+          <line class="cn-edge" x1="14" y1="58" x2="30" y2="60" />
+          <line class="cn-edge" x1="30" y1="60" x2="46" y2="60" />
+          <line class="cn-edge" x1="46" y1="60" x2="62" y2="60" />
+          <line class="cn-edge" x1="62" y1="60" x2="78" y2="60" />
 
-          <!-- Bottom floaters + slim totem -->
-          <line class="cn-edge" x1="14" y1="78" x2="36" y2="74" />
-          <line class="cn-edge" x1="68" y1="74" x2="84" y2="84" />
-          <line class="cn-edge" x1="8"  y1="38" x2="5"  y2="60" />
-          <line class="cn-edge" x1="5"  y1="60" x2="14" y2="78" />
+          <!-- Bottom grid -->
+          <line class="cn-edge" x1="22" y1="74" x2="40" y2="76" />
+          <line class="cn-edge" x1="40" y1="76" x2="56" y2="76" />
+          <line class="cn-edge" x1="56" y1="76" x2="72" y2="76" />
+          <line class="cn-edge" x1="72" y1="76" x2="88" y2="76" />
+
+          <!-- Left rail / totem -->
+          <line class="cn-edge" x1="10" y1="44" x2="6"  y2="72" />
+          <line class="cn-edge" x1="6"  y1="72" x2="18" y2="90" />
+
+          <!-- Bottom-band -->
+          <line class="cn-edge" x1="18" y1="90" x2="50" y2="90" />
+          <line class="cn-edge" x1="50" y1="90" x2="82" y2="92" />
 
           <!-- Cross-cluster narrative edges (faint) -->
-          <line class="cn-edge cn-edge--faint" x1="28" y1="10" x2="80" y2="18" />
-          <line class="cn-edge cn-edge--faint" x1="12" y1="20" x2="46" y2="30" />
-          <line class="cn-edge cn-edge--faint" x1="66" y1="52" x2="80" y2="18" />
-          <line class="cn-edge cn-edge--faint" x1="26" y1="52" x2="36" y2="74" />
-          <line class="cn-edge cn-edge--faint" x1="66" y1="52" x2="68" y2="74" />
-          <line class="cn-edge cn-edge--faint" x1="93" y1="65" x2="84" y2="84" />
-          <line class="cn-edge cn-edge--faint" x1="56" y1="20" x2="66" y2="52" />
+          <line class="cn-edge cn-edge--faint" x1="28" y1="8"  x2="88" y2="10" />
+          <line class="cn-edge cn-edge--faint" x1="10" y1="12" x2="32" y2="24" />
+          <line class="cn-edge cn-edge--faint" x1="52" y1="44" x2="88" y2="10" />
+          <line class="cn-edge cn-edge--faint" x1="28" y1="46" x2="30" y2="60" />
+          <line class="cn-edge cn-edge--faint" x1="52" y1="44" x2="62" y2="60" />
+          <line class="cn-edge cn-edge--faint" x1="88" y1="76" x2="82" y2="92" />
+          <line class="cn-edge cn-edge--faint" x1="50" y1="10" x2="52" y2="44" />
         </svg>
 
-        <!-- Ambient stars — small yellow pulses scattered through the gaps -->
-        <span class="cn-star" style="--x: 40%; --y: 45%; --sd: 0" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 60%; --y: 38%; --sd: 1" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 78%; --y: 58%; --sd: 2" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 20%; --y: 68%; --sd: 3" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 44%; --y: 60%; --sd: 4" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 88%; --y: 30%; --sd: 5" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 32%; --y: 92%; --sd: 6" aria-hidden="true"></span>
-        <span class="cn-star" style="--x: 72%; --y: 92%; --sd: 7" aria-hidden="true"></span>
-        <span class="cn-star cn-star--big" style="--x: 50%; --y: 5%; --sd: 8" aria-hidden="true"></span>
+        <!-- Ambient stars — pulses filling gaps between nodes -->
+        <span class="cn-star" style="--x: 40%; --y: 20%; --sd: 0" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 60%; --y: 40%; --sd: 1" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 80%; --y: 50%; --sd: 2" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 20%; --y: 50%; --sd: 3" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 44%; --y: 70%; --sd: 4" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 88%; --y: 82%; --sd: 5" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 32%; --y: 82%; --sd: 6" aria-hidden="true"></span>
+        <span class="cn-star" style="--x: 66%; --y: 84%; --sd: 7" aria-hidden="true"></span>
+        <span class="cn-star cn-star--big" style="--x: 50%; --y: 4%; --sd: 8" aria-hidden="true"></span>
         <span class="cn-star cn-star--big" style="--x: 96%; --y: 5%; --sd: 9" aria-hidden="true"></span>
 
-        <!-- Character portrait cluster — upper-left arc, 4 pieces -->
-        <figure class="cn-node cn-node--m" style="--ar: 0.80; --x: 12%; --y: 20%; --d: 0" data-tag="cover 04">
+        <!-- Row 1 · Top (y 8-14) -->
+        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 10%; --y: 12%; --d: 0" data-tag="portrait 01">
+          <img src="/showcase/graphics/portrait-01.webp" alt="Portrait 01" loading="lazy" />
+          <span class="cn-node__tag">portrait · 01</span>
+        </figure>
+        <figure class="cn-node cn-node--m" style="--ar: 2.22; --x: 30%; --y: 8%; --d: 1" data-tag="banner 01">
+          <img src="/showcase/graphics/banner-01.webp" alt="Banner 01" loading="lazy" />
+          <span class="cn-node__tag">banner · 01</span>
+        </figure>
+        <figure class="cn-node cn-node--m" style="--ar: 0.80; --x: 50%; --y: 10%; --d: 2" data-tag="cover 04">
           <img src="/showcase/graphics/cover.webp" alt="Cover 04" loading="lazy" />
           <span class="cn-node__tag">cover 04</span>
         </figure>
-        <figure class="cn-node cn-node--m" style="--ar: 0.79; --x: 28%; --y: 10%; --d: 3" data-tag="citlali">
-          <img src="/showcase/graphics/citlali.webp" alt="Citlali key art" loading="lazy" />
+        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 70%; --y: 8%; --d: 3" data-tag="bigger graphics">
+          <img src="/showcase/graphics/bigger-graphics.webp" alt="Bigger graphics" loading="lazy" />
+          <span class="cn-node__tag">bigger graphics</span>
+        </figure>
+        <figure class="cn-node cn-node--m" style="--ar: 0.79; --x: 88%; --y: 10%; --d: 4" data-tag="citlali">
+          <img src="/showcase/graphics/citlali.webp" alt="Citlali" loading="lazy" />
           <span class="cn-node__tag">citlali</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 24%; --y: 30%; --d: 5" data-tag="past designs">
+
+        <!-- Row 2 · Upper-middle (y 22-30) -->
+        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 10%; --y: 28%; --d: 5" data-tag="past designs">
           <img src="/showcase/graphics/past-designs.webp" alt="Past designs" loading="lazy" />
           <span class="cn-node__tag">past designs</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 8%; --y: 38%; --d: 6" data-tag="fmig · post">
-          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
-          <span class="cn-node__tag">fmig · post</span>
-        </figure>
-
-        <!-- Motion / hero triad — center of gravity -->
-        <figure class="cn-node cn-node--xl cn-node--video" style="--ar: 2.37; --x: 46%; --y: 30%; --d: 1" data-tag="header mograph">
+        <figure class="cn-node cn-node--xl cn-node--video" style="--ar: 2.37; --x: 32%; --y: 24%; --d: 6" data-tag="header mograph">
           <video muted loop playsinline autoplay preload="metadata" poster="/showcase/motion/header-mograph-poster.jpg">
             <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
             <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
           </video>
           <span class="cn-node__tag">header mograph &middot; motion</span>
         </figure>
-        <figure class="cn-node cn-node--l" style="--ar: 2.22; --x: 66%; --y: 52%; --d: 4" data-tag="chii · widescreen">
-          <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
-          <span class="cn-node__tag">chii &middot; widescreen</span>
+        <figure class="cn-node cn-node--l" style="--ar: 2.37; --x: 62%; --y: 26%; --d: 7" data-tag="citlali · header">
+          <img src="/showcase/graphics/citlali-header.webp" alt="Citlali header" loading="lazy" />
+          <span class="cn-node__tag">citlali &middot; header</span>
         </figure>
-        <figure class="cn-node cn-node--m cn-node--video" style="--ar: 0.5625; --x: 26%; --y: 52%; --d: 7" data-tag="comp 1_1 · reel">
+        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 84%; --y: 28%; --d: 8" data-tag="portrait 02">
+          <img src="/showcase/graphics/portrait-02.webp" alt="Portrait 02" loading="lazy" />
+          <span class="cn-node__tag">portrait · 02</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.69; --x: 96%; --y: 26%; --d: 9" data-tag="cipher tiles">
+          <img src="/showcase/graphics/cipher-tiles.webp" alt="Cipher tiles" loading="lazy" />
+          <span class="cn-node__tag">cipher &middot; tiles</span>
+        </figure>
+
+        <!-- Row 3 · Middle (y 42-48) -->
+        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 10%; --y: 44%; --d: 10" data-tag="fmig · post">
+          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
+          <span class="cn-node__tag">fmig &middot; post</span>
+        </figure>
+        <figure class="cn-node cn-node--m cn-node--video" style="--ar: 0.5625; --x: 28%; --y: 46%; --d: 11" data-tag="comp 1_1 · reel">
           <video muted loop playsinline autoplay preload="metadata" poster="/showcase/motion/comp-1-1-poster.jpg">
             <source src="/showcase/motion/comp-1-1.webm" type="video/webm" />
             <source src="/showcase/motion/comp-1-1.mp4" type="video/mp4" />
           </video>
           <span class="cn-node__tag">comp 1_1 &middot; reel</span>
         </figure>
-
-        <!-- Wide + tall banner + bigger-graphics cluster (right) -->
-        <figure class="cn-node cn-node--l" style="--ar: 2.37; --x: 80%; --y: 18%; --d: 2" data-tag="citlali · header">
-          <img src="/showcase/graphics/citlali-header.webp" alt="Citlali header" loading="lazy" />
-          <span class="cn-node__tag">citlali &middot; header</span>
+        <figure class="cn-node cn-node--l" style="--ar: 2.22; --x: 52%; --y: 44%; --d: 12" data-tag="chii · widescreen">
+          <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen" loading="lazy" />
+          <span class="cn-node__tag">chii &middot; widescreen</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 56%; --y: 20%; --d: 4" data-tag="bigger graphics">
-          <img src="/showcase/graphics/bigger-graphics.webp" alt="Bigger graphics" loading="lazy" />
-          <span class="cn-node__tag">bigger graphics</span>
+        <figure class="cn-node cn-node--s" style="--ar: 1.25; --x: 76%; --y: 44%; --d: 13" data-tag="topbox">
+          <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
+          <span class="cn-node__tag">topbox</span>
         </figure>
-        <figure class="cn-node cn-node--m" style="--ar: 0.55; --x: 92%; --y: 42%; --d: 5" data-tag="cipher · vertical">
-          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical banner" loading="lazy" />
+        <figure class="cn-node cn-node--m" style="--ar: 0.55; --x: 92%; --y: 46%; --d: 14" data-tag="cipher · vertical">
+          <img src="/showcase/graphics/cipher-vertical.webp" alt="Cipher vertical" loading="lazy" />
           <span class="cn-node__tag">cipher &middot; vertical</span>
         </figure>
-        <figure class="cn-node cn-node--m" style="--ar: 0.61; --x: 93%; --y: 65%; --d: 8" data-tag="fuwawa · tall">
+
+        <!-- Row 4 · Middle-lower (y 58-62) -->
+        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 14%; --y: 58%; --d: 15" data-tag="concept">
+          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
+          <span class="cn-node__tag">concept</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.75; --x: 30%; --y: 60%; --d: 16" data-tag="citlali · mobile">
+          <img src="/showcase/graphics/citlali-mobile.webp" alt="Citlali mobile" loading="lazy" />
+          <span class="cn-node__tag">citlali &middot; mobile</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 46%; --y: 60%; --d: 17" data-tag="product">
+          <img src="/showcase/graphics/product-square.webp" alt="Product square" loading="lazy" />
+          <span class="cn-node__tag">product</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 62%; --y: 60%; --d: 18" data-tag="cipher · print">
+          <img src="/showcase/graphics/cipher-print.webp" alt="Cipher print" loading="lazy" />
+          <span class="cn-node__tag">cipher &middot; print</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 78%; --y: 60%; --d: 19" data-tag="print 01">
+          <img src="/showcase/graphics/print-01.webp" alt="Print 01" loading="lazy" />
+          <span class="cn-node__tag">print · 01</span>
+        </figure>
+        <figure class="cn-node cn-node--m" style="--ar: 0.61; --x: 94%; --y: 62%; --d: 20" data-tag="fuwawa · tall">
           <img src="/showcase/graphics/fuwawa-banner.webp" alt="Fuwawa banner" loading="lazy" />
           <span class="cn-node__tag">fuwawa &middot; tall</span>
         </figure>
 
-        <!-- Square / print cluster (bottom center) -->
-        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 36%; --y: 74%; --d: 3" data-tag="concept">
-          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
-          <span class="cn-node__tag">concept</span>
+        <!-- Row 5 · Lower (y 72-78) -->
+        <figure class="cn-node cn-node--totem" style="--ar: 0.13; --x: 6%; --y: 72%; --d: 21" data-tag="close-ups">
+          <img src="/showcase/graphics/character-close-ups.webp" alt="Character close-ups strip" loading="lazy" />
+          <span class="cn-node__tag">close-ups</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 1; --x: 52%; --y: 85%; --d: 6" data-tag="product">
-          <img src="/showcase/graphics/product-square.webp" alt="Product square" loading="lazy" />
-          <span class="cn-node__tag">product</span>
+        <figure class="cn-node cn-node--s" style="--ar: 0.65; --x: 22%; --y: 74%; --d: 22" data-tag="fuwamoco · illust">
+          <img src="/showcase/graphics/fuwamoco-illust.webp" alt="Fuwamoco commercial illustration" loading="lazy" />
+          <span class="cn-node__tag">fuwamoco &middot; illust</span>
         </figure>
-        <figure class="cn-node cn-node--s" style="--ar: 1.25; --x: 68%; --y: 74%; --d: 9" data-tag="topbox">
-          <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
-          <span class="cn-node__tag">topbox</span>
+        <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 40%; --y: 76%; --d: 23" data-tag="portrait 03">
+          <img src="/showcase/graphics/portrait-03.webp" alt="Portrait 03" loading="lazy" />
+          <span class="cn-node__tag">portrait &middot; 03</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.56; --x: 56%; --y: 76%; --d: 24" data-tag="ig · pin promo">
+          <img src="/showcase/graphics/ig-pin-promo.webp" alt="IG pin promo" loading="lazy" />
+          <span class="cn-node__tag">ig &middot; pin promo</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.56; --x: 72%; --y: 76%; --d: 25" data-tag="yx · story">
+          <img src="/showcase/graphics/yx-story.webp" alt="Yx story" loading="lazy" />
+          <span class="cn-node__tag">yx &middot; story</span>
+        </figure>
+        <figure class="cn-node cn-node--s" style="--ar: 0.55; --x: 88%; --y: 76%; --d: 26" data-tag="nso · psg anm">
+          <img src="/showcase/graphics/nsopsg-anm.webp" alt="NSO/PSG animation" loading="lazy" />
+          <span class="cn-node__tag">nso · psg anm</span>
         </figure>
 
-        <!-- Wide floaters (bottom corners) -->
-        <figure class="cn-node cn-node--m" style="--ar: 2.37; --x: 14%; --y: 78%; --d: 4" data-tag="ayaka · header">
+        <!-- Row 6 · Bottom banners -->
+        <figure class="cn-node cn-node--m" style="--ar: 2.37; --x: 18%; --y: 90%; --d: 27" data-tag="ayaka · header">
           <img src="/showcase/graphics/dodgers-ayaka-header.webp" alt="Dodgers Ayaka header" loading="lazy" />
           <span class="cn-node__tag">ayaka &middot; header</span>
         </figure>
-        <figure class="cn-node cn-node--m" style="--ar: 1.78; --x: 84%; --y: 84%; --d: 10" data-tag="fuwamoco · header">
+        <figure class="cn-node cn-node--m" style="--ar: 2.22; --x: 50%; --y: 90%; --d: 28" data-tag="banner 02">
+          <img src="/showcase/graphics/banner-02.webp" alt="Banner 02" loading="lazy" />
+          <span class="cn-node__tag">banner · 02</span>
+        </figure>
+        <figure class="cn-node cn-node--m" style="--ar: 1.78; --x: 82%; --y: 92%; --d: 29" data-tag="fuwamoco · header">
           <img src="/showcase/graphics/fuwamoco-header.webp" alt="Fuwamoco header" loading="lazy" />
           <span class="cn-node__tag">fuwamoco &middot; header</span>
-        </figure>
-
-        <!-- Slim vertical totem (left edge) — character close-ups strip -->
-        <figure class="cn-node cn-node--totem" style="--ar: 0.13; --x: 5%; --y: 60%; --d: 8" data-tag="close-ups">
-          <img src="/showcase/graphics/character-close-ups.webp" alt="Character close-ups strip" loading="lazy" />
-          <span class="cn-node__tag">close-ups</span>
         </figure>
       </div>
 
@@ -450,6 +511,12 @@ const roster = [
                 <span class="lead-3d__card-tag">10</span>
               </div>
             </button>
+            <button class="lead-3d__card" data-i="10" aria-label="Frame 11">
+              <div class="lead-3d__card-inner">
+                <img src="/showcase/photography/photo-11.webp" alt="Product photography frame 11" loading="lazy" />
+                <span class="lead-3d__card-tag">11</span>
+              </div>
+            </button>
           </div>
 
           <div class="lead-3d__ctrl">
@@ -465,6 +532,7 @@ const roster = [
               <button                   data-goto="7" aria-label="Frame 08"></button>
               <button                   data-goto="8" aria-label="Frame 09"></button>
               <button                   data-goto="9" aria-label="Frame 10"></button>
+              <button                   data-goto="10" aria-label="Frame 11"></button>
             </div>
             <button class="lead-3d__arrow" data-nav="next" aria-label="Next">&rarr;</button>
           </div>
@@ -694,6 +762,8 @@ const roster = [
           specs: [["set","studio · window light"], ["capture","a7iii · 85mm"], ["process","tone · retouch"]] },
         { name: "Frame 10", label: "lifestyle",    idx: "10",
           specs: [["set","desk build · softbox"],  ["capture","a7iii · 35mm"], ["process","color · sharpen"]] },
+        { name: "Frame 11", label: "portrait",     idx: "11",
+          specs: [["set","daylight · window"],     ["capture","iphone · 26mm"], ["process","color · balance"]] },
       ];
       const N = cards.length;
       let current = 0;
@@ -1282,8 +1352,8 @@ const roster = [
     .cn-space {
       position: relative;
       width: 100%;
-      min-height: 108vh;
-      min-height: 108svh;
+      min-height: 170vh;
+      min-height: 170svh;
       padding: clamp(24px, 3vh, 40px) 0;
       overflow: visible;
     }
@@ -1404,12 +1474,13 @@ const roster = [
       animation: gdPulse 1.6s ease-in-out infinite;
       pointer-events: none;
     }
-    /* Size tiers — bumped so pieces read at a glance, not as node dots */
-    .cn-node--xl { width: clamp(340px, 36vw, 640px); }
-    .cn-node--l  { width: clamp(260px, 26vw, 460px); }
-    .cn-node--m  { width: clamp(200px, 19vw, 340px); }
-    .cn-node--s  { width: clamp(150px, 14vw, 240px); }
-    /* Slim vertical totem — for the super-tall character close-ups strip */
+    /* Size tiers — tuned for a 30-node canvas, avoids overlap while
+       keeping pieces readable (still ~2-3x the original constellation) */
+    .cn-node--xl { width: clamp(260px, 28vw, 500px); }
+    .cn-node--l  { width: clamp(200px, 20vw, 360px); }
+    .cn-node--m  { width: clamp(150px, 14vw, 260px); }
+    .cn-node--s  { width: clamp(110px, 10vw, 190px); }
+    /* Slim vertical totem — the super-tall character close-ups strip */
     .cn-node--totem { width: clamp(50px, 5vw, 90px); }
 
     /* Ambient constellation stars — small pulsing points that fill the gaps

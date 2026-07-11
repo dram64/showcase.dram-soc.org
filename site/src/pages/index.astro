@@ -2958,6 +2958,15 @@ const featured = [
     #hero .hero__art { z-index: 3; }
     #hero .hero__dots { z-index: 6; }
     #graphic, #photo { position: relative; overflow: hidden; }
+    /* Every non-deco top-level child of graphic + photo gets its own
+       stacking context at z-index 3, so the ambient deco layer
+       (z-index 1 halftones + watermark, z-index 2 cube) always sits
+       BEHIND the section's real content. */
+    #graphic > :not(.deco-cube):not(.deco-watermark):not(.deco-halftone),
+    #photo  > :not(.deco-cube):not(.deco-watermark):not(.deco-halftone) {
+      position: relative;
+      z-index: 3;
+    }
 
     /* -------- HALFTONE DOTS -------- */
     .deco-halftone {

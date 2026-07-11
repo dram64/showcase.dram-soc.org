@@ -2,7 +2,7 @@ export type Product = {
   slug: string;
   title: string;
   price: number;
-  category: "deskmat" | "print" | "tapestry" | "sticker" | "flag";
+  category: "deskmat" | "print" | "tapestry" | "sticker" | "flag" | "tote" | "lanyard";
   image: string;
   soldOut?: boolean;
   lowStock?: number;
@@ -59,6 +59,8 @@ export const products: Product[] = [
   { slug: "psg-print",             title: "PSG Print",               price: 5,  category: "print",    image: "/assets/psg-print.webp" },
   { slug: "psg-panty-sticker",     title: "Panty Sticker",           price: 3,  category: "sticker",  image: "/assets/psg-panty-sticker.webp" },
   { slug: "psg-stocking-sticker",  title: "Stocking Sticker",        price: 3,  category: "sticker",  image: "/assets/psg-stocking-sticker.webp" },
+  { slug: "psg-tote",              title: "PSG Tote Bag",            price: 20, category: "tote",     image: "/assets/psg-tote.webp" },
+  { slug: "psg-lanyard",           title: "PSG Lanyard",             price: 10, category: "lanyard",  image: "/assets/psg-lanyard.webp" },
 
   // NSO drop
   { slug: "nso-deskmat",           title: "NSO Deskmat",             price: 25, category: "deskmat",  image: "/assets/nso-deskmat.webp" },
@@ -72,6 +74,8 @@ export const products: Product[] = [
 export const categories = [
   { key: "deskmat",  title: "Deskmats",  tagline: "900×400mm, 5mm rubber base, sublimated print." },
   { key: "tapestry", title: "Tapestries", tagline: "60×90cm polyester wall scrolls, rod hung." },
+  { key: "tote",     title: "Totes",      tagline: "Heavyweight cotton, screen-printed, 15\"×16\"." },
+  { key: "lanyard",  title: "Lanyards",   tagline: "Woven polyester, 20mm, metal breakaway clasp." },
   { key: "print",    title: "Prints",     tagline: "12×18\" heavy satin card stock, 300 DPI." },
   { key: "sticker",  title: "Stickers",   tagline: "Die-cut vinyl, weatherproof, laminated." },
   { key: "flag",     title: "Flags",      tagline: "100×100cm polyester, 4-grommet corners." },

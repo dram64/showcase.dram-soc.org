@@ -73,26 +73,6 @@ const featured = [
     <div class="deco-halftone deco-halftone--br" aria-hidden="true"></div>
     <div class="deco-watermark deco-watermark--hero" aria-hidden="true">TZ</div>
     <div class="deco-slash deco-slash--hero" aria-hidden="true"></div>
-    <div class="deco-cube deco-cube--bg" aria-hidden="true">
-      <div class="deco-cube__box">
-        <span class="deco-cube__face deco-cube__face--f"></span>
-        <span class="deco-cube__face deco-cube__face--b"></span>
-        <span class="deco-cube__face deco-cube__face--r"></span>
-        <span class="deco-cube__face deco-cube__face--l"></span>
-        <span class="deco-cube__face deco-cube__face--t"></span>
-        <span class="deco-cube__face deco-cube__face--bo"></span>
-      </div>
-    </div>
-    <div class="deco-cube deco-cube--sm" aria-hidden="true">
-      <div class="deco-cube__box deco-cube__box--fast">
-        <span class="deco-cube__face deco-cube__face--f"></span>
-        <span class="deco-cube__face deco-cube__face--b"></span>
-        <span class="deco-cube__face deco-cube__face--r"></span>
-        <span class="deco-cube__face deco-cube__face--l"></span>
-        <span class="deco-cube__face deco-cube__face--t"></span>
-        <span class="deco-cube__face deco-cube__face--bo"></span>
-      </div>
-    </div>
 
     <!-- Scroll hint — bottom-left, points at the hero-strip below -->
     <a href="#graphic" class="scroll-hint" aria-label="Scroll to next section">
@@ -125,6 +105,26 @@ const featured = [
        02 · GRAPHIC DESIGN
        ================================================================ -->
   <section id="graphic" class="sec">
+    <!-- Endfield-style ambient layer for the constellation. Big rotating
+         cube sits behind everything, watermark "02" anchors the section
+         number, halftone dots in both corners, yellow slash across the
+         top-right, corner brackets frame the whole board. -->
+    <div class="deco-cube deco-cube--graphic" aria-hidden="true">
+      <div class="deco-cube__box">
+        <span class="deco-cube__face deco-cube__face--f"></span>
+        <span class="deco-cube__face deco-cube__face--b"></span>
+        <span class="deco-cube__face deco-cube__face--r"></span>
+        <span class="deco-cube__face deco-cube__face--l"></span>
+        <span class="deco-cube__face deco-cube__face--t"></span>
+        <span class="deco-cube__face deco-cube__face--bo"></span>
+      </div>
+    </div>
+    <div class="deco-watermark deco-watermark--graphic" aria-hidden="true">02</div>
+    <div class="deco-halftone deco-halftone--graphic-tl" aria-hidden="true"></div>
+    <div class="deco-halftone deco-halftone--graphic-br" aria-hidden="true"></div>
+    <div class="deco-slash deco-slash--graphic" aria-hidden="true"></div>
+    <span class="deco-bracket deco-bracket--tl" aria-hidden="true"></span>
+    <span class="deco-bracket deco-bracket--br" aria-hidden="true"></span>
     <div class="sec__head sec__head--with-themes" data-reveal>
       <div class="sec__head-text">
         <p class="sec__num">02 / 04</p>
@@ -346,6 +346,24 @@ const featured = [
        03 · PRODUCT PHOTOGRAPHY — full-width 3D coverflow, caption below
        ================================================================ -->
   <section id="photo" class="sec">
+    <!-- Endfield-style ambient layer for the photography section. Small
+         cube behind the carousel, watermark "03" number anchors the
+         section, halftones + corner brackets bracket the whole thing. -->
+    <div class="deco-cube deco-cube--photo" aria-hidden="true">
+      <div class="deco-cube__box deco-cube__box--fast">
+        <span class="deco-cube__face deco-cube__face--f"></span>
+        <span class="deco-cube__face deco-cube__face--b"></span>
+        <span class="deco-cube__face deco-cube__face--r"></span>
+        <span class="deco-cube__face deco-cube__face--l"></span>
+        <span class="deco-cube__face deco-cube__face--t"></span>
+        <span class="deco-cube__face deco-cube__face--bo"></span>
+      </div>
+    </div>
+    <div class="deco-watermark deco-watermark--photo" aria-hidden="true">03</div>
+    <div class="deco-halftone deco-halftone--photo-tl" aria-hidden="true"></div>
+    <div class="deco-halftone deco-halftone--photo-br" aria-hidden="true"></div>
+    <span class="deco-bracket deco-bracket--photo-tl" aria-hidden="true"></span>
+    <span class="deco-bracket deco-bracket--photo-br" aria-hidden="true"></span>
     <div class="sec__head" data-reveal>
       <p class="sec__num">03 / 04</p>
       <p class="sec__eyebrow">product photography</p>
@@ -2944,110 +2962,201 @@ const featured = [
        throughout the landing to give it real motion + rhythm.
        ============================================================ */
 
-    /* Hero content stacks on top of the ambient deco layer so the
-       character illustration reads clean against the cube + slash. */
+    /* Ensure Endfield deco layer sits above the section backdrop but
+       below the content stack. */
     #hero .hero__art { z-index: 3; }
     #hero .hero__dots { z-index: 6; }
+    #graphic { position: relative; }
+    #graphic > *:not(.deco-cube):not(.deco-watermark):not(.deco-halftone):not(.deco-slash):not(.deco-bracket) { position: relative; z-index: 3; }
+    #photo { position: relative; }
+    #photo > *:not(.deco-cube):not(.deco-watermark):not(.deco-halftone):not(.deco-bracket) { position: relative; z-index: 3; }
 
-    /* Halftone dot pattern — Y2K/print-shop grain. Fades out with a
-       radial mask so the corners feel etched, not stamped. */
+    /* -------- HALFTONE DOTS -------- */
     .deco-halftone {
       position: absolute;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.55;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.55) 1.2px, transparent 1.8px);
-      background-size: 12px 12px;
+      background-repeat: repeat;
     }
+    /* Hero (dark bg) — white dots */
     .deco-halftone--tl {
       top: 60px;
       left: 60px;
-      width: 280px;
-      height: 280px;
+      width: 340px;
+      height: 340px;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 1.6px, transparent 2.4px);
+      background-size: 12px 12px;
+      opacity: 0.85;
       mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 75%);
       -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 75%);
     }
     .deco-halftone--br {
       bottom: 40px;
       right: 40px;
-      width: 260px;
-      height: 260px;
+      width: 300px;
+      height: 300px;
+      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.75) 1.4px, transparent 2.2px);
       background-size: 10px 10px;
-      opacity: 0.45;
+      opacity: 0.85;
       mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
       -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
     }
+    /* Graphic (dark cinema) — white dots on top-left, yellow on bot-right */
+    .deco-halftone--graphic-tl {
+      top: 20px;
+      left: 20px;
+      width: 300px;
+      height: 300px;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.55) 1.4px, transparent 2.1px);
+      background-size: 11px 11px;
+      opacity: 0.9;
+      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
+    }
+    .deco-halftone--graphic-br {
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      height: 320px;
+      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.5) 1.6px, transparent 2.4px);
+      background-size: 13px 13px;
+      opacity: 0.9;
+      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
+    }
+    /* Photo (cream bg) — slate-violet dots */
+    .deco-halftone--photo-tl,
+    .deco-halftone--photo-br {
+      width: 260px;
+      height: 260px;
+      background-image: radial-gradient(circle, rgba(80, 97, 185, 0.55) 1.4px, transparent 2.1px);
+      background-size: 12px 12px;
+      opacity: 0.85;
+    }
+    .deco-halftone--photo-tl {
+      top: 20px;
+      left: 20px;
+      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
+    }
+    .deco-halftone--photo-br {
+      bottom: 20px;
+      right: 20px;
+      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
+    }
 
-    /* Big translucent letter watermark — anchors the composition like
-       the "EN" in the Endfield reference. Apex Mk3 light-weight so it
-       carries as background typography, not a stamp. */
+    /* -------- WATERMARK LETTERS (big background typography) -------- */
     .deco-watermark {
       position: absolute;
       z-index: 1;
       pointer-events: none;
       font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
       font-weight: 300;
-      color: rgba(255, 255, 255, 0.06);
       letter-spacing: -0.06em;
       line-height: 0.85;
       user-select: none;
     }
     .deco-watermark--hero {
-      top: 24%;
-      left: 8%;
-      font-size: clamp(18rem, 32vw, 44rem);
+      top: 22%;
+      left: 6%;
+      font-size: clamp(20rem, 36vw, 48rem);
+      color: rgba(255, 255, 255, 0.14);
+    }
+    .deco-watermark--graphic {
+      top: 40%;
+      right: 4%;
+      font-size: clamp(14rem, 28vw, 36rem);
+      color: rgba(255, 255, 255, 0.09);
+      font-weight: 500;
+    }
+    .deco-watermark--photo {
+      bottom: 4%;
+      left: 3%;
+      font-size: clamp(14rem, 28vw, 36rem);
+      color: rgba(80, 97, 185, 0.12);
+      font-weight: 500;
     }
 
-    /* Yellow slash — brand colour cutting diagonally through the hero
-       background. Sits behind the character illustration so the
-       character silhouette breaks it in a very Endfield way. */
+    /* -------- YELLOW SLASH -------- */
     .deco-slash {
       position: absolute;
       z-index: 1;
       pointer-events: none;
       background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 238, 0, 0.16) 15%,
-        rgba(255, 238, 0, 0.28) 50%,
-        rgba(255, 238, 0, 0.16) 85%,
+        rgba(255, 238, 0, 0.30) 15%,
+        rgba(255, 238, 0, 0.50) 50%,
+        rgba(255, 238, 0, 0.30) 85%,
         transparent 100%);
       mix-blend-mode: overlay;
     }
     .deco-slash--hero {
-      top: 32%;
+      top: 30%;
       right: -5%;
       width: 90%;
-      height: 18%;
+      height: 22%;
       transform: rotate(-6deg);
       transform-origin: 100% 50%;
     }
+    .deco-slash--graphic {
+      top: 12%;
+      right: -8%;
+      width: 60%;
+      height: 8%;
+      transform: rotate(-4deg);
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 238, 0, 0.22) 20%,
+        rgba(255, 238, 0, 0.40) 50%,
+        rgba(255, 238, 0, 0.22) 80%,
+        transparent 100%);
+    }
 
-    /* Rotating wireframe 3D cube — big background instance is the
-       hero centerpiece; small instance is an ambient accent in the
-       opposite corner. Layered at z-index 2 so it sits between the
-       backdrop and the hero image. */
+    /* -------- BRACKET CORNERS — thin L-shaped brackets that frame the
+       whole section like camera viewfinder marks. -------- */
+    .deco-bracket {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      width: 56px;
+      height: 56px;
+      border: 2px solid rgba(255, 238, 0, 0.6);
+    }
+    /* Graphic — yellow brackets on dark bg */
+    .deco-bracket--tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+    .deco-bracket--br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+    /* Photo — slate-violet brackets on cream bg */
+    .deco-bracket--photo-tl,
+    .deco-bracket--photo-br { border-color: rgba(80, 97, 185, 0.55); }
+    .deco-bracket--photo-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+    .deco-bracket--photo-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+    /* -------- 3D CUBE VARIANTS -------- */
     .deco-cube {
       position: absolute;
-      perspective: 1600px;
       pointer-events: none;
+      z-index: 2;
+    }
+    /* Graphic — big yellow wireframe cube behind the constellation */
+    .deco-cube--graphic {
+      top: 45%;
+      right: 6%;
+      width: clamp(340px, 44vw, 640px);
+      height: clamp(340px, 44vw, 640px);
+      transform: translateY(-50%);
+      perspective: 1800px;
+      opacity: 0.70;
       mix-blend-mode: screen;
     }
-    .deco-cube--bg {
-      top: 50%;
-      right: 10%;
-      width: clamp(320px, 42vw, 620px);
-      height: clamp(320px, 42vw, 620px);
-      transform: translateY(-50%);
-      z-index: 2;
+    /* Photo — smaller slate-violet cube behind the carousel */
+    .deco-cube--photo {
+      top: 32%;
+      left: 4%;
+      width: clamp(160px, 18vw, 260px);
+      height: clamp(160px, 18vw, 260px);
+      perspective: 1000px;
       opacity: 0.55;
-    }
-    .deco-cube--sm {
-      bottom: 12%;
-      left: 8%;
-      width: clamp(90px, 10vw, 140px);
-      height: clamp(90px, 10vw, 140px);
-      z-index: 2;
-      opacity: 0.7;
     }
     .deco-cube__box {
       width: 100%;
@@ -3056,28 +3165,33 @@ const featured = [
       transform-style: preserve-3d;
       animation: decoCubeSpin 26s linear infinite;
     }
-    .deco-cube__box--fast { animation-duration: 14s; animation-direction: reverse; }
+    .deco-cube__box--fast { animation-duration: 18s; animation-direction: reverse; }
     .deco-cube__face {
       position: absolute;
       inset: 0;
-      border: 1.4px solid rgba(255, 238, 0, 0.55);
+      border: 2px solid rgba(255, 238, 0, 0.6);
       background: rgba(255, 238, 0, 0.03);
-      box-shadow: inset 0 0 32px rgba(255, 238, 0, 0.08);
+      box-shadow: inset 0 0 32px rgba(255, 238, 0, 0.10);
     }
-    /* Face translations = half the cube edge so faces meet at corners.
-       Clamp mirrors the .deco-cube--bg / --sm widths above. */
-    .deco-cube--bg .deco-cube__face--f  { transform: translateZ(clamp(160px, 21vw, 310px)); }
-    .deco-cube--bg .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(160px, 21vw, 310px)); }
-    .deco-cube--bg .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(160px, 21vw, 310px)); }
-    .deco-cube--bg .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(160px, 21vw, 310px)); }
-    .deco-cube--bg .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(160px, 21vw, 310px)); }
-    .deco-cube--bg .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(160px, 21vw, 310px)); }
-    .deco-cube--sm .deco-cube__face--f  { transform: translateZ(clamp(45px, 5vw, 70px)); }
-    .deco-cube--sm .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(45px, 5vw, 70px)); }
-    .deco-cube--sm .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(45px, 5vw, 70px)); }
-    .deco-cube--sm .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(45px, 5vw, 70px)); }
-    .deco-cube--sm .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(45px, 5vw, 70px)); }
-    .deco-cube--sm .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(45px, 5vw, 70px)); }
+    /* Photo cube gets slate-violet wireframe (fits cream bg) */
+    .deco-cube--photo .deco-cube__face {
+      border-color: rgba(80, 97, 185, 0.55);
+      background: rgba(80, 97, 185, 0.04);
+      box-shadow: inset 0 0 32px rgba(80, 97, 185, 0.10);
+    }
+    /* Face translations — half the cube edge so faces meet at corners */
+    .deco-cube--graphic .deco-cube__face--f  { transform: translateZ(clamp(170px, 22vw, 320px)); }
+    .deco-cube--graphic .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(170px, 22vw, 320px)); }
+    .deco-cube--graphic .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(170px, 22vw, 320px)); }
+    .deco-cube--graphic .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(170px, 22vw, 320px)); }
+    .deco-cube--graphic .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(170px, 22vw, 320px)); }
+    .deco-cube--graphic .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(170px, 22vw, 320px)); }
+    .deco-cube--photo .deco-cube__face--f  { transform: translateZ(clamp(80px, 9vw, 130px)); }
+    .deco-cube--photo .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(80px, 9vw, 130px)); }
+    .deco-cube--photo .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(80px, 9vw, 130px)); }
+    .deco-cube--photo .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(80px, 9vw, 130px)); }
+    .deco-cube--photo .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(80px, 9vw, 130px)); }
+    .deco-cube--photo .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(80px, 9vw, 130px)); }
     @keyframes decoCubeSpin {
       from { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
       to   { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
@@ -3158,21 +3272,32 @@ const featured = [
       50%      { transform: translate(6px, -50%); opacity: 1; }
     }
 
+    @media (max-width: 900px) {
+      .deco-cube--graphic { right: -8%; width: 70vw; height: 70vw; opacity: 0.5; }
+      .deco-cube--graphic .deco-cube__face--f  { transform: translateZ(35vw); }
+      .deco-cube--graphic .deco-cube__face--b  { transform: rotateY(180deg) translateZ(35vw); }
+      .deco-cube--graphic .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(35vw); }
+      .deco-cube--graphic .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(35vw); }
+      .deco-cube--graphic .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(35vw); }
+      .deco-cube--graphic .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(35vw); }
+      .deco-watermark--graphic { font-size: 40vw; right: -6%; }
+      .deco-watermark--photo   { font-size: 40vw; }
+    }
     @media (max-width: 700px) {
       .deco-halftone--tl { width: 160px; height: 160px; top: 30px; left: 30px; }
       .deco-halftone--br { display: none; }
+      .deco-halftone--graphic-br,
+      .deco-halftone--photo-br { display: none; }
       .deco-watermark--hero { font-size: 60vw; top: 30%; }
-      .deco-slash--hero    { display: none; }
-      .deco-cube--sm       { display: none; }
-      .deco-cube--bg       { right: -8%; width: 65vw; height: 65vw; opacity: 0.4; }
-      .deco-cube--bg .deco-cube__face--f  { transform: translateZ(32.5vw); }
-      .deco-cube--bg .deco-cube__face--b  { transform: rotateY(180deg) translateZ(32.5vw); }
-      .deco-cube--bg .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(32.5vw); }
-      .deco-cube--bg .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(32.5vw); }
-      .deco-cube--bg .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(32.5vw); }
-      .deco-cube--bg .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(32.5vw); }
+      .deco-slash--hero,
+      .deco-slash--graphic { display: none; }
+      .deco-cube--photo    { display: none; }
+      .deco-cube--graphic  { opacity: 0.35; }
       .scroll-hint { left: 12px; }
       .deco-arrow--boundary { display: none; }
+      .deco-bracket,
+      .deco-bracket--photo-tl,
+      .deco-bracket--photo-br { width: 32px; height: 32px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .deco-cube__box,

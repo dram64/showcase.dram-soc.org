@@ -147,12 +147,16 @@ const featured = [
            clusters (faint) to visualize the relationship graph.
            ================================================================ -->
       <div class="cn-space" aria-label="Constellation of graphic design pieces">
-        <!-- Product cornerstones — PSG tote + lanyard from Shopify float
-             on top of the masonry, tilted, with soft cast shadows.
-             Positioned absolutely so they overlap the graphics without
-             disrupting the shortest-column packing. -->
-        <img class="cn-corner cn-corner--tote"    src="/assets/psg-tote.webp"    alt="" aria-hidden="true" loading="lazy" />
-        <img class="cn-corner cn-corner--lanyard" src="/assets/psg-lanyard.webp" alt="" aria-hidden="true" loading="lazy" />
+        <!-- Product cornerstones — PSG tote + lanyard sprinkled over
+             the masonry as tilted, shadowed cutouts. Six overlays
+             (three tote, three lanyard) at varied heights so no long
+             stretch of the constellation goes without a product on it. -->
+        <img class="cn-corner cn-corner--lanyard-top" src="/assets/psg-lanyard.webp" alt="" aria-hidden="true" loading="lazy" />
+        <img class="cn-corner cn-corner--tote"        src="/assets/psg-tote.webp"    alt="" aria-hidden="true" loading="lazy" />
+        <img class="cn-corner cn-corner--lanyard-mid" src="/assets/psg-lanyard.webp" alt="" aria-hidden="true" loading="lazy" />
+        <img class="cn-corner cn-corner--tote-mid"    src="/assets/psg-tote.webp"    alt="" aria-hidden="true" loading="lazy" />
+        <img class="cn-corner cn-corner--lanyard"     src="/assets/psg-lanyard.webp" alt="" aria-hidden="true" loading="lazy" />
+        <img class="cn-corner cn-corner--tote-bot"    src="/assets/psg-tote.webp"    alt="" aria-hidden="true" loading="lazy" />
         <svg class="cn-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <!-- Motion/hero triad (yellow — the two reels + widescreen) -->
           <line class="cn-edge cn-edge--yellow" x1="30" y1="28" x2="52" y2="50" />
@@ -1437,20 +1441,48 @@ const featured = [
         drop-shadow(0 30px 44px rgba(20, 19, 26, 0.30));
       transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .cn-corner--lanyard-top {
+      top: 3%;
+      left: -24px;
+      width: clamp(100px, 10vw, 150px);
+      transform: rotate(-14deg);
+    }
     .cn-corner--tote {
       top: 8%;
       right: -36px;
       transform: rotate(-9deg);
     }
+    .cn-corner--lanyard-mid {
+      top: 38%;
+      right: -28px;
+      width: clamp(110px, 11vw, 165px);
+      transform: rotate(7deg);
+    }
+    .cn-corner--tote-mid {
+      top: 52%;
+      left: -34px;
+      width: clamp(120px, 12vw, 180px);
+      transform: rotate(6deg);
+    }
     .cn-corner--lanyard {
-      bottom: 12%;
+      bottom: 22%;
       left: -30px;
       width: clamp(120px, 12vw, 180px);
       transform: rotate(11deg);
     }
+    .cn-corner--tote-bot {
+      bottom: 6%;
+      right: -30px;
+      width: clamp(130px, 13vw, 200px);
+      transform: rotate(-12deg);
+    }
     @media (max-width: 900px) {
-      .cn-corner--tote    { top: 4%; right: -22px; width: clamp(100px, 22vw, 160px); }
-      .cn-corner--lanyard { bottom: 8%; left: -18px; width: clamp(90px, 20vw, 140px); }
+      .cn-corner--lanyard-top,
+      .cn-corner--lanyard-mid,
+      .cn-corner--tote-mid { display: none; }
+      .cn-corner--tote     { top: 4%; right: -22px; width: clamp(100px, 22vw, 160px); }
+      .cn-corner--lanyard  { bottom: 12%; left: -18px; width: clamp(90px, 20vw, 140px); }
+      .cn-corner--tote-bot { bottom: 4%; right: -20px; width: clamp(100px, 22vw, 160px); }
     }
     @media (max-width: 560px) {
       .cn-corner { display: none; }
@@ -2741,13 +2773,18 @@ const featured = [
       opacity: 0.6;
     }
 
-    /* Carousel controls */
+    /* Carousel controls — pinned below the stage, above the floating
+       card shadows (which used to spill downward into this row). */
     .lead-3d__ctrl {
+      position: relative;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 20px;
-      padding: 16px 0 0;
+      padding: 32px 0 0;
+      margin-top: 28px;
+      background: transparent;
     }
     .lead-3d__arrow {
       width: 40px;

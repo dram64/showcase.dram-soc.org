@@ -4,38 +4,32 @@ import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
 import { products } from "../data/products.ts";
 
-// 16 featured items across the four most-recent drops: NSO, PSG,
-// Yuzuha/Alice and misc. Excludes Toki, Blanc Bunny and Evelyn.
+// Every NSO / PSG / Yuzuha / Alice product on the catalog (19 items).
+// Toki, Blanc Bunny and Evelyn intentionally excluded (per prior ask).
 const featured = [
-  // NSO drop
+  // NSO drop (6)
   "nso-deskmat",
   "nso-ame-tapestry",
   "nso-kangel-tapestry",
   "nso-print",
   "nso-ame-sticker",
-  // PSG drop
+  "nso-kangel-sticker",
+  // PSG drop (8)
   "psg-deskmat",
   "psg-panty-tapestry",
   "psg-stocking-tapestry",
   "psg-panty-acrylic",
   "psg-stocking-acrylic",
+  "psg-print",
   "psg-panty-sticker",
-  // Yuzuha & Alice
+  "psg-stocking-sticker",
+  // Yuzuha & Alice (5)
   "deskmat-yuzuha-alice",
   "print-yuzuha",
   "print-alice",
   "sticker-yuzuha",
   "sticker-alice",
 ].map(slug => products.find(p => p.slug === slug)).filter(Boolean);
-
-const roster = [
-  { key: "ame",      img: "/showcase/roster/ame.webp",      name: "Ame",       faction: "Off &amp; online",           universe: "Needy Streamer Overload", tag: "NSO" },
-  { key: "kangel",   img: "/showcase/roster/kangel.webp",   name: "K.Angel",   faction: "Public-face streamer",       universe: "Needy Streamer Overload", tag: "NSO" },
-  { key: "panty",    img: "/showcase/roster/panty.webp",    name: "Panty",     faction: "Anarchy sisters",            universe: "Panty &amp; Stocking",    tag: "PSG" },
-  { key: "stocking", img: "/showcase/roster/stocking.webp", name: "Stocking",  faction: "Anarchy sisters",            universe: "Panty &amp; Stocking",    tag: "PSG" },
-  { key: "yuzuha",   img: "/showcase/roster/yuzuha.webp",   name: "Yuzuha",    faction: "Tokyo Zero original",        universe: "Chromadipity Core",       tag: "OC" },
-  { key: "chii",     img: "/showcase/roster/chii.webp",     name: "Chii",      faction: "Vtuber commission",          universe: "Independent commission",  tag: "VT" },
-];
 ---
 <Base title="portfolio" pageClass="page-index" showHeader={false} showFooter={true}>
 
@@ -49,14 +43,11 @@ const roster = [
     <a class="tracker__item" data-section="graphic" href="#graphic">
       <span class="tracker__bar"></span><span class="tracker__num">02</span><span class="tracker__lbl">graphic</span>
     </a>
-    <a class="tracker__item" data-section="roster" href="#roster">
-      <span class="tracker__bar"></span><span class="tracker__num">03</span><span class="tracker__lbl">roster</span>
-    </a>
     <a class="tracker__item" data-section="photo" href="#photo">
-      <span class="tracker__bar"></span><span class="tracker__num">04</span><span class="tracker__lbl">photo</span>
+      <span class="tracker__bar"></span><span class="tracker__num">03</span><span class="tracker__lbl">photo</span>
     </a>
     <a class="tracker__item" data-section="catalog" href="#catalog">
-      <span class="tracker__bar"></span><span class="tracker__num">05</span><span class="tracker__lbl">catalog</span>
+      <span class="tracker__bar"></span><span class="tracker__num">04</span><span class="tracker__lbl">catalog</span>
     </a>
   </nav>
 
@@ -97,7 +88,7 @@ const roster = [
   <section id="graphic" class="sec">
     <div class="sec__head sec__head--with-themes" data-reveal>
       <div class="sec__head-text">
-        <p class="sec__num">02 / 05</p>
+        <p class="sec__num">02 / 04</p>
         <p class="sec__eyebrow">graphic design</p>
         <h2 class="sec__title">the illustration.</h2>
         <p class="sec__lede">
@@ -156,6 +147,12 @@ const roster = [
            clusters (faint) to visualize the relationship graph.
            ================================================================ -->
       <div class="cn-space" aria-label="Constellation of graphic design pieces">
+        <!-- Product cornerstones — PSG tote + lanyard from Shopify float
+             on top of the masonry, tilted, with soft cast shadows.
+             Positioned absolutely so they overlap the graphics without
+             disrupting the shortest-column packing. -->
+        <img class="cn-corner cn-corner--tote"    src="/assets/psg-tote.webp"    alt="" aria-hidden="true" loading="lazy" />
+        <img class="cn-corner cn-corner--lanyard" src="/assets/psg-lanyard.webp" alt="" aria-hidden="true" loading="lazy" />
         <svg class="cn-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <!-- Motion/hero triad (yellow — the two reels + widescreen) -->
           <line class="cn-edge cn-edge--yellow" x1="30" y1="28" x2="52" y2="50" />
@@ -355,77 +352,21 @@ const roster = [
   </section>
 
   <!-- ================================================================
-       03 · CHARACTER ROSTER
+       03 · PRODUCT PHOTOGRAPHY — full-width 3D coverflow, caption below
        ================================================================ -->
-  <section id="roster" class="sec">
+  <section id="photo" class="sec">
     <div class="sec__head" data-reveal>
-      <p class="sec__num">03 / 05</p>
-      <p class="sec__eyebrow">the roster</p>
-      <h2 class="sec__title">character work.</h2>
+      <p class="sec__num">03 / 04</p>
+      <p class="sec__eyebrow">product photography</p>
+      <h2 class="sec__title">finished pieces.</h2>
       <p class="sec__lede">
-        Portrait, key art, chibi variant, full-body pose &mdash; each character
-        in the roster serves at least one product category.
+        Illustration &rarr; production &rarr; photography. Eleven frames
+        from the drop &mdash; deskmats, prints, stickers, packaging, flat-lays.
       </p>
     </div>
 
-    <div class="roster-body">
-      <aside class="roster-rail">
-        {roster.map((r, i) => (
-          <button class:list={["portrait", i === 0 && "is-active"]} data-key={r.key} aria-label={r.name}>
-            <img src={r.img} alt={r.name} />
-          </button>
-        ))}
-        <a class="roster-all" href="/catalog/">all &rarr;</a>
-      </aside>
-
-      <div class="roster-stage">
-        <div class="roster-block" aria-hidden="true"></div>
-        <div class="roster-letters" data-target="letters" aria-hidden="true">AME</div>
-
-        <div class="roster-hero">
-          <img class="roster-img" src="/showcase/roster/ame.webp" alt="Ame" data-target="img" />
-        </div>
-
-        <div class="roster-card" data-reveal>
-          <p class="roster-card__num" data-target="num">01 / 06</p>
-          <h3 class="roster-card__name" data-target="name">Ame</h3>
-          <div class="roster-card__rule"></div>
-          <dl class="roster-card__dl">
-            <dt>faction</dt><dd data-target="faction">Off &amp; online</dd>
-            <dt>universe</dt><dd data-target="universe">Needy Streamer Overload</dd>
-            <dt>tag</dt><dd data-target="tag">NSO</dd>
-          </dl>
-          <p class="roster-card__desc">
-            Hand-illustrated character work &mdash; portraits, key art, chibi
-            variants, and full-body poses. Each character in the roster serves
-            a specific product category: deskmats, tapestries, prints, or
-            acrylic stands.
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ================================================================
-       04 · PRODUCT PHOTOGRAPHY — 3D coverflow carousel + editorial sidebar
-       ================================================================ -->
-  <section id="photo" class="sec">
-    <!-- viewport-fit wrapper: header + carousel take one screen height -->
-    <div class="photo-viewport">
-      <div class="sec__head" data-reveal>
-        <p class="sec__num">04 / 05</p>
-        <p class="sec__eyebrow">product photography</p>
-        <h2 class="sec__title">finished pieces.</h2>
-        <p class="sec__lede">
-          Illustration &rarr; production &rarr; photography. Ten frames from the
-          drop &mdash; deskmats, prints, stickers, packaging, flat-lays.
-        </p>
-      </div>
-
-      <div class="photo-editorial">
-        <!-- 3D coverflow carousel — auto-rotates through 10 photo frames -->
-        <div class="lead-3d" aria-label="Product photography carousel">
+    <!-- Full-width 3D coverflow — spans the whole section -->
+    <div class="lead-3d" aria-label="Product photography carousel">
           <div class="lead-3d__stage">
             <button class="lead-3d__card" data-i="0" aria-label="Frame 01">
               <div class="lead-3d__card-inner">
@@ -514,30 +455,23 @@ const roster = [
           </div>
         </div>
 
-        <!-- Editorial sidebar — dynamic caption for the active card -->
-        <aside class="photo-side" data-reveal>
-          <p class="photo-side__label">// featured</p>
-          <h3 class="photo-side__title">the drop.</h3>
-
-          <div class="photo-side__cap" data-target="side-cap">
-            <p class="photo-side__idx" data-target="side-idx">01</p>
-            <p class="photo-side__cap-label" data-target="side-label">flat-lay</p>
-            <h4 class="photo-side__cap-name">
-              <span data-target="side-name">Frame 01</span><span class="photo-side__dot">.</span>
-            </h4>
-            <div class="photo-side__specs" data-target="side-specs">
-              <span><em>set</em>studio &middot; natural light</span>
-              <span><em>capture</em>a7iii &middot; 35mm</span>
-              <span><em>process</em>color &middot; retouch</span>
-            </div>
-          </div>
-
-          <div class="photo-side__quote">
-            <p>&ldquo;the character comes first &mdash; the product is the vessel.&rdquo;</p>
-            <span class="photo-side__by">&mdash; from the desk.</span>
-          </div>
-        </aside>
-      </div>
+    <!-- Caption card below the carousel — same visual language as the
+         retired roster-card: num, name, hairline rule, dl for specs. -->
+    <div class="photo-caption" data-reveal>
+      <p class="photo-caption__num"><span data-target="side-idx">01</span> / 11</p>
+      <h3 class="photo-caption__name" data-target="side-name">Frame 01</h3>
+      <div class="photo-caption__rule"></div>
+      <dl class="photo-caption__dl" data-target="side-specs">
+        <dt>type</dt><dd data-target="side-label">flat-lay</dd>
+        <dt>set</dt><dd>studio &middot; natural light</dd>
+        <dt>capture</dt><dd>a7iii &middot; 35mm</dd>
+        <dt>process</dt><dd>color &middot; retouch</dd>
+      </dl>
+      <p class="photo-caption__desc">
+        Illustration &rarr; production &rarr; photography. Each frame lives
+        on a Shopify listing; the carousel above auto-advances and the
+        caption card refreshes to match.
+      </p>
     </div>
   </section>
 
@@ -546,13 +480,13 @@ const roster = [
        ================================================================ -->
   <section id="catalog" class="sec">
     <div class="sec__head" data-reveal>
-      <p class="sec__num">05 / 05</p>
+      <p class="sec__num">04 / 04</p>
       <p class="sec__eyebrow">from the catalog</p>
       <h2 class="sec__title">the drops.</h2>
       <p class="sec__lede">
-        Sixteen recent drops &mdash; NSO, PSG, Yuzuha &amp; Alice.
-        Deskmats, tapestries, prints, stickers, acrylic stands. Each carries
-        a character. Full catalog on shopify.
+        Nineteen recent drops &mdash; every NSO, PSG, and Yuzuha &amp;
+        Alice piece. Deskmats, tapestries, prints, stickers, acrylic stands.
+        Each carries a character. Full catalog on shopify.
       </p>
     </div>
 
@@ -587,30 +521,9 @@ const roster = [
   </section>
 
   <script is:inline>
-    const roster = {
-      ame:      { name: "Ame",      letters: "AME",      faction: "Off & online",         universe: "Needy Streamer Overload", tag: "NSO", img: "/showcase/roster/ame.webp",      num: "01" },
-      kangel:   { name: "K.Angel",  letters: "KANGEL",   faction: "Public-face streamer", universe: "Needy Streamer Overload", tag: "NSO", img: "/showcase/roster/kangel.webp",   num: "02" },
-      panty:    { name: "Panty",    letters: "PANTY",    faction: "Anarchy sisters",      universe: "Panty & Stocking",        tag: "PSG", img: "/showcase/roster/panty.webp",    num: "03" },
-      stocking: { name: "Stocking", letters: "STOCKING", faction: "Anarchy sisters",      universe: "Panty & Stocking",        tag: "PSG", img: "/showcase/roster/stocking.webp", num: "04" },
-      yuzuha:   { name: "Yuzuha",   letters: "YUZUHA",   faction: "Tokyo Zero original",  universe: "Chromadipity Core",       tag: "OC",  img: "/showcase/roster/yuzuha.webp",   num: "05" },
-      chii:     { name: "Chii",     letters: "CHII",     faction: "Vtuber commission",    universe: "Independent commission",  tag: "VT",  img: "/showcase/roster/chii.webp",     num: "06" },
-    };
-    document.querySelectorAll(".portrait[data-key]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const r = roster[btn.dataset.key];
-        if (!r) return;
-        document.querySelectorAll(".portrait").forEach(b => b.classList.remove("is-active"));
-        btn.classList.add("is-active");
-        const set = (t, v) => { const el = document.querySelector(`[data-target="${t}"]`); if (el) el.textContent = v; };
-        set("name", r.name); set("letters", r.letters); set("faction", r.faction); set("universe", r.universe); set("tag", r.tag);
-        set("num", r.num + " / 06");  // roster carousel counter (kept — 6 characters)
-        const img = document.querySelector('[data-target="img"]'); if (img) img.src = r.img;
-      });
-    });
-
     // Tracker — IntersectionObserver highlights the active section + smooth-scroll on click
     const trackerItems = document.querySelectorAll(".tracker__item[data-section]");
-    const sectionIds = ["hero", "graphic", "roster", "photo", "catalog"];
+    const sectionIds = ["hero", "graphic", "photo", "catalog"];
     const setActive = (id) => trackerItems.forEach(el => el.classList.toggle("is-active", el.dataset.section === id));
     const io = new IntersectionObserver((entries) => {
       let best = null;
@@ -768,11 +681,14 @@ const roster = [
         const p = products[current] || {};
         const setEl = (t, v) => { const el = document.querySelector(`[data-target="${t}"]`); if (el) el.textContent = v; };
         setEl("side-idx",   p.idx);
-        setEl("side-label", p.label);
         setEl("side-name",  p.name);
-        const specsEl = document.querySelector('[data-target="side-specs"]');
-        if (specsEl && p.specs) {
-          specsEl.innerHTML = p.specs.map(([k, v]) => `<span><em>${k}</em>${v}</span>`).join("");
+        const dl = document.querySelector('[data-target="side-specs"]');
+        if (dl && p.specs) {
+          const rows = [
+            `<dt>type</dt><dd data-target="side-label">${p.label || ""}</dd>`,
+            ...p.specs.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`),
+          ];
+          dl.innerHTML = rows.join("");
         }
       };
 
@@ -1324,6 +1240,7 @@ const roster = [
        and every piece reads at a real size on first scroll. */
     .cn-space {
       position: relative;
+      isolation: isolate;
       width: 100%;
       columns: 5;
       column-gap: clamp(10px, 1vw, 16px);
@@ -1502,6 +1419,41 @@ const roster = [
       width: 100%;
       aspect-ratio: unset;
       max-height: clamp(320px, 42vh, 480px);
+    }
+
+    /* Product cornerstones — PSG tote + lanyard sit as tilted, shadowed
+       cutouts over the masonry. Absolute so they don't disturb the
+       shortest-column pack; z-index above cells; sticky vertically so
+       they follow scroll a little inside the section. */
+    .cn-corner {
+      position: absolute;
+      z-index: 5;
+      pointer-events: none;
+      display: block;
+      width: clamp(140px, 14vw, 220px);
+      height: auto;
+      filter:
+        drop-shadow(0 12px 22px rgba(20, 19, 26, 0.35))
+        drop-shadow(0 30px 44px rgba(20, 19, 26, 0.30));
+      transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cn-corner--tote {
+      top: 8%;
+      right: -36px;
+      transform: rotate(-9deg);
+    }
+    .cn-corner--lanyard {
+      bottom: 12%;
+      left: -30px;
+      width: clamp(120px, 12vw, 180px);
+      transform: rotate(11deg);
+    }
+    @media (max-width: 900px) {
+      .cn-corner--tote    { top: 4%; right: -22px; width: clamp(100px, 22vw, 160px); }
+      .cn-corner--lanyard { bottom: 8%; left: -18px; width: clamp(90px, 20vw, 140px); }
+    }
+    @media (max-width: 560px) {
+      .cn-corner { display: none; }
     }
     .cn-node--totem img {
       height: 100%;
@@ -2544,28 +2496,105 @@ const roster = [
       .theme-mini__grid { justify-self: stretch; max-width: none; }
     }
 
-    /* ---- Editorial photography — viewport-fit wrapper ---- */
+    /* ---- Editorial photography — full-width carousel + caption card ---- */
     #photo {
       padding-top: clamp(48px, 6vh, 88px);
       padding-bottom: clamp(48px, 6vw, 100px);
     }
-    #photo .photo-viewport {
-      min-height: calc(100vh - clamp(96px, 12vh, 176px));
-      min-height: calc(100svh - clamp(96px, 12vh, 176px));
-      display: flex;
-      flex-direction: column;
-      gap: clamp(24px, 3vh, 40px);
-      margin-bottom: clamp(56px, 6vw, 96px);
+    #photo .sec__head { margin-bottom: clamp(24px, 3vh, 44px); }
+    #photo .lead-3d {
+      width: 100%;
+      min-height: clamp(420px, 60vh, 640px);
+      margin: 0 auto clamp(40px, 5vw, 72px);
     }
-    #photo .photo-viewport .sec__head { margin-bottom: 0; }
 
-    .photo-editorial {
+    /* Caption card at the bottom — same visual language as the retired
+       roster-card: soft white surface, hairline rule, dl of specs. */
+    .photo-caption {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(32px, 4vw, 48px);
+      background: linear-gradient(180deg, #fff 0%, #faf9f5 100%);
+      border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
+      box-shadow: 0 24px 44px -22px rgba(20, 19, 26, 0.14);
+      position: relative;
+      text-align: left;
+    }
+    .photo-caption::before {
+      content: "featured";
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--misc-accent, #5061b9);
+      color: #fff;
+      padding: 3px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .photo-caption__num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      color: var(--misc-accent, #5061b9);
+      margin: 0 0 10px;
+    }
+    .photo-caption__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 2.8vw, 2.2rem);
+      line-height: 1;
+      color: var(--misc-ink, #14131a);
+      margin: 0 0 18px;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
+    }
+    .photo-caption__rule {
+      height: 1px;
+      background: var(--misc-line, rgba(0,0,0,0.14));
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .photo-caption__rule::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 0;
+      width: 56px;
+      height: 2px;
+      background: var(--misc-accent, #5061b9);
+    }
+    .photo-caption__dl {
       display: grid;
-      grid-template-columns: minmax(0, 1.65fr) minmax(280px, 380px);
-      gap: clamp(24px, 4vw, 56px);
-      flex: 1;
-      min-height: 0;
-      align-items: stretch;
+      grid-template-columns: auto 1fr;
+      gap: 10px 20px;
+      margin: 0 0 22px;
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.92rem;
+      align-items: center;
+    }
+    .photo-caption__dl dt {
+      background: rgba(80, 97, 185, 0.10);
+      color: var(--misc-accent, #5061b9);
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      justify-self: start;
+    }
+    .photo-caption__dl dd {
+      margin: 0;
+      color: var(--misc-ink, #14131a);
+    }
+    .photo-caption__desc {
+      font-family: 'Branding Pro', sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--misc-ink-soft, #6b6b6b);
+      margin: 0;
     }
 
     /* ---- 3D coverflow carousel — PSP/PS2 magazine-showcase aesthetic
@@ -2863,9 +2892,8 @@ const roster = [
     }
 
     @media (max-width: 900px) {
-      #photo .photo-viewport { min-height: 0; }
-      .photo-editorial { grid-template-columns: 1fr; }
       .lead-3d__stage { min-height: 320px; }
+      #photo .lead-3d { min-height: clamp(360px, 55vh, 520px); }
     }
     .photo-lead {
       position: relative;
@@ -3011,8 +3039,5 @@ const roster = [
       color: var(--misc-ink-soft);
     }
 
-    @media (max-width: 900px) {
-      .photo-editorial { grid-template-columns: 1fr; }
-    }
   </style>
 </Base>

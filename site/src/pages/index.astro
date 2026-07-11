@@ -64,15 +64,11 @@ const featured = [
       <button class="hero__dot"           data-goto="1" aria-label="Slide 2"></button>
     </div>
 
-    <!-- Ambient hero decorations — layered background/foreground. The
-         cube sits between the hero backdrop and the hero image
-         (z-index tuned so it's visible but the character art rides
-         above it). Watermark letters + halftone + yellow slash mimic
-         the dense-but-slotted Endfield composition. -->
+    <!-- Ambient hero background — halftone + watermark only. Just
+         texture, no foreground graphic elements. -->
     <div class="deco-halftone deco-halftone--tl" aria-hidden="true"></div>
     <div class="deco-halftone deco-halftone--br" aria-hidden="true"></div>
     <div class="deco-watermark deco-watermark--hero" aria-hidden="true">TZ</div>
-    <div class="deco-slash deco-slash--hero" aria-hidden="true"></div>
 
     <!-- Scroll hint — bottom-left, points at the hero-strip below -->
     <a href="#graphic" class="scroll-hint" aria-label="Scroll to next section">
@@ -122,9 +118,6 @@ const featured = [
     <div class="deco-watermark deco-watermark--graphic" aria-hidden="true">02</div>
     <div class="deco-halftone deco-halftone--graphic-tl" aria-hidden="true"></div>
     <div class="deco-halftone deco-halftone--graphic-br" aria-hidden="true"></div>
-    <div class="deco-slash deco-slash--graphic" aria-hidden="true"></div>
-    <span class="deco-bracket deco-bracket--tl" aria-hidden="true"></span>
-    <span class="deco-bracket deco-bracket--br" aria-hidden="true"></span>
     <div class="sec__head sec__head--with-themes" data-reveal>
       <div class="sec__head-text">
         <p class="sec__num">02 / 04</p>
@@ -362,8 +355,6 @@ const featured = [
     <div class="deco-watermark deco-watermark--photo" aria-hidden="true">03</div>
     <div class="deco-halftone deco-halftone--photo-tl" aria-hidden="true"></div>
     <div class="deco-halftone deco-halftone--photo-br" aria-hidden="true"></div>
-    <span class="deco-bracket deco-bracket--photo-tl" aria-hidden="true"></span>
-    <span class="deco-bracket deco-bracket--photo-br" aria-hidden="true"></span>
     <div class="sec__head" data-reveal>
       <p class="sec__num">03 / 04</p>
       <p class="sec__eyebrow">product photography</p>
@@ -2962,14 +2953,11 @@ const featured = [
        throughout the landing to give it real motion + rhythm.
        ============================================================ */
 
-    /* Ensure Endfield deco layer sits above the section backdrop but
-       below the content stack. */
+    /* Deco stays behind everything. Sections keep their own layout,
+       the deco just floats in the background of each. */
     #hero .hero__art { z-index: 3; }
     #hero .hero__dots { z-index: 6; }
-    #graphic { position: relative; }
-    #graphic > *:not(.deco-cube):not(.deco-watermark):not(.deco-halftone):not(.deco-slash):not(.deco-bracket) { position: relative; z-index: 3; }
-    #photo { position: relative; }
-    #photo > *:not(.deco-cube):not(.deco-watermark):not(.deco-halftone):not(.deco-bracket) { position: relative; z-index: 3; }
+    #graphic, #photo { position: relative; overflow: hidden; }
 
     /* -------- HALFTONE DOTS -------- */
     .deco-halftone {
@@ -2978,38 +2966,38 @@ const featured = [
       z-index: 1;
       background-repeat: repeat;
     }
-    /* Hero (dark bg) — white dots */
+    /* Hero (dark bg) — subtle white/yellow dot grain */
     .deco-halftone--tl {
       top: 60px;
       left: 60px;
-      width: 340px;
-      height: 340px;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 1.6px, transparent 2.4px);
+      width: 320px;
+      height: 320px;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.35) 1.4px, transparent 2.2px);
       background-size: 12px 12px;
-      opacity: 0.85;
+      opacity: 0.55;
       mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 75%);
       -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 75%);
     }
     .deco-halftone--br {
       bottom: 40px;
       right: 40px;
-      width: 300px;
-      height: 300px;
-      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.75) 1.4px, transparent 2.2px);
+      width: 280px;
+      height: 280px;
+      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.28) 1.2px, transparent 2px);
       background-size: 10px 10px;
-      opacity: 0.85;
+      opacity: 0.55;
       mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
       -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
     }
-    /* Graphic (dark cinema) — white dots on top-left, yellow on bot-right */
+    /* Graphic (dark cinema) — grain top-left + bottom-right, both subtle */
     .deco-halftone--graphic-tl {
       top: 20px;
       left: 20px;
       width: 300px;
       height: 300px;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.55) 1.4px, transparent 2.1px);
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.20) 1.3px, transparent 2px);
       background-size: 11px 11px;
-      opacity: 0.9;
+      opacity: 0.5;
       mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
       -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
     }
@@ -3018,20 +3006,20 @@ const featured = [
       right: 20px;
       width: 320px;
       height: 320px;
-      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.5) 1.6px, transparent 2.4px);
+      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.18) 1.4px, transparent 2.2px);
       background-size: 13px 13px;
-      opacity: 0.9;
+      opacity: 0.5;
       mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
       -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
     }
-    /* Photo (cream bg) — slate-violet dots */
+    /* Photo (cream bg) — slate-violet grain */
     .deco-halftone--photo-tl,
     .deco-halftone--photo-br {
-      width: 260px;
-      height: 260px;
-      background-image: radial-gradient(circle, rgba(80, 97, 185, 0.55) 1.4px, transparent 2.1px);
+      width: 240px;
+      height: 240px;
+      background-image: radial-gradient(circle, rgba(80, 97, 185, 0.22) 1.3px, transparent 2px);
       background-size: 12px 12px;
-      opacity: 0.85;
+      opacity: 0.5;
     }
     .deco-halftone--photo-tl {
       top: 20px;
@@ -3060,77 +3048,23 @@ const featured = [
     .deco-watermark--hero {
       top: 22%;
       left: 6%;
-      font-size: clamp(20rem, 36vw, 48rem);
-      color: rgba(255, 255, 255, 0.14);
+      font-size: clamp(18rem, 32vw, 42rem);
+      color: rgba(255, 255, 255, 0.05);
     }
     .deco-watermark--graphic {
       top: 40%;
       right: 4%;
-      font-size: clamp(14rem, 28vw, 36rem);
-      color: rgba(255, 255, 255, 0.09);
+      font-size: clamp(12rem, 24vw, 32rem);
+      color: rgba(255, 255, 255, 0.035);
       font-weight: 500;
     }
     .deco-watermark--photo {
       bottom: 4%;
       left: 3%;
-      font-size: clamp(14rem, 28vw, 36rem);
-      color: rgba(80, 97, 185, 0.12);
+      font-size: clamp(12rem, 24vw, 32rem);
+      color: rgba(80, 97, 185, 0.05);
       font-weight: 500;
     }
-
-    /* -------- YELLOW SLASH -------- */
-    .deco-slash {
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 238, 0, 0.30) 15%,
-        rgba(255, 238, 0, 0.50) 50%,
-        rgba(255, 238, 0, 0.30) 85%,
-        transparent 100%);
-      mix-blend-mode: overlay;
-    }
-    .deco-slash--hero {
-      top: 30%;
-      right: -5%;
-      width: 90%;
-      height: 22%;
-      transform: rotate(-6deg);
-      transform-origin: 100% 50%;
-    }
-    .deco-slash--graphic {
-      top: 12%;
-      right: -8%;
-      width: 60%;
-      height: 8%;
-      transform: rotate(-4deg);
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 238, 0, 0.22) 20%,
-        rgba(255, 238, 0, 0.40) 50%,
-        rgba(255, 238, 0, 0.22) 80%,
-        transparent 100%);
-    }
-
-    /* -------- BRACKET CORNERS — thin L-shaped brackets that frame the
-       whole section like camera viewfinder marks. -------- */
-    .deco-bracket {
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-      width: 56px;
-      height: 56px;
-      border: 2px solid rgba(255, 238, 0, 0.6);
-    }
-    /* Graphic — yellow brackets on dark bg */
-    .deco-bracket--tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
-    .deco-bracket--br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
-    /* Photo — slate-violet brackets on cream bg */
-    .deco-bracket--photo-tl,
-    .deco-bracket--photo-br { border-color: rgba(80, 97, 185, 0.55); }
-    .deco-bracket--photo-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
-    .deco-bracket--photo-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
 
     /* -------- 3D CUBE VARIANTS -------- */
     .deco-cube {
@@ -3138,25 +3072,25 @@ const featured = [
       pointer-events: none;
       z-index: 2;
     }
-    /* Graphic — big yellow wireframe cube behind the constellation */
+    /* Graphic — background cube behind the constellation. Subtler */
     .deco-cube--graphic {
       top: 45%;
       right: 6%;
-      width: clamp(340px, 44vw, 640px);
-      height: clamp(340px, 44vw, 640px);
+      width: clamp(320px, 40vw, 580px);
+      height: clamp(320px, 40vw, 580px);
       transform: translateY(-50%);
       perspective: 1800px;
-      opacity: 0.70;
+      opacity: 0.28;
       mix-blend-mode: screen;
     }
-    /* Photo — smaller slate-violet cube behind the carousel */
+    /* Photo — small slate-violet cube behind the carousel. Subtler */
     .deco-cube--photo {
       top: 32%;
       left: 4%;
-      width: clamp(160px, 18vw, 260px);
-      height: clamp(160px, 18vw, 260px);
+      width: clamp(140px, 16vw, 220px);
+      height: clamp(140px, 16vw, 220px);
       perspective: 1000px;
-      opacity: 0.55;
+      opacity: 0.22;
     }
     .deco-cube__box {
       width: 100%;
@@ -3180,18 +3114,18 @@ const featured = [
       box-shadow: inset 0 0 32px rgba(80, 97, 185, 0.10);
     }
     /* Face translations — half the cube edge so faces meet at corners */
-    .deco-cube--graphic .deco-cube__face--f  { transform: translateZ(clamp(170px, 22vw, 320px)); }
-    .deco-cube--graphic .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(170px, 22vw, 320px)); }
-    .deco-cube--graphic .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(170px, 22vw, 320px)); }
-    .deco-cube--graphic .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(170px, 22vw, 320px)); }
-    .deco-cube--graphic .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(170px, 22vw, 320px)); }
-    .deco-cube--graphic .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(170px, 22vw, 320px)); }
-    .deco-cube--photo .deco-cube__face--f  { transform: translateZ(clamp(80px, 9vw, 130px)); }
-    .deco-cube--photo .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(80px, 9vw, 130px)); }
-    .deco-cube--photo .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(80px, 9vw, 130px)); }
-    .deco-cube--photo .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(80px, 9vw, 130px)); }
-    .deco-cube--photo .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(80px, 9vw, 130px)); }
-    .deco-cube--photo .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(80px, 9vw, 130px)); }
+    .deco-cube--graphic .deco-cube__face--f  { transform: translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--photo .deco-cube__face--f  { transform: translateZ(clamp(70px, 8vw, 110px)); }
+    .deco-cube--photo .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(70px, 8vw, 110px)); }
+    .deco-cube--photo .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(70px, 8vw, 110px)); }
+    .deco-cube--photo .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(70px, 8vw, 110px)); }
+    .deco-cube--photo .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(70px, 8vw, 110px)); }
+    .deco-cube--photo .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(70px, 8vw, 110px)); }
     @keyframes decoCubeSpin {
       from { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
       to   { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
@@ -3289,15 +3223,10 @@ const featured = [
       .deco-halftone--graphic-br,
       .deco-halftone--photo-br { display: none; }
       .deco-watermark--hero { font-size: 60vw; top: 30%; }
-      .deco-slash--hero,
-      .deco-slash--graphic { display: none; }
       .deco-cube--photo    { display: none; }
       .deco-cube--graphic  { opacity: 0.35; }
       .scroll-hint { left: 12px; }
       .deco-arrow--boundary { display: none; }
-      .deco-bracket,
-      .deco-bracket--photo-tl,
-      .deco-bracket--photo-br { width: 32px; height: 32px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .deco-cube__box,

@@ -431,16 +431,10 @@ const featured = [
       <h3 class="photo-caption__name" data-target="side-name">Frame 01</h3>
       <div class="photo-caption__rule"></div>
       <dl class="photo-caption__dl" data-target="side-specs">
-        <dt>type</dt><dd data-target="side-label">flat-lay</dd>
-        <dt>set</dt><dd>studio &middot; natural light</dd>
-        <dt>capture</dt><dd>a7iii &middot; 35mm</dd>
-        <dt>process</dt><dd>color &middot; retouch</dd>
+        <dt>character</dt><dd>mococo</dd>
+        <dt>camera</dt><dd>a7iii</dd>
+        <dt>lens</dt><dd>85mm</dd>
       </dl>
-      <p class="photo-caption__desc">
-        Illustration &rarr; production &rarr; photography. Each frame lives
-        on a Shopify listing; the carousel above auto-advances and the
-        caption card refreshes to match.
-      </p>
     </div>
   </section>
 
@@ -598,28 +592,17 @@ const featured = [
         next: document.querySelector('.lead-3d__arrow[data-nav="next"]'),
       };
       const products = [
-        { name: "Frame 01", label: "flat-lay",     idx: "01",
-          specs: [["set","studio · natural light"], ["capture","a7iii · 35mm"], ["process","color · retouch"]] },
-        { name: "Frame 02", label: "portrait",     idx: "02",
-          specs: [["set","tabletop · softbox"],    ["capture","a7iii · 50mm"], ["process","color · dodge"]] },
-        { name: "Frame 03", label: "flat-lay",     idx: "03",
-          specs: [["set","overhead · daylight"],   ["capture","a7iii · 35mm"], ["process","color · sharpen"]] },
-        { name: "Frame 04", label: "editorial",    idx: "04",
-          specs: [["set","studio · rim light"],    ["capture","a7iii · 85mm"], ["process","tone · retouch"]] },
-        { name: "Frame 05", label: "lifestyle",    idx: "05",
-          specs: [["set","desk build · daylight"], ["capture","a7iii · 35mm"], ["process","color · balance"]] },
-        { name: "Frame 06", label: "detail",       idx: "06",
-          specs: [["set","macro · softbox"],       ["capture","a7iii · 90mm"], ["process","tone · dodge"]] },
-        { name: "Frame 07", label: "editorial",    idx: "07",
-          specs: [["set","seamless · softbox"],    ["capture","a7iii · 50mm"], ["process","color · retouch"]] },
-        { name: "Frame 08", label: "flat-lay",     idx: "08",
-          specs: [["set","overhead · daylight"],   ["capture","a7iii · 35mm"], ["process","color · balance"]] },
-        { name: "Frame 09", label: "portrait",     idx: "09",
-          specs: [["set","studio · window light"], ["capture","a7iii · 85mm"], ["process","tone · retouch"]] },
-        { name: "Frame 10", label: "lifestyle",    idx: "10",
-          specs: [["set","desk build · softbox"],  ["capture","a7iii · 35mm"], ["process","color · sharpen"]] },
-        { name: "Frame 11", label: "portrait",     idx: "11",
-          specs: [["set","daylight · window"],     ["capture","iphone · 26mm"], ["process","color · balance"]] },
+        { name: "Frame 01", character: "mococo",           idx: "01" },
+        { name: "Frame 02", character: "kafka",            idx: "02" },
+        { name: "Frame 03", character: "mococo",           idx: "03" },
+        { name: "Frame 04", character: "ayaka",            idx: "04" },
+        { name: "Frame 05", character: "fuwawa",           idx: "05" },
+        { name: "Frame 06", character: "kafka",            idx: "06" },
+        { name: "Frame 07", character: "panty & stocking", idx: "07" },
+        { name: "Frame 08", character: "fuwamoco",         idx: "08" },
+        { name: "Frame 09", character: "nilou",            idx: "09" },
+        { name: "Frame 10", character: "topaz",            idx: "10" },
+        { name: "Frame 11", character: "panty & stocking", idx: "11" },
       ];
       const N = cards.length;
       let current = 0;
@@ -650,12 +633,12 @@ const featured = [
         setEl("side-idx",   p.idx);
         setEl("side-name",  p.name);
         const dl = document.querySelector('[data-target="side-specs"]');
-        if (dl && p.specs) {
-          const rows = [
-            `<dt>type</dt><dd data-target="side-label">${p.label || ""}</dd>`,
-            ...p.specs.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`),
-          ];
-          dl.innerHTML = rows.join("");
+        if (dl && p.character) {
+          dl.innerHTML = [
+            `<dt>character</dt><dd>${p.character}</dd>`,
+            `<dt>camera</dt><dd>a7iii</dd>`,
+            `<dt>lens</dt><dd>85mm</dd>`,
+          ].join("");
         }
       };
 

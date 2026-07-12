@@ -88,47 +88,6 @@ GET *   │                             │  POST /contact
       </table>
     </div>
 
-    <div class="gl-section">
-      <h2 class="gl-h2">03 · monthly cost</h2>
-      <table class="gl-tbl">
-        <thead><tr><th>Item</th><th class="gl-tbl__num">$ / mo</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><code>cloudflare dns</code></td><td class="gl-tbl__num">0.00</td><td>Free tier, existing domain</td></tr>
-          <tr><td><code>cloudfront egress</code></td><td class="gl-tbl__num">~0.20</td><td>&lt; 10 GB/mo at portfolio scale</td></tr>
-          <tr><td><code>s3 storage + xfer</code></td><td class="gl-tbl__num">~0.10</td><td>Primary + DR ~30 MB × 2 + logs</td></tr>
-          <tr><td><code>cloudwatch logs</code></td><td class="gl-tbl__num">~0.50</td><td>30-day retention keeps this bounded</td></tr>
-          <tr><td><code>synthetics canary</code></td><td class="gl-tbl__num">~1.30</td><td>1 canary × hourly × single region</td></tr>
-          <tr><td><code>lambda / api gw / ddb / ses</code></td><td class="gl-tbl__num">0.00</td><td>All inside free tier at this volume</td></tr>
-          <tr><td><code>athena / glue</code></td><td class="gl-tbl__num">0.00</td><td>Catalog is free tier; queries in cents</td></tr>
-          <tr><td><code>acm cert</code></td><td class="gl-tbl__num">0.00</td><td>Free forever</td></tr>
-          <tr class="gl-tbl__total"><td>Total</td><td class="gl-tbl__num">~2.10</td><td>Budget hard-capped at $25/mo</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="gl-section">
-      <h2 class="gl-h2">04 · CI/CD flow</h2>
-      <ol class="ordered">
-        <li><strong>Push to <code>main</code></strong> in the repo.</li>
-        <li>GitHub Actions assumes an AWS IAM role via <strong>OIDC federation</strong> — zero long-lived credentials in the repo.</li>
-        <li>Site change → <code>npm ci → astro build → aws s3 sync (primary + dr) → cloudfront invalidate /*</code>.</li>
-        <li>Infra change → <code>terraform fmt → init → validate → plan</code> on PR; <code>apply</code> on merge to <code>main</code>.</li>
-        <li>Both workflows use path filters — a doc-only change doesn't trigger a full redeploy.</li>
-      </ol>
-    </div>
-
-    <div class="gl-section">
-      <h2 class="gl-h2">05 · deliberate choices</h2>
-      <ul class="bul">
-        <li><strong>Terraform, not CloudFormation.</strong> Broader job market, better plan output, multi-cloud portable.</li>
-        <li><strong>HTTP API v2, not REST.</strong> ~70% cheaper. Contact form doesn't need REST-only features (usage plans, request validators).</li>
-        <li><strong>Static Astro, not Next.js SSR.</strong> Site is 100% content — no reason to pay for warm Node servers per request.</li>
-        <li><strong>OAC, not signed URLs.</strong> AWS-recommended path. SigV4 + full S3 feature support, unlike legacy OAI.</li>
-        <li><strong>Origin-group failover, not Route 53 multi-region.</strong> Failover fires on first bad response instead of after health-check TTL — ~5-min RTO drops to ~30s.</li>
-        <li><strong>Budget hard cap + Anomaly Detection, not "hope for the best."</strong> Bill can't exceed $25 without an email hitting the inbox first.</li>
-      </ul>
-    </div>
-
     <div class="gl-panel gl-panel--elev cta">
       <span class="gl-panel__corner gl-panel__corner--tl"></span>
       <span class="gl-panel__corner gl-panel__corner--bl"></span>

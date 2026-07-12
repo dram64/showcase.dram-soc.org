@@ -1,4 +1,9 @@
 node_modules/
+# ...except the CloudWatch Synthetics canary source, which the Puppeteer
+# runtime requires to live under `nodejs/node_modules/`.
+!infra/lambdas/canary/nodejs/
+!infra/lambdas/canary/nodejs/node_modules/
+!infra/lambdas/canary/nodejs/node_modules/*
 .astro/
 dist/
 .env

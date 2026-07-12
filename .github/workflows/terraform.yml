@@ -37,8 +37,11 @@ jobs:
           role-to-assume: ${{ secrets.AWS_TF_ROLE_ARN }}
           aws-region: us-west-2
 
-      - name: Install Lambda deps
+      - name: Install Lambda deps (contact)
         run: cd lambdas/contact && npm ci --omit=dev
+
+      - name: Install Lambda deps (digest)
+        run: cd lambdas/digest && npm install --omit=dev --package-lock=false
 
       - name: fmt / init / validate
         run: |
@@ -73,8 +76,11 @@ jobs:
           role-to-assume: ${{ secrets.AWS_TF_ROLE_ARN }}
           aws-region: us-west-2
 
-      - name: Install Lambda deps
+      - name: Install Lambda deps (contact)
         run: cd lambdas/contact && npm ci --omit=dev
+
+      - name: Install Lambda deps (digest)
+        run: cd lambdas/digest && npm install --omit=dev --package-lock=false
 
       - name: init
         run: terraform init -input=false

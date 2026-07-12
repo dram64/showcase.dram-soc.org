@@ -1,16 +1,27 @@
-// Nightly Lambda — queries Cost Explorer + Synthetics + Athena and writes
-// three JSON files to the site bucket that the /status, /cost, and
-// /insights static pages fetch client-side. Refreshed via EventBridge cron.
+// Nightly Lambda — writes status.json + insights.json to the site buckets
+// (primary us-west-2 + DR us-east-1). Static pages fetch these client-side.
+//
+// status.json  — CloudWatch Synthetics canary health + 30-day roll-up
+// insights.json — Athena over CloudFront access logs, top pages/refs/countries
 
-import { CostExplorerClient, GetCostAndUsageCommand } from "@aws-sdk/client-cost-explorer";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { SyntheticsClient, DescribeCanariesLastRunCommand } from "@aws-sdk/client-synthetics";
-import { AthenaClient, StartQueryExecutionCommand, GetQueryExecutionCommand, GetQueryResultsCommand } from "@aws-sdk/client-athena";
+import { CloudWatchClient, GetMetricStatisticsCommand } from "@aws-sdk/client-cloudwatch";
+import {
+  SyntheticsClient,
+  DescribeCanariesLastRunCommand,
+  GetCanaryRunsCommand,
+} from "@aws-sdk/client-synthetics";
+import {
+  AthenaClient,
+  StartQueryExecutionCommand,
+  GetQueryExecutionCommand,
+  GetQueryResultsCommand,
+} from "@aws-sdk/client-athena";
 
-const ce = new CostExplorerClient({ region: "us-east-1" });
-const s3 = new S3Client({ region: "us-west-2" });   // primary bucket
-const s3dr = new S3Client({ region: "us-east-1" }); // DR bucket
-const syn = new SyntheticsClient({});
+const s3   = new S3Client({ region: "us-west-2" });   // primary
+const s3dr = new S3Client({ region: "us-east-1" });   // DR
+const cw   = new CloudWatchClient({});
+const syn  = new SyntheticsClient({});
 const athena = new AthenaClient({});
 
 const {
@@ -21,64 +32,94 @@ const {
   ATHENA_WORKGROUP,
 } = process.env;
 
-function toIsoDate(offsetDays = 0) {
+// URLs the canary probes. Keep in sync with lambdas/canary/nodejs/node_modules/index.js
+const CANARY_TARGETS = ["/", "/work/", "/architecture/"];
+
+const isoDate = (offsetDays = 0) => {
   const d = new Date();
   d.setUTCDate(d.getUTCDate() + offsetDays);
   return d.toISOString().slice(0, 10);
-}
+};
 
 async function putJson(key, body) {
   const payload = JSON.stringify({ generatedAt: new Date().toISOString(), ...body }, null, 2);
+  const params = {
+    Key: key,
+    Body: payload,
+    ContentType: "application/json",
+    CacheControl: "public, max-age=300, must-revalidate",
+  };
   await Promise.all([
-    s3.send(new PutObjectCommand({
-      Bucket: SITE_BUCKET,
-      Key: key,
-      Body: payload,
-      ContentType: "application/json",
-      CacheControl: "public, max-age=300, must-revalidate",
-    })),
-    s3dr.send(new PutObjectCommand({
-      Bucket: SITE_BUCKET_DR,
-      Key: key,
-      Body: payload,
-      ContentType: "application/json",
-      CacheControl: "public, max-age=300, must-revalidate",
-    })),
+    s3.send(new PutObjectCommand({ Bucket: SITE_BUCKET,    ...params })),
+    s3dr.send(new PutObjectCommand({ Bucket: SITE_BUCKET_DR, ...params })),
   ]);
 }
 
-async function collectCost() {
-  const res = await ce.send(new GetCostAndUsageCommand({
-    TimePeriod: { Start: toIsoDate(-30), End: toIsoDate() },
-    Granularity: "MONTHLY",
-    Metrics: ["UnblendedCost"],
-    GroupBy: [{ Type: "DIMENSION", Key: "SERVICE" }],
-  }));
-  const services = (res.ResultsByTime?.[0]?.Groups ?? [])
-    .map((g) => ({
-      service: g.Keys?.[0] ?? "unknown",
-      cost:    parseFloat(g.Metrics?.UnblendedCost?.Amount ?? "0"),
-    }))
-    .filter((s) => s.cost > 0.0001)
-    .sort((a, b) => b.cost - a.cost);
-
-  const total = services.reduce((sum, s) => sum + s.cost, 0);
-  return { periodStart: toIsoDate(-30), periodEnd: toIsoDate(), total, services };
-}
+// ---------- STATUS ----------
 
 async function collectStatus() {
-  const res = await syn.send(new DescribeCanariesLastRunCommand({ Names: [CANARY_NAME] }));
-  const lastRun = res.CanariesLastRun?.[0]?.LastRun;
+  // Last run + basic metadata.
+  const lastRunRes = await syn.send(new DescribeCanariesLastRunCommand({ Names: [CANARY_NAME] }));
+  const lastRun = lastRunRes.CanariesLastRun?.[0]?.LastRun;
+  const startedAt = lastRun?.Timeline?.Started;
+  const completedAt = lastRun?.Timeline?.Completed;
+
+  // 30-day success rate from CloudWatch metrics.
+  const now = new Date();
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const successMetric = await cw.send(new GetMetricStatisticsCommand({
+    Namespace: "CloudWatchSynthetics",
+    MetricName: "SuccessPercent",
+    Dimensions: [{ Name: "CanaryName", Value: CANARY_NAME }],
+    StartTime: thirtyDaysAgo,
+    EndTime: now,
+    Period: 3600,
+    Statistics: ["Average", "SampleCount"],
+  }));
+  const dp = successMetric.Datapoints ?? [];
+  const totalRuns30d = dp.reduce((s, d) => s + (d.SampleCount ?? 0), 0);
+  const weightedSum = dp.reduce((s, d) => s + (d.Average ?? 0) * (d.SampleCount ?? 0), 0);
+  const successRate30d = totalRuns30d > 0 ? weightedSum / totalRuns30d : null;
+  const failedRuns30d = totalRuns30d > 0
+    ? Math.round(totalRuns30d - (weightedSum / 100))
+    : 0;
+
+  // Last 8 runs — powers the "recent runs" table.
+  const runsRes = await syn.send(new GetCanaryRunsCommand({ Name: CANARY_NAME, MaxResults: 8 }));
+  const recentRuns = (runsRes.CanaryRuns ?? []).map((r) => ({
+    runAt: r.Timeline?.Completed?.toISOString() ?? r.Timeline?.Started?.toISOString(),
+    status: r.Status?.State ?? "unknown",
+    durationMs: r.Timeline?.Started && r.Timeline?.Completed
+      ? r.Timeline.Completed.getTime() - r.Timeline.Started.getTime()
+      : null,
+  }));
+
+  // Per-URL breakdown — canary script tests these together so we mirror the last-run status.
+  const endpoints = CANARY_TARGETS.map((url) => ({
+    url,
+    status: lastRun?.Status?.State ?? "unknown",
+    durationMs: startedAt && completedAt
+      ? Math.round((completedAt.getTime() - startedAt.getTime()) / CANARY_TARGETS.length)
+      : null,
+  }));
+
   return {
     canary: CANARY_NAME,
     lastRunStatus: lastRun?.Status?.State ?? "unknown",
-    lastRunAt: lastRun?.Timeline?.Completed?.toISOString() ?? null,
-    lastRunDurationMs: lastRun?.Timeline?.Started && lastRun?.Timeline?.Completed
-      ? (lastRun.Timeline.Completed.getTime() - lastRun.Timeline.Started.getTime())
+    lastRunAt: completedAt?.toISOString() ?? null,
+    lastRunDurationMs: startedAt && completedAt
+      ? completedAt.getTime() - startedAt.getTime()
       : null,
+    successRate30d,
+    totalRuns30d,
+    failedRuns30d,
+    endpoints,
+    recentRuns,
     statusUrl: `https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#synthetics:canary/detail/${CANARY_NAME}`,
   };
 }
+
+// ---------- INSIGHTS ----------
 
 async function runAthena(sql) {
   const start = await athena.send(new StartQueryExecutionCommand({
@@ -87,7 +128,7 @@ async function runAthena(sql) {
     WorkGroup: ATHENA_WORKGROUP,
   }));
   const id = start.QueryExecutionId;
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 40; i++) {
     await new Promise((r) => setTimeout(r, 1500));
     const st = await athena.send(new GetQueryExecutionCommand({ QueryExecutionId: id }));
     const state = st.QueryExecution?.Status?.State;
@@ -106,29 +147,114 @@ async function runAthena(sql) {
   });
 }
 
+// CloudFront edge-location prefixes → country code, best-effort. Not exhaustive.
+const EDGE_TO_COUNTRY = {
+  ATL: "US", BOS: "US", CDG: "FR", DFW: "US", EWR: "US", FRA: "DE",
+  GRU: "BR", HKG: "HK", IAD: "US", ICN: "KR", JFK: "US", LAX: "US",
+  LHR: "GB", MAD: "ES", MIA: "US", MRS: "FR", NRT: "JP", ORD: "US",
+  PDX: "US", SEA: "US", SFO: "US", SIN: "SG", SJC: "US", SYD: "AU",
+  YTO: "CA", YUL: "CA", YVR: "CA", ZRH: "CH", DUB: "IE", ARN: "SE",
+  AMS: "NL", MXP: "IT", MUC: "DE",
+};
+
 async function collectInsights() {
   try {
-    const topPages = await runAthena(`
-      SELECT uri, COUNT(*) AS hits
-      FROM ${ATHENA_DB}.cloudfront_logs
-      WHERE log_date >= current_date - interval '7' day
-        AND status = 200
-        AND uri NOT LIKE '/_assets/%'
-        AND uri NOT LIKE '/fonts/%'
-        AND uri NOT LIKE '/assets/%'
-      GROUP BY uri
-      ORDER BY hits DESC
-      LIMIT 10
-    `);
-    return { period: "last 7 days", topPages };
+    const [topPagesRaw, refsRaw, edgeRaw, statsRaw] = await Promise.all([
+      runAthena(`
+        SELECT uri, COUNT(*) AS hits
+        FROM ${ATHENA_DB}.cloudfront_logs
+        WHERE log_date >= current_date - interval '7' day
+          AND status = 200
+          AND uri NOT LIKE '/_astro/%'
+          AND uri NOT LIKE '/_assets/%'
+          AND uri NOT LIKE '/fonts/%'
+          AND uri NOT LIKE '/assets/%'
+          AND uri NOT LIKE '/new-assets/%'
+          AND uri NOT LIKE '/showcase/%'
+          AND uri NOT LIKE '%.json'
+          AND uri NOT LIKE '%.xml'
+          AND uri NOT LIKE '%.png'
+          AND uri NOT LIKE '%.webp'
+          AND uri NOT LIKE '%.jpg'
+          AND uri NOT LIKE '%.svg'
+          AND uri NOT LIKE '%.ico'
+        GROUP BY uri
+        ORDER BY hits DESC
+        LIMIT 15
+      `),
+      runAthena(`
+        SELECT
+          CASE
+            WHEN referrer = '-' OR referrer = '' THEN '(direct)'
+            WHEN regexp_like(referrer, 'https?://([^/]+)') THEN regexp_extract(referrer, 'https?://([^/]+)', 1)
+            ELSE referrer
+          END AS domain,
+          COUNT(*) AS hits
+        FROM ${ATHENA_DB}.cloudfront_logs
+        WHERE log_date >= current_date - interval '7' day
+          AND referrer NOT LIKE '%showcase.dram-soc.org%'
+        GROUP BY 1
+        ORDER BY hits DESC
+        LIMIT 8
+      `),
+      runAthena(`
+        SELECT substring(location, 1, 3) AS edge, COUNT(*) AS hits
+        FROM ${ATHENA_DB}.cloudfront_logs
+        WHERE log_date >= current_date - interval '7' day
+        GROUP BY 1
+        ORDER BY hits DESC
+        LIMIT 20
+      `),
+      runAthena(`
+        SELECT
+          COUNT(*) AS total_requests,
+          COUNT(DISTINCT request_ip) AS unique_viewers,
+          SUM(CAST(bytes AS bigint)) AS bytes_served,
+          SUM(CASE WHEN result_type IN ('Hit', 'RefreshHit') THEN 1 ELSE 0 END) * 1.0 / COUNT(*) AS cache_hit_ratio
+        FROM ${ATHENA_DB}.cloudfront_logs
+        WHERE log_date >= current_date - interval '7' day
+      `),
+    ]);
+
+    // Aggregate edge → country.
+    const byCountry = {};
+    for (const row of edgeRaw) {
+      const country = EDGE_TO_COUNTRY[row.edge] ?? row.edge;
+      byCountry[country] = (byCountry[country] ?? 0) + parseInt(row.hits, 10);
+    }
+    const topCountries = Object.entries(byCountry)
+      .map(([country, hits]) => ({ country, hits }))
+      .sort((a, b) => b.hits - a.hits)
+      .slice(0, 8);
+
+    const stats = statsRaw[0] ?? {};
+    return {
+      periodStart: isoDate(-7),
+      periodEnd: isoDate(),
+      totalRequests: parseInt(stats.total_requests ?? "0", 10),
+      uniqueViewers: parseInt(stats.unique_viewers ?? "0", 10),
+      cacheHitRatio: parseFloat(stats.cache_hit_ratio ?? "0"),
+      bytesServedMB: parseFloat(stats.bytes_served ?? "0") / (1024 * 1024),
+      topPages: topPagesRaw.map((r) => ({ uri: r.uri, hits: parseInt(r.hits, 10) })),
+      topReferrers: refsRaw.map((r) => ({ domain: r.domain, hits: parseInt(r.hits, 10) })),
+      topCountries,
+    };
   } catch (err) {
-    return { period: "last 7 days", topPages: [], warning: err.message };
+    return {
+      periodStart: isoDate(-7),
+      periodEnd: isoDate(),
+      topPages: [],
+      topReferrers: [],
+      topCountries: [],
+      warning: err.message,
+    };
   }
 }
 
+// ---------- HANDLER ----------
+
 export async function handler() {
-  const [cost, status, insights] = await Promise.allSettled([
-    collectCost(),
+  const [status, insights] = await Promise.allSettled([
     collectStatus(),
     collectInsights(),
   ]);
@@ -139,10 +265,9 @@ export async function handler() {
   };
 
   await Promise.all([
-    write("cost.json", cost),
     write("status.json", status),
     write("insights.json", insights),
   ]);
 
-  return { ok: true, wrote: ["cost.json", "status.json", "insights.json"] };
+  return { ok: true, wrote: ["status.json", "insights.json"] };
 }

@@ -31,13 +31,17 @@ resource "aws_iam_role_policy" "digest" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = ["ce:GetCostAndUsage"]
+        Effect = "Allow"
+        Action = [
+          "synthetics:DescribeCanariesLastRun",
+          "synthetics:GetCanary",
+          "synthetics:GetCanaryRuns",
+        ]
         Resource = "*"
       },
       {
         Effect   = "Allow"
-        Action   = ["synthetics:DescribeCanariesLastRun", "synthetics:GetCanary"]
+        Action   = ["cloudwatch:GetMetricStatistics"]
         Resource = "*"
       },
       {
@@ -79,10 +83,8 @@ resource "aws_iam_role_policy" "digest" {
         Effect = "Allow"
         Action = ["s3:PutObject"]
         Resource = [
-          "${aws_s3_bucket.site.arn}/cost.json",
           "${aws_s3_bucket.site.arn}/status.json",
           "${aws_s3_bucket.site.arn}/insights.json",
-          "${aws_s3_bucket.site_dr.arn}/cost.json",
           "${aws_s3_bucket.site_dr.arn}/status.json",
           "${aws_s3_bucket.site_dr.arn}/insights.json",
         ]

@@ -2091,12 +2091,19 @@ const featured = [
       position: relative;
       overflow: hidden;
     }
-    /* Cinema editorial dark mode — graphic section only */
+    /* Cinema editorial dark mode — graphic section only. Halftone dot
+       pattern baked into the bg so the grain sits on the section from
+       edge to edge; the constellation cells (z-index 3) simply cover
+       it where they land, so the section reads as one integrated
+       composition with deco + tiles overlapping in the same space. */
     #graphic {
       background:
+        radial-gradient(circle, rgba(255, 255, 255, 0.06) 1.2px, transparent 2.2px),
         radial-gradient(circle at 8% 12%, rgba(80, 97, 185, 0.18) 0%, transparent 45%),
         radial-gradient(circle at 92% 88%, rgba(255, 129, 176, 0.08) 0%, transparent 50%),
         linear-gradient(180deg, #0d0c13 0%, #14131a 100%);
+      background-size: 14px 14px, auto, auto, auto;
+      background-repeat: repeat, no-repeat, no-repeat, no-repeat;
       color: #f5f4f0;
       position: relative;
       overflow: hidden;

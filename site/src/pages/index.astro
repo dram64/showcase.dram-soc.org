@@ -105,37 +105,6 @@ const featured = [
          cube sits behind everything, watermark "02" anchors the section
          number, halftone dots in both corners, yellow slash across the
          top-right, corner brackets frame the whole board. -->
-    <!-- Cubes hang off the right + left edges — most of the volume
-         lives in the section's outer gutter so they frame the
-         constellation instead of sitting behind it. -->
-    <div class="deco-cube deco-cube--graphic deco-cube--graphic-r" aria-hidden="true">
-      <div class="deco-cube__box">
-        <span class="deco-cube__face deco-cube__face--f"></span>
-        <span class="deco-cube__face deco-cube__face--b"></span>
-        <span class="deco-cube__face deco-cube__face--r"></span>
-        <span class="deco-cube__face deco-cube__face--l"></span>
-        <span class="deco-cube__face deco-cube__face--t"></span>
-        <span class="deco-cube__face deco-cube__face--bo"></span>
-      </div>
-    </div>
-    <div class="deco-cube deco-cube--graphic deco-cube--graphic-l" aria-hidden="true">
-      <div class="deco-cube__box deco-cube__box--fast">
-        <span class="deco-cube__face deco-cube__face--f"></span>
-        <span class="deco-cube__face deco-cube__face--b"></span>
-        <span class="deco-cube__face deco-cube__face--r"></span>
-        <span class="deco-cube__face deco-cube__face--l"></span>
-        <span class="deco-cube__face deco-cube__face--t"></span>
-        <span class="deco-cube__face deco-cube__face--bo"></span>
-      </div>
-    </div>
-    <!-- Vertical watermark rails hugging each side of the section -->
-    <div class="deco-watermark deco-watermark--graphic-left"  aria-hidden="true">graphic&nbsp;·&nbsp;02</div>
-    <div class="deco-watermark deco-watermark--graphic-right" aria-hidden="true">no.&nbsp;01&nbsp;·&nbsp;drop&nbsp;01</div>
-    <!-- Halftones anchored into all four outer corners of the section -->
-    <div class="deco-halftone deco-halftone--graphic-tl" aria-hidden="true"></div>
-    <div class="deco-halftone deco-halftone--graphic-tr" aria-hidden="true"></div>
-    <div class="deco-halftone deco-halftone--graphic-bl" aria-hidden="true"></div>
-    <div class="deco-halftone deco-halftone--graphic-br" aria-hidden="true"></div>
     <div class="sec__head sec__head--with-themes" data-reveal>
       <div class="sec__head-text">
         <p class="sec__num">02 / 04</p>
@@ -2094,12 +2063,21 @@ const featured = [
       position: relative;
       overflow: hidden;
     }
-    /* Cinema editorial dark mode — graphic section only */
+    /* Cinema editorial dark mode — graphic section only.
+       Background filler:
+         · repeating halftone dot pattern (whole section, edge to edge)
+         · slate-violet radial wash top-left
+         · coral-pink radial wash bottom-right
+         · vertical slate gradient
+       Cells sit directly on top of all this — decor is the wallpaper. */
     #graphic {
       background:
+        radial-gradient(circle, rgba(255, 255, 255, 0.055) 1.2px, transparent 2.2px),
         radial-gradient(circle at 8% 12%, rgba(80, 97, 185, 0.18) 0%, transparent 45%),
         radial-gradient(circle at 92% 88%, rgba(255, 129, 176, 0.08) 0%, transparent 50%),
         linear-gradient(180deg, #0d0c13 0%, #14131a 100%);
+      background-size: 14px 14px, auto, auto, auto;
+      background-repeat: repeat, no-repeat, no-repeat, no-repeat;
       color: #f5f4f0;
       position: relative;
       overflow: hidden;

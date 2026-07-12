@@ -101,18 +101,6 @@ const featured = [
        02 · GRAPHIC DESIGN
        ================================================================ -->
   <section id="graphic" class="sec">
-    <!-- Single background cube — slow-spinning wireframe behind the
-         constellation cells (z-index 2, cells z-index 3). Pure filler. -->
-    <div class="deco-cube deco-cube--graphic deco-cube--graphic-r" aria-hidden="true">
-      <div class="deco-cube__box">
-        <span class="deco-cube__face deco-cube__face--f"></span>
-        <span class="deco-cube__face deco-cube__face--b"></span>
-        <span class="deco-cube__face deco-cube__face--r"></span>
-        <span class="deco-cube__face deco-cube__face--l"></span>
-        <span class="deco-cube__face deco-cube__face--t"></span>
-        <span class="deco-cube__face deco-cube__face--bo"></span>
-      </div>
-    </div>
     <div class="sec__head sec__head--with-themes" data-reveal>
       <div class="sec__head-text">
         <p class="sec__num">02 / 04</p>
@@ -2069,22 +2057,6 @@ const featured = [
       position: relative;
       overflow: hidden;
     }
-    /* Soft halftone dot pattern as a background filler layer. Radially
-       masked from the section center outward, so the grain is quietly
-       present through the middle and fades cleanly into transparency
-       at every edge — no hard rectangle of dots. */
-    #graphic::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.045) 1.1px, transparent 2px);
-      background-size: 14px 14px;
-      background-repeat: repeat;
-      mask-image: radial-gradient(ellipse 75% 80% at center, black 10%, transparent 92%);
-      -webkit-mask-image: radial-gradient(ellipse 75% 80% at center, black 10%, transparent 92%);
-    }
     /* Section corner vignette — soft radial darkening at the corners so
        the constellation reads as a lit stage. Sits above the base bg
        gradient but below the content stack. */
@@ -2963,8 +2935,8 @@ const featured = [
        stacking context at z-index 3, so the ambient deco layer
        (z-index 1 halftones + watermark, z-index 2 cube) always sits
        BEHIND the section's real content. */
-    #graphic > :not(.deco-cube):not(.deco-watermark):not(.deco-halftone),
-    #photo  > :not(.deco-cube):not(.deco-watermark):not(.deco-halftone) {
+    #graphic > :not(.deco-watermark):not(.deco-halftone),
+    #photo  > :not(.deco-watermark):not(.deco-halftone) {
       position: relative;
       z-index: 3;
     }
@@ -3110,54 +3082,6 @@ const featured = [
       font-weight: 500;
     }
 
-    /* -------- 3D CUBE VARIANTS -------- */
-    .deco-cube {
-      position: absolute;
-      pointer-events: none;
-      z-index: 2;
-    }
-    /* Cubes bleed off the outer edges of the section so most of their
-       mass lives in the rail gutter and only a wedge is inside the
-       content region — the constellation is framed, never covered. */
-    .deco-cube--graphic {
-      width: clamp(90px, 9vw, 140px);
-      height: clamp(90px, 9vw, 140px);
-      perspective: 700px;
-      opacity: 0.42;
-      mix-blend-mode: screen;
-    }
-    .deco-cube--graphic-r {
-      bottom: 5%;
-      left: 4%;
-    }
-    .deco-cube__box {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: decoCubeSpin 26s linear infinite;
-    }
-    .deco-cube__box--fast { animation-duration: 18s; animation-direction: reverse; }
-    .deco-cube__face {
-      position: absolute;
-      inset: 0;
-      border: 1.5px solid rgba(255, 255, 255, 0.75);
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.10);
-    }
-    /* Photo cube gets slate-violet wireframe (fits cream bg) */
-    /* Face translations — half the cube edge so faces meet at corners */
-    .deco-cube--graphic-r .deco-cube__face--f  { transform: translateZ(clamp(45px, 4.5vw, 70px)); }
-    .deco-cube--graphic-r .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(45px, 4.5vw, 70px)); }
-    .deco-cube--graphic-r .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(45px, 4.5vw, 70px)); }
-    .deco-cube--graphic-r .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(45px, 4.5vw, 70px)); }
-    .deco-cube--graphic-r .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(45px, 4.5vw, 70px)); }
-    .deco-cube--graphic-r .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(45px, 4.5vw, 70px)); }
-    @keyframes decoCubeSpin {
-      from { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
-      to   { transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg); }
-    }
-
     /* Scroll hint — bottom-left of hero, points at graphic section */
     .scroll-hint {
       position: absolute;
@@ -3234,13 +3158,6 @@ const featured = [
     }
 
     @media (max-width: 900px) {
-      .deco-cube--graphic { width: 24vw; height: 24vw; opacity: 0.5; }
-      .deco-cube--graphic .deco-cube__face--f  { transform: translateZ(12vw); }
-      .deco-cube--graphic .deco-cube__face--b  { transform: rotateY(180deg) translateZ(12vw); }
-      .deco-cube--graphic .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(12vw); }
-      .deco-cube--graphic .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(12vw); }
-      .deco-cube--graphic .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(12vw); }
-      .deco-cube--graphic .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(12vw); }
       .deco-watermark--graphic { font-size: 40vw; right: -6%; }
       .deco-watermark--photo   { font-size: 40vw; }
     }
@@ -3250,12 +3167,10 @@ const featured = [
       .deco-halftone--graphic-br,
       .deco-halftone--photo-br { display: none; }
       .deco-watermark--hero { font-size: 60vw; top: 30%; }
-      .deco-cube--graphic  { opacity: 0.35; }
       .scroll-hint { left: 12px; }
       .deco-arrow--boundary { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .deco-cube__box,
       .deco-square--boundary,
       .deco-arrow--boundary,
       .scroll-hint__arrow { animation: none; }

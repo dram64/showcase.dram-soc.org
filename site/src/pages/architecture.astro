@@ -4,13 +4,13 @@ import Gryphline from "../layouts/Gryphline.astro";
 ---
 <Gryphline title="architecture">
   <section class="gl-shell">
-    <p class="gl-kicker">case study · cloud engineering</p>
-    <h1 class="gl-h1">how this ships<em>.</em></h1>
+    <p class="gl-kicker">case study · cloud</p>
+    <h1 class="gl-h1">architecture<em>.</em></h1>
     <p class="gl-lede">
-      Every piece of dram-soc.org lives in one Terraform state — the static site, the CDN,
-      the DNS, the certificate, the contact form endpoint, and the log retention policies.
-      <code>git push</code> triggers plan + apply. Total spend: <strong>~$4/month</strong> including
-      cross-region failover, hourly Synthetics canaries, and Athena analytics.
+      Whole stack sits in one Terraform state. Site, CDN, DNS, cert, contact form, log
+      retention — one <code>apply</code> covers all of it. Push to <code>main</code>, plan runs,
+      apply runs. Runs me around <strong>$4/month</strong>, and that includes cross-region
+      failover, hourly Puppeteer canaries, and Athena on top.
     </p>
 
     <div class="gl-section">
@@ -83,7 +83,7 @@ GET *   │                             │  POST /contact
           <tr><td><code>x-ray</code></td><td>Distributed tracing across Lambda + API GW.</td><td>Free for first 100k traces/mo. Invaluable when the contact form breaks.</td></tr>
           <tr><td><code>eventbridge sched</code></td><td>Nightly cron for the digest Lambda.</td><td>Replaces CloudWatch Events. Cleaner IAM model.</td></tr>
           <tr><td><code>cost explorer + budgets</code></td><td>FinOps guardrails: 3 SNS thresholds + anomaly detection.</td><td>Anomaly monitor scoped to <code>&gt;= $1</code> daily drift; alerts to email.</td></tr>
-          <tr><td><code>cloudwatch logs</code></td><td>Lambda + HTTP API access logs.</td><td>30-day retention on every log group — cost cannot creep.</td></tr>
+          <tr><td><code>cloudwatch logs</code></td><td>Lambda + HTTP API access logs.</td><td>30-day retention on every group so nothing quietly creeps up.</td></tr>
         </tbody>
       </table>
     </div>
@@ -136,11 +136,11 @@ GET *   │                             │  POST /contact
       <p class="gl-kicker">code</p>
       <h2 class="gl-h2 cta__h">read the terraform</h2>
       <p class="gl-lede" style="margin-bottom: 20px;">
-        The full IaC lives at
+        Repo's public.
         <a href="https://github.com/dram64/showcase.dram-soc.org" target="_blank" rel="noopener">
           github.com/dram64/showcase.dram-soc.org
-        </a> — <code>infra/</code> for Terraform, <code>site/</code> for the Astro source,
-        <code>.github/workflows/</code> for the deploy pipeline.
+        </a> — <code>infra/</code> is the Terraform, <code>site/</code> is the Astro source,
+        <code>.github/workflows/</code> is the deploy pipeline. Read whatever's useful.
       </p>
       <a class="gl-btn gl-btn--primary" href="https://github.com/dram64/showcase.dram-soc.org" target="_blank" rel="noopener">
         github <span class="gl-btn__arrow">&rarr;</span>

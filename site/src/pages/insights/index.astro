@@ -51,16 +51,6 @@ import Gryphline from "../../layouts/Gryphline.astro";
       </table>
     </div>
 
-    <div class="gl-section">
-      <h2 class="gl-h2">top countries</h2>
-      <table class="gl-tbl">
-        <thead>
-          <tr><th>Country</th><th class="gl-tbl__num">hits</th></tr>
-        </thead>
-        <tbody id="i-countries"><tr><td colspan="2">loading&hellip;</td></tr></tbody>
-      </table>
-    </div>
-
     <p class="gl-kicker" id="i-generated" style="margin-top: 32px;">loading&hellip;</p>
   </section>
 
@@ -83,9 +73,8 @@ import Gryphline from "../../layouts/Gryphline.astro";
           el.appendChild(tr);
         });
       };
-      fill("i-body",      d.topPages,     "uri");
-      fill("i-refs",      d.topReferrers, "domain");
-      fill("i-countries", d.topCountries, "country");
+      fill("i-body", d.topPages,     "uri");
+      fill("i-refs", d.topReferrers, "domain");
     }).catch(() => {
       document.getElementById("i-generated").textContent = "// digest not available yet";
     });

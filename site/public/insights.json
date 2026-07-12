@@ -1,38 +1,27 @@
 {
-  "periodStart": "2026-07-04",
-  "periodEnd": "2026-07-11",
-  "totalRequests": 5847,
-  "uniqueViewers": 1204,
+  "periodStart": "2026-07-05",
+  "periodEnd": "2026-07-12",
+  "totalRequests": 2618,
+  "uniqueViewers": 641,
   "cacheHitRatio": 0.9482,
-  "bytesServedMB": 409.1,
+  "bytesServedMB": 182.4,
   "topPages": [
-    { "uri": "/",              "hits": 1420 },
-    { "uri": "/work/",         "hits": 682  },
-    { "uri": "/architecture/", "hits": 594  },
-    { "uri": "/process/",      "hits": 481  },
-    { "uri": "/catalog/",      "hits": 428  },
-    { "uri": "/work/psg/",     "hits": 316  },
-    { "uri": "/work/nso/",     "hits": 291  },
-    { "uri": "/status/",       "hits": 244  },
-    { "uri": "/contact/",      "hits": 172  },
-    { "uri": "/insights/",     "hits": 148  },
-    { "uri": "/lab/endfield/", "hits":  89  }
+    { "uri": "/",              "hits": 890 },
+    { "uri": "/catalog/",      "hits": 512 },
+    { "uri": "/work/psg/",     "hits": 388 },
+    { "uri": "/work/nso/",     "hits": 341 },
+    { "uri": "/work/",         "hits": 142 },
+    { "uri": "/architecture/", "hits": 118 },
+    { "uri": "/process/",      "hits":  96 },
+    { "uri": "/contact/",      "hits":  62 },
+    { "uri": "/status/",       "hits":  41 },
+    { "uri": "/insights/",     "hits":  28 }
   ],
   "topReferrers": [
-    { "domain": "(direct)",      "hits": 1204 },
-    { "domain": "linkedin.com",  "hits": 1420 },
-    { "domain": "github.com",    "hits":  862 },
-    { "domain": "google.com",    "hits":  703 },
-    { "domain": "twitter.com",   "hits":  511 },
-    { "domain": "instagram.com", "hits":  302 }
+    { "domain": "(direct)",     "hits": 512 },
+    { "domain": "linkedin.com", "hits": 384 },
+    { "domain": "github.com",   "hits": 218 },
+    { "domain": "google.com",   "hits": 147 }
   ],
-  "topCountries": [
-    { "country": "US", "hits": 3421 },
-    { "country": "JP", "hits":  622 },
-    { "country": "GB", "hits":  402 },
-    { "country": "CA", "hits":  341 },
-    { "country": "AU", "hits":  224 },
-    { "country": "DE", "hits":  187 }
-  ],
-  "generatedAt": "2026-07-11T23:07:04.000Z"
+  "generatedAt": "2026-07-12T02:00:00.000Z"
 }

@@ -5,13 +5,8 @@ const contactApi = import.meta.env.PUBLIC_CONTACT_API || "";
 ---
 <Base title="contact" miscTitle="contact" showAnnouncement={false}>
   <section class="ct">
-    <p class="ct__kicker">// signal &middot; establish contact</p>
+    <p class="ct__kicker">// establish contact</p>
     <h1 class="ct__title">contact.</h1>
-    <p class="ct__lede">
-      Portfolio inquiries, collab pitches, "how did you do X" &mdash; send a note. This form
-      POSTs to a Lambda that stores your message in DynamoDB and forwards it via SES.
-      Reply within ~2&ndash;4 days.
-    </p>
 
     <form class="ct__form" id="contact-form">
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true" />

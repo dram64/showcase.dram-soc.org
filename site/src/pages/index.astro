@@ -105,7 +105,10 @@ const featured = [
          cube sits behind everything, watermark "02" anchors the section
          number, halftone dots in both corners, yellow slash across the
          top-right, corner brackets frame the whole board. -->
-    <div class="deco-cube deco-cube--graphic deco-cube--graphic-hi" aria-hidden="true">
+    <!-- Cubes hang off the right + left edges — most of the volume
+         lives in the section's outer gutter so they frame the
+         constellation instead of sitting behind it. -->
+    <div class="deco-cube deco-cube--graphic deco-cube--graphic-r" aria-hidden="true">
       <div class="deco-cube__box">
         <span class="deco-cube__face deco-cube__face--f"></span>
         <span class="deco-cube__face deco-cube__face--b"></span>
@@ -115,7 +118,7 @@ const featured = [
         <span class="deco-cube__face deco-cube__face--bo"></span>
       </div>
     </div>
-    <div class="deco-cube deco-cube--graphic deco-cube--graphic-lo" aria-hidden="true">
+    <div class="deco-cube deco-cube--graphic deco-cube--graphic-l" aria-hidden="true">
       <div class="deco-cube__box deco-cube__box--fast">
         <span class="deco-cube__face deco-cube__face--f"></span>
         <span class="deco-cube__face deco-cube__face--b"></span>
@@ -125,11 +128,13 @@ const featured = [
         <span class="deco-cube__face deco-cube__face--bo"></span>
       </div>
     </div>
-    <div class="deco-watermark deco-watermark--graphic deco-watermark--graphic-hi" aria-hidden="true">02</div>
-    <div class="deco-watermark deco-watermark--graphic deco-watermark--graphic-lo" aria-hidden="true">/GR</div>
+    <!-- Vertical watermark rails hugging each side of the section -->
+    <div class="deco-watermark deco-watermark--graphic-left"  aria-hidden="true">graphic&nbsp;·&nbsp;02</div>
+    <div class="deco-watermark deco-watermark--graphic-right" aria-hidden="true">no.&nbsp;01&nbsp;·&nbsp;drop&nbsp;01</div>
+    <!-- Halftones anchored into all four outer corners of the section -->
     <div class="deco-halftone deco-halftone--graphic-tl" aria-hidden="true"></div>
-    <div class="deco-halftone deco-halftone--graphic-ml" aria-hidden="true"></div>
-    <div class="deco-halftone deco-halftone--graphic-mr" aria-hidden="true"></div>
+    <div class="deco-halftone deco-halftone--graphic-tr" aria-hidden="true"></div>
+    <div class="deco-halftone deco-halftone--graphic-bl" aria-hidden="true"></div>
     <div class="deco-halftone deco-halftone--graphic-br" aria-hidden="true"></div>
     <div class="sec__head sec__head--with-themes" data-reveal>
       <div class="sec__head-text">
@@ -3011,48 +3016,45 @@ const featured = [
       mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
       -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
     }
-    /* Graphic (dark cinema) — four halftone patches distributed vertically
-       so grain follows the user through the entire scroll of the section. */
+    /* Halftone patches — one anchored into each outer corner of the
+       section so the grain sits in the rail gutters instead of
+       floating over the constellation cells. */
     .deco-halftone--graphic-tl,
-    .deco-halftone--graphic-ml,
-    .deco-halftone--graphic-mr,
+    .deco-halftone--graphic-tr,
+    .deco-halftone--graphic-bl,
     .deco-halftone--graphic-br {
-      width: 300px;
-      height: 300px;
+      width: 240px;
+      height: 240px;
       background-size: 11px 11px;
-      opacity: 0.45;
+      opacity: 0.5;
     }
     .deco-halftone--graphic-tl,
-    .deco-halftone--graphic-ml {
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.20) 1.3px, transparent 2px);
+    .deco-halftone--graphic-bl {
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.22) 1.3px, transparent 2px);
     }
-    .deco-halftone--graphic-mr,
+    .deco-halftone--graphic-tr,
     .deco-halftone--graphic-br {
-      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.18) 1.4px, transparent 2.2px);
+      background-image: radial-gradient(circle, rgba(255, 238, 0, 0.22) 1.4px, transparent 2.2px);
     }
     .deco-halftone--graphic-tl {
-      top: 20px; left: 20px;
-      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
-      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
+      top: 0; left: 0;
+      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 70%);
     }
-    .deco-halftone--graphic-ml {
-      top: 42%; left: 20px;
-      mask-image: radial-gradient(circle at 0% 50%, black 0%, transparent 72%);
-      -webkit-mask-image: radial-gradient(circle at 0% 50%, black 0%, transparent 72%);
+    .deco-halftone--graphic-tr {
+      top: 0; right: 0;
+      mask-image: radial-gradient(circle at 100% 0%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 100% 0%, black 0%, transparent 70%);
     }
-    .deco-halftone--graphic-mr {
-      top: 58%; right: 20px;
-      width: 320px; height: 320px;
-      background-size: 13px 13px;
-      mask-image: radial-gradient(circle at 100% 50%, black 0%, transparent 72%);
-      -webkit-mask-image: radial-gradient(circle at 100% 50%, black 0%, transparent 72%);
+    .deco-halftone--graphic-bl {
+      bottom: 0; left: 0;
+      mask-image: radial-gradient(circle at 0% 100%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 0% 100%, black 0%, transparent 70%);
     }
     .deco-halftone--graphic-br {
-      bottom: 20px; right: 20px;
-      width: 320px; height: 320px;
-      background-size: 13px 13px;
-      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
-      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
+      bottom: 0; right: 0;
+      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
     }
     /* Photo (cream bg) — slate-violet grain */
     .deco-halftone--photo-tl,
@@ -3093,13 +3095,29 @@ const featured = [
       font-size: clamp(18rem, 32vw, 42rem);
       color: rgba(255, 255, 255, 0.05);
     }
-    .deco-watermark--graphic {
-      font-size: clamp(12rem, 24vw, 32rem);
-      color: rgba(255, 255, 255, 0.035);
-      font-weight: 500;
+    /* Vertical mono rail watermarks — sit inside the section's rail
+       gutter (max ~var(--rails-w)+padding), so they hug the side and
+       don't cover any cell. */
+    .deco-watermark--graphic-left,
+    .deco-watermark--graphic-right {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 400;
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: lowercase;
+      color: rgba(255, 255, 255, 0.28);
+      writing-mode: vertical-rl;
+      white-space: nowrap;
     }
-    .deco-watermark--graphic-hi { top: 18%; right: 4%; }
-    .deco-watermark--graphic-lo { bottom: 8%;  left: 3%; }
+    .deco-watermark--graphic-left {
+      top: 20%;
+      left: 8px;
+      transform: rotate(180deg);
+    }
+    .deco-watermark--graphic-right {
+      bottom: 20%;
+      right: 8px;
+    }
     .deco-watermark--photo {
       bottom: 4%;
       left: 3%;
@@ -3114,22 +3132,26 @@ const featured = [
       pointer-events: none;
       z-index: 2;
     }
-    /* Graphic — two cubes distributed vertically so the constellation
-       always has a cube drifting behind some part of it. */
+    /* Cubes bleed off the outer edges of the section so most of their
+       mass lives in the rail gutter and only a wedge is inside the
+       content region — the constellation is framed, never covered. */
     .deco-cube--graphic {
       width: clamp(320px, 40vw, 580px);
       height: clamp(320px, 40vw, 580px);
       perspective: 1800px;
-      opacity: 0.28;
+      opacity: 0.30;
       mix-blend-mode: screen;
     }
-    .deco-cube--graphic-hi { top: 20%; right: 6%; }
-    .deco-cube--graphic-lo {
-      top: 65%;
-      left: 4%;
+    .deco-cube--graphic-r {
+      top: 24%;
+      right: -18%;
+    }
+    .deco-cube--graphic-l {
+      top: 62%;
+      left: -12%;
       width: clamp(240px, 30vw, 440px);
       height: clamp(240px, 30vw, 440px);
-      opacity: 0.22;
+      opacity: 0.24;
     }
     /* Photo — small slate-violet cube behind the carousel. Subtler */
     .deco-cube--photo {
@@ -3162,18 +3184,18 @@ const featured = [
       box-shadow: inset 0 0 32px rgba(80, 97, 185, 0.10);
     }
     /* Face translations — half the cube edge so faces meet at corners */
-    .deco-cube--graphic-hi .deco-cube__face--f  { transform: translateZ(clamp(160px, 20vw, 290px)); }
-    .deco-cube--graphic-hi .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(160px, 20vw, 290px)); }
-    .deco-cube--graphic-hi .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(160px, 20vw, 290px)); }
-    .deco-cube--graphic-hi .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(160px, 20vw, 290px)); }
-    .deco-cube--graphic-hi .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(160px, 20vw, 290px)); }
-    .deco-cube--graphic-hi .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(160px, 20vw, 290px)); }
-    .deco-cube--graphic-lo .deco-cube__face--f  { transform: translateZ(clamp(120px, 15vw, 220px)); }
-    .deco-cube--graphic-lo .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(120px, 15vw, 220px)); }
-    .deco-cube--graphic-lo .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(120px, 15vw, 220px)); }
-    .deco-cube--graphic-lo .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(120px, 15vw, 220px)); }
-    .deco-cube--graphic-lo .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(120px, 15vw, 220px)); }
-    .deco-cube--graphic-lo .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(120px, 15vw, 220px)); }
+    .deco-cube--graphic-r .deco-cube__face--f  { transform: translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic-r .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic-r .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic-r .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic-r .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic-r .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(160px, 20vw, 290px)); }
+    .deco-cube--graphic-l .deco-cube__face--f  { transform: translateZ(clamp(120px, 15vw, 220px)); }
+    .deco-cube--graphic-l .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(120px, 15vw, 220px)); }
+    .deco-cube--graphic-l .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(120px, 15vw, 220px)); }
+    .deco-cube--graphic-l .deco-cube__face--l  { transform: rotateY(-90deg) translateZ(clamp(120px, 15vw, 220px)); }
+    .deco-cube--graphic-l .deco-cube__face--t  { transform: rotateX(90deg)  translateZ(clamp(120px, 15vw, 220px)); }
+    .deco-cube--graphic-l .deco-cube__face--bo { transform: rotateX(-90deg) translateZ(clamp(120px, 15vw, 220px)); }
     .deco-cube--photo .deco-cube__face--f  { transform: translateZ(clamp(70px, 8vw, 110px)); }
     .deco-cube--photo .deco-cube__face--b  { transform: rotateY(180deg) translateZ(clamp(70px, 8vw, 110px)); }
     .deco-cube--photo .deco-cube__face--r  { transform: rotateY(90deg)  translateZ(clamp(70px, 8vw, 110px)); }

@@ -8,91 +8,145 @@ import Base from "../layouts/Base.astro";
       <p class="doc__kicker">// case study &middot; graphic design</p>
       <h1 class="doc__title">the process.</h1>
       <p class="doc__lede">
-        Tokyo Zero is a small-drop anime merch project &mdash; 47 products, three thematic
-        storefronts, one voice. Here's how the brand system, typography, and page
-        architecture came together.
+        Notes on where the palette, the type, and the visual language came from.
+        Nothing here is finalised; the point of a process page is to show the reasoning,
+        not to sell it.
       </p>
     </header>
 
     <section class="sec">
       <p class="sec__num">01</p>
-      <h2 class="sec__h">voice + audience</h2>
+      <h2 class="sec__h">palette</h2>
       <p>
-        The core reader is the person who already knows the reference &mdash; Panty &amp; Stocking with
-        Garterbelt, Needy Streamer Overload, Genshin, HoYo, Vtubers. The brand assumes fluency
-        instead of explaining. Copy is short, lowercase, punchy &mdash; closer to a Discord message
-        than a marketing brochure.
+        Cream first, not white. I print on satin card stock, and monitor white blows out sitting
+        next to a physical print of the same design. So the site backgrounds match the paper
+        (#fdfcf9, #f5f4f0). The catalog is meant to feel like a real object, not a screenshot of one.
       </p>
-      <blockquote class="pull">
-        "small drops. heavy print. character work for the people who already know."
-      </blockquote>
+      <p>
+        Slate-violet (#5061b9) is pulled from the blue in Yuzuha's uniform. Cold enough to work as
+        a system UI colour, warm enough that it doesn't read as a raw hex value. Every neutral
+        page runs on it &mdash; it's the accent, the link colour, the sticky bar background.
+      </p>
+      <p>
+        The yellow (#ffee00) is the same yellow as the SOLD OUT tape convention artists slap on
+        empty prints. Loud, unmixed, deliberately close to CMYK-limit yellow. Only used for
+        callouts and highlights. If you fill anything larger than a chip with it, it eats the page.
+      </p>
+      <p>
+        The graphic-design section swaps to a dark cinema pair (#0d0c13 to #14131a). Character
+        illustration reads best against near-black; full #000 was too violent next to the cream
+        everywhere else, so the section blends into a very dark neutral instead.
+      </p>
+      <p>
+        The two pinks (#ff4da6, #fd7ac0) only exist inside the PSG and NSO themed rooms. They'd
+        ruin the neutral pages if they escaped, but they carry the whole personality of those two
+        drops when the walls close in around them.
+      </p>
+      <div class="swatches">
+        <div class="sw"><span style="background: #fdfcf9; border: 1px solid rgba(0,0,0,0.14)"></span>#fdfcf9 cream</div>
+        <div class="sw"><span style="background: #14131a"></span>#14131a ink</div>
+        <div class="sw"><span style="background: #5061b9"></span>#5061b9 slate-violet</div>
+        <div class="sw"><span style="background: #ffee00; border: 1px solid rgba(0,0,0,0.14)"></span>#ffee00 tape yellow</div>
+        <div class="sw"><span style="background: #0d0c13"></span>#0d0c13 cinema</div>
+        <div class="sw"><span style="background: #ff4da6"></span>#ff4da6 psg pink</div>
+        <div class="sw"><span style="background: #fd7ac0"></span>#fd7ac0 nso magenta</div>
+      </div>
     </section>
 
     <section class="sec">
       <p class="sec__num">02</p>
-      <h2 class="sec__h">three storefronts, one system</h2>
-      <div class="grid grid--3">
-        <div class="tile">
-          <p class="tile__label">misc</p>
-          <h3 class="tile__title">catalog, curated</h3>
-          <p>Magazine-style catalog with numbered cards, hairline dividers, slate-violet accent. The neutral hub.</p>
+      <h2 class="sec__h">typography</h2>
+      <p>
+        Titles, labels, and navigation are set in Apex Mk3, a monospace face. Most copy on the
+        site is short strings: product names, prices, section numbers, timestamps. Monospace makes
+        those feel tabular and intentional, not casual. It also ties the design side of the site
+        to the infra side &mdash; the ops pages under /status, /cost, and /architecture use the
+        same face, so both halves of the portfolio read as one voice.
+      </p>
+      <p>
+        Body copy is Branding Pro. Wide x-height, five weights, quiet next to the mono headers.
+        It does the work you don't notice, which is exactly the job.
+      </p>
+      <p>
+        One line per section, usually the eyebrow, is set in Beam Visionary &mdash; a script
+        italic. It's there specifically to break the machine feel. One line of a human hand, then
+        back to the terminal. Used sparingly on purpose; if it appeared more than once per screen
+        it would stop working.
+      </p>
+      <p>
+        The NSO room runs on NSO CRT, an actual bitmap font. Chyrons, popup labels, HUD text.
+        It doesn't appear anywhere else. The themed rooms are supposed to feel like walking into
+        separate shops with separate identities; swapping the entire typeface is the fastest way
+        to signal you've stepped into a different one.
+      </p>
+      <div class="grid grid--2">
+        <div class="face">
+          <p class="face__name">Apex Mk3</p>
+          <p class="face__sample" style="font-family: 'Apex Mk3', monospace;">.contact</p>
+          <p class="face__role">Mono. Titles, labels, nav, ops pages.</p>
         </div>
-        <div class="tile">
-          <p class="tile__label">psg</p>
-          <h3 class="tile__title">candy-halftone spectacle</h3>
-          <p>Panty &amp; Stocking pastiche &mdash; hot pink frills, halftone circles, 7-card showcase on a tilted cyan slab.</p>
+        <div class="face">
+          <p class="face__name">Branding Pro</p>
+          <p class="face__sample" style="font-family: 'Branding Pro', sans-serif;">Body copy &mdash; running text.</p>
+          <p class="face__role">Sans. Body. Five weights. Wide x-height.</p>
         </div>
-        <div class="tile">
-          <p class="tile__label">nso</p>
-          <h3 class="tile__title">crt streamer decay</h3>
-          <p>Needy Streamer Overload homage &mdash; chrome bg, RGB-glitching popups, scanlines everywhere.</p>
+        <div class="face">
+          <p class="face__name">Beam Visionary</p>
+          <p class="face__sample" style="font-family: 'Beam Visionary', cursive; font-style: italic;">from the desk.</p>
+          <p class="face__role">Script italic. One eyebrow per section, no more.</p>
+        </div>
+        <div class="face">
+          <p class="face__name">NSO CRT</p>
+          <p class="face__sample" style="font-family: 'NSO CRT', monospace; letter-spacing: 0.06em;">SIGNAL &gt; NO SYNC</p>
+          <p class="face__role">Pixel bitmap. NSO themed room only.</p>
         </div>
       </div>
     </section>
 
     <section class="sec">
       <p class="sec__num">03</p>
-      <h2 class="sec__h">typography</h2>
-      <div class="grid grid--2">
-        <div class="face">
-          <p class="face__name">Apex Mk3</p>
-          <p class="face__sample" style="font-family: 'Apex Mk3', monospace;">.contact</p>
-          <p class="face__role">Monospace. Titles, labels, navigation. Reads as terminal output &mdash; matches the design + code story.</p>
-        </div>
-        <div class="face">
-          <p class="face__name">Beam Visionary</p>
-          <p class="face__sample" style="font-family: 'Beam Visionary', cursive; font-style: italic;">from the desk.</p>
-          <p class="face__role">Script. Eyebrows, brand marks. The one moment of handwriting in an otherwise-mechanical system.</p>
-        </div>
-        <div class="face">
-          <p class="face__name">Branding Pro</p>
-          <p class="face__sample" style="font-family: 'Branding Pro', sans-serif;">Body copy &mdash; running text.</p>
-          <p class="face__role">Sans. Body copy. Neutral, wide x-height, five weights. Does the invisible work.</p>
-        </div>
-        <div class="face">
-          <p class="face__name">NSO CRT</p>
-          <p class="face__sample" style="font-family: 'NSO CRT', monospace; letter-spacing: 0.06em;">SIGNAL &gt; NO SYNC</p>
-          <p class="face__role">Pixel bitmap. NSO theme only. Chyrons, popup labels, HUD text.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec">
-      <p class="sec__num">04</p>
-      <h2 class="sec__h">color</h2>
+      <h2 class="sec__h">inspirations</h2>
       <p>
-        Base palette locks the catalog in a soft-white / slate-violet universe. Each themed room
-        breaks that mold on purpose. Themes feel like walking into different shops; misc is the
-        hallway between.
+        Not a moodboard. These are the specific pieces I kept re-opening while working on the
+        site, and what I took from each.
       </p>
-      <div class="swatches">
-        <div class="sw"><span style="background: #f5f4f0"></span>#f5f4f0 base</div>
-        <div class="sw"><span style="background: #14131a"></span>#14131a ink</div>
-        <div class="sw"><span style="background: #5061b9"></span>#5061b9 slate-violet</div>
-        <div class="sw"><span style="background: #ff4da6"></span>#ff4da6 psg pink</div>
-        <div class="sw"><span style="background: #3deaff"></span>#3deaff psg cyan</div>
-        <div class="sw"><span style="background: #fd7ac0"></span>#fd7ac0 nso magenta</div>
-      </div>
+      <ul class="inspo">
+        <li>
+          <p class="inspo__name">Arknights: Endfield &mdash; promotional site.</p>
+          <p>Nested HUD widgets, transparent overlay panels, extremely comfortable being visually
+            dense. The graphic and photo sections here inherit that willingness to layer decor over
+            content.</p>
+        </li>
+        <li>
+          <p class="inspo__name">Panty &amp; Stocking with Garterbelt &mdash; DVD liner notes.</p>
+          <p>Halftone dots, hot pink frills, Y2K collage energy. Lifted wholesale for the PSG
+            themed room. The tilted cyan slab and card-stack showcase are direct references.</p>
+        </li>
+        <li>
+          <p class="inspo__name">Needy Streamer Overload.</p>
+          <p>CRT scanlines, RGB-glitching popups, chrome desktop backdrop. The NSO themed room
+            in one line. The alerts, the popups, the intentionally decayed UI &mdash; it's all
+            from that game.</p>
+        </li>
+        <li>
+          <p class="inspo__name">Convention artist alley table cards.</p>
+          <p>The little "01 / 20" numbered chip and the stock indicator on every product card came
+            from watching how table sellers label runs. It reads at a glance and it makes finite
+            drops feel finite.</p>
+        </li>
+        <li>
+          <p class="inspo__name">Muji product catalogs.</p>
+          <p>How they set a large product photo next to a tiny mono label without either fighting
+            the other. The catalog page owes them the whole layout: photo, monospace label,
+            hairline rule, price. Nothing else.</p>
+        </li>
+        <li>
+          <p class="inspo__name">Ghost in the Shell &mdash; the 1995 film's opening credits.</p>
+          <p>Where the terminal-monospace eyebrow above every section came from. Katakana-style
+            numeric prefixes, thin rules, everything in a small caps mono. Not literally copied,
+            but the mood is unavoidable.</p>
+        </li>
+      </ul>
     </section>
 
     <section class="sec sec--cta">
@@ -151,28 +205,16 @@ import Base from "../layouts/Base.astro";
       border-bottom: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       text-transform: lowercase;
     }
-    .sec p, .sec li { font-family: 'Branding Pro', sans-serif; font-size: 1rem; line-height: 1.6; margin: 0 0 16px; color: var(--misc-ink); }
-    .pull {
-      margin: 24px 0 0;
-      padding: 20px 24px;
-      background: rgba(80, 97, 185, 0.08);
-      border-left: 3px solid var(--misc-accent, #5061b9);
-      font-family: 'Beam Visionary', cursive;
-      font-style: italic;
-      font-size: 1.25rem;
-      line-height: 1.4;
-      color: var(--misc-ink, #1a1a1a);
-    }
+    .sec p, .sec li { font-family: 'Branding Pro', sans-serif; font-size: 1rem; line-height: 1.65; margin: 0 0 16px; color: var(--misc-ink); }
     .grid { display: grid; gap: 20px; margin-top: 20px; }
     .grid--2 { grid-template-columns: 1fr 1fr; }
-    .grid--3 { grid-template-columns: 1fr 1fr 1fr; }
-    .tile, .face {
+    .face {
       padding: 20px;
       background: #fff;
       border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
     }
-    .tile__label, .face__name {
+    .face__name {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.68rem;
       letter-spacing: 0.18em;
@@ -180,19 +222,22 @@ import Base from "../layouts/Base.astro";
       color: var(--misc-accent, #5061b9);
       margin: 0 0 10px;
     }
-    .tile__title {
-      font-family: 'Apex Mk3', sans-serif;
-      font-weight: 400;
-      font-size: 1.2rem;
-      margin: 0 0 10px;
-      color: var(--misc-ink);
-    }
-    .tile p, .face__role { font-size: 0.9rem; margin: 0; color: var(--misc-ink-soft); }
+    .face__role { font-size: 0.9rem; margin: 0; color: var(--misc-ink-soft); }
     .face__sample { font-size: 1.5rem; margin: 4px 0 14px; line-height: 1.1; color: var(--misc-ink); }
-    .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 24px; }
     .sw { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--misc-ink-soft); }
     .sw span { display: inline-block; width: 26px; height: 26px; border: 1px solid var(--misc-line); }
-
+    .inspo { list-style: none; padding: 0; margin: 20px 0 0; }
+    .inspo li { margin: 0 0 22px; padding: 16px 0 0; border-top: 1px solid var(--misc-line, rgba(0,0,0,0.14)); }
+    .inspo li:first-child { border-top: none; padding-top: 0; }
+    .inspo__name {
+      font-family: 'Apex Mk3', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--misc-ink);
+      margin: 0 0 6px;
+    }
+    .inspo li p:last-child { margin: 0; color: var(--misc-ink-soft); font-size: 0.95rem; }
     .sec--cta { padding: 28px; background: rgba(80, 97, 185, 0.06); border: 1px solid rgba(80,97,185,0.14); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%); }
     .sec__cta-kicker {
       font-family: 'JetBrains Mono', monospace;
@@ -204,9 +249,8 @@ import Base from "../layouts/Base.astro";
     .sec__cta-h { font-family: 'Apex Mk3', sans-serif; font-size: 1.6rem; margin: 0 0 12px; font-weight: 300; text-transform: lowercase; }
     .sec--cta p { margin: 0; }
     .sec--cta a { color: var(--misc-accent); text-decoration: underline; text-underline-offset: 3px; }
-
     @media (max-width: 700px) {
-      .grid--2, .grid--3 { grid-template-columns: 1fr; }
+      .grid--2 { grid-template-columns: 1fr; }
     }
   </style>
 </Base>

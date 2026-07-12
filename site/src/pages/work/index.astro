@@ -43,7 +43,7 @@ import Base from "../../layouts/Base.astro";
   </section>
 
   <style>
-    .work { max-width: 1200px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 48px); }
+    .work { max-width: 1600px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 64px); }
     .work__kicker {
       font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
       font-size: 0.72rem;
@@ -71,13 +71,13 @@ import Base from "../../layouts/Base.astro";
     .work__grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 28px;
     }
     .w-tile {
       position: relative;
       display: block;
-      aspect-ratio: 3 / 4;
-      padding: 28px 24px;
+      aspect-ratio: 1 / 1;
+      padding: 32px 28px;
       background: #fff;
       border: 1px solid var(--misc-line, rgba(0,0,0,0.14));
       overflow: hidden;
@@ -91,14 +91,14 @@ import Base from "../../layouts/Base.astro";
     .w-tile--nso  { background: linear-gradient(150deg, #e0e6ff 0%, #f6f2ff 60%, #ffe0f4 100%); }
     .w-tile__char {
       position: absolute;
-      bottom: -8%;
-      height: 62%;
+      bottom: -6%;
+      height: 54%;
       pointer-events: none;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
       z-index: 1;
     }
-    .w-tile__char--l { left: -6%; }
-    .w-tile__char--r { right: -6%; }
+    .w-tile__char--l { left: -8%; }
+    .w-tile__char--r { right: -8%; }
     .w-tile__meta { position: relative; z-index: 2; }
     .w-tile__num {
       font-family: 'JetBrains Mono', monospace;
@@ -123,10 +123,15 @@ import Base from "../../layouts/Base.astro";
       margin: 0;
       max-width: 90%;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
+      .work__grid { grid-template-columns: 1fr 1fr; }
+      .w-tile--misc { grid-column: 1 / -1; aspect-ratio: 2 / 1; }
+    }
+    @media (max-width: 700px) {
       .work__grid { grid-template-columns: 1fr; }
-      .w-tile { aspect-ratio: 5/3; }
-      .w-tile__char { height: 90%; }
+      .w-tile { aspect-ratio: 5 / 3; }
+      .w-tile--misc { aspect-ratio: 5 / 3; }
+      .w-tile__char { height: 80%; }
     }
   </style>
 </Base>

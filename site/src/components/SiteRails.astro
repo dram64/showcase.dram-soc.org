@@ -4,9 +4,11 @@
 // the right. Width matches the --rails-w CSS variable which content pads
 // against.
 ---
-<div class="site-rail site-rail--l" aria-hidden="true">
-  <span class="site-rail__mark"></span>
-  <span class="site-rail__vrail">// TOKYO ZERO · CHROMADIPITY CORE</span>
+<div class="site-rail site-rail--l">
+  <a class="site-rail__home" href="/" aria-label="Home">
+    <span class="site-rail__mark"></span>
+  </a>
+  <span class="site-rail__vrail" aria-hidden="true">// TOKYO ZERO · CHROMADIPITY CORE</span>
 </div>
 <div class="site-rail site-rail--r">
   <a href="https://www.instagram.com/tokyozeroofficial/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -71,6 +73,20 @@
     gap: 20px;
     justify-content: center;
   }
+  .site-rail__home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: background 200ms ease, transform 140ms ease;
+  }
+  .site-rail__home:hover { background: rgba(80, 97, 185, 0.10); transform: scale(1.06); }
+  .site-rail__home:focus-visible {
+    outline: 2px solid #5061b9;
+    outline-offset: 2px;
+  }
   .site-rail__mark {
     display: block;
     width: 20px;
@@ -109,6 +125,8 @@
   html[data-rail="dark"] .site-rail--l { border-right-color: rgba(255, 255, 255, 0.10); }
   html[data-rail="dark"] .site-rail--r { border-left-color: rgba(255, 255, 255, 0.10); }
   html[data-rail="dark"] .site-rail__mark { background: #fff; }
+  html[data-rail="dark"] .site-rail__home:hover { background: rgba(255, 238, 0, 0.15); }
+  html[data-rail="dark"] .site-rail__home:hover .site-rail__mark { background: #ffee00; }
   html[data-rail="dark"] .site-rail__vrail { color: rgba(245, 244, 240, 0.55); }
   html[data-rail="dark"] .site-rail--r a { color: rgba(255, 255, 255, 0.7); }
   html[data-rail="dark"] .site-rail--r a:hover { color: #ffee00; }

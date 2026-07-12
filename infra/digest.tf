@@ -1,6 +1,6 @@
-# Nightly digest — EventBridge Scheduler → Lambda → writes JSON to both
-# site buckets. Static pages (/cost, /status, /insights) fetch the JSON
-# client-side. All queries stay well within free tier at portfolio scale.
+# Nightly digest — EventBridge Scheduler → Lambda → writes status.json
+# and insights.json to both site buckets. The /status and /insights pages
+# fetch these JSON files client-side.
 
 data "archive_file" "digest_zip" {
   type        = "zip"
@@ -123,7 +123,7 @@ resource "aws_lambda_function" "digest" {
   depends_on = [aws_cloudwatch_log_group.digest]
 }
 
-# EventBridge Scheduler — nightly at 03:00 UTC (portfolio has low traffic then).
+# EventBridge Scheduler — nightly at 03:00 UTC.
 resource "aws_scheduler_schedule" "digest" {
   name                         = "${replace(var.domain, ".", "-")}-digest-nightly"
   schedule_expression          = "cron(0 3 * * ? *)"

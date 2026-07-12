@@ -1,96 +1,74 @@
-# dram-soc.org
+# showcase.dram-soc.org
 
-Personal portfolio site — paired design case study (Tokyo Zero merch line) and cloud engineering showcase (serverless AWS, Terraform, GitHub Actions).
+Personal portfolio. Design case study (Tokyo Zero merch line) paired with the
+serverless AWS stack the site runs on.
 
-Live: [dram-soc.org](https://dram-soc.org) · Design writeup: [/process](https://dram-soc.org/process) · Architecture: [/architecture](https://dram-soc.org/architecture)
+Live at [showcase.dram-soc.org](https://showcase.dram-soc.org). The design
+writeup is at [/process](https://showcase.dram-soc.org/process); the infra
+walkthrough is at [/architecture](https://showcase.dram-soc.org/architecture).
 
-## Repo layout
+## Layout
 
 ```
-dram-soc.org/
-├── site/                Astro static site (frontend)
-│   ├── src/pages/       index, work, process, architecture, contact
-│   ├── src/layouts/     Base layout shared across pages
-│   └── public/          Images, fonts, favicon
-├── infra/               Terraform — all AWS resources
-│   ├── main.tf          providers + backend
-│   ├── s3.tf            site + logs buckets
-│   ├── cloudfront.tf    CDN, security headers, URL-rewrite CF Function
-│   ├── acm.tf           us-east-1 TLS cert with DNS validation
-│   ├── route53.tf       A-record aliases for apex + www
-│   ├── contact.tf       Lambda + HTTP API v2 + DynamoDB + SES policy
-│   ├── outputs.tf       CI/CD-consumed outputs
-│   └── lambdas/contact/ Node 20 contact form handler
+.
+├── site/           Astro static site (frontend)
+│   ├── src/pages/  routes: /, /work, /catalog, /process, /architecture,
+│   │               /status, /insights, /contact
+│   ├── src/layouts/ Base + Gryphline shells
+│   └── public/     images, fonts, favicon, sample JSON for ops pages
+├── infra/          Terraform for every AWS resource
+│   ├── main.tf, s3.tf, cloudfront.tf, acm.tf, dns.tf, failover.tf
+│   ├── contact.tf, synthetics.tf, digest.tf, analytics.tf, budget.tf
+│   └── lambdas/{contact,digest,canary}
 └── .github/workflows/
-    ├── deploy.yml       build Astro, sync S3, invalidate CloudFront
-    └── terraform.yml    fmt + plan on PR, apply on merge to main
+    ├── deploy.yml     Astro build → S3 sync (primary + DR) → CF invalidate
+    └── terraform.yml  fmt / init / validate / plan on PR; apply on merge
 ```
-
-## Architecture at a glance
-
-```
-user ──▶ Route 53 ──▶ CloudFront ──▶ S3 (private, OAC)
-                          │
-                          └──▶ HTTP API ──▶ Lambda ──▶ SES
-                                                └──▶ DynamoDB
-```
-
-Full breakdown with cost table, security notes, and reasoning at [/architecture](https://dram-soc.org/architecture).
 
 ## Running locally
 
 ```bash
 cd site
 npm install
-npm run dev            # http://localhost:4321
+npm run dev   # http://localhost:4321
 ```
 
-To point the contact form at your local API or a deployed one:
+The contact form points at an API Gateway endpoint by default. To point it
+somewhere else:
 
 ```bash
 cp .env.example .env
-# edit PUBLIC_CONTACT_API in .env
+# edit PUBLIC_CONTACT_API
 ```
 
 ## Deploying
 
-The site auto-deploys on push to `main`:
+Push to `main`. Path filters mean site changes and infra changes deploy
+independently.
 
-- **Site changes** (`site/**`) → GitHub Actions runs `astro build`, `aws s3 sync`, then `cloudfront create-invalidation`.
-- **Infra changes** (`infra/**`) → PRs get a `terraform plan` comment; merges to main run `terraform apply`.
+- **Site changes** (`site/**`) — GitHub Actions runs `astro build`, syncs
+  `dist/` to the primary + DR buckets, then invalidates CloudFront.
+- **Infra changes** (`infra/**`) — PRs get a `terraform plan`; merges to
+  `main` run `terraform apply`.
 
-Both workflows authenticate to AWS via **OIDC** — no long-lived access keys in the repo.
+Both workflows use AWS OIDC federation. There are no long-lived AWS keys
+in the repo.
 
-### First-time infra bootstrap
+First-time setup lives in [`infra/README.md`](./infra/README.md).
 
-See [`infra/README.md`](./infra/README.md) for the one-time setup (state bucket, SES verification, `terraform apply`).
+### GitHub Actions secrets + variables
 
-### Required GitHub Actions secrets + variables
-
-| Type     | Name                          | Purpose                                      |
-|----------|-------------------------------|----------------------------------------------|
-| Secret   | `AWS_DEPLOY_ROLE_ARN`         | Role assumed by the `deploy.yml` workflow     |
-| Secret   | `AWS_TF_ROLE_ARN`             | Role assumed by the `terraform.yml` workflow  |
-| Secret   | `OWNER_EMAIL`                 | Where contact form messages go                |
-| Secret   | `SES_SENDER`                  | Verified sender identity                      |
-| Variable | `SITE_BUCKET`                 | S3 bucket name (from `terraform output`)      |
-| Variable | `CLOUDFRONT_DISTRIBUTION_ID`  | CF distribution ID (from `terraform output`)  |
-| Variable | `PUBLIC_CONTACT_API`          | HTTP API endpoint URL for the contact form    |
-
-## Cost
-
-~$0.80/month at portfolio-scale traffic. Full breakdown in [`infra/README.md`](./infra/README.md).
-
-## Why this stack?
-
-- **Static site + edge CDN** — no server to patch, sub-100ms global TTFB, scales to any traffic
-- **Serverless contact form** — pay only when someone actually submits (~free in practice)
-- **Terraform** — reproducible, versioned, PR-reviewable infra
-- **OIDC deploys** — zero-secret CI/CD, IAM policy is the audit trail
-- **Free-tier native** — same architecture works for a 100× traffic product with linear cost growth
-
-Reasoning for each service is documented at [/architecture](https://dram-soc.org/architecture).
+| Type     | Name                          |
+|----------|-------------------------------|
+| Secret   | `AWS_DEPLOY_ROLE_ARN`         |
+| Secret   | `AWS_TF_ROLE_ARN`             |
+| Secret   | `OWNER_EMAIL`                 |
+| Secret   | `SES_SENDER`                  |
+| Variable | `SITE_BUCKET`                 |
+| Variable | `CLOUDFRONT_DISTRIBUTION_ID`  |
+| Variable | `PUBLIC_CONTACT_API`          |
 
 ## License
 
-Site code MIT. Character illustration + brand assets © dram, all rights reserved.
+Site code is MIT. Character illustration and brand assets are © dram; all
+rights reserved.

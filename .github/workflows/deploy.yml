@@ -39,7 +39,6 @@ jobs:
       - name: Build (Astro static)
         env:
           PUBLIC_CONTACT_API: ${{ vars.PUBLIC_CONTACT_API }}
-          PUBLIC_SITE_URL: https://dram-soc.org
         run: npm run build
 
       - name: Configure AWS credentials (OIDC)

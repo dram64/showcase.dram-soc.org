@@ -1,6 +1,5 @@
-# Cost guardrails — SNS-backed alerts at $5, $10, and a hard $25 ceiling.
-# Even if traffic spikes or a misconfigured Lambda loops, this makes it
-# impossible to spend more than the ceiling without a human seeing it first.
+# Cost guardrails — SNS-backed budget alerts at three thresholds so a runaway
+# Lambda or traffic spike gets an email before it bills a lot.
 
 resource "aws_sns_topic" "cost_alerts" {
   name              = "${replace(var.domain, ".", "-")}-cost-alerts"
@@ -22,7 +21,7 @@ resource "aws_budgets_budget" "monthly_cap" {
 
   notification {
     comparison_operator        = "GREATER_THAN"
-    threshold                  = 20 # $5 spent
+    threshold                  = 20
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = [var.owner_email]
@@ -30,7 +29,7 @@ resource "aws_budgets_budget" "monthly_cap" {
   }
   notification {
     comparison_operator        = "GREATER_THAN"
-    threshold                  = 40 # $10 spent
+    threshold                  = 40
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = [var.owner_email]
@@ -38,7 +37,7 @@ resource "aws_budgets_budget" "monthly_cap" {
   }
   notification {
     comparison_operator        = "GREATER_THAN"
-    threshold                  = 80 # $20 — near ceiling
+    threshold                  = 80
     threshold_type             = "PERCENTAGE"
     notification_type          = "FORECASTED"
     subscriber_email_addresses = [var.owner_email]

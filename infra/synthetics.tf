@@ -1,6 +1,6 @@
-# CloudWatch Synthetics canary — probes the site every hour from us-west-2.
-# Verifies 3 pages return 200 + contain expected content within budget.
-# On failure: CloudWatch alarm → SNS topic (same one as cost alerts).
+# CloudWatch Synthetics canary — probes 3 pages hourly from us-west-2 and
+# verifies each returns 200 with the expected marker string. Failure fires
+# a CloudWatch alarm → SNS topic (shared with cost alerts).
 
 resource "aws_s3_bucket" "canary_artifacts" {
   bucket        = "${var.domain}-canary"

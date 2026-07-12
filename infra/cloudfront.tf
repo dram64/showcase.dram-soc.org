@@ -33,9 +33,9 @@ resource "aws_cloudfront_response_headers_policy" "site" {
   }
 }
 
-# Astro emits pretty URLs like /process/ — CloudFront runs this at every
-# edge on the viewer request stage to rewrite /process → /process/index.html
-# so the S3 origin resolves correctly. Cheaper than Lambda@Edge.
+# Astro emits pretty URLs like /process/. CloudFront runs this at the
+# viewer-request stage to rewrite /process → /process/index.html so the
+# S3 origin resolves.
 resource "aws_cloudfront_function" "rewrite" {
   name    = "${replace(var.domain, ".", "-")}-rewrite"
   runtime = "cloudfront-js-2.0"
@@ -75,8 +75,7 @@ resource "aws_cloudfront_distribution" "site" {
     origin_access_control_id = aws_cloudfront_origin_access_control.site.id
   }
 
-  # Origin group flips to the DR bucket on 5xx or timeout without any DNS or
-  # config change on the viewer side. RTO ≈ single failed request (~30s).
+  # Origin group flips to the DR bucket on 5xx/timeout — no DNS change needed.
   origin_group {
     origin_id = "site-origin-group"
 

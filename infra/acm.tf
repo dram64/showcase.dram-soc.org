@@ -8,10 +8,9 @@ resource "aws_acm_certificate" "site" {
   }
 }
 
-# ACM validation depends on a CNAME the user adds at Cloudflare (see outputs).
-# We can't wait on validation in-band, so validation completion is done via a
-# separate `terraform apply -target=aws_acm_certificate_validation.site` after
-# the DNS record propagates. Terraform will poll ACM until it flips to ISSUED.
+# ACM validation depends on a CNAME added in Cloudflare — see outputs.tf
+# for the exact record. Terraform polls ACM until the cert flips to ISSUED
+# (up to 45 min); add the CNAME while apply is waiting.
 resource "aws_acm_certificate_validation" "site" {
   provider        = aws.us_east_1
   certificate_arn = aws_acm_certificate.site.arn

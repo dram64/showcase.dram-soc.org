@@ -1,9 +1,6 @@
-# Multi-region failover — a passive replica of the site bucket in us-east-1.
-# CloudFront's origin group polls the primary and falls back to this bucket
-# on 5xx/timeout. RTO ≈ 5 min (single failed request triggers the failover).
-#
-# Cross-region replication keeps the two buckets in sync: any object written
-# to the primary is asynchronously copied to the secondary within seconds.
+# Passive DR replica of the site bucket in us-east-1. CloudFront's origin
+# group falls back to this bucket on 5xx/timeout. Cross-region replication
+# keeps them in sync — writes to the primary land here within seconds.
 
 resource "aws_s3_bucket" "site_dr" {
   provider = aws.us_east_1

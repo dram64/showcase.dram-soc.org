@@ -1,13 +1,6 @@
-# Athena over CloudFront logs — serverless analytics with no warehouse.
-# CloudFront writes gzipped TSV logs to the already-provisioned logs bucket
-# under /cloudfront/. Glue Catalog tables the schema; Athena queries in
-# columnar plans against S3 without ever spinning up a cluster.
-#
-# Query cost: $5/TB scanned. At portfolio scale (a few MB/mo), one query
-# costs fractions of a cent. The pricing story is a resume line by itself.
-
-# Query results land here. Lifecycle keeps costs bounded by expiring old
-# result sets after 14 days.
+# Athena over CloudFront logs. Glue Catalog holds the schema; Athena
+# queries the TSV files S3 stores under /cloudfront/. Result sets go to
+# a dedicated bucket with a 14-day lifecycle.
 resource "aws_s3_bucket" "athena_results" {
   bucket        = "${var.domain}-athena-results"
   force_destroy = true
@@ -55,8 +48,7 @@ resource "aws_athena_workgroup" "portfolio" {
       }
     }
 
-    # Cap accidental large scans. Portfolio queries stay under a MB;
-    # this caps a single query at 1 GB of scanned data ($0.005).
+    # Cap any single query at 1 GB scanned as a guardrail.
     bytes_scanned_cutoff_per_query = 1073741824
   }
 }
@@ -139,9 +131,8 @@ resource "aws_glue_catalog_table" "cloudfront_logs" {
   }
 }
 
-# Canonical saved queries — Athena stores them in the workgroup so anyone
-# with console access sees them. `terraform apply` becomes the source of
-# truth for how to query the analytics data.
+# Saved queries — stored in the workgroup so they show up in the Athena
+# console for anyone with access.
 
 resource "aws_athena_named_query" "top_pages" {
   name        = "01_top_pages_last_7_days"

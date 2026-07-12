@@ -110,8 +110,7 @@ resource "aws_dynamodb_table" "messages" {
   }
 }
 
-# HTTP API v2 — cheaper + faster than REST API. CORS handled at the gateway
-# rather than in Lambda so preflights don't cost a Lambda invocation.
+# HTTP API v2 with CORS handled at the gateway so preflights don't hit Lambda.
 resource "aws_apigatewayv2_api" "contact" {
   name          = "${replace(var.domain, ".", "-")}-contact-api"
   protocol_type = "HTTP"

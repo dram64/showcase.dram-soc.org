@@ -1,8 +1,7 @@
-// Nightly Lambda — writes status.json + insights.json to the site buckets
-// (primary us-west-2 + DR us-east-1). Static pages fetch these client-side.
+// Nightly Lambda. Writes status.json + insights.json to both site buckets.
 //
-// status.json  — CloudWatch Synthetics canary health + 30-day roll-up
-// insights.json — Athena over CloudFront access logs, top pages/refs/countries
+//   status.json  — Synthetics canary health + 30-day roll-up
+//   insights.json — Athena over CloudFront access logs
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { CloudWatchClient, GetMetricStatisticsCommand } from "@aws-sdk/client-cloudwatch";
@@ -147,19 +146,9 @@ async function runAthena(sql) {
   });
 }
 
-// CloudFront edge-location prefixes → country code, best-effort. Not exhaustive.
-const EDGE_TO_COUNTRY = {
-  ATL: "US", BOS: "US", CDG: "FR", DFW: "US", EWR: "US", FRA: "DE",
-  GRU: "BR", HKG: "HK", IAD: "US", ICN: "KR", JFK: "US", LAX: "US",
-  LHR: "GB", MAD: "ES", MIA: "US", MRS: "FR", NRT: "JP", ORD: "US",
-  PDX: "US", SEA: "US", SFO: "US", SIN: "SG", SJC: "US", SYD: "AU",
-  YTO: "CA", YUL: "CA", YVR: "CA", ZRH: "CH", DUB: "IE", ARN: "SE",
-  AMS: "NL", MXP: "IT", MUC: "DE",
-};
-
 async function collectInsights() {
   try {
-    const [topPagesRaw, refsRaw, edgeRaw, statsRaw] = await Promise.all([
+    const [topPagesRaw, refsRaw, statsRaw] = await Promise.all([
       runAthena(`
         SELECT uri, COUNT(*) AS hits
         FROM ${ATHENA_DB}.cloudfront_logs
@@ -198,14 +187,6 @@ async function collectInsights() {
         LIMIT 8
       `),
       runAthena(`
-        SELECT substring(location, 1, 3) AS edge, COUNT(*) AS hits
-        FROM ${ATHENA_DB}.cloudfront_logs
-        WHERE log_date >= current_date - interval '7' day
-        GROUP BY 1
-        ORDER BY hits DESC
-        LIMIT 20
-      `),
-      runAthena(`
         SELECT
           COUNT(*) AS total_requests,
           COUNT(DISTINCT request_ip) AS unique_viewers,
@@ -215,17 +196,6 @@ async function collectInsights() {
         WHERE log_date >= current_date - interval '7' day
       `),
     ]);
-
-    // Aggregate edge → country.
-    const byCountry = {};
-    for (const row of edgeRaw) {
-      const country = EDGE_TO_COUNTRY[row.edge] ?? row.edge;
-      byCountry[country] = (byCountry[country] ?? 0) + parseInt(row.hits, 10);
-    }
-    const topCountries = Object.entries(byCountry)
-      .map(([country, hits]) => ({ country, hits }))
-      .sort((a, b) => b.hits - a.hits)
-      .slice(0, 8);
 
     const stats = statsRaw[0] ?? {};
     return {
@@ -237,7 +207,6 @@ async function collectInsights() {
       bytesServedMB: parseFloat(stats.bytes_served ?? "0") / (1024 * 1024),
       topPages: topPagesRaw.map((r) => ({ uri: r.uri, hits: parseInt(r.hits, 10) })),
       topReferrers: refsRaw.map((r) => ({ domain: r.domain, hits: parseInt(r.hits, 10) })),
-      topCountries,
     };
   } catch (err) {
     return {
@@ -245,7 +214,6 @@ async function collectInsights() {
       periodEnd: isoDate(),
       topPages: [],
       topReferrers: [],
-      topCountries: [],
       warning: err.message,
     };
   }

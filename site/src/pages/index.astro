@@ -3016,15 +3016,16 @@ const featured = [
       mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
       -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
     }
-    /* Halftone patches — one anchored into each outer corner of the
-       section so the grain sits in the rail gutters instead of
-       floating over the constellation cells. */
+    /* Halftone patches — four spread through the section body so the
+       grain sits behind the constellation the whole way down. Cells at
+       z-index 3 cover them wherever they overlap; the grain shows in
+       the column gutters + section margins. */
     .deco-halftone--graphic-tl,
     .deco-halftone--graphic-tr,
     .deco-halftone--graphic-bl,
     .deco-halftone--graphic-br {
-      width: 240px;
-      height: 240px;
+      width: 340px;
+      height: 340px;
       background-size: 11px 11px;
       opacity: 0.5;
     }
@@ -3037,24 +3038,24 @@ const featured = [
       background-image: radial-gradient(circle, rgba(255, 238, 0, 0.22) 1.4px, transparent 2.2px);
     }
     .deco-halftone--graphic-tl {
-      top: 0; left: 0;
-      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 70%);
-      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 70%);
+      top: 4%; left: 3%;
+      mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 0% 0%, black 0%, transparent 72%);
     }
     .deco-halftone--graphic-tr {
-      top: 0; right: 0;
-      mask-image: radial-gradient(circle at 100% 0%, black 0%, transparent 70%);
-      -webkit-mask-image: radial-gradient(circle at 100% 0%, black 0%, transparent 70%);
+      top: 42%; right: 3%;
+      mask-image: radial-gradient(circle at 100% 50%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 100% 50%, black 0%, transparent 72%);
     }
     .deco-halftone--graphic-bl {
-      bottom: 0; left: 0;
-      mask-image: radial-gradient(circle at 0% 100%, black 0%, transparent 70%);
-      -webkit-mask-image: radial-gradient(circle at 0% 100%, black 0%, transparent 70%);
+      top: 55%; left: 3%;
+      mask-image: radial-gradient(circle at 0% 50%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 0% 50%, black 0%, transparent 72%);
     }
     .deco-halftone--graphic-br {
-      bottom: 0; right: 0;
-      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
-      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
+      bottom: 4%; right: 3%;
+      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 72%);
     }
     /* Photo (cream bg) — slate-violet grain */
     .deco-halftone--photo-tl,
@@ -3143,12 +3144,12 @@ const featured = [
       mix-blend-mode: screen;
     }
     .deco-cube--graphic-r {
-      top: 24%;
-      right: -18%;
+      top: 22%;
+      right: 6%;
     }
     .deco-cube--graphic-l {
       top: 62%;
-      left: -12%;
+      left: 4%;
       width: clamp(240px, 30vw, 440px);
       height: clamp(240px, 30vw, 440px);
       opacity: 0.24;

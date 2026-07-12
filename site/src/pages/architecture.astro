@@ -9,8 +9,8 @@ import Gryphline from "../layouts/Gryphline.astro";
     <p class="gl-lede">
       Whole stack sits in one Terraform state. Site, CDN, DNS, cert, contact form, log
       retention — one <code>apply</code> covers all of it. Push to <code>main</code>, plan runs,
-      apply runs. Runs me around <strong>$4/month</strong>, and that includes cross-region
-      failover, hourly Puppeteer canaries, and Athena on top.
+      apply runs. Cross-region failover, hourly Puppeteer canaries, and Athena over the access
+      logs are all part of the same apply.
     </p>
 
     <div class="gl-section">
@@ -60,8 +60,8 @@ GET *   │                             │  POST /contact
   synthetics canary ─ 3 endpoints, hourly, us-west-2 ─▶ cloudwatch alarms
   x-ray tracing     ─ lambda + api gw + digest lambda ─▶ trace map
   eventbridge sched ─ nightly 03:00 utc               ─▶ digest lambda
-     digest lambda  ─ cost explorer + synthetics + athena
-                     ─▶ json → s3 (primary + dr) → /status /cost /insights
+     digest lambda  ─ synthetics + athena
+                     ─▶ json → s3 (primary + dr) → /status /insights
         </pre>
       </div>
     </div>
@@ -73,16 +73,15 @@ GET *   │                             │  POST /contact
         <tbody>
           <tr><td><code>s3</code></td><td>Origin bucket + DR replica + logs + Athena results.</td><td>Private, OAC-only reads. Cross-region replication → us-east-1 for 5-min RTO.</td></tr>
           <tr><td><code>cloudfront</code></td><td>HTTPS-terminating CDN + edge cache.</td><td>Origin group failover, security-headers policy, JS URL rewrite at the edge.</td></tr>
-          <tr><td><code>acm</code></td><td>TLS cert (us-east-1 for CloudFront).</td><td>Free. DNS-01 validated via a Cloudflare CNAME.</td></tr>
-          <tr><td><code>api gateway http v2</code></td><td>Public POST /contact endpoint.</td><td>Cheaper + faster than REST. CORS enforced at gateway (saves Lambda cost on preflights).</td></tr>
+          <tr><td><code>acm</code></td><td>TLS cert (us-east-1 for CloudFront).</td><td>DNS-01 validated via a Cloudflare CNAME.</td></tr>
+          <tr><td><code>api gateway http v2</code></td><td>Public POST /contact endpoint.</td><td>Lighter than REST. CORS enforced at the gateway so Lambda never sees preflights.</td></tr>
           <tr><td><code>lambda</code></td><td>Contact handler + nightly digest job.</td><td>Node 20 + X-Ray active tracing. IAM scoped to a single verified SES sender.</td></tr>
           <tr><td><code>ses</code></td><td>Sends contact submissions to the owner inbox.</td><td>Policy condition on <code>ses:FromAddress</code> prevents impersonation.</td></tr>
           <tr><td><code>dynamodb</code></td><td>Audit log of every submission + Terraform state lock.</td><td>Pay-per-request + PITR + encryption at rest.</td></tr>
           <tr><td><code>athena + glue</code></td><td>Serverless analytics over CloudFront logs.</td><td>Workgroup capped at 1 GB scanned per query. Saved queries as Terraform resources.</td></tr>
           <tr><td><code>synthetics</code></td><td>Puppeteer-based canary hitting 3 pages hourly.</td><td>Screenshots + timing + alarm on <code>SuccessPercent &lt; 100</code>.</td></tr>
-          <tr><td><code>x-ray</code></td><td>Distributed tracing across Lambda + API GW.</td><td>Free for first 100k traces/mo. Invaluable when the contact form breaks.</td></tr>
+          <tr><td><code>x-ray</code></td><td>Distributed tracing across Lambda + API GW.</td><td>Invaluable when the contact form breaks — the request path is right there in the trace map.</td></tr>
           <tr><td><code>eventbridge sched</code></td><td>Nightly cron for the digest Lambda.</td><td>Replaces CloudWatch Events. Cleaner IAM model.</td></tr>
-          <tr><td><code>cost explorer + budgets</code></td><td>FinOps guardrails: 3 SNS thresholds + anomaly detection.</td><td>Anomaly monitor scoped to <code>&gt;= $1</code> daily drift; alerts to email.</td></tr>
           <tr><td><code>cloudwatch logs</code></td><td>Lambda + HTTP API access logs.</td><td>30-day retention on every group so nothing quietly creeps up.</td></tr>
         </tbody>
       </table>

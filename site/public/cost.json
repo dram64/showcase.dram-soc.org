@@ -1,0 +1,24 @@
+{
+  "periodStart": "2026-06-12",
+  "periodEnd": "2026-07-11",
+  "total": 3.24,
+  "budgetCeiling": 25.00,
+  "budgetUtilizationPct": 12.96,
+  "anomalyStatus": "OK",
+  "activeBudgetAlerts": 0,
+  "services": [
+    { "service": "AmazonCloudWatch",  "cost": 1.34 },
+    { "service": "AmazonCloudFront",  "cost": 0.68 },
+    { "service": "AmazonS3",          "cost": 0.42 },
+    { "service": "AWSCloudTrail",     "cost": 0.40 },
+    { "service": "AWSDataTransfer",   "cost": 0.35 },
+    { "service": "AmazonAthena",      "cost": 0.05 },
+    { "service": "AWSLambda",         "cost": 0.00 },
+    { "service": "AmazonAPIGateway",  "cost": 0.00 },
+    { "service": "AmazonDynamoDB",    "cost": 0.00 },
+    { "service": "AmazonSES",         "cost": 0.00 },
+    { "service": "AmazonSNS",         "cost": 0.00 },
+    { "service": "AWSXRay",           "cost": 0.00 }
+  ],
+  "generatedAt": "2026-07-11T23:07:04.000Z"
+}

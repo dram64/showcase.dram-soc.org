@@ -7,41 +7,85 @@ import Gryphline from "../../layouts/Gryphline.astro";
     <p class="gl-kicker">traffic · last 7 days · athena over cloudfront logs</p>
     <h1 class="gl-h1">insights<em>.</em></h1>
     <p class="gl-lede">
-      Live from <strong>Amazon Athena</strong> over CloudFront access logs (parsed via a Glue
-      Data Catalog table). Published nightly by the digest Lambda. Query cost: fractions
+      Live from <strong>Amazon Athena</strong> over CloudFront access logs (schema managed by a
+      Glue Data Catalog table). Published nightly by the digest Lambda. Query cost: fractions
       of a cent, capped at <code>1 GB scanned</code> via workgroup config.
     </p>
 
-    <h2 class="gl-h2">top pages</h2>
-    <table class="gl-tbl">
-      <thead>
-        <tr><th>URI</th><th class="gl-tbl__num">hits</th></tr>
-      </thead>
-      <tbody id="i-body"><tr><td colspan="2">loading&hellip;</td></tr></tbody>
-    </table>
+    <div class="gl-stats">
+      <div class="gl-stat">
+        <p class="gl-stat__label">requests</p>
+        <p class="gl-stat__value" id="i-req">&mdash;</p>
+      </div>
+      <div class="gl-stat">
+        <p class="gl-stat__label">unique viewers</p>
+        <p class="gl-stat__value" id="i-uv">&mdash;</p>
+      </div>
+      <div class="gl-stat">
+        <p class="gl-stat__label">cache hit</p>
+        <p class="gl-stat__value" id="i-cache">&mdash;</p>
+      </div>
+      <div class="gl-stat">
+        <p class="gl-stat__label">bytes served</p>
+        <p class="gl-stat__value" id="i-bytes">&mdash;</p>
+      </div>
+    </div>
+
+    <div class="gl-section">
+      <h2 class="gl-h2">top pages</h2>
+      <table class="gl-tbl">
+        <thead>
+          <tr><th>URI</th><th class="gl-tbl__num">hits</th></tr>
+        </thead>
+        <tbody id="i-body"><tr><td colspan="2">loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="gl-section">
+      <h2 class="gl-h2">top referrers</h2>
+      <table class="gl-tbl">
+        <thead>
+          <tr><th>Domain</th><th class="gl-tbl__num">hits</th></tr>
+        </thead>
+        <tbody id="i-refs"><tr><td colspan="2">loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="gl-section">
+      <h2 class="gl-h2">top countries</h2>
+      <table class="gl-tbl">
+        <thead>
+          <tr><th>Country</th><th class="gl-tbl__num">hits</th></tr>
+        </thead>
+        <tbody id="i-countries"><tr><td colspan="2">loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
 
     <p class="gl-kicker" id="i-generated" style="margin-top: 32px;">loading&hellip;</p>
   </section>
 
   <script is:inline>
     fetch("/insights.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
-      document.getElementById("i-generated").textContent = "// digest generated " + new Date(d.generatedAt).toLocaleString();
-      const body = document.getElementById("i-body");
-      body.innerHTML = "";
-      if (d.warning) {
-        body.innerHTML = "<tr><td colspan='2'>" + d.warning + "</td></tr>";
-        return;
-      }
-      const rows = d.topPages || [];
-      if (!rows.length) {
-        body.innerHTML = "<tr><td colspan='2'>no data yet — CloudFront logs roll in every hour</td></tr>";
-        return;
-      }
-      rows.forEach(r => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td><code>${r.uri}</code></td><td class='gl-tbl__num'>${r.hits}</td>`;
-        body.appendChild(tr);
-      });
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      set("i-req",   (d.totalRequests ?? 0).toLocaleString());
+      set("i-uv",    (d.uniqueViewers ?? 0).toLocaleString());
+      set("i-cache", typeof d.cacheHitRatio === "number" ? (d.cacheHitRatio * 100).toFixed(1) + " %" : "-");
+      set("i-bytes", (d.bytesServedMB ?? 0).toFixed(1) + " MB");
+      set("i-generated", "// digest generated " + new Date(d.generatedAt).toLocaleString());
+
+      const fill = (elId, rows, key, label) => {
+        const el = document.getElementById(elId);
+        el.innerHTML = "";
+        if (!rows || !rows.length) { el.innerHTML = "<tr><td colspan='2'>no data yet</td></tr>"; return; }
+        rows.forEach(r => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td><code>${r[key]}</code></td><td class='gl-tbl__num'>${r.hits.toLocaleString()}</td>`;
+          el.appendChild(tr);
+        });
+      };
+      fill("i-body",      d.topPages,     "uri");
+      fill("i-refs",      d.topReferrers, "domain");
+      fill("i-countries", d.topCountries, "country");
     }).catch(() => {
       document.getElementById("i-generated").textContent = "// digest not available yet";
     });

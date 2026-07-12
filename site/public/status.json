@@ -1,0 +1,27 @@
+{
+  "canary": "dram-soc-tri-page",
+  "canaryArn": "arn:aws:synthetics:us-west-2:824123457812:canary:dram-soc-tri-page",
+  "lastRunStatus": "PASSED",
+  "lastRunAt": "2026-07-11T23:00:11.284Z",
+  "lastRunDurationMs": 3217,
+  "successRate30d": 99.86,
+  "totalRuns30d": 720,
+  "failedRuns30d": 1,
+  "endpoints": [
+    { "url": "/",              "status": "PASSED", "durationMs": 1064 },
+    { "url": "/architecture/", "status": "PASSED", "durationMs": 1088 },
+    { "url": "/catalog/",      "status": "PASSED", "durationMs": 1065 }
+  ],
+  "recentRuns": [
+    { "runAt": "2026-07-11T23:00Z", "status": "PASSED", "durationMs": 3217 },
+    { "runAt": "2026-07-11T22:00Z", "status": "PASSED", "durationMs": 3105 },
+    { "runAt": "2026-07-11T21:00Z", "status": "PASSED", "durationMs": 3402 },
+    { "runAt": "2026-07-11T20:00Z", "status": "PASSED", "durationMs": 3188 },
+    { "runAt": "2026-07-11T19:00Z", "status": "PASSED", "durationMs": 3011 },
+    { "runAt": "2026-07-11T18:00Z", "status": "PASSED", "durationMs": 3244 },
+    { "runAt": "2026-07-11T17:00Z", "status": "PASSED", "durationMs": 3082 },
+    { "runAt": "2026-07-11T16:00Z", "status": "PASSED", "durationMs": 3196 }
+  ],
+  "generatedAt": "2026-07-11T23:07:04.000Z",
+  "statusUrl": "https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#synthetics:canary/detail/dram-soc-tri-page"
+}

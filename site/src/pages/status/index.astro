@@ -7,9 +7,9 @@ import Gryphline from "../../layouts/Gryphline.astro";
     <p class="gl-kicker">availability · uptime · latency</p>
     <h1 class="gl-h1">status<em>.</em></h1>
     <p class="gl-lede">
-      Live from a <strong>CloudWatch Synthetics canary</strong> running every hour against three pages,
-      published nightly by a scheduled Lambda. Failures page an SNS topic that emails
-      <code>desiramirez62200@gmail.com</code>. Full metric history + screenshots in the
+      Live from a <strong>CloudWatch Synthetics canary</strong> hitting three pages every hour,
+      published nightly by a scheduled Lambda. Failures fire an SNS topic that emails
+      <code>desiramirez62200@gmail.com</code>. Full run history + screenshots in the
       <a id="cw-link" href="#">CloudWatch console &rarr;</a>
     </p>
 
@@ -27,20 +27,51 @@ import Gryphline from "../../layouts/Gryphline.astro";
         <p class="gl-stat__value" id="s-dur">&mdash;</p>
       </div>
       <div class="gl-stat">
-        <p class="gl-stat__label">canary</p>
-        <p class="gl-stat__value" id="s-name">&mdash;</p>
+        <p class="gl-stat__label">success 30d</p>
+        <p class="gl-stat__value" id="s-rate">&mdash;</p>
       </div>
     </div>
 
+    <div class="gl-section">
+      <h2 class="gl-h2">endpoints under watch</h2>
+      <table class="gl-tbl">
+        <thead>
+          <tr><th>URI</th><th>Last</th><th class="gl-tbl__num">Duration</th></tr>
+        </thead>
+        <tbody id="s-endpoints"><tr><td colspan="3">loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="gl-section">
+      <h2 class="gl-h2">recent runs</h2>
+      <table class="gl-tbl">
+        <thead>
+          <tr><th>Timestamp (UTC)</th><th>Status</th><th class="gl-tbl__num">Duration</th></tr>
+        </thead>
+        <tbody id="s-recent"><tr><td colspan="3">loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+
     <p class="gl-kicker" id="s-generated" style="margin-top: 32px;">loading&hellip;</p>
+
+    <p class="gl-kicker" style="margin-top: 24px; color: var(--gl-ink-soft);">
+      canary: <code id="s-name">&mdash;</code> &middot; <span id="s-runcount">&mdash;</span> total runs in the last 30 days
+    </p>
   </section>
+
+  <style>
+    .gl-tbl .gl-ok  { color: var(--gl-green, #2ec27a); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 0.06em; }
+    .gl-tbl .gl-bad { color: var(--gl-red,   #ff5b5b); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 0.06em; }
+  </style>
 
   <script is:inline>
     fetch("/status.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
-      const set = (id, v) => document.getElementById(id).textContent = v;
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
       set("s-name",   d.canary || "-");
       set("s-at",     d.lastRunAt ? new Date(d.lastRunAt).toLocaleString() : "-");
       set("s-dur",    d.lastRunDurationMs ? (d.lastRunDurationMs / 1000).toFixed(1) + " s" : "-");
+      set("s-rate",   (typeof d.successRate30d === "number") ? d.successRate30d.toFixed(2) + " %" : "-");
+      set("s-runcount", (d.totalRuns30d ?? "-") + "");
       set("s-generated", "// digest generated " + new Date(d.generatedAt).toLocaleString());
       const link = document.getElementById("cw-link");
       if (d.statusUrl) link.href = d.statusUrl;
@@ -48,6 +79,24 @@ import Gryphline from "../../layouts/Gryphline.astro";
       pill.textContent = d.lastRunStatus || "unknown";
       if (d.lastRunStatus === "PASSED") pill.classList.add("gl-ok");
       else if (d.lastRunStatus === "FAILED") pill.classList.add("gl-bad");
+
+      const eBody = document.getElementById("s-endpoints");
+      eBody.innerHTML = "";
+      (d.endpoints || []).forEach(ep => {
+        const tr = document.createElement("tr");
+        const cls = ep.status === "PASSED" ? "gl-ok" : "gl-bad";
+        tr.innerHTML = `<td><code>${ep.url}</code></td><td><span class="${cls}">${ep.status}</span></td><td class="gl-tbl__num">${(ep.durationMs/1000).toFixed(2)} s</td>`;
+        eBody.appendChild(tr);
+      });
+
+      const rBody = document.getElementById("s-recent");
+      rBody.innerHTML = "";
+      (d.recentRuns || []).forEach(r => {
+        const tr = document.createElement("tr");
+        const cls = r.status === "PASSED" ? "gl-ok" : "gl-bad";
+        tr.innerHTML = `<td><code>${r.runAt}</code></td><td><span class="${cls}">${r.status}</span></td><td class="gl-tbl__num">${(r.durationMs/1000).toFixed(2)} s</td>`;
+        rBody.appendChild(tr);
+      });
     }).catch(() => {
       document.getElementById("s-generated").textContent = "// digest not available yet";
     });

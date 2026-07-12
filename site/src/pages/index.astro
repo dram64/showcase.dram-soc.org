@@ -1209,14 +1209,17 @@ const featured = [
        Cinema editorial board (dark) — .gd-board container
        ============================================================ */
     #graphic {
-      padding-top: clamp(40px, 5vw, 72px);
+      padding-top: clamp(16px, 2vw, 28px);
       padding-bottom: clamp(40px, 5vw, 72px);
     }
+    /* Tighten every vertical gap between the section top and the first
+       tile so the constellation reaches the edge of the colored bg. */
+    #graphic .sec__head { margin-bottom: clamp(12px, 1.5vh, 24px); }
     .gd-board {
       display: flex;
       flex-direction: column;
       gap: clamp(12px, 1.6vw, 22px);
-      padding: clamp(6px, 1vw, 12px) 0;
+      padding: 0;
     }
     /* Masonry — packs cells shortest-column-first so no white space is
        left between images within a column. Column-order visually, but
@@ -1256,7 +1259,7 @@ const featured = [
       width: 100%;
       columns: 5;
       column-gap: clamp(10px, 1vw, 16px);
-      padding: clamp(20px, 2.5vh, 40px) 0;
+      padding: 0 0 clamp(20px, 2.5vh, 40px);
       overflow: visible;
       /* CSS counter for the folio numeral drawn on every cell */
       counter-reset: folio;

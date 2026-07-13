@@ -1400,15 +1400,16 @@ const featured = [
       50%      { transform: translate(-50%, -50%) translateY(-10px); }
     }
 
-    /* Mobile — collapse to a scroll-through vertical layout */
+    /* Mobile — collapse the constellation into a scroll-through layout.
+       Below 900px: 2-column CSS masonry so the section isn't an endless
+       single strip. Below 480px: single column for tiny screens. */
     @media (max-width: 900px) {
       .cn-space {
         min-height: 0;
-        padding: 24px 0;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 14px;
-        justify-items: center;
+        padding: 16px 0;
+        display: block;
+        columns: 2;
+        column-gap: 10px;
       }
       .cn-edges, .cn-star { display: none; }
       .cn-node {
@@ -1418,15 +1419,31 @@ const featured = [
         animation: none;
         transition: border-color 260ms ease, box-shadow 260ms ease;
         display: block;
+        break-inside: avoid;
+        margin: 0 0 10px 0;
+        width: 100%;
       }
       .cn-space.is-entered .cn-node {
         transform: none;
         animation: none;
       }
-      .cn-node--xl, .cn-node--l, .cn-node--m, .cn-node--s {
-        width: min(92%, 460px);
+      .cn-node--xl, .cn-node--l, .cn-node--m, .cn-node--s, .cn-node--xs {
+        width: 100%;
       }
-      .cn-node__tag { opacity: 1; transform: none; }
+      .cn-node::before {
+        top: 4px;
+        left: 8px;
+        font-size: 12.5px;
+      }
+      .cn-node__tag { opacity: 1; transform: none; font-size: 0.52rem; padding: 8px 8px 6px; }
+    }
+    @media (max-width: 480px) {
+      .cn-space { columns: 1; }
+      .cn-node--xl, .cn-node--l, .cn-node--m, .cn-node--s, .cn-node--xs {
+        width: min(96%, 460px);
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     /* Editorial marks — mono pills that thread through the spread */

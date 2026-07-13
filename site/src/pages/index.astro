@@ -809,10 +809,14 @@ const featured = [
     }
     @media (max-width: 700px) {
       .hero {
-        height: 62vh;
-        height: 62svh;
-        min-height: 440px;
-        max-height: 620px;
+        height: auto;
+        aspect-ratio: 3 / 4;
+        min-height: 0;
+        max-height: 78svh;
+      }
+      .hero__art {
+        object-fit: contain;
+        object-position: center center;
       }
     }
     .hero__art {

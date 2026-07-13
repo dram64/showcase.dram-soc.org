@@ -1437,7 +1437,9 @@ const featured = [
       }
       .cn-node__tag { opacity: 1; transform: none; font-size: 0.52rem; padding: 8px 8px 6px; }
     }
-    @media (max-width: 480px) {
+    /* Keep 2-column all the way down to typical phone widths (390-320px).
+       Only collapse to single column on extremely narrow screens. */
+    @media (max-width: 340px) {
       .cn-space { columns: 1; }
       .cn-node--xl, .cn-node--l, .cn-node--m, .cn-node--s, .cn-node--xs {
         width: min(96%, 460px);

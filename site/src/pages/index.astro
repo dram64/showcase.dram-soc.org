@@ -807,24 +807,6 @@ const featured = [
       font-size: 0;
       box-sizing: border-box;
     }
-    @media (max-width: 700px) {
-      /* Undo the hero's full-bleed on mobile so the character art sits
-         between the two side rails instead of going edge-to-edge underneath
-         them. Aspect-ratio 3/4 keeps the illustration in its native shape. */
-      .hero {
-        width: auto;
-        margin-left: 0;
-        max-width: none;
-        height: auto;
-        aspect-ratio: 3 / 4;
-        min-height: 0;
-        max-height: 78svh;
-      }
-      .hero__art {
-        object-fit: contain;
-        object-position: center center;
-      }
-    }
     .hero__art {
       position: absolute;
       inset: 0;
@@ -842,6 +824,26 @@ const featured = [
       will-change: opacity;
     }
     .hero__art.is-active { opacity: 1; }
+    @media (max-width: 700px) {
+      /* Undo the hero's full-bleed on mobile so the character art sits
+         between the two side rails instead of going edge-to-edge underneath
+         them. Aspect-ratio 3/4 keeps the illustration in its native shape.
+         Placed AFTER the base .hero + .hero__art rules so it wins on
+         source-order (same specificity, later declaration). */
+      .hero {
+        width: auto;
+        margin-left: 0;
+        max-width: none;
+        height: auto;
+        aspect-ratio: 3 / 4;
+        min-height: 0;
+        max-height: 78svh;
+      }
+      .hero__art {
+        object-fit: contain;
+        object-position: center center;
+      }
+    }
 
     /* ============================================================
        Scroll-reveal — elements marked [data-reveal] fade + rise in

@@ -825,22 +825,19 @@ const featured = [
     }
     .hero__art.is-active { opacity: 1; }
     @media (max-width: 700px) {
-      /* Undo the hero's full-bleed on mobile so the character art sits
-         between the two side rails instead of going edge-to-edge underneath
-         them. Aspect-ratio 3/4 keeps the illustration in its native shape.
-         Placed AFTER the base .hero + .hero__art rules so it wins on
-         source-order (same specificity, later declaration). */
+      /* Hero fits between the two side rails and matches the natural aspect
+         of the hero art (3960×2160 = 11:6). No letterbox bars. */
       .hero {
         width: auto;
         margin-left: 0;
         max-width: none;
         height: auto;
-        aspect-ratio: 3 / 4;
+        aspect-ratio: 11 / 6;
         min-height: 0;
         max-height: 78svh;
       }
       .hero__art {
-        object-fit: contain;
+        object-fit: cover;
         object-position: center center;
       }
     }

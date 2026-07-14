@@ -151,7 +151,7 @@ async function collectInsights() {
     const [topPagesRaw, refsRaw, statsRaw] = await Promise.all([
       runAthena(`
         SELECT uri, COUNT(*) AS hits
-        FROM ${ATHENA_DB}.cloudfront_logs
+        FROM `${ATHENA_DB}`.cloudfront_logs
         WHERE log_date >= current_date - interval '7' day
           AND status = 200
           AND uri NOT LIKE '/_astro/%'
@@ -179,7 +179,7 @@ async function collectInsights() {
             ELSE referrer
           END AS domain,
           COUNT(*) AS hits
-        FROM ${ATHENA_DB}.cloudfront_logs
+        FROM `${ATHENA_DB}`.cloudfront_logs
         WHERE log_date >= current_date - interval '7' day
           AND referrer NOT LIKE '%showcase.dram-soc.org%'
         GROUP BY 1
@@ -192,7 +192,7 @@ async function collectInsights() {
           COUNT(DISTINCT request_ip) AS unique_viewers,
           SUM(CAST(bytes AS bigint)) AS bytes_served,
           SUM(CASE WHEN result_type IN ('Hit', 'RefreshHit') THEN 1 ELSE 0 END) * 1.0 / COUNT(*) AS cache_hit_ratio
-        FROM ${ATHENA_DB}.cloudfront_logs
+        FROM `${ATHENA_DB}`.cloudfront_logs
         WHERE log_date >= current_date - interval '7' day
       `),
     ]);

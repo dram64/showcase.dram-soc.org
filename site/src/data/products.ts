@@ -11,7 +11,6 @@ export type Product = {
 export const products: Product[] = [
   // Deskmats
   { slug: "deskmat-yuzuha-alice", title: "Yuzuha & Alice Deskmat", price: 25, category: "deskmat", image: "/assets/YuzuhaAliceDeskmat.webp" },
-  { slug: "deskmat-toki-bunny", title: "Toki Bunny Deskmat", price: 25, category: "deskmat", image: "/assets/TokiBunnyDeskmat.webp", lowStock: 2 },
   { slug: "deskmat-jane-doe", title: "Jane Doe Deskmat", price: 25, category: "deskmat", image: "/assets/JaneDoeDeskmat.webp", lowStock: 2 },
   { slug: "deskmat-yi-xuan", title: "Yi Xuan Deskmat", price: 25, category: "deskmat", image: "/assets/YiXuanDeskmat.webp", lowStock: 1 },
   { slug: "deskmat-ironmouse", title: "Ironmouse Deskmat", price: 25, category: "deskmat", image: "/assets/IronmouseDeskmat.webp", lowStock: 1 },
@@ -42,7 +41,6 @@ export const products: Product[] = [
   { slug: "sticker-jane-doe", title: "Jane Doe Sticker", price: 3, category: "sticker", image: "/assets/JaneDoeSticker.webp" },
   { slug: "sticker-yi-xuan", title: "Yi Xuan Sticker", price: 3, category: "sticker", image: "/assets/YiXuanSticker.webp" },
   { slug: "sticker-blanc-bunny", title: "Blanc Bunny Sticker", price: 3, category: "sticker", image: "/assets/BlancBunny.webp" },
-  { slug: "sticker-toki-bunny", title: "Toki Bunny Sticker", price: 3, category: "sticker", image: "/assets/TokiBunnySFW.webp" },
   { slug: "sticker-cipher", title: "Cipher Sticker", price: 3, category: "sticker", image: "/assets/CipherSticker.webp", soldOut: true },
   { slug: "sticker-faruzan", title: "Faruzan Sticker", price: 3, category: "sticker", image: "/assets/FaruzanSticker.webp", soldOut: true },
 

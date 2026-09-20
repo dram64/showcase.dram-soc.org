@@ -1,0 +1,682 @@
+---
+// Shared flip lightbox. Any element matching `selectors` becomes
+// pressable: it lifts off the page, turns 180deg on its Y axis while it
+// grows, and lands centred as a static card for a close read.
+//
+// Three modes, picked per element via data-flip-mode:
+//   media (default) — for the constellation tiles on the home page. The
+//     card is sized to the asset's true aspect, so the front face is the
+//     cropped tile you clicked and the back is the piece uncropped.
+//   card — for product squares. The card keeps the tile's own aspect and
+//     the front face is a live mirror of the square itself, so takeoff is
+//     pixel-identical; the back carries the product detail.
+//   photo — for the carousel frames, which float contained inside a fixed
+//     4:5 button rather than filling it. Measuring that button would
+//     stretch the flight, so the source rect is the image's own box; its
+//     aspect already matches the target, so the scale stays uniform. The
+//     faces are bare, keeping the shot floating as it does on the stage.
+//
+// data-flip-guard names a class the element must carry for a press to
+// open it — the carousel uses it so only the centred frame opens, and a
+// click on a side frame still just rotates it to the front.
+//
+// The whole thing is one overlay per page, so use this component once.
+interface Props {
+  selectors?: string;
+}
+const { selectors = "[data-flip]" } = Astro.props;
+---
+
+{/* The card is built at runtime and appended to <body>, so it carries
+    none of Astro's scope attributes and has to be styled globally.
+    Living on <body> is deliberate: a fixed element trapped inside a
+    transformed ancestor would position against that ancestor rather
+    than the viewport. */}
+<style is:global>
+  /* Affordance + socket state on whatever the script has wired up. */
+  [data-flip-src] { cursor: zoom-in; }
+  [data-flip-src]:focus-visible {
+    outline: 2px solid #ffee00;
+    outline-offset: 3px;
+  }
+  /* The lifted tile stays in place as a dim socket so neither the
+     masonry nor the product grid reflows while its card is up. */
+  [data-flip-src].is-lifted { opacity: 0.14; filter: grayscale(1); }
+  [data-flip-src].is-lifted img,
+  [data-flip-src].is-lifted video,
+  [data-flip-src].is-lifted .cn-node__tag,
+  /* Carousel frames carry an inline opacity from the coverflow paint,
+     which outranks the dimming above — hide the whole inner instead so
+     the shot and its cast floor shadow leave together. */
+  [data-flip-src].is-lifted .lead-3d__card-inner { visibility: hidden; }
+
+  .flip-lb {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  /* Presence is deliberately NOT tied to is-open. The card keeps flying
+     for the whole return, and is-open comes off the moment the close
+     starts — so hanging visibility on it would cut the card away at
+     frame one and leave an empty socket until the tile came back.
+     is-active is held until the flight actually settles. */
+  .flip-lb.is-active { visibility: visible; }
+  .flip-lb.is-open { pointer-events: auto; }
+  /* Coming home reads better with an even curve; the strong ease-out
+     used on the way up makes the return leap off the centre and then
+     crawl into the slot. */
+  .flip-lb.is-closing .flip-lb__card,
+  .flip-lb.is-closing .flip-lb__flip {
+    transition-timing-function: cubic-bezier(0.42, 0, 0.28, 1);
+  }
+
+  .flip-lb__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 5, 12, 0.9);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    opacity: 0;
+    /* Matched to the flight so the dim lifts exactly as the card lands,
+       rather than exposing the live page while it is still moving. */
+    transition: opacity 620ms ease;
+  }
+  .flip-lb.is-open .flip-lb__backdrop { opacity: 1; }
+
+  /* Geometry layer — top-left origin, so translate + scale maps the
+     finished card exactly onto the tile it came from. */
+  .flip-lb__card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: zoom-out;
+  }
+  /* Spin layer — centre origin, and it owns the perspective so the card
+     keeps its own vanishing point wherever it is on screen. Geometry and
+     spin are split across two elements on purpose: done on one, the
+     top-left origin needed for the travel would rotate the card about
+     its left edge and swing it sideways instead of turning in place. */
+  .flip-lb__flip {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 50%;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .flip-lb__face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #0a0913;
+    border: 1px solid rgba(255, 238, 0, 0.55);
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .flip-lb__face--back { transform: rotateY(180deg); }
+  .flip-lb__media { width: 100%; height: 100%; display: block; }
+  /* Front repeats the crop you clicked; the back shows it whole. */
+  .flip-lb__face--front .flip-lb__media { object-fit: cover; }
+  .flip-lb__face--back  .flip-lb__media { object-fit: contain; }
+
+  .flip-lb__meta {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 18px 18px 13px;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 9, 19, 0.94) 62%);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: lowercase;
+    pointer-events: none;
+  }
+  .flip-lb__folio {
+    font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #ffee00;
+  }
+
+  /* ---- photo mode: carousel frames -------------------------------- */
+  /* The shot floats on the carousel stage with no frame around it, so
+     the faces drop the plate and the rim and carry the same render-style
+     drop-shadow instead. Source and target share the shot's aspect, so
+     contain fills the face exactly and nothing letterboxes. */
+  .flip-lb__face--bare {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .flip-lb__face--bare .flip-lb__media {
+    object-fit: contain;
+    filter:
+      drop-shadow(0 10px 20px rgba(0, 0, 0, 0.34))
+      drop-shadow(0 34px 52px rgba(0, 0, 0, 0.44));
+  }
+  .flip-lb__face--bare .flip-lb__meta {
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 9, 19, 0.86) 70%);
+  }
+
+  /* ---- card mode: product squares --------------------------------- */
+  /* The front face mirrors the square at its own intrinsic width and is
+     scaled up bodily, so every proportion inside it — image, badge,
+     caption type — matches the tile exactly rather than re-flowing at
+     the larger size. */
+  .flip-lb__face--mirror { background: #ffffff; border-color: rgba(80, 97, 185, 0.5); }
+  .flip-lb__mirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+  }
+  .flip-lb__mirror .misc__link { pointer-events: none; }
+
+  .flip-lb__face--detail {
+    background: linear-gradient(180deg, #fafbfd 0%, #eef1f7 100%);
+    border-color: rgba(80, 97, 185, 0.5);
+    display: flex;
+    flex-direction: column;
+  }
+  /* Products vary wildly in shape — a deskmat is 9:4, a print is 2:3 —
+     and the card keeps the square's portrait aspect so the flight stays
+     undistorted. A wide product would therefore float in dead white, so
+     the shot sits on an explicit plate: the leftover room then reads as
+     matting around a framed product photo instead of a void. */
+  .flip-lb__shot {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    padding: clamp(12px, 3.5%, 24px);
+  }
+  .flip-lb__plate {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(10px, 3%, 22px);
+    background: radial-gradient(120% 90% at 50% 38%, #ffffff 0%, #eaeef6 100%);
+    border: 1px solid rgba(80, 97, 185, 0.16);
+    border-radius: 3px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  .flip-lb__plate img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 14px 26px rgba(20, 19, 26, 0.2));
+  }
+  .flip-lb__info {
+    flex: 0 0 auto;
+    padding: clamp(14px, 3%, 26px) clamp(16px, 4%, 30px) clamp(16px, 3.4%, 28px);
+    border-top: 1px solid rgba(80, 97, 185, 0.18);
+    background: rgba(255, 255, 255, 0.72);
+    color: #14131a;
+  }
+  .flip-lb__idx {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.24em;
+    color: rgba(80, 97, 185, 0.9);
+    margin-bottom: 6px;
+  }
+  .flip-lb__name {
+    margin: 0;
+    font-family: 'Chakra Petch', 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 2.1vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+  .flip-lb__row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .flip-lb__price {
+    font-family: 'Apex Mk3', 'JetBrains Mono', monospace;
+    font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+    line-height: 1;
+    color: #14131a;
+  }
+  .flip-lb__status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border: 1px solid rgba(80, 97, 185, 0.45);
+    color: rgba(80, 97, 185, 1);
+    white-space: nowrap;
+  }
+  .flip-lb__status[data-state="sold-out"] { border-color: rgba(200, 60, 90, 0.5); color: rgba(190, 45, 80, 1); }
+  .flip-lb__status[data-state="low"]      { border-color: rgba(214, 150, 0, 0.6);  color: rgba(170, 118, 0, 1); }
+  .flip-lb__note {
+    margin: 12px 0 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+    color: rgba(20, 19, 26, 0.55);
+  }
+
+  .flip-lb__close {
+    position: absolute;
+    top: clamp(14px, 3vh, 34px);
+    right: clamp(14px, 3vw, 40px);
+    z-index: 3;
+    padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 240ms ease, border-color 200ms ease, color 200ms ease;
+  }
+  /* Delay on the way in only — on the way out it should leave at once,
+     not sit on screen for a beat while the card is already travelling. */
+  .flip-lb.is-open .flip-lb__close { opacity: 1; transition-delay: 200ms; }
+  .flip-lb__close:hover { border-color: #ffee00; color: #ffee00; }
+
+  @media (max-width: 700px) {
+    .flip-lb__meta { font-size: 0.55rem; padding: 14px 12px 10px; }
+    .flip-lb__folio { font-size: 1.15rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flip-lb__card, .flip-lb__flip, .flip-lb__backdrop { transition: none !important; }
+  }
+</style>
+
+<script is:inline define:vars={{ selectors }}>
+  // FLIP technique: the card is sized to its final box straight away,
+  // then inverted back onto the source rect, so the whole journey is one
+  // transform interpolation and the browser does no layout work in
+  // flight.
+  (function () {
+    const nodes = Array.from(document.querySelectorAll(selectors));
+    if (!nodes.length) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const FLIGHT_MS = 620;
+
+    const lb = document.createElement("div");
+    lb.className = "flip-lb";
+    lb.setAttribute("aria-hidden", "true");
+    lb.innerHTML =
+      '<div class="flip-lb__backdrop"></div>' +
+      '<div class="flip-lb__card" role="dialog" aria-modal="true" aria-label="Detail view">' +
+        '<div class="flip-lb__flip">' +
+          '<div class="flip-lb__face flip-lb__face--front"></div>' +
+          '<div class="flip-lb__face flip-lb__face--back"></div>' +
+        '</div>' +
+      '</div>' +
+      '<button class="flip-lb__close" type="button" aria-label="Close">esc</button>';
+    document.body.appendChild(lb);
+
+    const card  = lb.querySelector(".flip-lb__card");
+    const flip  = lb.querySelector(".flip-lb__flip");
+    const front = lb.querySelector(".flip-lb__face--front");
+    const back  = lb.querySelector(".flip-lb__face--back");
+
+    let openIdx = -1;
+    let busy = false;
+    let closeTimer = null;
+    let flightEnd = 0;   // performance.now() at which the current move settles
+    let mirror = null;   // card mode: the scaled clone on the front face
+    let mirrorW = 0;     // ...and the intrinsic width it was laid out at
+
+    const modeOf = (n) => {
+      const m = n.dataset.flipMode;
+      return (m === "card" || m === "photo") ? m : "media";
+    };
+    const mediaOf = (n) => n.querySelector("img, video");
+
+    // Photo mode flies from the image's own box, not the frame it floats
+    // inside — that box already carries the shot's aspect, which is what
+    // keeps the scale uniform end to end.
+    const sourceRect = (n) => {
+      if (modeOf(n) === "photo") {
+        const m = mediaOf(n);
+        if (m) {
+          const mr = m.getBoundingClientRect();
+          if (mr.width && mr.height) return mr;
+        }
+      }
+      return n.getBoundingClientRect();
+    };
+
+    const dimsOf = (el) => {
+      if (!el) return null;
+      const w = el.naturalWidth  || el.videoWidth  || 0;
+      const h = el.naturalHeight || el.videoHeight || 0;
+      return (w && h) ? { w: w, h: h } : null;
+    };
+
+    const fit = (a) => {
+      const maxW = Math.min(window.innerWidth * 0.86, 1500);
+      const maxH = window.innerHeight * 0.84;
+      let w = maxW;
+      let h = w / a;
+      if (h > maxH) { h = maxH; w = h * a; }
+      return { w: w, h: h };
+    };
+
+    // Card mode keeps the square's own aspect, so the scale stays
+    // uniform and nothing inside the mirror distorts on the way up.
+    // Media mode sizes to the asset's real pixels instead, which is what
+    // lets the back face show a cropped tile uncropped.
+    const targetBox = (n, alt) => {
+      const r = n.getBoundingClientRect();
+      if (modeOf(n) === "card") {
+        // A product square should land like a card held in the hand, not
+        // a wall poster, so cap it well below the full-bleed size the
+        // graphic pieces get. Aspect still comes from the tile, which is
+        // what keeps the scale uniform and the mirror undistorted.
+        const a = r.height ? r.width / r.height : 1;
+        const maxW = Math.min(window.innerWidth * 0.86, 520);
+        const maxH = window.innerHeight * 0.8;
+        let w = maxW;
+        let h = w / a;
+        if (h > maxH) { h = maxH; w = h * a; }
+        return { w: w, h: h };
+      }
+      const d = dimsOf(mediaOf(n)) || dimsOf(alt);
+      let a;
+      if (d) {
+        a = d.w / d.h;
+      } else {
+        const ar = parseFloat(getComputedStyle(n).getPropertyValue("--ar"));
+        a = Number.isFinite(ar) && ar > 0 ? ar : 1;
+      }
+      const box = fit(a);
+      // Never blow a small asset up past its own pixels — but never
+      // shrink the card below a readable floor either.
+      if (d) {
+        const cap = Math.max(d.w, Math.min(window.innerWidth * 0.86, 560));
+        if (box.w > cap) { box.w = cap; box.h = cap / a; }
+      }
+      return box;
+    };
+
+    const geom = (x, y, sx, sy) => "translate(" + x + "px, " + y + "px) scale(" + sx + ", " + sy + ")";
+    const spin = (deg) => "perspective(1400px) rotateY(" + deg + "deg)";
+
+    // Always derive the resting transform from the card's CURRENT box
+    // rather than a value captured earlier — a late re-fit can change
+    // the size between scheduling a move and playing it.
+    const centred = () => {
+      const w = parseFloat(card.style.width);
+      const h = parseFloat(card.style.height);
+      return geom((window.innerWidth - w) / 2, (window.innerHeight - h) / 2, 1, 1);
+    };
+
+    const sizeCard = (box) => {
+      card.style.width  = box.w + "px";
+      card.style.height = box.h + "px";
+      if (mirror && mirrorW) mirror.style.transform = "scale(" + (box.w / mirrorW) + ")";
+    };
+
+    // Re-measure and re-centre the open card. Held until any move in
+    // flight has settled, so a late-decoding asset never snaps the card
+    // mid-turn.
+    const refit = () => {
+      if (openIdx < 0) return;
+      const now = performance.now();
+      if (now < flightEnd) { setTimeout(refit, flightEnd - now + 20); return; }
+      sizeCard(targetBox(nodes[openIdx], back.querySelector("img, video")));
+      card.style.transition = "none";
+      card.style.transform = centred();
+      requestAnimationFrame(() => { if (!reduce) card.style.transition = ""; });
+    };
+
+    const clearFaces = () => {
+      front.className = "flip-lb__face flip-lb__face--front";
+      back.className  = "flip-lb__face flip-lb__face--back";
+      front.innerHTML = "";
+      back.innerHTML = "";
+      mirror = null;
+      mirrorW = 0;
+    };
+
+    const scrollLock = (on) => {
+      const html = document.documentElement;
+      if (on) {
+        const gutter = window.innerWidth - html.clientWidth;
+        html.style.overflow = "hidden";
+        if (gutter > 0) document.body.style.paddingRight = gutter + "px";
+      } else {
+        html.style.overflow = "";
+        document.body.style.paddingRight = "";
+      }
+    };
+
+    const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+    ));
+
+    // --- face builders -------------------------------------------------
+    const buildMediaFaces = (n, i) => {
+      const m = mediaOf(n);
+      let backMedia = null;
+      if (modeOf(n) === "photo") {
+        front.className += " flip-lb__face--bare";
+        back.className  += " flip-lb__face--bare";
+      }
+      if (m) {
+        const f = m.cloneNode(true);
+        const b = m.cloneNode(true);
+        [f, b].forEach((el) => {
+          el.removeAttribute("loading");
+          el.className = "flip-lb__media";
+        });
+        // The front is only on screen for the first half of the turn, so
+        // there is no reason to spend a decode loop on it.
+        if (f.tagName === "VIDEO") { f.removeAttribute("autoplay"); f.autoplay = false; f.muted = true; }
+        if (b.tagName === "VIDEO") {
+          b.muted = true; b.loop = true; b.playsInline = true;
+          const p = b.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+          b.addEventListener("loadedmetadata", () => { if (openIdx === i) refit(); }, { once: true });
+        } else {
+          b.addEventListener("load", () => { if (openIdx === i) refit(); }, { once: true });
+        }
+        front.appendChild(f);
+        back.appendChild(b);
+        backMedia = b;
+      }
+      const label = n.dataset.flipLabel || n.dataset.tag || "";
+      const folio = n.dataset.flipIndex || String(i + 1).padStart(2, "0");
+      back.insertAdjacentHTML(
+        "beforeend",
+        '<span class="flip-lb__meta"><b class="flip-lb__folio">' + esc(folio) +
+        '</b><span>' + esc(label) + '</span></span>',
+      );
+      return backMedia;
+    };
+
+    const buildCardFaces = (n, i, rect) => {
+      // Front: a live mirror of the square, laid out at its own width and
+      // scaled bodily so every inner proportion survives the trip.
+      front.className += " flip-lb__face--mirror";
+      mirror = document.createElement("div");
+      mirror.className = "flip-lb__mirror";
+      mirror.style.width  = rect.width + "px";
+      mirror.style.height = rect.height + "px";
+      mirrorW = rect.width;
+      const twin = n.cloneNode(true);
+      twin.removeAttribute("data-flip-src");
+      twin.removeAttribute("tabindex");
+      twin.removeAttribute("role");
+      twin.classList.remove("is-lifted");
+      mirror.appendChild(twin);
+      front.appendChild(mirror);
+
+      // Back: the product detail the dead storefront used to carry.
+      back.className += " flip-lb__face--detail";
+      const img = n.querySelector("img");
+      const status = n.dataset.flipStatus || "";
+      const state = n.dataset.flipState || "";
+      const folio = n.dataset.flipIndex || String(i + 1).padStart(2, "0");
+      back.innerHTML =
+        '<div class="flip-lb__shot"><div class="flip-lb__plate">' +
+          (img ? '<img src="' + esc(img.getAttribute("src")) + '" alt="' + esc(img.getAttribute("alt") || "") + '" />' : "") +
+        '</div></div>' +
+        '<div class="flip-lb__info">' +
+          '<span class="flip-lb__idx">' + esc(folio) + ' &middot; ' + esc(n.dataset.flipCategory || "") + '</span>' +
+          '<h3 class="flip-lb__name">' + esc(n.dataset.flipTitle || "") + '</h3>' +
+          '<div class="flip-lb__row">' +
+            '<span class="flip-lb__price">' + esc(n.dataset.flipPrice || "") + '</span>' +
+            (status ? '<span class="flip-lb__status" data-state="' + esc(state) + '">' + esc(status) + '</span>' : "") +
+          '</div>' +
+          '<p class="flip-lb__note">Sold in person at events.</p>' +
+        '</div>';
+      return null;
+    };
+
+    // --- open / close ---------------------------------------------------
+    const openAt = (i) => {
+      const n = nodes[i];
+      if (!n || busy || openIdx === i) return;
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      busy = true;
+      openIdx = i;
+      // Claim the flight window up front so a load event landing during
+      // setup queues a re-fit instead of fighting the turn.
+      flightEnd = performance.now() + FLIGHT_MS + 80;
+
+      const r = sourceRect(n);
+      clearFaces();
+
+      const box = targetBox(n, null);
+      const backMedia = modeOf(n) === "card"
+        ? buildCardFaces(n, i, r)
+        : buildMediaFaces(n, i);
+
+      // Media mode may only learn the true aspect once the clone exists.
+      sizeCard(modeOf(n) === "card" ? box : targetBox(n, backMedia));
+
+      // Invert: park the finished card exactly over its tile.
+      const w = parseFloat(card.style.width);
+      const h = parseFloat(card.style.height);
+      card.style.transition = "none";
+      flip.style.transition = "none";
+      card.style.transform = geom(r.left, r.top, r.width / w, r.height / h);
+      flip.style.transform = spin(0);
+
+      n.classList.add("is-lifted");
+      lb.classList.remove("is-closing");
+      lb.classList.add("is-active", "is-open");
+      lb.setAttribute("aria-hidden", "false");
+      scrollLock(true);
+      // Let the page quiet anything that would keep moving behind the
+      // card — the carousel pauses its auto-advance on this.
+      document.dispatchEvent(new CustomEvent("flip:open"));
+
+      // Two frames: one to commit the inverted state, one to play it.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (!reduce) { card.style.transition = ""; flip.style.transition = ""; }
+        card.style.transform = centred();
+        flip.style.transform = spin(180);
+        flightEnd = reduce ? 0 : performance.now() + FLIGHT_MS;
+        busy = false;
+      }));
+    };
+
+    const close = () => {
+      if (openIdx < 0 || busy) return;
+      const n = nodes[openIdx];
+      const r = sourceRect(n);
+      const w = parseFloat(card.style.width);
+      const h = parseFloat(card.style.height);
+      busy = true;
+      flightEnd = reduce ? 0 : performance.now() + FLIGHT_MS;
+
+      if (!reduce) { card.style.transition = ""; flip.style.transition = ""; }
+      card.style.transform = geom(r.left, r.top, r.width / w, r.height / h);
+      flip.style.transform = spin(0);
+      // is-open off hands the page back straight away; is-active stays
+      // until settle so the card is visible all the way home.
+      lb.classList.add("is-closing");
+      lb.classList.remove("is-open");
+
+      const settle = () => {
+        closeTimer = null;
+        n.classList.remove("is-lifted");
+        lb.classList.remove("is-active", "is-closing");
+        lb.setAttribute("aria-hidden", "true");
+        scrollLock(false);
+        clearFaces();
+        n.focus({ preventScroll: true });
+        openIdx = -1;
+        busy = false;
+        document.dispatchEvent(new CustomEvent("flip:close"));
+      };
+      if (reduce) settle();
+      else closeTimer = setTimeout(settle, FLIGHT_MS);
+    };
+
+    // A guarded element only opens while it carries the named class —
+    // the carousel uses this so a press on a side frame keeps its
+    // existing job of rotating that frame to the front.
+    const armed = (n) => {
+      const guard = n.dataset.flipGuard;
+      return !guard || n.classList.contains(guard);
+    };
+
+    nodes.forEach((n, i) => {
+      n.setAttribute("data-flip-src", "");
+      const native = n.tagName === "BUTTON" || n.tagName === "A";
+      if (!native) {
+        n.setAttribute("role", "button");
+        n.setAttribute("tabindex", "0");
+      }
+      // Never clobber a label the markup already set — the carousel
+      // frames name themselves, and its paint() owns their tabindex.
+      if (!n.hasAttribute("aria-label")) {
+        const label = n.dataset.flipTitle || n.dataset.flipLabel || n.dataset.tag;
+        n.setAttribute("aria-label", label ? "View " + label : "View detail");
+      }
+      n.addEventListener("click", () => { if (armed(n)) openAt(i); });
+      if (!native) {
+        n.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+            e.preventDefault();
+            if (armed(n)) openAt(i);
+          }
+        });
+      }
+    });
+
+    lb.addEventListener("click", close);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && openIdx >= 0) close();
+    });
+
+    // Re-centre rather than strand the card if the viewport changes while
+    // it is up (orientation flip, window drag).
+    window.addEventListener("resize", refit);
+  })();
+</script>

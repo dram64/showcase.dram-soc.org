@@ -2,10 +2,11 @@
 export const prerender = true;
 import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
+import FlipLightbox from "../components/FlipLightbox.astro";
 import { products } from "../data/products.ts";
 
 // Every NSO / PSG / Yuzuha / Alice product on the catalog (21 items).
-// Toki, Blanc Bunny and Evelyn intentionally excluded (per prior ask).
+// Blanc Bunny and Evelyn intentionally excluded (per prior ask).
 const featured = [
   // NSO drop (6)
   "nso-deskmat",
@@ -337,67 +338,78 @@ const featured = [
     <!-- Full-width 3D coverflow — spans the whole section -->
     <div class="lead-3d" aria-label="Product photography carousel">
           <div class="lead-3d__stage">
-            <button class="lead-3d__card" data-i="0" aria-label="Frame 01">
+            <button class="lead-3d__card" data-i="0" aria-label="Frame 01"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="01" data-flip-label="mococo · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-01.webp" alt="Product photography frame 01" loading="lazy" />
                 <span class="lead-3d__card-tag">01</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="1" aria-label="Frame 02">
+            <button class="lead-3d__card" data-i="1" aria-label="Frame 02"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="02" data-flip-label="kafka · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-02.webp" alt="Product photography frame 02" loading="lazy" />
                 <span class="lead-3d__card-tag">02</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="2" aria-label="Frame 03">
+            <button class="lead-3d__card" data-i="2" aria-label="Frame 03"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="03" data-flip-label="mococo · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-03.webp" alt="Product photography frame 03" loading="lazy" />
                 <span class="lead-3d__card-tag">03</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="3" aria-label="Frame 04">
+            <button class="lead-3d__card" data-i="3" aria-label="Frame 04"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="04" data-flip-label="ayaka · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-04.webp" alt="Product photography frame 04" loading="lazy" />
                 <span class="lead-3d__card-tag">04</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="4" aria-label="Frame 05">
+            <button class="lead-3d__card" data-i="4" aria-label="Frame 05"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="05" data-flip-label="fuwawa · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-05.webp" alt="Product photography frame 05" loading="lazy" />
                 <span class="lead-3d__card-tag">05</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="5" aria-label="Frame 06">
+            <button class="lead-3d__card" data-i="5" aria-label="Frame 06"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="06" data-flip-label="kafka · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-06.webp" alt="Product photography frame 06" loading="lazy" />
                 <span class="lead-3d__card-tag">06</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="6" aria-label="Frame 07">
+            <button class="lead-3d__card" data-i="6" aria-label="Frame 07"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="07" data-flip-label="panty & stocking · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-07.webp" alt="Product photography frame 07" loading="lazy" />
                 <span class="lead-3d__card-tag">07</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="7" aria-label="Frame 08">
+            <button class="lead-3d__card" data-i="7" aria-label="Frame 08"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="08" data-flip-label="fuwamoco · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-08.webp" alt="Product photography frame 08" loading="lazy" />
                 <span class="lead-3d__card-tag">08</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="8" aria-label="Frame 09">
+            <button class="lead-3d__card" data-i="8" aria-label="Frame 09"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="09" data-flip-label="nilou · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-09.webp" alt="Product photography frame 09" loading="lazy" />
                 <span class="lead-3d__card-tag">09</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="9" aria-label="Frame 10">
+            <button class="lead-3d__card" data-i="9" aria-label="Frame 10"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="10" data-flip-label="topaz · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-10.webp" alt="Product photography frame 10" loading="lazy" />
                 <span class="lead-3d__card-tag">10</span>
               </div>
             </button>
-            <button class="lead-3d__card" data-i="10" aria-label="Frame 11">
+            <button class="lead-3d__card" data-i="10" aria-label="Frame 11"
+              data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="11" data-flip-label="panty & stocking · a7iii · 85mm">
               <div class="lead-3d__card-inner">
                 <img src="/showcase/photography/photo-11.webp" alt="Product photography frame 11" loading="lazy" />
                 <span class="lead-3d__card-tag">11</span>
@@ -458,7 +470,7 @@ const featured = [
     </div>
 
     <div class="sec-foot">
-      <a class="btn btn--primary" href="https://ac41ps-i0.myshopify.com" target="_blank" rel="noopener">shop the full catalog &rarr;</a>
+      <a class="btn btn--primary" href="/catalog/">browse the full catalog &rarr;</a>
     </div>
 
     <!-- Closing nav: three paths to keep exploring -->
@@ -480,6 +492,10 @@ const featured = [
       </a>
     </div>
   </section>
+
+  {/* Constellation tiles, carousel frames and product squares all flip
+      open in place. One overlay serves the whole page. */}
+  <FlipLightbox selectors=".cn-node, .lead-3d__card, .misc__card" />
 
   <script is:inline>
     // Tracker — IntersectionObserver highlights the active section + smooth-scroll on click
@@ -644,7 +660,11 @@ const featured = [
 
       const advance = () => { current = (current + 1) % N; paint(); };
       const back    = () => { current = (current - 1 + N) % N; paint(); };
-      const start   = () => { stop(); timer = setInterval(advance, INTERVAL); };
+      // Held while a frame is open in the lightbox. The frame's own click
+      // handler also calls start(), landing after the flip:open below, so a
+      // flag rather than a bare stop() is what actually keeps it still.
+      let paused = false;
+      const start   = () => { stop(); if (paused) return; timer = setInterval(advance, INTERVAL); };
       const stop    = () => { if (timer) { clearInterval(timer); timer = null; } };
 
       cards.forEach((card, i) => card.addEventListener("click", () => { current = i; paint(); start(); }));
@@ -653,6 +673,10 @@ const featured = [
       if (nav.next) nav.next.addEventListener("click", () => { advance(); start(); });
 
       document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else start(); });
+      // Hold position while a frame is open in the lightbox, so the
+      // card it flew from is still there to fly back to.
+      document.addEventListener("flip:open",  () => { paused = true;  stop();  });
+      document.addEventListener("flip:close", () => { paused = false; start(); });
 
       paint();
       start();

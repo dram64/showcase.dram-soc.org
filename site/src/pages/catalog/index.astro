@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from "../../layouts/Base.astro";
 import ProductCard from "../../components/ProductCard.astro";
+import FlipLightbox from "../../components/FlipLightbox.astro";
 import { products, categories } from "../../data/products.ts";
 
 function pad(n: number): string {
@@ -26,4 +27,6 @@ function pad(n: number): string {
       </section>
     );
   })}
+
+  <FlipLightbox selectors=".misc__card" />
 </Base>

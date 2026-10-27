@@ -25,10 +25,20 @@ resource "aws_s3_bucket_lifecycle_configuration" "canary_artifacts" {
   }
 }
 
+# aws_synthetics_canary has no source_code_hash and only diffs zip_file as a
+# path string, so a script edit under a fixed zip name never reaches AWS.
+# Hashing the source into the name gives every edit a new path.
+locals {
+  canary_src = "${path.module}/lambdas/canary"
+  canary_src_hash = sha1(join("", [
+    for f in fileset(local.canary_src, "**") : filesha1("${local.canary_src}/${f}")
+  ]))
+}
+
 data "archive_file" "canary_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/lambdas/canary"
-  output_path = "${path.module}/build/canary.zip"
+  source_dir  = local.canary_src
+  output_path = "${path.module}/build/canary-${substr(local.canary_src_hash, 0, 12)}.zip"
 }
 
 resource "aws_iam_role" "canary" {
@@ -81,7 +91,7 @@ resource "aws_iam_role_policy" "canary" {
 }
 
 resource "aws_synthetics_canary" "portfolio" {
-  name                 = "${substr(replace(var.domain, ".", "-"), 0, 21)}"
+  name                 = substr(replace(var.domain, ".", "-"), 0, 21)
   artifact_s3_location = "s3://${aws_s3_bucket.canary_artifacts.bucket}/"
   execution_role_arn   = aws_iam_role.canary.arn
   runtime_version      = "syn-nodejs-puppeteer-9.1"
@@ -104,14 +114,17 @@ resource "aws_synthetics_canary" "portfolio" {
   failure_retention_period = 30
 }
 
+# Period matches the hourly schedule. With a shorter period most windows
+# have no datapoint, and "breaching" turns each empty window into an
+# ALARM/OK flap (and an email each way).
 resource "aws_cloudwatch_metric_alarm" "canary_failed" {
   alarm_name          = "${replace(var.domain, ".", "-")}-canary-failed"
-  alarm_description   = "showcase.dram-soc.org canary has failed at least once in the last 15 min"
+  alarm_description   = "showcase.dram-soc.org canary has failed at least once in the last hour"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
   metric_name         = "SuccessPercent"
   namespace           = "CloudWatchSynthetics"
-  period              = 900
+  period              = 3600
   statistic           = "Average"
   threshold           = 100
   treat_missing_data  = "breaching"

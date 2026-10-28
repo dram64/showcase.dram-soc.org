@@ -32,7 +32,7 @@ const {
 } = process.env;
 
 // URLs the canary probes. Keep in sync with lambdas/canary/nodejs/node_modules/index.js
-const CANARY_TARGETS = ["/", "/work/", "/architecture/"];
+const CANARY_TARGETS = ["/tokyo-zero/", "/tokyo-zero/work/", "/tokyo-zero/architecture/"];
 
 const isoDate = (offsetDays = 0) => {
   const d = new Date();

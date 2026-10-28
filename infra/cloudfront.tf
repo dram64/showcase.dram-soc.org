@@ -33,16 +33,14 @@ resource "aws_cloudfront_response_headers_policy" "site" {
   }
 }
 
-# Astro emits pretty URLs like /process/. CloudFront runs this at the
-# viewer-request stage to rewrite /process → /process/index.html so the
-# S3 origin resolves. The site is built for site_domain + site_path, so its
-# own links carry that prefix; it's dropped here so this hostname serves
-# the same build (see site_domain.tf).
+# The site moved to site_domain + site_path (see site_domain.tf). Every
+# request here gets a 301 to the same page there, query string kept. Paths
+# that already carry the prefix (links in the current build) aren't doubled.
 resource "aws_cloudfront_function" "rewrite" {
   name    = "${replace(var.domain, ".", "-")}-rewrite"
   runtime = "cloudfront-js-2.0"
   publish = true
-  comment = "Strip ${var.site_path}, append /index.html to directory-style paths."
+  comment = "301 to https://${var.site_domain}${var.site_path}/ (same path)."
   code    = <<-EOT
     function handler(event) {
       var request = event.request;
@@ -50,13 +48,21 @@ resource "aws_cloudfront_function" "rewrite" {
       if (uri.indexOf('${var.site_path}/') === 0) {
         uri = uri.substring(${length(var.site_path)});
       }
-      if (uri.endsWith('/')) {
-        uri += 'index.html';
-      } else if (!uri.includes('.')) {
-        uri += '/index.html';
+      var query = [];
+      for (var key in request.querystring) {
+        var param = request.querystring[key];
+        var values = param.multiValue ? param.multiValue : [param];
+        for (var i = 0; i < values.length; i++) {
+          query.push(key + '=' + values[i].value);
+        }
       }
-      request.uri = uri;
-      return request;
+      return {
+        statusCode: 301,
+        statusDescription: 'Moved Permanently',
+        headers: {
+          location: { value: 'https://${var.site_domain}${var.site_path}' + uri + (query.length ? '?' + query.join('&') : '') }
+        }
+      };
     }
   EOT
 }

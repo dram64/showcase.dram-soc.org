@@ -31,3 +31,21 @@ variable "price_class" {
   type        = string
   default     = "PriceClass_100"
 }
+
+variable "site_domain" {
+  description = "Name domain that serves the resume at / and this showcase under site_path."
+  type        = string
+  default     = "desiramirez.com"
+}
+
+variable "site_path" {
+  description = "Path the showcase is served under on site_domain. Must match `base` in site/astro.config.mjs."
+  type        = string
+  default     = "/tokyo-zero"
+}
+
+variable "resume_bucket" {
+  description = "Bucket owned by the soc-detection-lab stack whose apex/ prefix holds the resume page."
+  type        = string
+  default     = "dram-soc-dashboard-frontend"
+}

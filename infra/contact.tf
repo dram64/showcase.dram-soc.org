@@ -116,7 +116,7 @@ resource "aws_apigatewayv2_api" "contact" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_origins = ["https://${var.domain}"]
+    allow_origins = ["https://${var.domain}", "https://${var.site_domain}"]
     allow_methods = ["POST", "OPTIONS"]
     allow_headers = ["content-type"]
     max_age       = 300

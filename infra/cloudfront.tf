@@ -35,21 +35,27 @@ resource "aws_cloudfront_response_headers_policy" "site" {
 
 # Astro emits pretty URLs like /process/. CloudFront runs this at the
 # viewer-request stage to rewrite /process → /process/index.html so the
-# S3 origin resolves.
+# S3 origin resolves. The site is built for site_domain + site_path, so its
+# own links carry that prefix; it's dropped here so this hostname serves
+# the same build (see site_domain.tf).
 resource "aws_cloudfront_function" "rewrite" {
   name    = "${replace(var.domain, ".", "-")}-rewrite"
   runtime = "cloudfront-js-2.0"
   publish = true
-  comment = "Append /index.html to directory-style paths."
+  comment = "Strip ${var.site_path}, append /index.html to directory-style paths."
   code    = <<-EOT
     function handler(event) {
       var request = event.request;
       var uri = request.uri;
-      if (uri.endsWith('/')) {
-        request.uri = uri + 'index.html';
-      } else if (!uri.includes('.')) {
-        request.uri = uri + '/index.html';
+      if (uri.indexOf('${var.site_path}/') === 0) {
+        uri = uri.substring(${length(var.site_path)});
       }
+      if (uri.endsWith('/')) {
+        uri += 'index.html';
+      } else if (!uri.includes('.')) {
+        uri += '/index.html';
+      }
+      request.uri = uri;
       return request;
     }
   EOT

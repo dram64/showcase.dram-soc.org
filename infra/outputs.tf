@@ -41,3 +41,29 @@ output "site_url" {
   description = "Public site URL."
   value       = "https://${var.domain}"
 }
+
+output "site_domain_acm_validation_records" {
+  description = "CNAMEs to add in the site_domain Cloudflare zone (unproxied) to validate its cert."
+  value = [
+    for dvo in aws_acm_certificate.site_domain.domain_validation_options : {
+      name  = dvo.resource_record_name
+      value = dvo.resource_record_value
+      type  = dvo.resource_record_type
+    }
+  ]
+}
+
+output "site_domain_distribution_id" {
+  description = "Set as the SITE_DISTRIBUTION_ID repo variable so deploys invalidate it."
+  value       = aws_cloudfront_distribution.site_domain.id
+}
+
+output "site_domain_distribution_arn" {
+  description = "Goes in the soc-detection-lab resume bucket policy so this distribution can read apex/."
+  value       = aws_cloudfront_distribution.site_domain.arn
+}
+
+output "site_domain_cname_instruction" {
+  description = "Cloudflare records for the name domain."
+  value       = "In the ${var.site_domain} Cloudflare zone: CNAME '@' and 'www' -> '${aws_cloudfront_distribution.site_domain.domain_name}' with PROXY OFF (grey cloud)."
+}

@@ -82,3 +82,12 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
+
+      # The same bucket is served at desiramirez.com/tokyo-zero by the
+      # distribution in infra/site_domain.tf (its ID is a repo variable).
+      - name: Invalidate CloudFront (site domain)
+        if: vars.SITE_DISTRIBUTION_ID != ''
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ vars.SITE_DISTRIBUTION_ID }} \
+            --paths "/tokyo-zero/*"

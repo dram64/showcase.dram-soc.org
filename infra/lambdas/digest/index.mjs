@@ -154,12 +154,12 @@ async function collectInsights() {
         FROM "${ATHENA_DB}".cloudfront_logs
         WHERE log_date >= current_date - interval '7' day
           AND status = 200
-          AND uri NOT LIKE '/_astro/%'
-          AND uri NOT LIKE '/_assets/%'
-          AND uri NOT LIKE '/fonts/%'
-          AND uri NOT LIKE '/assets/%'
-          AND uri NOT LIKE '/new-assets/%'
-          AND uri NOT LIKE '/showcase/%'
+          AND uri NOT LIKE '%/_astro/%'
+          AND uri NOT LIKE '%/_assets/%'
+          AND uri NOT LIKE '%/fonts/%'
+          AND uri NOT LIKE '%/assets/%'
+          AND uri NOT LIKE '%/new-assets/%'
+          AND uri NOT LIKE '%/showcase/%'
           AND uri NOT LIKE '%.json'
           AND uri NOT LIKE '%.xml'
           AND uri NOT LIKE '%.png'
@@ -167,6 +167,8 @@ async function collectInsights() {
           AND uri NOT LIKE '%.jpg'
           AND uri NOT LIKE '%.svg'
           AND uri NOT LIKE '%.ico'
+          AND uri NOT LIKE '%.mp4'
+          AND uri NOT LIKE '%.webm'
         GROUP BY uri
         ORDER BY hits DESC
         LIMIT 15
@@ -182,6 +184,7 @@ async function collectInsights() {
         FROM "${ATHENA_DB}".cloudfront_logs
         WHERE log_date >= current_date - interval '7' day
           AND referrer NOT LIKE '%showcase.dram-soc.org%'
+          AND referrer NOT LIKE '%desiramirez.com%'
         GROUP BY 1
         ORDER BY hits DESC
         LIMIT 8

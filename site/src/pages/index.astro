@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import ProductCard from "../components/ProductCard.astro";
 import FlipLightbox from "../components/FlipLightbox.astro";
 import { products } from "../data/products.ts";
+import { u } from "../lib/url.ts";
 
 // Every NSO / PSG / Yuzuha / Alice product on the catalog (21 items).
 // Blanc Bunny and Evelyn intentionally excluded (per prior ask).
@@ -57,8 +58,8 @@ const featured = [
        01 · HERO — auto-crossfade carousel between NSO + Yuzuha/Alice
        ================================================================ -->
   <section id="hero" class="hero" aria-label="hero">
-    <img class="hero__art is-active" src="/hero/nso-hero.webp"          alt="NSO — Ame &amp; KAngel key art" data-slide="0" />
-    <img class="hero__art"           src="/hero/yuzuha-alice-hero.webp" alt="Yuzuha &amp; Alice key art"     data-slide="1" />
+    <img class="hero__art is-active" src={u("/hero/nso-hero.webp")}          alt="NSO — Ame &amp; KAngel key art" data-slide="0" />
+    <img class="hero__art"           src={u("/hero/yuzuha-alice-hero.webp")} alt="Yuzuha &amp; Alice key art"     data-slide="1" />
 
     <div class="hero__dots" role="tablist" aria-label="Hero carousel">
       <button class="hero__dot is-active" data-goto="0" aria-label="Slide 1"></button>
@@ -84,7 +85,7 @@ const featured = [
   <div class="hero-strip" aria-hidden="true" data-reveal>
     <span><em>design</em> apex mk3 &middot; beam visionary &middot; branding pro</span>
     <span><em>cloud</em> s3 &middot; cloudfront &middot; lambda &middot; athena &middot; terraform</span>
-    <span><em>ops</em> <a href="/status/">/status</a> &middot; <a href="/insights/">/insights</a></span>
+    <span><em>ops</em> <a href={u("/status/")}>/status</a> &middot; <a href={u("/insights/")}>/insights</a></span>
   </div>
 
   <!-- ================================================================
@@ -114,14 +115,14 @@ const featured = [
       <aside class="theme-picks" aria-label="Themed storefronts">
         <span class="theme-picks__label">themed rooms</span>
         <nav class="misc__theme-switch" aria-label="Theme">
-          <a class="misc__theme-square misc__theme-square--psg" href="/work/psg/" aria-label="PSG theme">
-            <img class="misc__theme-square-char misc__theme-square-char--panty"    src="/assets/psg-panty-sticker.webp"    alt="" aria-hidden="true" loading="lazy" />
-            <img class="misc__theme-square-char misc__theme-square-char--stocking" src="/assets/psg-stocking-sticker.webp" alt="" aria-hidden="true" loading="lazy" />
+          <a class="misc__theme-square misc__theme-square--psg" href={u("/work/psg/")} aria-label="PSG theme">
+            <img class="misc__theme-square-char misc__theme-square-char--panty"    src={u("/assets/psg-panty-sticker.webp")}    alt="" aria-hidden="true" loading="lazy" />
+            <img class="misc__theme-square-char misc__theme-square-char--stocking" src={u("/assets/psg-stocking-sticker.webp")} alt="" aria-hidden="true" loading="lazy" />
             <span class="misc__theme-square-label">psg</span>
           </a>
-          <a class="misc__theme-square misc__theme-square--nso" href="/work/nso/" aria-label="NSO theme">
-            <img class="misc__theme-square-char misc__theme-square-char--ame"    src="/assets/nso-ame-sticker.webp"    alt="" aria-hidden="true" loading="lazy" />
-            <img class="misc__theme-square-char misc__theme-square-char--kangel" src="/assets/nso-kangel-sticker.webp" alt="" aria-hidden="true" loading="lazy" />
+          <a class="misc__theme-square misc__theme-square--nso" href={u("/work/nso/")} aria-label="NSO theme">
+            <img class="misc__theme-square-char misc__theme-square-char--ame"    src={u("/assets/nso-ame-sticker.webp")}    alt="" aria-hidden="true" loading="lazy" />
+            <img class="misc__theme-square-char misc__theme-square-char--kangel" src={u("/assets/nso-kangel-sticker.webp")} alt="" aria-hidden="true" loading="lazy" />
             <span class="misc__theme-square-label">nso</span>
           </a>
         </nav>
@@ -199,119 +200,119 @@ const featured = [
 
         <!-- Row 1 · Top (4 nodes) — portrait, wide banner, wide banner, portrait -->
         <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 14%; --y: 12%; --d: 0" data-tag="portrait · 01">
-          <img src="/showcase/graphics/portrait-01.webp" alt="Portrait 01" loading="lazy" />
+          <img src={u("/showcase/graphics/portrait-01.webp")} alt="Portrait 01" loading="lazy" />
           <span class="cn-node__tag">portrait &middot; 01</span>
         </figure>
         <figure class="cn-node cn-node--m" style="--ar: 2.22; --x: 36%; --y: 8%; --d: 1" data-tag="banner · 01">
-          <img src="/showcase/graphics/banner-01.webp" alt="Banner 01" loading="lazy" />
+          <img src={u("/showcase/graphics/banner-01.webp")} alt="Banner 01" loading="lazy" />
           <span class="cn-node__tag">banner &middot; 01</span>
         </figure>
         <figure class="cn-node cn-node--m" style="--ar: 2.22; --x: 62%; --y: 10%; --d: 2" data-tag="psg · deskmat">
-          <img src="/showcase/graphics/psg-deskmat.webp" alt="PSG deskmat" loading="lazy" />
+          <img src={u("/showcase/graphics/psg-deskmat.webp")} alt="PSG deskmat" loading="lazy" />
           <span class="cn-node__tag">psg &middot; deskmat</span>
         </figure>
         <figure class="cn-node cn-node--s" style="--ar: 0.75; --x: 86%; --y: 12%; --d: 3" data-tag="citlali · mobile">
-          <img src="/showcase/graphics/citlali-mobile.webp" alt="Citlali mobile" loading="lazy" />
+          <img src={u("/showcase/graphics/citlali-mobile.webp")} alt="Citlali mobile" loading="lazy" />
           <span class="cn-node__tag">citlali &middot; mobile</span>
         </figure>
 
         <!-- Row 2 · Upper-middle (5 nodes) — motion hero band -->
         <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 8%; --y: 32%; --d: 4" data-tag="fmig · post">
-          <img src="/showcase/graphics/fmig-post.webp" alt="FMIG post" loading="lazy" />
+          <img src={u("/showcase/graphics/fmig-post.webp")} alt="FMIG post" loading="lazy" />
           <span class="cn-node__tag">fmig &middot; post</span>
         </figure>
         <figure class="cn-node cn-node--xl cn-node--video" style="--ar: 2.37; --x: 30%; --y: 28%; --d: 5" data-tag="header mograph · motion">
-          <video muted loop playsinline autoplay preload="metadata" poster="/showcase/motion/header-mograph-poster.jpg">
-            <source src="/showcase/motion/header-mograph.webm" type="video/webm" />
-            <source src="/showcase/motion/header-mograph.mp4" type="video/mp4" />
+          <video muted loop playsinline autoplay preload="metadata" poster={u("/showcase/motion/header-mograph-poster.jpg")}>
+            <source src={u("/showcase/motion/header-mograph.webm")} type="video/webm" />
+            <source src={u("/showcase/motion/header-mograph.mp4")} type="video/mp4" />
           </video>
           <span class="cn-node__tag">header mograph &middot; motion</span>
         </figure>
         <figure class="cn-node cn-node--l" style="--ar: 2.37; --x: 60%; --y: 30%; --d: 6" data-tag="citlali · header">
-          <img src="/showcase/graphics/citlali-header.webp" alt="Citlali header" loading="lazy" />
+          <img src={u("/showcase/graphics/citlali-header.webp")} alt="Citlali header" loading="lazy" />
           <span class="cn-node__tag">citlali &middot; header</span>
         </figure>
         <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 84%; --y: 32%; --d: 7" data-tag="portrait · 02">
-          <img src="/showcase/graphics/portrait-02.webp" alt="Portrait 02" loading="lazy" />
+          <img src={u("/showcase/graphics/portrait-02.webp")} alt="Portrait 02" loading="lazy" />
           <span class="cn-node__tag">portrait &middot; 02</span>
         </figure>
         <figure class="cn-node cn-node--xs" style="--ar: 0.65; --x: 96%; --y: 30%; --d: 8" data-tag="pdf · astra yao">
-          <img src="/showcase/graphics/pdf-astra-yao.webp" alt="Astra Yao PDF preview" loading="lazy" />
+          <img src={u("/showcase/graphics/pdf-astra-yao.webp")} alt="Astra Yao PDF preview" loading="lazy" />
           <span class="cn-node__tag">pdf &middot; astra yao</span>
         </figure>
 
         <!-- Row 3 · Middle (5 nodes) — chii widescreen at heart -->
         <figure class="cn-node cn-node--xs" style="--ar: 0.65; --x: 8%; --y: 50%; --d: 9" data-tag="cipher · print">
-          <img src="/showcase/graphics/cipher-print.webp" alt="Cipher print" loading="lazy" />
+          <img src={u("/showcase/graphics/cipher-print.webp")} alt="Cipher print" loading="lazy" />
           <span class="cn-node__tag">cipher &middot; print</span>
         </figure>
         <figure class="cn-node cn-node--xs cn-node--video" style="--ar: 0.5625; --x: 24%; --y: 50%; --d: 10" data-tag="comp 1_1 · reel">
-          <video muted loop playsinline autoplay preload="metadata" poster="/showcase/motion/comp-1-1-poster.jpg">
-            <source src="/showcase/motion/comp-1-1.webm" type="video/webm" />
-            <source src="/showcase/motion/comp-1-1.mp4" type="video/mp4" />
+          <video muted loop playsinline autoplay preload="metadata" poster={u("/showcase/motion/comp-1-1-poster.jpg")}>
+            <source src={u("/showcase/motion/comp-1-1.webm")} type="video/webm" />
+            <source src={u("/showcase/motion/comp-1-1.mp4")} type="video/mp4" />
           </video>
           <span class="cn-node__tag">comp 1_1 &middot; reel</span>
         </figure>
         <figure class="cn-node cn-node--l" style="--ar: 2.22; --x: 52%; --y: 50%; --d: 11" data-tag="chii · widescreen">
-          <img src="/showcase/graphics/chii3.webp" alt="Chii widescreen illustration" loading="lazy" />
+          <img src={u("/showcase/graphics/chii3.webp")} alt="Chii widescreen illustration" loading="lazy" />
           <span class="cn-node__tag">chii &middot; widescreen</span>
         </figure>
         <figure class="cn-node cn-node--s" style="--ar: 1.25; --x: 78%; --y: 50%; --d: 12" data-tag="topbox">
-          <img src="/showcase/graphics/topbox.webp" alt="Topbox" loading="lazy" />
+          <img src={u("/showcase/graphics/topbox.webp")} alt="Topbox" loading="lazy" />
           <span class="cn-node__tag">topbox</span>
         </figure>
         <figure class="cn-node cn-node--xs" style="--ar: 0.65; --x: 94%; --y: 50%; --d: 13" data-tag="pdf · kafka">
-          <img src="/showcase/graphics/pdf-kafka.webp" alt="Kafka PDF preview" loading="lazy" />
+          <img src={u("/showcase/graphics/pdf-kafka.webp")} alt="Kafka PDF preview" loading="lazy" />
           <span class="cn-node__tag">pdf &middot; kafka</span>
         </figure>
 
         <!-- Row 4 · Middle-lower (5 nodes) — square + prints -->
         <figure class="cn-node cn-node--s" style="--ar: 1; --x: 10%; --y: 70%; --d: 14" data-tag="concept · square">
-          <img src="/showcase/graphics/concept-square.webp" alt="Concept square" loading="lazy" />
+          <img src={u("/showcase/graphics/concept-square.webp")} alt="Concept square" loading="lazy" />
           <span class="cn-node__tag">concept &middot; square</span>
         </figure>
         <figure class="cn-node cn-node--s" style="--ar: 1; --x: 28%; --y: 70%; --d: 15" data-tag="product · square">
-          <img src="/showcase/graphics/product-square.webp" alt="Product square" loading="lazy" />
+          <img src={u("/showcase/graphics/product-square.webp")} alt="Product square" loading="lazy" />
           <span class="cn-node__tag">product &middot; square</span>
         </figure>
         <figure class="cn-node cn-node--s" style="--ar: 0.80; --x: 48%; --y: 70%; --d: 16" data-tag="portrait · 03">
-          <img src="/showcase/graphics/portrait-03.webp" alt="Portrait 03" loading="lazy" />
+          <img src={u("/showcase/graphics/portrait-03.webp")} alt="Portrait 03" loading="lazy" />
           <span class="cn-node__tag">portrait &middot; 03</span>
         </figure>
         <figure class="cn-node cn-node--xs" style="--ar: 0.55; --x: 68%; --y: 70%; --d: 17" data-tag="nso · psg anm">
-          <img src="/showcase/graphics/nsopsg-anm.webp" alt="NSO/PSG animation" loading="lazy" />
+          <img src={u("/showcase/graphics/nsopsg-anm.webp")} alt="NSO/PSG animation" loading="lazy" />
           <span class="cn-node__tag">nso &middot; psg anm</span>
         </figure>
         <figure class="cn-node cn-node--xs" style="--ar: 0.65; --x: 88%; --y: 70%; --d: 18" data-tag="fuwamoco · illust">
-          <img src="/showcase/graphics/fuwamoco-illust.webp" alt="Fuwamoco commercial illustration" loading="lazy" />
+          <img src={u("/showcase/graphics/fuwamoco-illust.webp")} alt="Fuwamoco commercial illustration" loading="lazy" />
           <span class="cn-node__tag">fuwamoco &middot; illust</span>
         </figure>
 
         <!-- Row 5 · Bottom (4 nodes: 2 tall stills + 2 wide banners) -->
         <figure class="cn-node cn-node--xs" style="--ar: 0.56; --x: 18%; --y: 88%; --d: 20" data-tag="yx · story">
-          <img src="/showcase/graphics/yx-story.webp" alt="Yx story" loading="lazy" />
+          <img src={u("/showcase/graphics/yx-story.webp")} alt="Yx story" loading="lazy" />
           <span class="cn-node__tag">yx &middot; story</span>
         </figure>
         <figure class="cn-node cn-node--xs" style="--ar: 0.65; --x: 38%; --y: 88%; --d: 21" data-tag="print · 01">
-          <img src="/showcase/graphics/print-01.webp" alt="Print 01" loading="lazy" />
+          <img src={u("/showcase/graphics/print-01.webp")} alt="Print 01" loading="lazy" />
           <span class="cn-node__tag">print &middot; 01</span>
         </figure>
         <figure class="cn-node cn-node--m" style="--ar: 2.37; --x: 60%; --y: 88%; --d: 22" data-tag="ayaka · header">
-          <img src="/showcase/graphics/dodgers-ayaka-header.webp" alt="Dodgers Ayaka header" loading="lazy" />
+          <img src={u("/showcase/graphics/dodgers-ayaka-header.webp")} alt="Dodgers Ayaka header" loading="lazy" />
           <span class="cn-node__tag">ayaka &middot; header</span>
         </figure>
         <figure class="cn-node cn-node--m" style="--ar: 2.22; --x: 88%; --y: 88%; --d: 23" data-tag="banner · 02">
-          <img src="/showcase/graphics/banner-02.webp" alt="Banner 02" loading="lazy" />
+          <img src={u("/showcase/graphics/banner-02.webp")} alt="Banner 02" loading="lazy" />
           <span class="cn-node__tag">banner &middot; 02</span>
         </figure>
 
         <!-- Theme storefront full-page screenshots (native tall aspect) -->
         <figure class="cn-node cn-node--m" style="--ar: 0.40; --d: 24" data-tag="theme · psg">
-          <img src="/showcase/graphics/theme-psg.webp" alt="PSG themed storefront full page" loading="lazy" />
+          <img src={u("/showcase/graphics/theme-psg.webp")} alt="PSG themed storefront full page" loading="lazy" />
           <span class="cn-node__tag">theme &middot; psg</span>
         </figure>
         <figure class="cn-node cn-node--m" style="--ar: 0.50; --d: 25" data-tag="theme · nso">
-          <img src="/showcase/graphics/theme-nso.webp" alt="NSO themed storefront full page" loading="lazy" />
+          <img src={u("/showcase/graphics/theme-nso.webp")} alt="NSO themed storefront full page" loading="lazy" />
           <span class="cn-node__tag">theme &middot; nso</span>
         </figure>
       </div>
@@ -341,77 +342,77 @@ const featured = [
             <button class="lead-3d__card" data-i="0" aria-label="Frame 01"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="01" data-flip-label="mococo · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-01.webp" alt="Product photography frame 01" loading="lazy" />
+                <img src={u("/showcase/photography/photo-01.webp")} alt="Product photography frame 01" loading="lazy" />
                 <span class="lead-3d__card-tag">01</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="1" aria-label="Frame 02"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="02" data-flip-label="kafka · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-02.webp" alt="Product photography frame 02" loading="lazy" />
+                <img src={u("/showcase/photography/photo-02.webp")} alt="Product photography frame 02" loading="lazy" />
                 <span class="lead-3d__card-tag">02</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="2" aria-label="Frame 03"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="03" data-flip-label="mococo · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-03.webp" alt="Product photography frame 03" loading="lazy" />
+                <img src={u("/showcase/photography/photo-03.webp")} alt="Product photography frame 03" loading="lazy" />
                 <span class="lead-3d__card-tag">03</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="3" aria-label="Frame 04"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="04" data-flip-label="ayaka · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-04.webp" alt="Product photography frame 04" loading="lazy" />
+                <img src={u("/showcase/photography/photo-04.webp")} alt="Product photography frame 04" loading="lazy" />
                 <span class="lead-3d__card-tag">04</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="4" aria-label="Frame 05"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="05" data-flip-label="fuwawa · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-05.webp" alt="Product photography frame 05" loading="lazy" />
+                <img src={u("/showcase/photography/photo-05.webp")} alt="Product photography frame 05" loading="lazy" />
                 <span class="lead-3d__card-tag">05</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="5" aria-label="Frame 06"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="06" data-flip-label="kafka · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-06.webp" alt="Product photography frame 06" loading="lazy" />
+                <img src={u("/showcase/photography/photo-06.webp")} alt="Product photography frame 06" loading="lazy" />
                 <span class="lead-3d__card-tag">06</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="6" aria-label="Frame 07"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="07" data-flip-label="panty & stocking · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-07.webp" alt="Product photography frame 07" loading="lazy" />
+                <img src={u("/showcase/photography/photo-07.webp")} alt="Product photography frame 07" loading="lazy" />
                 <span class="lead-3d__card-tag">07</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="7" aria-label="Frame 08"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="08" data-flip-label="fuwamoco · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-08.webp" alt="Product photography frame 08" loading="lazy" />
+                <img src={u("/showcase/photography/photo-08.webp")} alt="Product photography frame 08" loading="lazy" />
                 <span class="lead-3d__card-tag">08</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="8" aria-label="Frame 09"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="09" data-flip-label="nilou · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-09.webp" alt="Product photography frame 09" loading="lazy" />
+                <img src={u("/showcase/photography/photo-09.webp")} alt="Product photography frame 09" loading="lazy" />
                 <span class="lead-3d__card-tag">09</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="9" aria-label="Frame 10"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="10" data-flip-label="topaz · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-10.webp" alt="Product photography frame 10" loading="lazy" />
+                <img src={u("/showcase/photography/photo-10.webp")} alt="Product photography frame 10" loading="lazy" />
                 <span class="lead-3d__card-tag">10</span>
               </div>
             </button>
             <button class="lead-3d__card" data-i="10" aria-label="Frame 11"
               data-flip-mode="photo" data-flip-guard="is-center" data-flip-index="11" data-flip-label="panty & stocking · a7iii · 85mm">
               <div class="lead-3d__card-inner">
-                <img src="/showcase/photography/photo-11.webp" alt="Product photography frame 11" loading="lazy" />
+                <img src={u("/showcase/photography/photo-11.webp")} alt="Product photography frame 11" loading="lazy" />
                 <span class="lead-3d__card-tag">11</span>
               </div>
             </button>
@@ -470,22 +471,22 @@ const featured = [
     </div>
 
     <div class="sec-foot">
-      <a class="btn btn--primary" href="/catalog/">browse the full catalog &rarr;</a>
+      <a class="btn btn--primary" href={u("/catalog/")}>browse the full catalog &rarr;</a>
     </div>
 
     <!-- Closing nav: three paths to keep exploring -->
     <div class="paths" data-reveal>
-      <a class="path" href="/work/">
+      <a class="path" href={u("/work/")}>
         <p class="path__num">&mdash; 01</p>
         <h3 class="path__title">the three themes</h3>
         <p class="path__desc">psg &middot; nso &middot; misc &mdash; each with a distinct system.</p>
       </a>
-      <a class="path" href="/process/">
+      <a class="path" href={u("/process/")}>
         <p class="path__num">&mdash; 02</p>
         <h3 class="path__title">design case study</h3>
         <p class="path__desc">voice, typography, color, three-theme system.</p>
       </a>
-      <a class="path" href="/architecture/">
+      <a class="path" href={u("/architecture/")}>
         <p class="path__num">&mdash; 03</p>
         <h3 class="path__title">the aws stack</h3>
         <p class="path__desc">serverless breakdown &mdash; request path, services, and IaC.</p>

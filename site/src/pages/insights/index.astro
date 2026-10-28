@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Gryphline from "../../layouts/Gryphline.astro";
+import { u } from "../../lib/url.ts";
 ---
 <Gryphline title="insights">
   <section class="gl-shell">
@@ -54,8 +55,8 @@ import Gryphline from "../../layouts/Gryphline.astro";
     <p class="gl-kicker" id="i-generated" style="margin-top: 32px;">loading&hellip;</p>
   </section>
 
-  <script is:inline>
-    fetch("/insights.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
+  <script is:inline define:vars={{ digestUrl: u("/insights.json") }}>
+    fetch(digestUrl, { cache: "no-cache" }).then(r => r.json()).then(d => {
       const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
       set("i-req",   (d.totalRequests ?? 0).toLocaleString());
       set("i-uv",    (d.uniqueViewers ?? 0).toLocaleString());

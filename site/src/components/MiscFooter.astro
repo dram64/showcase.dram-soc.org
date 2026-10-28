@@ -1,11 +1,12 @@
 ---
+import { u } from "../lib/url.ts";
 const year = 2026;
 ---
 <footer class="tz-footer" role="contentinfo">
   <div class="tz-footer__inner">
     <div class="tz-footer__col tz-footer__col--brand">
       <p class="tz-footer__eyebrow">
-        <a class="tz-footer__eyebrow-line" href="/">TOKYO ZERO</a>
+        <a class="tz-footer__eyebrow-line" href={u("/")}>TOKYO ZERO</a>
         <span class="tz-footer__eyebrow-line">Chromadipity Core</span>
       </p>
     </div>
@@ -13,12 +14,12 @@ const year = 2026;
     <nav class="tz-footer__col tz-footer__col--nav" aria-label="Footer">
       <p class="tz-footer__col-label">explore</p>
       <ul class="tz-footer__list">
-        <li><a href="/">catalog</a></li>
-        <li><a href="/process/">process</a></li>
-        <li><a href="/architecture/">architecture</a></li>
-        <li><a href="/status/">status</a></li>
-        <li><a href="/insights/">insights</a></li>
-        <li><a href="/contact/">contact</a></li>
+        <li><a href={u("/")}>catalog</a></li>
+        <li><a href={u("/process/")}>process</a></li>
+        <li><a href={u("/architecture/")}>architecture</a></li>
+        <li><a href={u("/status/")}>status</a></li>
+        <li><a href={u("/insights/")}>insights</a></li>
+        <li><a href={u("/contact/")}>contact</a></li>
       </ul>
     </nav>
 

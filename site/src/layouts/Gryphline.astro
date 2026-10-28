@@ -9,6 +9,7 @@ import "@fontsource/chakra-petch/700.css";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource-variable/jetbrains-mono";
 import "../styles/gryphline.css";
+import { u } from "../lib/url.ts";
 
 interface Props {
   title: string;
@@ -27,7 +28,7 @@ const {
     <meta name="theme-color" content="#0a0d12" />
     <title>{title} — dram-soc.ops</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={u("/favicon.png")} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).toString()} />
     <meta property="og:title" content={`${title} — dram-soc.ops`} />
     <meta property="og:description" content={description} />

@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import "../../../styles/shopify/nso.css";
+import { u } from "../../../lib/url.ts";
 ---
 <!doctype html>
 <html lang="en">
@@ -9,58 +10,58 @@ import "../../../styles/shopify/nso.css";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NSO — Tokyo Zero</title>
     <meta name="description" content="Needy Streamer Overload homage — CRT / chrome / RGB glitch showcase from Tokyo Zero." />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={u("/favicon.png")} />
   </head>
   <body class="page-nso">
     <nav class="theme-nav theme-nav--nso" aria-label="Theme navigation">
-      <button type="button" class="theme-nav__btn theme-nav__btn--back" aria-label="Go back" onclick="if(history.length>1){history.back()}else{location.href='/'}">
+      <button type="button" class="theme-nav__btn theme-nav__btn--back" aria-label="Go back" onclick={`if(history.length>1){history.back()}else{location.href='${u("/")}'}`}>
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <a class="theme-nav__btn theme-nav__btn--home" href="/" aria-label="Home">
+      <a class="theme-nav__btn theme-nav__btn--home" href={u("/")} aria-label="Home">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </nav>
 
     <div class="nso-stage">
       <div class="nso-herobg-flank nso-herobg-flank--l" aria-hidden="true"></div>
-      <img class="nso-herobg" src="/assets/nso-bg.webp" alt="" aria-hidden="true" />
+      <img class="nso-herobg" src={u("/assets/nso-bg.webp")} alt="" aria-hidden="true" />
       <div class="nso-herobg-flank nso-herobg-flank--r" aria-hidden="true"></div>
 
-      <img class="nso-ribbon"     src="/assets/nso-ribbon.webp" alt="" aria-hidden="true" />
-      <img class="nso-ribbon-new" src="/assets/nso-new.webp"    alt="NEW" aria-hidden="true" />
+      <img class="nso-ribbon"     src={u("/assets/nso-ribbon.webp")} alt="" aria-hidden="true" />
+      <img class="nso-ribbon-new" src={u("/assets/nso-new.webp")}    alt="NEW" aria-hidden="true" />
 
-      <img class="nso-white-gradient" src="/assets/nso-white-gradient.webp" alt="" aria-hidden="true" />
-      <img class="nso-sparkle"        src="/assets/nso-product-bg.webp"     alt="" aria-hidden="true" />
+      <img class="nso-white-gradient" src={u("/assets/nso-white-gradient.webp")} alt="" aria-hidden="true" />
+      <img class="nso-sparkle"        src={u("/assets/nso-product-bg.webp")}     alt="" aria-hidden="true" />
 
-      <img class="nso-ngo-title"      src="/assets/nso-ngo-title.webp"     alt="Needy Girl Overdose" />
-      <img class="nso-ngo-overdose"   src="/assets/nso-ngo-overdose.webp"  alt="Needy Girl Overdose" />
-      <img class="nso-products-banner" src="/assets/nso-products-banner.webp" alt="Products" />
+      <img class="nso-ngo-title"      src={u("/assets/nso-ngo-title.webp")}     alt="Needy Girl Overdose" />
+      <img class="nso-ngo-overdose"   src={u("/assets/nso-ngo-overdose.webp")}  alt="Needy Girl Overdose" />
+      <img class="nso-products-banner" src={u("/assets/nso-products-banner.webp")} alt="Products" />
 
       <p class="nso-coming-soon" aria-hidden="true">
         <span class="nso-coming-soon__line">COMING</span>
         <span class="nso-coming-soon__line">SOON</span>
       </p>
 
-      <img class="nso-y2k-heart"       src="/assets/nso-y2k-heart.webp"       alt="" aria-hidden="true" />
-      <img class="nso-y2k-doubleheart" src="/assets/nso-y2k-doubleheart.webp" alt="" aria-hidden="true" />
-      <img class="nso-heart-grid"      src="/assets/nso-heart-grid.webp"      alt="" aria-hidden="true" />
+      <img class="nso-y2k-heart"       src={u("/assets/nso-y2k-heart.webp")}       alt="" aria-hidden="true" />
+      <img class="nso-y2k-doubleheart" src={u("/assets/nso-y2k-doubleheart.webp")} alt="" aria-hidden="true" />
+      <img class="nso-heart-grid"      src={u("/assets/nso-heart-grid.webp")}      alt="" aria-hidden="true" />
 
       <div class="nso-chars">
-        <img class="nso-char nso-char--ame"    src="/assets/nso-ame-sticker.webp"    alt="Ame" />
-        <img class="nso-char nso-char--kangel" src="/assets/nso-kangel-sticker.webp" alt="KAngel" />
+        <img class="nso-char nso-char--ame"    src={u("/assets/nso-ame-sticker.webp")}    alt="Ame" />
+        <img class="nso-char nso-char--kangel" src={u("/assets/nso-kangel-sticker.webp")} alt="KAngel" />
       </div>
 
-      <a class="nso-popup-link nso-popup-link--1" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--1" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
-      <a class="nso-popup-link nso-popup-link--2" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--2" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
-      <a class="nso-popup-link nso-popup-link--3" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--3" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
-      <a class="nso-popup-link nso-popup-link--4" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--4" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
-      <a class="nso-popup-link nso-popup-link--5" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--5" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
-      <a class="nso-popup-link nso-popup-link--6" href="/" aria-label="Browse catalog"><img class="nso-popup nso-popup--6" src="/assets/nso-popup-box.webp" alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--1" href={u("/")} aria-label="Browse catalog"><img class="nso-popup nso-popup--1" src={u("/assets/nso-popup-box.webp")} alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--2" href={u("/")} aria-label="Browse catalog"><img class="nso-popup nso-popup--2" src={u("/assets/nso-popup-box.webp")} alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--3" href={u("/")} aria-label="Browse catalog"><img class="nso-popup nso-popup--3" src={u("/assets/nso-popup-box.webp")} alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--4" href={u("/")} aria-label="Browse catalog"><img class="nso-popup nso-popup--4" src={u("/assets/nso-popup-box.webp")} alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--5" href={u("/")} aria-label="Browse catalog"><img class="nso-popup nso-popup--5" src={u("/assets/nso-popup-box.webp")} alt="" aria-hidden="true" /></a>
+      <a class="nso-popup-link nso-popup-link--6" href={u("/")} aria-label="Browse catalog"><img class="nso-popup nso-popup--6" src={u("/assets/nso-popup-box.webp")} alt="" aria-hidden="true" /></a>
 
       <div class="nso-pink-grid-bg" aria-hidden="true"></div>
 
       <div class="nso-card3d-wrap nso-card3d-wrap--1" aria-label="Print preview">
-        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-print.webp')"></div><div class="nso-card3d__face nso-card3d__face--back"></div></div>
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style={`background-image: url('${u("/assets/nso-print.webp")}')`}></div><div class="nso-card3d__face nso-card3d__face--back"></div></div>
       </div>
       <div class="nso-card3d-shadow nso-card3d-shadow--1" aria-hidden="true"></div>
       <div class="nso-product-copy nso-product-copy--1">
@@ -70,7 +71,7 @@ import "../../../styles/shopify/nso.css";
       </div>
 
       <div class="nso-card3d-wrap nso-card3d-wrap--2" aria-label="Deskmat preview">
-        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-deskmat.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-deskmat.webp')"></div></div>
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style={`background-image: url('${u("/assets/nso-deskmat.webp")}')`}></div><div class="nso-card3d__face nso-card3d__face--back" style={`background-image: url('${u("/assets/nso-deskmat.webp")}')`}></div></div>
       </div>
       <div class="nso-card3d-shadow nso-card3d-shadow--2" aria-hidden="true"></div>
       <div class="nso-product-copy nso-product-copy--2">
@@ -80,11 +81,11 @@ import "../../../styles/shopify/nso.css";
       </div>
 
       <div class="nso-card3d-wrap nso-card3d-wrap--3" aria-label="Tapestry preview — Ame">
-        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-ame-tapestry.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-ame-tapestry.webp')"></div></div>
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style={`background-image: url('${u("/assets/nso-ame-tapestry.webp")}')`}></div><div class="nso-card3d__face nso-card3d__face--back" style={`background-image: url('${u("/assets/nso-ame-tapestry.webp")}')`}></div></div>
       </div>
       <div class="nso-card3d-shadow nso-card3d-shadow--3" aria-hidden="true"></div>
       <div class="nso-card3d-wrap nso-card3d-wrap--3b" aria-label="Tapestry preview — KAngel">
-        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-kangel-tapestry.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-kangel-tapestry.webp')"></div></div>
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style={`background-image: url('${u("/assets/nso-kangel-tapestry.webp")}')`}></div><div class="nso-card3d__face nso-card3d__face--back" style={`background-image: url('${u("/assets/nso-kangel-tapestry.webp")}')`}></div></div>
       </div>
       <div class="nso-card3d-shadow nso-card3d-shadow--3b" aria-hidden="true"></div>
       <div class="nso-product-copy nso-product-copy--3">
@@ -94,11 +95,11 @@ import "../../../styles/shopify/nso.css";
       </div>
 
       <div class="nso-card3d-wrap nso-card3d-wrap--4" aria-label="Sticker preview — Ame">
-        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-ame-sticker.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-ame-sticker.webp')"></div></div>
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style={`background-image: url('${u("/assets/nso-ame-sticker.webp")}')`}></div><div class="nso-card3d__face nso-card3d__face--back" style={`background-image: url('${u("/assets/nso-ame-sticker.webp")}')`}></div></div>
       </div>
       <div class="nso-card3d-shadow nso-card3d-shadow--4" aria-hidden="true"></div>
       <div class="nso-card3d-wrap nso-card3d-wrap--4b" aria-label="Sticker preview — KAngel">
-        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style="background-image: url('/assets/nso-kangel-sticker.webp')"></div><div class="nso-card3d__face nso-card3d__face--back" style="background-image: url('/assets/nso-kangel-sticker.webp')"></div></div>
+        <div class="nso-card3d"><div class="nso-card3d__face nso-card3d__face--front" style={`background-image: url('${u("/assets/nso-kangel-sticker.webp")}')`}></div><div class="nso-card3d__face nso-card3d__face--back" style={`background-image: url('${u("/assets/nso-kangel-sticker.webp")}')`}></div></div>
       </div>
       <div class="nso-card3d-shadow nso-card3d-shadow--4b" aria-hidden="true"></div>
       <div class="nso-product-copy nso-product-copy--4">

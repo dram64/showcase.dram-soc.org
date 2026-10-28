@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Gryphline from "../../layouts/Gryphline.astro";
+import { u } from "../../lib/url.ts";
 ---
 <Gryphline title="status">
   <section class="gl-shell">
@@ -64,8 +65,8 @@ import Gryphline from "../../layouts/Gryphline.astro";
     .gl-tbl .gl-bad { color: var(--gl-red,   #ff5b5b); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 0.06em; }
   </style>
 
-  <script is:inline>
-    fetch("/status.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
+  <script is:inline define:vars={{ digestUrl: u("/status.json") }}>
+    fetch(digestUrl, { cache: "no-cache" }).then(r => r.json()).then(d => {
       const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
       set("s-name",   d.canary || "-");
       set("s-at",     d.lastRunAt ? new Date(d.lastRunAt).toLocaleString() : "-");

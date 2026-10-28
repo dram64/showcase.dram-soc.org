@@ -1,4 +1,5 @@
 ---
+import { u } from "../lib/url.ts";
 const year = 2026;
 ---
 <footer class="gl-foot" role="contentinfo">
@@ -13,17 +14,17 @@ const year = 2026;
     <div class="gl-foot__col">
       <p class="gl-foot__col-h">ops</p>
       <ul>
-        <li><a href="/status/">/status</a></li>
-        <li><a href="/insights/">/insights</a></li>
-        <li><a href="/architecture/">/architecture</a></li>
+        <li><a href={u("/status/")}>/status</a></li>
+        <li><a href={u("/insights/")}>/insights</a></li>
+        <li><a href={u("/architecture/")}>/architecture</a></li>
       </ul>
     </div>
     <div class="gl-foot__col">
       <p class="gl-foot__col-h">work</p>
       <ul>
-        <li><a href="/work/">/work</a></li>
-        <li><a href="/process/">/process</a></li>
-        <li><a href="/catalog/">/catalog</a></li>
+        <li><a href={u("/work/")}>/work</a></li>
+        <li><a href={u("/process/")}>/process</a></li>
+        <li><a href={u("/catalog/")}>/catalog</a></li>
       </ul>
     </div>
     <div class="gl-foot__col">

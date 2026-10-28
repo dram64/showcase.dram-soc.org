@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import "../../../styles/shopify/psg.css";
+import { u } from "../../../lib/url.ts";
 ---
 <!doctype html>
 <html lang="en">
@@ -9,48 +10,48 @@ import "../../../styles/shopify/psg.css";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PSG — Tokyo Zero</title>
     <meta name="description" content="Panty & Stocking pastiche — candy halftone showcase from the Tokyo Zero brand system." />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={u("/favicon.png")} />
   </head>
   <body class="page-psg intro-done">
     <nav class="theme-nav theme-nav--psg" aria-label="Theme navigation">
-      <button type="button" class="theme-nav__btn theme-nav__btn--back" aria-label="Go back" onclick="if(history.length>1){history.back()}else{location.href='/'}">
+      <button type="button" class="theme-nav__btn theme-nav__btn--back" aria-label="Go back" onclick={`if(history.length>1){history.back()}else{location.href='${u("/")}'}`}>
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <a class="theme-nav__btn theme-nav__btn--home" href="/" aria-label="Home">
+      <a class="theme-nav__btn theme-nav__btn--home" href={u("/")} aria-label="Home">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </nav>
 
     <div class="canvas">
-      <img class="heart-bg" src="/assets/psg-pink-heart.webp" alt="" aria-hidden="true" />
+      <img class="heart-bg" src={u("/assets/psg-pink-heart.webp")} alt="" aria-hidden="true" />
       <div class="frill-top" aria-hidden="true"></div>
-      <img class="char char--panty"    src="/assets/psg-panty.webp"    alt="Panty" />
-      <img class="char char--stocking" src="/assets/psg-stocking.webp" alt="Stocking" />
+      <img class="char char--panty"    src={u("/assets/psg-panty.webp")}    alt="Panty" />
+      <img class="char char--stocking" src={u("/assets/psg-stocking.webp")} alt="Stocking" />
       <div class="char-silh char-silh--panty"    aria-hidden="true"></div>
       <div class="char-silh char-silh--stocking" aria-hidden="true"></div>
       <div class="bg-pink" aria-hidden="true"></div>
-      <img class="halftone-circle halftone-circle--left"  src="/assets/psg-halftone-circle.webp" alt="" aria-hidden="true" />
-      <img class="halftone-circle halftone-circle--right" src="/assets/psg-halftone-circle.webp" alt="" aria-hidden="true" />
+      <img class="halftone-circle halftone-circle--left"  src={u("/assets/psg-halftone-circle.webp")} alt="" aria-hidden="true" />
+      <img class="halftone-circle halftone-circle--right" src={u("/assets/psg-halftone-circle.webp")} alt="" aria-hidden="true" />
       <div class="products-bg-tilt" aria-hidden="true"></div>
       <div class="products-bg" aria-hidden="true"></div>
 
       <footer class="site-footer">
         <nav class="footer-nav" aria-label="Footer">
-          <a href="/contact/">Contact Us</a>
-          <a href="/work/">About Us</a>
-          <a href="/">Tokyo Zero</a>
+          <a href={u("/contact/")}>Contact Us</a>
+          <a href={u("/work/")}>About Us</a>
+          <a href={u("/")}>Tokyo Zero</a>
         </nav>
       </footer>
 
       <p class="items-kicker">FW '26 · Drop 01</p>
       <h2 class="items-title">PRODUCTS</h2>
-      <img class="items-asset" src="/assets/psg-7-items.webp" alt="" aria-hidden="true" />
+      <img class="items-asset" src={u("/assets/psg-7-items.webp")} alt="" aria-hidden="true" />
       <p class="items-sub">Limited Time Only</p>
 
       <div class="products-showcase">
         <article class="psg-item psg-item--a psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">01</span>
-          <img class="product-item product-item--print" src="/assets/psg-print.webp" alt="Art Print" />
+          <img class="product-item product-item--print" src={u("/assets/psg-print.webp")} alt="Art Print" />
           <h3 class="psg-item__name">Art Print <i aria-hidden="true">♥</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
           <p class="psg-item__desc">11×17 in print on extra-heavy card stock.</p>
@@ -59,7 +60,7 @@ import "../../../styles/shopify/psg.css";
 
         <article class="psg-item psg-item--b psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">02</span>
-          <img class="product-item product-item--deskmat" src="/assets/psg-deskmat.webp" alt="Deskmat" />
+          <img class="product-item product-item--deskmat" src={u("/assets/psg-deskmat.webp")} alt="Deskmat" />
           <h3 class="psg-item__name">Deskmat <i aria-hidden="true">★</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
           <p class="psg-item__desc">900 × 400 × 4 mm stitched-edge mouse pad.</p>
@@ -68,7 +69,7 @@ import "../../../styles/shopify/psg.css";
 
         <article class="psg-item psg-item--a psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">03</span>
-          <img class="product-item product-item--tote" src="/assets/psg-tote.webp" alt="Tote Bag" />
+          <img class="product-item product-item--tote" src={u("/assets/psg-tote.webp")} alt="Tote Bag" />
           <h3 class="psg-item__name">Tote Bag <i aria-hidden="true">♥</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
           <p class="psg-item__desc">Canvas tote, 40 × 35 cm, single-sided print.</p>
@@ -77,7 +78,7 @@ import "../../../styles/shopify/psg.css";
 
         <article class="psg-item psg-item--b psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">04</span>
-          <img class="product-item product-item--lanyard" src="/assets/psg-lanyard.webp" alt="Lanyard" />
+          <img class="product-item product-item--lanyard" src={u("/assets/psg-lanyard.webp")} alt="Lanyard" />
           <h3 class="psg-item__name">Lanyard <i aria-hidden="true">★</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
           <p class="psg-item__desc">Polyester cord, double-sided print, bolt clip.</p>
@@ -87,8 +88,8 @@ import "../../../styles/shopify/psg.css";
         <article class="psg-item psg-item--a psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">05</span>
           <div class="psg-pair">
-            <img class="product-item product-item--acrylic product-item--shake-a" src="/assets/psg-panty-acrylic.webp"    alt="Panty Acrylic Stand" />
-            <img class="product-item product-item--acrylic product-item--shake-b" src="/assets/psg-stocking-acrylic.webp" alt="Stocking Acrylic Stand" />
+            <img class="product-item product-item--acrylic product-item--shake-a" src={u("/assets/psg-panty-acrylic.webp")}    alt="Panty Acrylic Stand" />
+            <img class="product-item product-item--acrylic product-item--shake-b" src={u("/assets/psg-stocking-acrylic.webp")} alt="Stocking Acrylic Stand" />
           </div>
           <h3 class="psg-item__name">Acrylic Stand <i aria-hidden="true">♡</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
@@ -99,8 +100,8 @@ import "../../../styles/shopify/psg.css";
         <article class="psg-item psg-item--b psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">06</span>
           <div class="psg-pair">
-            <img class="product-item product-item--tapestry product-item--shake-a" src="/assets/psg-panty-tapestry.webp"    alt="Panty Tapestry" />
-            <img class="product-item product-item--tapestry product-item--shake-b" src="/assets/psg-stocking-tapestry.webp" alt="Stocking Tapestry" />
+            <img class="product-item product-item--tapestry product-item--shake-a" src={u("/assets/psg-panty-tapestry.webp")}    alt="Panty Tapestry" />
+            <img class="product-item product-item--tapestry product-item--shake-b" src={u("/assets/psg-stocking-tapestry.webp")} alt="Stocking Tapestry" />
           </div>
           <h3 class="psg-item__name">Tapestry <i aria-hidden="true">☆</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
@@ -111,8 +112,8 @@ import "../../../styles/shopify/psg.css";
         <article class="psg-item psg-item--a psg-item--solo psg-item--clickable">
           <span class="psg-item__no" aria-hidden="true">07</span>
           <div class="psg-pair">
-            <img class="product-item product-item--sticker product-item--shake-a" src="/assets/psg-panty-sticker.webp"    alt="Panty Sticker" />
-            <img class="product-item product-item--sticker product-item--shake-b" src="/assets/psg-stocking-sticker.webp" alt="Stocking Sticker" />
+            <img class="product-item product-item--sticker product-item--shake-a" src={u("/assets/psg-panty-sticker.webp")}    alt="Panty Sticker" />
+            <img class="product-item product-item--sticker product-item--shake-b" src={u("/assets/psg-stocking-sticker.webp")} alt="Stocking Sticker" />
           </div>
           <h3 class="psg-item__name">Sticker <i aria-hidden="true">★</i></h3>
           <span class="psg-item__rule" aria-hidden="true"></span>
@@ -127,7 +128,7 @@ import "../../../styles/shopify/psg.css";
         <span class="smoke smoke--5"></span><span class="smoke smoke--6"></span>
         <span class="smoke smoke--7"></span><span class="smoke smoke--8"></span>
       </div>
-      <img class="psg-logo" src="/assets/psg-logo.svg" alt="Panty & Stocking" />
+      <img class="psg-logo" src={u("/assets/psg-logo.svg")} alt="Panty & Stocking" />
     </div>
 
     <style is:global>

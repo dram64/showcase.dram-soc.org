@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Base from "../../layouts/Base.astro";
+import { u } from "../../lib/url.ts";
 ---
 <Base title="work" miscTitle="work" showAnnouncement={false}>
   <section class="work">
@@ -12,9 +13,9 @@ import Base from "../../layouts/Base.astro";
     </p>
 
     <div class="work__grid">
-      <a class="w-tile w-tile--psg" href="/work/psg/">
-        <img class="w-tile__char w-tile__char--l" src="/assets/psg-panty-sticker.webp" alt="Panty" />
-        <img class="w-tile__char w-tile__char--r" src="/assets/psg-stocking-sticker.webp" alt="Stocking" />
+      <a class="w-tile w-tile--psg" href={u("/work/psg/")}>
+        <img class="w-tile__char w-tile__char--l" src={u("/assets/psg-panty-sticker.webp")} alt="Panty" />
+        <img class="w-tile__char w-tile__char--r" src={u("/assets/psg-stocking-sticker.webp")} alt="Stocking" />
         <div class="w-tile__meta">
           <p class="w-tile__num">01</p>
           <h2 class="w-tile__name">PSG</h2>
@@ -22,9 +23,9 @@ import Base from "../../layouts/Base.astro";
         </div>
       </a>
 
-      <a class="w-tile w-tile--nso" href="/work/nso/">
-        <img class="w-tile__char w-tile__char--l" src="/assets/nso-ame-sticker.webp" alt="Ame" />
-        <img class="w-tile__char w-tile__char--r" src="/assets/nso-kangel-sticker.webp" alt="KAngel" />
+      <a class="w-tile w-tile--nso" href={u("/work/nso/")}>
+        <img class="w-tile__char w-tile__char--l" src={u("/assets/nso-ame-sticker.webp")} alt="Ame" />
+        <img class="w-tile__char w-tile__char--r" src={u("/assets/nso-kangel-sticker.webp")} alt="KAngel" />
         <div class="w-tile__meta">
           <p class="w-tile__num">02</p>
           <h2 class="w-tile__name">NSO</h2>
@@ -32,7 +33,7 @@ import Base from "../../layouts/Base.astro";
         </div>
       </a>
 
-      <a class="w-tile w-tile--misc" href="/catalog/">
+      <a class="w-tile w-tile--misc" href={u("/catalog/")}>
         <div class="w-tile__meta">
           <p class="w-tile__num">03</p>
           <h2 class="w-tile__name">MISC</h2>

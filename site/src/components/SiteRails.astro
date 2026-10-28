@@ -1,23 +1,24 @@
 ---
+import { u } from "../lib/url.ts";
 // Site-wide fixed left+right rails. Displayed on every page via Base.astro
 // and Gryphline.astro. Brand mark + vertical text on the left, socials on
 // the right. Width matches the --rails-w CSS variable which content pads
 // against.
 ---
 <div class="site-rail site-rail--l">
-  <a class="site-rail__home" href="/" aria-label="Home">
+  <a class="site-rail__home" href={u("/")} aria-label="Home">
     <span class="site-rail__mark"></span>
   </a>
   <span class="site-rail__vrail" aria-hidden="true">// TOKYO ZERO · CHROMADIPITY CORE</span>
 </div>
 <div class="site-rail site-rail--r">
-  <a href="/" aria-label="Home">
+  <a href={u("/")} aria-label="Home">
     <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10.5V20h4v-6h6v6h4v-9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
   <a href="https://github.com/dram64" target="_blank" rel="noopener" aria-label="GitHub">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.9.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0012 2z" fill="currentColor"/></svg>
   </a>
-  <a href="/catalog/" aria-label="Catalog">
+  <a href={u("/catalog/")} aria-label="Catalog">
     <svg viewBox="0 0 24 24"><path d="M6 8h12l-1.2 10.4a2 2 0 0 1-2 1.6H9.2a2 2 0 0 1-2-1.6L6 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
   </a>
   <a href="mailto:desiramirez62200@gmail.com" aria-label="Email">

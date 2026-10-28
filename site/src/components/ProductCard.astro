@@ -1,5 +1,6 @@
 ---
 import type { Product } from "../data/products.ts";
+import { u } from "../lib/url.ts";
 interface Props {
   product: Product;
   index: string;
@@ -42,7 +43,7 @@ const state = product.soldOut ? "sold-out" : product.lowStock ? "low" : "in-stoc
         <span class="misc__low-stock" aria-label={`Only ${product.lowStock} left`}>{product.lowStock} left</span>
       )}
       <div class="misc__float">
-        <img class="misc__img" src={product.image} alt={product.title} loading="lazy" />
+        <img class="misc__img" src={u(product.image)} alt={product.title} loading="lazy" />
       </div>
     </div>
     <div class="misc__meta">

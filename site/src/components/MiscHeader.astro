@@ -1,4 +1,5 @@
 ---
+import { u } from "../lib/url.ts";
 interface Props {
   title?: string;
   brand?: string;
@@ -16,7 +17,7 @@ const {
   <div class="misc__header">
     <div class="misc__header-left">
       <p class="misc__eyebrow">
-        <a class="misc__eyebrow-line" href="/">{brand}</a>
+        <a class="misc__eyebrow-line" href={u("/")}>{brand}</a>
         <span class="misc__eyebrow-line">{subBrand}</span>
       </p>
       <h1 class="misc__title">{title}.</h1>
@@ -27,14 +28,14 @@ const {
         <span class="misc__theme-heading-title">theme selector</span>
       </p>
       <nav class="misc__theme-switch" aria-label="Theme">
-        <a class="misc__theme-square misc__theme-square--psg" href="/work/psg/" aria-label="PSG theme">
-          <img class="misc__theme-square-char misc__theme-square-char--panty"    src="/assets/psg-panty-sticker.webp"    alt="" aria-hidden="true" />
-          <img class="misc__theme-square-char misc__theme-square-char--stocking" src="/assets/psg-stocking-sticker.webp" alt="" aria-hidden="true" />
+        <a class="misc__theme-square misc__theme-square--psg" href={u("/work/psg/")} aria-label="PSG theme">
+          <img class="misc__theme-square-char misc__theme-square-char--panty"    src={u("/assets/psg-panty-sticker.webp")}    alt="" aria-hidden="true" />
+          <img class="misc__theme-square-char misc__theme-square-char--stocking" src={u("/assets/psg-stocking-sticker.webp")} alt="" aria-hidden="true" />
           <span class="misc__theme-square-label">psg</span>
         </a>
-        <a class="misc__theme-square misc__theme-square--nso" href="/work/nso/" aria-label="NSO theme">
-          <img class="misc__theme-square-char misc__theme-square-char--ame"    src="/assets/nso-ame-sticker.webp"    alt="" aria-hidden="true" />
-          <img class="misc__theme-square-char misc__theme-square-char--kangel" src="/assets/nso-kangel-sticker.webp" alt="" aria-hidden="true" />
+        <a class="misc__theme-square misc__theme-square--nso" href={u("/work/nso/")} aria-label="NSO theme">
+          <img class="misc__theme-square-char misc__theme-square-char--ame"    src={u("/assets/nso-ame-sticker.webp")}    alt="" aria-hidden="true" />
+          <img class="misc__theme-square-char misc__theme-square-char--kangel" src={u("/assets/nso-kangel-sticker.webp")} alt="" aria-hidden="true" />
           <span class="misc__theme-square-label">nso</span>
         </a>
       </nav>
@@ -45,11 +46,11 @@ const {
     <div class="misc__announcement" role="note" aria-label="Portfolio note">
       <span class="misc__announcement-item">
         <strong>portfolio showcase</strong> — running on aws serverless. see the
-        <a href="/architecture/">stack</a> ·
-        <a href="/status/">status</a> · <a href="/insights/">insights</a>
+        <a href={u("/architecture/")}>stack</a> ·
+        <a href={u("/status/")}>status</a> · <a href={u("/insights/")}>insights</a>
       </span>
       <span class="misc__announcement-item">
-        design case study at <a href="/process/">/process</a>
+        design case study at <a href={u("/process/")}>/process</a>
       </span>
     </div>
   )}

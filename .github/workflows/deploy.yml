@@ -47,12 +47,16 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: us-west-2
 
+      # status.json and insights.json belong to the digest Lambda, which
+      # rewrites them nightly; the copies in public/ are dev samples only.
       - name: Sync to S3 (primary us-west-2)
         run: |
           aws s3 sync dist/ s3://${{ vars.SITE_BUCKET }}/ \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" \
+            --exclude "status.json" \
+            --exclude "insights.json" \
             --exclude "sitemap*.xml" \
             --exclude "robots.txt"
           aws s3 sync dist/ s3://${{ vars.SITE_BUCKET }}/ \
@@ -68,6 +72,8 @@ jobs:
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" \
+            --exclude "status.json" \
+            --exclude "insights.json" \
             --exclude "sitemap*.xml" \
             --exclude "robots.txt"
           aws s3 sync dist/ s3://${{ vars.SITE_BUCKET }}-dr/ \
@@ -85,9 +91,11 @@ jobs:
 
       # The same bucket is served at desiramirez.com/tokyo-zero by the
       # distribution in infra/site_domain.tf (its ID is a repo variable).
+      # Its cache is keyed on the rewritten URI, with /tokyo-zero already
+      # stripped, so only /* reaches this site's entries.
       - name: Invalidate CloudFront (site domain)
         if: vars.SITE_DISTRIBUTION_ID != ''
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ vars.SITE_DISTRIBUTION_ID }} \
-            --paths "/tokyo-zero/*"
+            --paths "/*"

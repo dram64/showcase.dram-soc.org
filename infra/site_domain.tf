@@ -82,8 +82,14 @@ resource "aws_cloudfront_response_headers_policy" "resume" {
 # Viewer-request router for both behaviors:
 #   - www (and the bare *.cloudfront.net name) 301 to the apex,
 #   - the bare site_path 301s to site_path/ so the showcase's links resolve,
-#   - site_path/... loses its prefix, since the bucket is laid out from /,
-#   - directory-style paths get index.html, as in cloudfront.tf.
+#   - directory-style paths get index.html, as in cloudfront.tf,
+#   - site_path/... loses its prefix, since the showcase bucket is laid out
+#     from /, and everything else gains the resume bucket's apex/ prefix.
+# CloudFront keys its cache on the rewritten URI, not on the behavior, so
+# the two sites must never rewrite onto the same path: without the apex/
+# prefix, / and site_path/ would both become /index.html and share one
+# cache entry. The /apex/ guard keeps the error page path (/apex/404.html)
+# from being prefixed twice.
 resource "aws_cloudfront_function" "site_domain_router" {
   name    = "${replace(var.site_domain, ".", "-")}-router"
   runtime = "cloudfront-js-2.0"
@@ -114,13 +120,15 @@ resource "aws_cloudfront_function" "site_domain_router" {
         };
       }
 
-      if (uri.indexOf('${var.site_path}/') === 0) {
-        uri = uri.substring(${length(var.site_path)});
-      }
       if (uri.endsWith('/')) {
         uri += 'index.html';
       } else if (!uri.includes('.')) {
         uri += '/index.html';
+      }
+      if (uri.indexOf('${var.site_path}/') === 0) {
+        uri = uri.substring(${length(var.site_path)});
+      } else if (uri.indexOf('/apex/') !== 0) {
+        uri = '/apex' + uri;
       }
       request.uri = uri;
       return request;
@@ -139,7 +147,6 @@ resource "aws_cloudfront_distribution" "site_domain" {
   origin {
     domain_name              = data.aws_s3_bucket.resume.bucket_regional_domain_name
     origin_id                = "s3-resume"
-    origin_path              = "/apex"
     origin_access_control_id = aws_cloudfront_origin_access_control.site.id
   }
 
@@ -199,19 +206,19 @@ resource "aws_cloudfront_distribution" "site_domain" {
     }
   }
 
-  # /404.html goes through the default behavior, so a miss on either site
-  # gets the resume bucket's apex/404.html.
+  # The error page path goes through the default behavior, so a miss on
+  # either site gets the resume bucket's apex/404.html.
   custom_error_response {
     error_code            = 403
     response_code         = 404
-    response_page_path    = "/404.html"
+    response_page_path    = "/apex/404.html"
     error_caching_min_ttl = 60
   }
 
   custom_error_response {
     error_code            = 404
     response_code         = 404
-    response_page_path    = "/404.html"
+    response_page_path    = "/apex/404.html"
     error_caching_min_ttl = 60
   }
 
